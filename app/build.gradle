@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.zip.zipandroid"
+        applicationId "com.flaming.horizon.ziplead"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -53,10 +53,10 @@ android {
     }
     productFlavors {
         normal {
-            applicationId "com.zip.zipandroid"
+            applicationId "com.flaming.horizon.ziplead"
             versionCode 1
             versionName '1.0.0'
-            manifestPlaceholders = [authorities: "com.zip.zipandroid"]
+            manifestPlaceholders = [authorities: "com.flaming.horizon.ziplead"]
         }
     }
 

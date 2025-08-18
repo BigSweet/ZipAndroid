@@ -16,7 +16,7 @@ public class FormReq extends HashMap<String, Object> {
         req.put("source", "ANDROID");
         req.put("mid", "");
         req.put("userNo", "");
-        req.put("clientId", "32f614b2-4a69-43e2-8ee9-e1f26f0a744a");
+        req.put("clientId", "3a2d3b5b-ad80-4f98-a3ff-08900913b146");
         return req;
     }
 
