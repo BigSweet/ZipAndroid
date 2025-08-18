@@ -10,7 +10,7 @@ interface ZipApi {
 
 
     @POST("api/v4/ziplead/customer/sendSmsCode")
-    fun getCode(@Body body: FormReq): Observable<BaseRes<ZipCodeBean>>
+    fun getCode(@Body body: FormReq): Observable<ZipBaseRes<ZipCodeBean>>
 
 
 }

@@ -1,7 +1,7 @@
 package com.zip.zipandroid.base;
 
 
-public class BaseRes<T> {
+public class ZipBaseRes<T> {
     private int code;
     private String msg;
     private String sign;

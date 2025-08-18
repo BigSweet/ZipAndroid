@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF0F2F5"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/private_include_title"
+            layout="@layout/include_title_bar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/private_include_title"
+            app:sv_scl_radius="30dp">
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Por este medio, autorizo a CrediDora, y a sus agencias autorizadas, a consultar mi historial crediticio en las instituciones que consideren necesarias.\n\n\n
+Entiendo el propósito y el alcance de la información solicitada. Acepto que CrediDora utilice esta información y pueda consultar periódicamente mi actividad crediticia.\n\n\n
+Esta autorización tendrá una vigencia de 3 años a partir de hoy, o durante todo el tiempo que mantengamos una relación legal, a menos que se indique lo contrario.\n\n\n
+Reconozco que este documento es propiedad de CrediDora y se utiliza para dar cumplimiento al artículo 28 de la Ley de Sociedades de Información Crediticia (LRSIC).\n\n\n
+Por este medio, autorizo a CrediDora, y a sus agencias autorizadas, a consultar mi historial crediticio en las instituciones que consideren necesarias.\n\n\n
+Entiendo el propósito y el alcance de la información solicitada. Acepto que CrediDora utilice esta información y pueda consultar periódicamente mi actividad crediticia.\n\n\n
+Esta autorización tendrá una vigencia de 3 años a partir de hoy, o durante todo el tiempo que mantengamos una relación legal, a menos que se indique lo contrario.\n\n\n
+Reconozco que este documento es propiedad de CrediDora y se utiliza para dar cumplimiento al artículo 28 de la Ley de Sociedades de Información Crediticia (LRSIC)."
+                    android:textColor="#ff000000"
+                    android:textSize="13sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.core.widget.NestedScrollView>
+
+            <!--            -->
+            <!--            <WebView-->
+            <!--                android:id="@+id/per_content_nes"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent">-->
+
+            <!--            </WebView>-->
+
+
+            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:sv_scl_background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/private_cancel_tv"
+                    android:layout_width="115dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/commong_left_bg_btn"
+                    android:gravity="center"
+                    android:text="I Decline"
+                    android:textColor="#FF205EDB"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/private_sure_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.zip.zipandroid.shape.ShapeTextView
+                    android:id="@+id/private_sure_tv"
+                    android:layout_width="163dp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="Confirm"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/private_cancel_tv"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sv_tx_background="#FF205EDB"
+                    app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+
+            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

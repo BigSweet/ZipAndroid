@@ -16,21 +16,21 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
 
 
-public class ResponseSubscriber<T> implements Observer<BaseRes<T>> {
+public class ZipResponseSubscriber<T> implements Observer<ZipBaseRes<T>> {
     public static final int REQUEST_SUCCESS = 1000;
     public static int NET_OR_SERVER_ERROR = 0X4562;
     public static int NET_TIME_OUT = 0X4563;
 
 
-    public ResponseSubscriber() {
+    public ZipResponseSubscriber() {
         this(null, false, true);
     }
 
-    public ResponseSubscriber(Activity activity, boolean showDialog) {
+    public ZipResponseSubscriber(Activity activity, boolean showDialog) {
         this(activity, showDialog, true);
     }
 
-    public ResponseSubscriber(Activity activity, boolean showDialog, boolean showFailToast) {
+    public ZipResponseSubscriber(Activity activity, boolean showDialog, boolean showFailToast) {
     }
 
 
@@ -71,7 +71,7 @@ public class ResponseSubscriber<T> implements Observer<BaseRes<T>> {
     }
 
     @Override
-    public final void onNext(BaseRes<T> t) {
+    public final void onNext(ZipBaseRes<T> t) {
         if (t != null) {
             //同步本地与服务器时间差
             if (t.getResultCode() == REQUEST_SUCCESS) {

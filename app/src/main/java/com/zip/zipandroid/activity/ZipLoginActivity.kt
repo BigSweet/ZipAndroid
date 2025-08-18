@@ -3,6 +3,7 @@ package com.zip.zipandroid.activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import com.blankj.utilcode.util.KeyboardUtils
+import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipLoginBinding
 import com.zip.zipandroid.event.FinishLoginEvent
@@ -22,7 +23,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     var phone = ""
     override fun initView(savedInstanceState: Bundle?) {
         EventBusUtils.register(this)
-        mViewModel.getCode("8002233445")
+//        mViewModel.getCode("8002233445")
 //        val common_title_rl = findViewById<RelativeLayout>(R.id.common_title_rl)
 //        updateToolbarTopMargin(common_title_rl)
 //        mViewBind.maLoginGetCode.setOnDelayClickListener {

@@ -3,8 +3,8 @@ package com.zip.zipandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.BuildConfig
-import com.zip.zipandroid.base.ResponseSubscriber
-import com.zip.zipandroid.base.RetrofitHelper
+import com.zip.zipandroid.base.ZipResponseSubscriber
+import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -33,9 +33,9 @@ class ZipLoginModel : ZipBaseViewModel() {
         treeMap.putAll(api)
         api.addParam("idlad", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
 //        api.sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
-        RetrofitHelper.createApi(ZipApi::class.java).getCode(api)
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getCode(api)
             .compose(RxSchedulers.io_main())
-            .subscribe(object : ResponseSubscriber<ZipCodeBean>() {
+            .subscribe(object : ZipResponseSubscriber<ZipCodeBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
                     addReqDisposable(d)

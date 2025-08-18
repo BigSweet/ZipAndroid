@@ -2,10 +2,11 @@ package com.zip.zipandroid.activity
 
 import android.os.Bundle
 import com.blankj.utilcode.util.ThreadUtils
+import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.ZipMainActivity
-import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.UserInfo
 import com.zip.zipandroid.base.ZipBaseBindingActivity
+import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityZipSplashBinding
 
 
@@ -19,7 +20,13 @@ class ZipSlashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSpl
             if (!UserInfo.getInstance().token.isNullOrEmpty()) {
                 startActivity(ZipMainActivity::class.java)
             } else {
-                startActivity(ZipLoginActivity::class.java)
+                if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
+                    //没接受隐私的
+                    ZipPerActivity.start(this)
+                } else {
+                    startActivity(ZipLoginActivity::class.java)
+                }
+
             }
             finish()
         }, time)

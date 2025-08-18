@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/zip_app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/zip_app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZipAndroid"
         android:largeHeap="true"
@@ -39,6 +39,11 @@
         <activity
             android:exported="false"
             android:name=".activity.ZipLoginActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:exported="false"
+            android:name=".activity.ZipPerActivity"
             android:screenOrientation="portrait"></activity>
 
 
