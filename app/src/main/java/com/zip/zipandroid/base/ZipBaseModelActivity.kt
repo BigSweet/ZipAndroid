@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zip.zipandroid.utils.ActivityCollector
 
-abstract class ZipBaseModelActivity<VM : BaseViewModel> : AppCompatActivity() {
+abstract class ZipBaseModelActivity<VM : ZipBaseViewModel> : AppCompatActivity() {
 
     lateinit var mViewModel: VM
 

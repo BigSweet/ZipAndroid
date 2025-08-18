@@ -9,7 +9,7 @@ import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.BarUtils
 import com.zip.zipandroid.utils.ZipLoadingUtils
 
-abstract class ZipBaseBindingActivity<VM : BaseViewModel, VB : ViewBinding> : ZipBaseModelActivity<VM>() {
+abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> : ZipBaseModelActivity<VM>() {
 
     override fun layoutId(): Int = 0
 

@@ -15,4 +15,117 @@
         <item name="android:backgroundDimAmount">0.3</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
+    <style name="SplashTheme" parent="Theme.ZipAndroid">
+        <item name="android:windowBackground">@drawable/zip_bg_welcom</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
+    <declare-styleable name="ShapeConstraintLayout">
+        <attr name="sv_scl_orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="sv_scl_background" format="color|reference" />
+        <attr name="sv_scl_radius" format="dimension" />
+        <attr name="sv_scl_radius_top_left" format="dimension" />
+        <attr name="sv_scl_radius_bottom_right" format="dimension" />
+        <attr name="sv_scl_radius_bottom_left" format="dimension" />
+        <attr name="sv_scl_radius_top_right" format="dimension" />
+        <attr name="sv_scl_background_start" format="color|reference" />
+        <attr name="sv_scl_background_end" format="color|reference" />
+
+    </declare-styleable>
+    <declare-styleable name="ShapeRelativeLayout">
+        <attr name="sv_rl_orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="sv_rl_background" format="color|reference" />
+        <attr name="sv_rl_background_start" format="color|reference" />
+        <attr name="sv_rl_background_end" format="color|reference" />
+        <attr name="sv_rl_radius" format="dimension" />
+        <attr name="sv_rl_radius_top_left" format="dimension" />
+        <attr name="sv_rl_radius_bottom_right" format="dimension" />
+        <attr name="sv_rl_radius_bottom_left" format="dimension" />
+        <attr name="sv_rl_radius_top_right" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="ShapePointView">
+
+        <attr name="spv_tx_color" format="color" />
+        <attr name="spv_inner_bg" format="color" />
+        <attr name="spv_outer_bg" format="color" />
+        <attr name="spv_outer_radius" format="dimension" />
+        <attr name="spv_inner_radius" format="dimension" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="titleTextView">
+
+        <attr name="checkSize" format="integer" />
+        <attr name="unCheckSize" format="integer" />
+        <attr name="noChange" format="boolean" />
+
+    </declare-styleable>
+    <declare-styleable name="ShapeTextView">
+        <attr name="orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="sv_tx_background" format="color|reference" />
+        <attr name="sv_tx_enable" format="boolean" />
+        <attr name="sv_tx_need_scale" format="boolean" />
+        <attr name="sv_tx_background_start" format="color|reference" />
+        <attr name="sv_tx_background_end" format="color|reference" />
+        <attr name="sv_tx_disable_background" format="color|reference" />
+        <attr name="sv_tx_disable_color" format="color|reference" />
+        <attr name="sv_tx_color" format="color|reference" />
+        <attr name="sv_tx_disable_background_start" format="color|reference" />
+        <attr name="sv_tx_disable_background_end" format="color|reference" />
+        <attr name="sv_tx_radius" format="dimension" />
+        <attr name="sv_tx_disable_text" format="string" />
+        <attr name="sv_tx_enable_text" format="string" />
+
+        <attr name="sv_tx_radius_top_left" format="dimension" />
+        <attr name="sv_tx_radius_bottom_right" format="dimension" />
+        <attr name="sv_tx_radius_bottom_left" format="dimension" />
+        <attr name="sv_tx_radius_top_right" format="dimension" />
+
+
+    </declare-styleable>
+    <declare-styleable name="ShapeEditTextView">
+        <attr name="setv_orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="setv_radius_top_left" format="dimension" />
+        <attr name="setv_radius_bottom_right" format="dimension" />
+        <attr name="setv_radius_bottom_left" format="dimension" />
+        <attr name="setv_radius_top_right" format="dimension" />
+        <attr name="setv_background" format="color|reference" />
+        <attr name="setv_background_start" format="color|reference" />
+        <attr name="setv_background_end" format="color|reference" />
+        <attr name="setv_disable_background" format="color|reference" />
+        <attr name="setv_disable_background_start" format="color|reference" />
+        <attr name="setv_disable_background_end" format="color|reference" />
+        <attr name="setv_radius" format="dimension" />
+
+    </declare-styleable>
+
+    <declare-styleable name="ShapeLinearLayout">
+        <attr name="sv_orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="sv_background" format="color|reference" />
+        <attr name="sv_radius" format="dimension" />
+        <attr name="sv_radius_top_left" format="dimension" />
+        <attr name="sv_radius_bottom_right" format="dimension" />
+        <attr name="sv_radius_bottom_left" format="dimension" />
+        <attr name="sv_radius_top_right" format="dimension" />
+        <attr name="sv_background_start" format="color|reference" />
+        <attr name="sv_background_end" format="color|reference" />
+
+    </declare-styleable>
 </resources>

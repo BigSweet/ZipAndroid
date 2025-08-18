@@ -16,12 +16,7 @@ class SecurityInterceptor implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .method(original.method(), original.body());
         Request request = requestBuilder
-                .header("parisrocketloaf", "es")
-                .header("labunfoldfiercehuge", "MX")
-                .header("birdcagefat", "1289")
-                .header("scarsaleswoman", UserInfo.getInstance().getUserId() + "")
-                .header("shoppingdiplomadullasleep", "1")
-                .header("disappointmentspaceshipglue", UserInfo.getInstance().getToken())
+                .header("language", "es_MX")
                 .build();
         return chain.proceed(request);
     }

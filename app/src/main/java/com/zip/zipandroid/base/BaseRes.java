@@ -2,41 +2,50 @@ package com.zip.zipandroid.base;
 
 
 public class BaseRes<T> {
-    private int reduceshout;
-    private String model;
-    private T sincerelysoccerexistshopping;
+    private int code;
+    private String msg;
+    private String sign;
+    private T result;
 
     public T getResult() {
-        return sincerelysoccerexistshopping;
+        return result;
     }
 
     public void setResult(T result) {
-        this.sincerelysoccerexistshopping = result;
+        this.result = result;
     }
 
     public int getResultCode() {
-        return reduceshout;
+        return code;
     }
 
     public void setResultCode(int resultCode) {
-        this.reduceshout = resultCode;
+        this.code = resultCode;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public String getMsg() {
-        return model;
+        return msg;
     }
 
     public void setMsg(String msg) {
-        this.model = msg;
+        this.msg = msg;
     }
 
     public int getCode() {
-        return reduceshout;
+        return code;
     }
 
 
     public void setCode(int code) {
-        this.reduceshout = code;
+        this.code = code;
     }
 
 

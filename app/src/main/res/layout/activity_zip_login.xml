@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+<!--        <ImageView-->
+<!--            android:id="@+id/login_top_bg"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/login_top_bg"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        </ImageView>-->
+
+
+<!--        <ImageView-->
+<!--            android:id="@+id/login_code_top_iv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="32dp"-->
+<!--            android:layout_marginTop="82dp"-->
+<!--            android:src="@drawable/login_code_top_icon"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        </ImageView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/top_place_tv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="7dp"-->
+<!--            android:text="Monto máximo de préstamo"-->
+<!--            android:textColor="#ffffffff"-->
+<!--            android:textSize="12sp"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/login_code_top_iv"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/login_code_top_iv" />-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text=" $35,000 "-->
+<!--            android:textColor="#ffffffff"-->
+<!--            android:textSize="35sp"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/login_code_top_iv"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/top_place_tv" />-->
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/ma_number_rl"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginHorizontal="22dp"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            android:background="@drawable/bg_login_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/login_top_bg">-->
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/macaw_login_place_number"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:src="@drawable/login_phone_icon"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/login_place_number"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="19dp"-->
+<!--                android:layout_toRightOf="@+id/macaw_login_place_number"-->
+<!--                android:drawableRight="@drawable/phone_arrow_down"-->
+<!--                android:drawablePadding="2dp"-->
+<!--                android:text="+52"-->
+<!--                android:textColor="#ff1c1c1c"-->
+<!--                android:textSize="15sp" />-->
+
+
+<!--&lt;!&ndash;            <com.ma.macawandroid.view.NoSpaceLengthLimitedEditText&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/ma_get_phone"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_centerVertical="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_toRightOf="@+id/login_place_number"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="@null"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:hint="Ingrese número telefónico"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:imeOptions="actionDone"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:inputType="number"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:maxLength="10"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:paddingLeft="19dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#FF5A5CFC"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColorHint="#FF5A5CFC"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="13dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </com.ma.macawandroid.view.NoSpaceLengthLimitedEditText>&ndash;&gt;-->
+
+
+<!--        </RelativeLayout>-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/ma_code_rl"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginHorizontal="22dp"-->
+<!--            android:layout_marginTop="23dp"-->
+<!--            android:background="@drawable/bg_login_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ma_number_rl">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/login_left_iv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:src="@drawable/login_code_left_icon" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/ma_login_code"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="19dp"-->
+<!--                android:layout_marginRight="110dp"-->
+<!--                android:layout_toRightOf="@+id/login_left_iv"-->
+<!--                android:background="@null"-->
+<!--                android:hint="Código de verificación"-->
+<!--                android:imeOptions="actionDone"-->
+<!--                android:inputType="number"-->
+<!--                android:maxLength="4"-->
+<!--                android:textColor="#FF5A5CFC"-->
+<!--                android:textColorHint="#FF5A5CFC"-->
+<!--                android:textSize="13dp">-->
+
+<!--            </EditText>-->
+
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/ma_login_get_code"-->
+<!--                android:layout_width="107dp"-->
+<!--                android:layout_height="31dp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginRight="16dp"-->
+<!--                android:background="@drawable/bg_ma_get_code"-->
+<!--                app:sv_rl_background_end="#FF6C5AFC"-->
+<!--                app:sv_rl_background_start="#FF5E9DFF"-->
+<!--                app:sv_rl_radius="15dp">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/ma_get_code_place"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:text="Enviar código"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="13dp" />-->
+<!--            </RelativeLayout>-->
+
+<!--        </RelativeLayout>-->
+
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginBottom="68dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ma_code_rl">-->
+
+
+<!--            <com.zip.zipandroid.shape.ShapeTextView-->
+<!--                android:id="@+id/macaw_login_submit_tv"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginHorizontal="22dp"-->
+<!--                android:layout_marginBottom="12dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Comenzar"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/macaw_login_sc_ll_1"-->
+<!--                app:sv_tx_background_end="#FF6C5AFC"-->
+<!--                app:sv_tx_background_start="#FF5E9DFF"-->
+<!--                app:sv_tx_radius="17dp" />-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/macaw_login_sc_ll_1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/macaw_login_secret_iv_1"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/macaw_login_select_icon" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="9dp"-->
+<!--                    android:text="@string/login_per_bottom1"-->
+<!--                    android:textColor="#FF3F3F3F"-->
+<!--                    android:textSize="12sp" />-->
+
+
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/macaw_private_rl"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/macaw_login_secret_tv_2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="6dp"-->
+<!--                        android:text="@string/login_per_bottom2_link"-->
+<!--                        android:textColor="@color/main_color"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold" />-->
+
+
+<!--                </RelativeLayout>-->
+
+
+<!--            </LinearLayout>-->
+
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

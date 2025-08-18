@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.zip.zipandroid.utils.ZipLoadingUtils
 
 
-abstract class ZipBaseModelFragment<VM : BaseViewModel> : Fragment() {
+abstract class ZipBaseModelFragment<VM : ZipBaseViewModel> : Fragment() {
 
     private val handler = Handler()
 

@@ -1,7 +1,9 @@
 package com.zip.zipandroid.base;
 
 import android.content.Context;
-import android.content.SharedPreferences;import com.ma.macawandroid.base.MacawApplication;
+import android.content.SharedPreferences;
+
+import com.zip.zipandroid.ZipApplication;
 
 
 public class PreferencesHelper {
@@ -24,7 +26,7 @@ public class PreferencesHelper {
     }
 
     public PreferencesHelper(String tbName) {
-        context = MacawApplication.Companion.getInstance();
+        context = ZipApplication.Companion.getInstance();
         mPreferences = context.getSharedPreferences(tbName, 0);
         mEditor = mPreferences.edit();
     }

@@ -40,10 +40,9 @@ public class RetrofitHelper {
         String baseUrl;
         if (BuildConfig.DEBUG) {
 //            baseUrl = "https://loansapp.solyacredito.com/";
-            baseUrl = "http://94.74.106.175/cobicredit/";
+            baseUrl = "http://mxtest-loansapp.suonaduola.com/";
         } else {
-//            baseUrl = "http://overseas-loansapp-web.finbeeapp.co/";
-            baseUrl = "https://overseas-loansapp-web.noahsapp.com.cn/";
+            baseUrl = "http://mxtest-loansapp.suonaduola.com/";
         }
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

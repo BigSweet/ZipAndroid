@@ -1,2 +1,3 @@
 rootProject.name = "ZipAndroid"
 include ':app'
+include ':liveness'

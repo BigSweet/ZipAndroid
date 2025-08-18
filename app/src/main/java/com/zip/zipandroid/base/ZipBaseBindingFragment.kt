@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 
 
-abstract class ZipBaseBindingFragment<VM : BaseViewModel, DB : ViewDataBinding> : ZipBaseModelFragment<VM>() {
+abstract class ZipBaseBindingFragment<VM : ZipBaseViewModel, DB : ViewDataBinding> : ZipBaseModelFragment<VM>() {
 
     override fun layoutId() = 0
 

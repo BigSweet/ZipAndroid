@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 33
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    api 'ai.advance.mobile-sdk.android:liveness-detection:3.4.0'
+    api 'androidx.constraintlayout:constraintlayout:2.1.4'
+}
