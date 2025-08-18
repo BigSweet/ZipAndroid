@@ -127,11 +127,16 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         showLoading()
     }
 
+    override fun onStop() {
+        super.onStop()
+        KeyboardUtils.hideSoftInput(this)
+    }
 
     override fun createObserver() {
         mViewModel.codeLiveData.observe(this) {
             dismissLoading()
         }
+        ZipCodeActivity.start(this,"2336665656656","5245")
     }
 
     override fun showFailToast() {

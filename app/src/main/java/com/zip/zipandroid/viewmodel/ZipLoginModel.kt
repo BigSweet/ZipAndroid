@@ -3,12 +3,13 @@ package com.zip.zipandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.BuildConfig
-import com.zip.zipandroid.base.ZipResponseSubscriber
-import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
+import com.zip.zipandroid.base.ZipResponseSubscriber
+import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.ZipCodeBean
+import com.zip.zipandroid.bean.ZipLoginResponse
 import com.zip.zipandroid.utils.FormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
@@ -19,10 +20,34 @@ class ZipLoginModel : ZipBaseViewModel() {
 
     var codeLiveData = MutableLiveData<ZipCodeBean?>()
 
-//    var loginLiveData = MutableLiveData<LoginResponse?>()
+    var loginLiveData = MutableLiveData<ZipLoginResponse>()
 
-    fun macawLogin(phone: String, code: String) {
+    fun zipLogin(phone: String, code: String) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.addParam("cxmnmtyyytobile", phone)
+        api.addParam("ctytyxmnctyode", code)
+        api.addParam("jkjjkjkjkd", 999)
+        treeMap.putAll(api)
+        api.addParam("idlad", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).zipLogin(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipLoginResponse>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
 
+                override fun onSuccess(result: ZipLoginResponse) {
+                    loginLiveData.postValue(result)
+
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message)
+                }
+            })
     }
 
 
@@ -32,7 +57,6 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("cxmnmtyyytobile", phone)
         treeMap.putAll(api)
         api.addParam("idlad", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
-//        api.sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCode(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipCodeBean>() {

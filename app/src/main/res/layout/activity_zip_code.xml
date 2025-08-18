@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/code_top_bg"
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_login_top"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <include
+            android:id="@+id/private_include_title"
+            layout="@layout/include_title_bar" />
+
+
+        <TextView
+            android:id="@+id/code_top_place_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="96dp"
+            android:text="Input OTP"
+            android:textColor="#ff000000"
+            android:textSize="35sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/code_des_place_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="OTP has been sent to your phone number"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/code_top_place_tv"
+            app:layout_constraintTop_toBottomOf="@+id/code_top_place_tv" />
+
+        <TextView
+            android:id="@+id/code_phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:textColor="#ff3667f0"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/code_des_place_tv"
+            app:layout_constraintTop_toBottomOf="@+id/code_des_place_tv"
+            tools:text="+23408012****78" />
+
+        <com.zip.zipandroid.view.VerCodeEditText
+            android:id="@+id/zip_code_edit"
+            android:layout_width="292dp"
+            android:layout_height="61dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:background="@color/white"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:bottomLineHeight="0dp"
+            app:figures="4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/code_phone_tv"
+            app:selectedBackgroundColor="@color/cF1F5FF"
+            app:unSelectedBackgroundColor="@color/black"
+            app:verBackgroundRadius="19dp"
+            app:verCodeMargin="16dp" />
+
+        <TextView
+            android:id="@+id/code_send_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Resend after"
+            android:textColor="#ff7f8698"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zip_code_edit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
