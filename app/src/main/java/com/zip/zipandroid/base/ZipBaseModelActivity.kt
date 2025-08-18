@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.ToastUtils
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zip.zipandroid.utils.ActivityCollector
 
@@ -40,6 +41,12 @@ abstract class ZipBaseModelActivity<VM : ZipBaseViewModel> : AppCompatActivity()
         initView(savedInstanceState)
         createObserver()
         getData()
+        mViewModel.failLiveData.observe(this){
+            ToastUtils.showShort(it)
+            showFailToast()
+        }
+    }
+    open fun showFailToast(){
     }
 
 

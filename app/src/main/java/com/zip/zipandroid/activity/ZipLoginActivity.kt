@@ -1,195 +1,144 @@
 package com.zip.zipandroid.activity
 
+import android.graphics.Color
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.text.Editable
+import android.text.InputFilter
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
+import androidx.annotation.NonNull
 import com.blankj.utilcode.util.KeyboardUtils
-import com.tencent.mmkv.MMKV
+import com.blankj.utilcode.util.ToastUtils
+import com.zip.zipandroid.R
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipLoginBinding
-import com.zip.zipandroid.event.FinishLoginEvent
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.NoSpaceInputFilter
 import com.zip.zipandroid.viewmodel.ZipLoginModel
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginBinding>() {
 
 
-    var loginSrc1Select = true
-    var loginSrc2Select = true
+    var loginSrc1Select = false
 
 
-    var phone = ""
     override fun initView(savedInstanceState: Bundle?) {
-        EventBusUtils.register(this)
-//        mViewModel.getCode("8002233445")
-//        val common_title_rl = findViewById<RelativeLayout>(R.id.common_title_rl)
-//        updateToolbarTopMargin(common_title_rl)
-//        mViewBind.maLoginGetCode.setOnDelayClickListener {
-//            if (mViewBind.maGetPhone.text.isNullOrEmpty()) {
-//                ToastUtils.showShort("Por favor introduce el número de teléfono móvil")
-//                return@setOnDelayClickListener
-//            }
-//            if (!isTimerRunning) {
-//                showLoading()
-//                phone = mViewBind.maGetPhone.text.toString()
-//                mViewModel.getCode(phone)
-//
-//                KeyboardUtils.hideSoftInput(this)
-//            }
-//        }
-//        mViewBind.maGetPhone.setMaxLength(10)
-//        mViewBind.maGetPhone.filters = arrayOf<InputFilter>(NoSpaceInputFilter())
-//        mViewBind.maGetPhone.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//
-//            override fun afterTextChanged(s: Editable) {
-//                if (s.length < 10) {
-//                    mViewBind.maGetCodePlace.isEnabled = false
-//                    mViewBind.maLoginGetCode.setBackgroundResource(R.drawable.bg_ma_have_get_code)
-//                } else {
-//                    mViewBind.maGetCodePlace.isEnabled = true
-//                    mViewBind.maLoginGetCode.setBackgroundResource(R.drawable.bg_ma_get_code)
-//                    mViewBind.maLoginGetCode.performClick()
-//                }
-//
-//            }
-//
-//        })
-//        mViewBind.maGetCodePlace.isEnabled = false
-//        mViewBind.maLoginGetCode.setBackgroundResource(R.drawable.bg_ma_have_get_code)
-//        mViewBind.macawPrivateRl.setOnDelayClickListener {
-//            CobeAndroidWebActivityCobe.start(this, Constants.commonWebUrl)
-//        }
-////        mViewBind.macawServiceRl.setOnDelayClickListener {
-////            MacawAndroidWebActivityMacawMacaw.start(this, Constants.commonWebUrlPrivate)
-////        }
-//        mViewBind.macawLoginSecretIv1.setOnDelayClickListener {
-//            if (loginSrc1Select) {
-//                mViewBind.macawLoginSecretIv1.setImageResource(R.drawable.macaw_login_normal_icon)
-//                loginSrc1Select = false
-//            } else {
-//                loginSrc1Select = true
-//                mViewBind.macawLoginSecretIv1.setImageResource(R.drawable.macaw_login_select_icon)
-//            }
-//        }
-//
-//        mViewBind.maLoginCode.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-////                mViewBind.macawLoginSubmitTv.setEnabledPlus(s?.length == 6)
-//            }
-//
-//        })
-//
-//        mViewBind.macawLoginSubmitTv.setOnDelayClickListener {
-//            if (loginSrc1Select == false || loginSrc2Select == false) {
-//                ToastUtils.showShort("Por favor acepta el acuerdo")
-//                return@setOnDelayClickListener
-//            }
-//            if (mViewBind.maLoginCode.text.isNullOrEmpty()) {
-//                ToastUtils.showShort("Por favor ingresa el código de verificación")
-//                return@setOnDelayClickListener
-//            }
-//            login()
-//        }
-//
-//        if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
-//            CobePerActivity.start(this)
-//        } else {
-//            KeyboardUtils.showSoftInput(mViewBind.maGetPhone)
-//            mViewBind.maGetPhone.isFocusable = true
-//        }
+        val span = SpannableStringBuilder()
+        span.append("I agree to the ")
+        val start = span.length
+        span.append("Terms of Service")
+        val end = span.length
+        span.setSpan(object : ClickableSpan() {
+            override fun onClick(@NonNull widget: View) {
+                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonWebUrl)
+            }
+
+            override fun updateDrawState(@NonNull ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = Color.parseColor("#00000000")
+            }
+        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        span.setSpan(ForegroundColorSpan(Color.parseColor("#FF3667F0")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        span.append(" and ")
+
+        val star1 = span.length
+        span.append("Privacy Policy")
+        val end1 = span.length
+        span.setSpan(object : ClickableSpan() {
+            override fun onClick(@NonNull widget: View) {
+                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonWebUrl)
+            }
+
+            override fun updateDrawState(@NonNull ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = Color.parseColor("#00000000")
+            }
+        }, star1, end1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        span.setSpan(ForegroundColorSpan(Color.parseColor("#FF3667F0")), star1, end1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+
+        mViewBind.zipLoginPrivateTv.movementMethod = LinkMovementMethod.getInstance()
+        mViewBind.zipLoginPrivateTv.highlightColor = Color.TRANSPARENT
+        mViewBind.zipLoginPrivateTv.setText(span)
+
+        mViewBind.privateClickView.setOnDelayClickListener {
+            if (loginSrc1Select) {
+                mViewBind.zipLoginSelectIv.setImageResource(R.drawable.zip_login_normal_icon)
+                loginSrc1Select = false
+                mViewBind.zipLoginBtn.setEnabledPlus(false)
+            } else {
+                loginSrc1Select = true
+                mViewBind.zipLoginSelectIv.setImageResource(R.drawable.zip_login_select_icon)
+                if ((mViewBind.zipLoginEdit.text?.toString()?.length ?: 0) > 10) {
+                    mViewBind.zipLoginBtn.setEnabledPlus(true)
+                }
+            }
+        }
+
+        mViewBind.zipLoginEdit.setMaxLength(11)
+        mViewBind.zipLoginEdit.setOnDelayClickListener {
+            mViewBind.loginEditNumberSl.setBackground2(Color.parseColor("#FFF1F5FF"))
+            mViewBind.zipLoginEdit.requestFocus()
+        }
+        KeyboardUtils.showSoftInput(mViewBind.zipLoginEdit)
+        mViewBind.zipLoginEdit.filters = arrayOf<InputFilter>(NoSpaceInputFilter())
+        mViewBind.zipLoginEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.length > 10 && loginSrc1Select) {
+                    mViewBind.zipLoginBtn.setEnabledPlus(true)
+                } else {
+                    mViewBind.zipLoginBtn.setEnabledPlus(false)
+                }
+
+            }
+
+        })
+
+        mViewBind.zipLoginBtn.setOnDelayClickListener {
+            if (loginSrc1Select == false) {
+                ToastUtils.showShort("Please check the agreement")
+                return@setOnDelayClickListener
+            }
+            getZipCode()
+        }
     }
 
-    fun login() {
+    private fun getZipCode() {
+        mViewModel.getCode(mViewBind.zipLoginEdit.text.toString())
         KeyboardUtils.hideSoftInput(this)
         showLoading()
-//        mViewModel.macawLogin(phone, mViewBind.maLoginCode.text.toString())
-
     }
 
-
-    private var isTimerRunning = false
-    private val millTime: Long = 60000
-    private val countDownTime: Long = 1000
-
-    private var countDownTimer: CountDownTimer? = null
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: FinishLoginEvent) {
-        finish()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBusUtils.unregister(this)
-        countDownTimer?.cancel()
-    }
-
-    private fun startTimer() {
-//        mViewBind.maLoginGetCode.setBackgroundResource(R.drawable.bg_ma_have_get_code)
-//
-//        countDownTimer = object : CountDownTimer(millTime, countDownTime) {
-//            override fun onTick(millisUntilFinished: Long) {
-//                val secondsRemaining = millisUntilFinished / 1000
-//                mViewBind.maGetCodePlace.text = "${secondsRemaining}s"
-//                mViewBind.maGetCodePlace.isEnabled = false
-//                mViewBind.maGetCodePlace.setTextColor(resources.getColor(R.color.c73000000))
-//            }
-//
-//            override fun onFinish() {
-//                mViewBind.maGetCodePlace.setTextColor(resources.getColor(R.color.cFF9B53))
-//                mViewBind.maLoginGetCode.setBackgroundResource(R.drawable.bg_ma_get_code)
-//                mViewBind.maGetCodePlace.text = getString(R.string.code_sms_str)
-//                isTimerRunning = false
-//                mViewBind.maGetCodePlace.isEnabled = true
-//            }
-//        }
-
-        countDownTimer?.start()
-        isTimerRunning = true
-    }
 
     override fun createObserver() {
-//        mViewModel.loginLiveData.observe(this) {
-//            dismissLoading()
-//            if (it != null) {
-//                if (it.getafricannecessaryargument == "1") {
-//                    //去一个新手页面
-//                    UserInfo.getInstance().setNewUser(it.getafricannecessaryargument)
-//                    startActivity(CobeNewUserGuideActivity::class.java)
-//                } else {
-//                    startActivity(CobeMainActivityCobe::class.java)
-//                }
-//                finish()
-//
-//            }
-//
-//        }
-//
-//        mViewModel.codeLiveData.observe(this) {
-//            dismissLoading()
-//            it ?: return@observe
-//
-//            KeyboardUtils.showSoftInput(mViewBind.maLoginCode)
-//            mViewBind.maLoginCode.isFocusable = true
-//
-//            startTimer()
-//            mViewBind.maLoginCode.setText(it.spellingbrainpole)
-//        }
+        mViewModel.codeLiveData.observe(this) {
+            dismissLoading()
+        }
+    }
+
+    override fun showFailToast() {
+        super.showFailToast()
+        dismissLoading()
+        mViewBind.loginEditNumberSl.setBackground2(Color.parseColor("#FFFFECEC"))
+
     }
 
     override fun getData() {

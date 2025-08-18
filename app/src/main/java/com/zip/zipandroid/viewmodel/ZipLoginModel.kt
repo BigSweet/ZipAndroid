@@ -50,7 +50,7 @@ class ZipLoginModel : ZipBaseViewModel() {
 
                 override fun onFailure(code: Int, message: String?) {
                     super.onFailure(code, message)
-                    codeLiveData.postValue(null)
+                    failLiveData.postValue(message)
                 }
             })
 

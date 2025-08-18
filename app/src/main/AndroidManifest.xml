@@ -43,6 +43,11 @@
 
         <activity
             android:exported="false"
+            android:name=".activity.ZipWebActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:exported="false"
             android:name=".activity.ZipPerActivity"
             android:screenOrientation="portrait"></activity>
 
