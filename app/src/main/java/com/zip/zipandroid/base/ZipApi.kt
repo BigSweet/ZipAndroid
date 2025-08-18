@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface ZipApi {
 
 
-    @POST("api/customer/sendSmsCode")
+    @POST("api/v4/ziplead/customer/sendSmsCode")
     fun getCode(@Body body: FormReq): Observable<BaseRes<ZipCodeBean>>
 
 

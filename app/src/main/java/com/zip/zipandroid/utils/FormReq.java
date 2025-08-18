@@ -11,12 +11,12 @@ public class FormReq extends HashMap<String, Object> {
 
     public static FormReq create() {
         FormReq req = new FormReq();
-        req.put("appPackage", AppUtils.getAppPackageName());
-        req.put("version", AppUtils.getAppVersionName());
-        req.put("source", "ANDROID");
+        req.put("addbecpkg", AppUtils.getAppPackageName());
+        req.put("aidlversion", AppUtils.getAppVersionName());
+        req.put("cxmnsource", "ANDROID");
         req.put("mid", "");
         req.put("userNo", "");
-        req.put("clientId", "3a2d3b5b-ad80-4f98-a3ff-08900913b146");
+        req.put("aidlkldd", "3a2d3b5b-ad80-4f98-a3ff-08900913b146");
         return req;
     }
 

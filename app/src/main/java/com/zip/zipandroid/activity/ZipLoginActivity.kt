@@ -22,7 +22,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     var phone = ""
     override fun initView(savedInstanceState: Bundle?) {
         EventBusUtils.register(this)
-//        mViewModel.getCode("8002233445")
+        mViewModel.getCode("8002233445")
 //        val common_title_rl = findViewById<RelativeLayout>(R.id.common_title_rl)
 //        updateToolbarTopMargin(common_title_rl)
 //        mViewBind.maLoginGetCode.setOnDelayClickListener {
