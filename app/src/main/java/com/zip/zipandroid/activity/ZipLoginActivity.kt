@@ -136,7 +136,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         mViewModel.codeLiveData.observe(this) {
             dismissLoading()
         }
-        ZipCodeActivity.start(this,"2336665656656","5245")
+//        ZipCodeActivity.start(this,"2336665656656","5245")
     }
 
     override fun showFailToast() {

@@ -24,7 +24,8 @@ class ZipSlashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSpl
                     //没接受隐私的
                     ZipPerActivity.start(this)
                 } else {
-                    startActivity(ZipLoginActivity::class.java)
+//                    startActivity(ZipLoginActivity::class.java)
+                    startActivity(ZipMainActivity::class.java)
                 }
 
             }

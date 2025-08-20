@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000">
+
+        <com.zip.zipandroid.shape.ShapeLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:sv_background="@color/white"
+            app:sv_radius="19dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:text="Access Permission Notice"
+                android:textColor="#ff000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fillViewport="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="80dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="17dp"
+                            android:text="In order to provide you with a superior experience while ensuring the safe and efficient operation of our application, we need to request certain permissions from you. You can view and manage these permissions at any time in your device settings:"
+                            android:textColor="#ff000000"
+                            android:textSize="12sp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/location_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/per_location_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_location_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Location Permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/per_location_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="By obtaining your approximate location, we can monitor transaction security, provide you with customized services, and locate you in emergencies."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/per_location_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/per_devicen_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_ldevice_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Device Information Permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/per_devicen_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Collecting device identification information helps enhance security and allows us to create personalized services for you."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/per_devicen_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_sms_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_sms_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="SMS permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_sms_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="In order to provide you with better and more personalized financial services and comprehensively evaluate your credit status, our application needs to obtain SMS data permissions. We only collect SMS content related to financial activities, including key information such as sender name, contact phone number, transaction amount, etc., and will never collect SMS or other private SMS sent by you. \n\n We use advanced keyword filtering technology to strictly protect your personal privacy. All transaction data involved in you, whether it is detailed transaction content or accurate timestamp records, will be protected by strict encryption means and properly and securely stored. Its scope of use is strictly limited to credit status assessment and risk management. We promise not to share your SMS data with third parties without your explicit consent. You can manage or revoke this permission at any time. If you want to delete the data, please apply for cancellation in the application and complete the data deletion after 15 working days."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_sms_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/zip_per_camera_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_camera_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Camera Permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_camera_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Used for user identity verification and to conduct risk assessment."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_camera_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_cal_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_cal_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Calendar Permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_cal_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Access to your calendar information facilitates scheduling and setting up payment reminders for you."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_cal_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_blue_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_blue_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Bluetooth Permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_blue_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Enables Bluetooth functionality to ensure the security of data transfer and facilitate information sharing."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_blue_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_ad_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_ad_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Advertising ID"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_ad_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Device advertising ID can combine user behavior habits to accurately analyze the effect of advertising and achieve advertising optimization."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_ad_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_network_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_net_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Network status permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_network_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="It helps us take timely measures when the network is abnormal or unstable, such as reminding users of network problems, suspending operations that may affect user experience. etc."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_network_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_wifi_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_wifi_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Wi-Fi status permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_wifi_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Further optimize the network usage of the application. By obtaining Wi-Fi information, we can better evaluate the security and reliability of the current network environment."
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_wifi_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="17dp"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/zip_per_inter_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/zip_per_inter_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Internet permission"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toRightOf="@+id/zip_per_inter_icon"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Further optimize the network usage of the application. By obtaining Wi-Fi information, we can better evaluate the security and reliability of the current network environment. \n Permission information and data will be encrypted and uploaded to the server: http//www.flaminghorizonglobalservices.com/"
+                                android:textColor="#ff000000"
+                                android:textSize="12sp"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_per_inter_icon" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:sv_scl_background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/private_cancel_tv"
+                    android:layout_width="115dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/commong_left_bg_btn"
+                    android:gravity="center"
+                    android:text="I Decline"
+                    android:textColor="#FF205EDB"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/private_sure_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.zip.zipandroid.shape.ShapeTextView
+                    android:id="@+id/private_sure_tv"
+                    android:layout_width="163dp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="Confirm"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/private_cancel_tv"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sv_tx_background="#FF205EDB"
+                    app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+
+            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+        </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
