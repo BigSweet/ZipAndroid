@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/private_include_title"
+            layout="@layout/include_title_bar" />
+
+
+        <LinearLayout
+            android:id="@+id/set_info_top_progress_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/private_include_title">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zip_setinfo_top_progress_icon" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zip_setinfo_top_default_icon" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zip_setinfo_top_default_icon" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zip_setinfo_top_default_icon" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zip_setinfo_top_default_icon" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingBottom="90dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/set_info_top_progress_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/first_name_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="21dp"
+                    app:infoHintName="Please enter"
+                    app:infoTopName="First Name"
+                    app:inputInfoType="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="false"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/middle_name_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please enter"
+                    app:infoTopName="Middle Name"
+                    app:inputInfoType="1"
+                    app:layout_constraintTop_toBottomOf="@+id/first_name_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="false"
+                    app:showX="false">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/last_name_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please enter"
+                    app:infoTopName="Last Name"
+                    app:inputInfoType="1"
+                    app:layout_constraintTop_toBottomOf="@+id/middle_name_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="false"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+
+                <TextView
+                    android:id="@+id/sex_xx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="*"
+                    android:textColor="#fff54b4b"
+                    android:textSize="13sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/last_name_info_view" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/sex_xx"
+                    app:layout_constraintLeft_toRightOf="@+id/sex_xx"
+                    app:layout_constraintTop_toTopOf="@+id/sex_xx" />
+
+
+                <LinearLayout
+                    android:id="@+id/sex_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/sex_xx">
+
+                    <com.zip.zipandroid.shape.ShapeTextView
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Male"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:sv_tx_background="#FFF7F7F7"
+                        app:sv_tx_radius="13dp">
+
+                    </com.zip.zipandroid.shape.ShapeTextView>
+
+                    <com.zip.zipandroid.shape.ShapeTextView
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="11dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Female"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:sv_tx_background="#FFF7F7F7"
+                        app:sv_tx_radius="13dp">
+
+                    </com.zip.zipandroid.shape.ShapeTextView>
+                </LinearLayout>
+
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/birthday_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Date of Birth"
+                    app:layout_constraintTop_toBottomOf="@+id/sex_ll"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/bvn_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="22 000 000 000"
+                    app:infoTopName="BVN"
+                    app:inputInfoType="2"
+                    app:layout_constraintTop_toBottomOf="@+id/birthday_info_view"
+                    app:showBottomNumber="true"
+                    app:showInfoArrow="false"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/edu_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Education"
+                    app:layout_constraintTop_toBottomOf="@+id/bvn_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/ma_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Marital Status"
+                    app:layout_constraintTop_toBottomOf="@+id/edu_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/number_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Number of Children"
+                    app:layout_constraintTop_toBottomOf="@+id/ma_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/email_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please enter"
+                    app:infoTopName="Email"
+                    app:layout_constraintTop_toBottomOf="@+id/number_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="false"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recommend_email_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="6dp"
+                    app:layout_constraintTop_toBottomOf="@+id/email_info_view">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/address_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Home Address"
+                    app:layout_constraintTop_toBottomOf="@+id/recommend_email_rv"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/detail_address_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Detail Home Address"
+                    app:layout_constraintTop_toBottomOf="@+id/address_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="false"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+                <com.zip.zipandroid.view.SetInfoEditView
+                    android:id="@+id/lang_info_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="15dp"
+                    app:infoHintName="Please choose"
+                    app:infoTopName="Languages"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_address_info_view"
+                    app:showBottomNumber="false"
+                    app:showInfoArrow="true"
+                    app:showX="true">
+
+                </com.zip.zipandroid.view.SetInfoEditView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.zip.zipandroid.shape.ShapeTextView
+            android:id="@+id/info_next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="33dp"
+            android:layout_marginBottom="34dp"
+            android:gravity="center"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:sv_tx_background="#FFAAC0FB"
+            app:sv_tx_radius="8dp">
+
+        </com.zip.zipandroid.shape.ShapeTextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

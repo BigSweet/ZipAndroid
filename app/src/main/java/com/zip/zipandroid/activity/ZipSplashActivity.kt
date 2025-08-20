@@ -10,7 +10,7 @@ import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityZipSplashBinding
 
 
-class ZipSlashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSplashBinding>() {
+class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSplashBinding>() {
 
 
     var time = 1000L
@@ -25,7 +25,7 @@ class ZipSlashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSpl
                     ZipPerActivity.start(this)
                 } else {
 //                    startActivity(ZipLoginActivity::class.java)
-                    startActivity(ZipMainActivity::class.java)
+                    startActivity(ZipPersonInfoActivity::class.java)
                 }
 
             }
