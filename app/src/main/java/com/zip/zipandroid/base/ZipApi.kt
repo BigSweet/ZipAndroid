@@ -1,5 +1,6 @@
 package com.zip.zipandroid.base
 
+import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
@@ -23,7 +24,7 @@ interface ZipApi {
     fun getHomeData(@Body body: FormReq): Observable<ZipBaseRes<ZipHomeDataBean>>
 
     @POST("api/v4/ziplead/app-configuration")
-    fun getConfig(@Body body: FormReq): Observable<ZipBaseRes<ZipLoginResponse>>
+    fun getConfig(@Body body: FormReq): Observable<ZipBaseRes<ZipAppConfigBean>>
 
 
 }

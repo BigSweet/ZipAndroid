@@ -2,10 +2,10 @@ package com.zip.zipandroid.fragment
 
 import android.os.Bundle
 import com.zip.zipandroid.base.ZipBaseBindingFragment
-import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.FragmentZipOrderListBinding
+import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 
-class ZipHomeFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipOrderListBinding>() {
+class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrderListBinding>() {
     companion object {
         fun newInstance(): ZipHomeFragment {
             val args = Bundle()
