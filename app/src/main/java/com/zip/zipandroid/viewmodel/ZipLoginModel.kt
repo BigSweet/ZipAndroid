@@ -54,9 +54,9 @@ class ZipLoginModel : ZipBaseViewModel() {
     fun getCode(phone: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("cxmnmtyyytobile", phone)
+        api.addParam("wayarHannu", phone)
         treeMap.putAll(api)
-        api.addParam("idlad", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCode(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipCodeBean>() {

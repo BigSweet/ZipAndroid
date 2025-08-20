@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,6 +10,302 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/zip_home_top_sl"
+            android:layout_width="match_parent"
+            android:layout_height="285dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sv_scl_background="#FF3667F0"
+            app:sv_scl_radius_bottom_left="52dp"
+            app:sv_scl_radius_bottom_right="52dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="53dp"
+                android:src="@drawable/zip_home_top_icon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/zip_home_custom_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="49dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/zip_home_custom_icon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/zip_home_max_place_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Maximum Loan Amount"
+                android:textColor="#adffffff"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv" />
+
+            <TextView
+                android:id="@+id/zip_home_money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#ffffffff"
+                android:textSize="48sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/zip_home_max_place_tv"
+                tools:text="₦ 600,000" />
+
+            <com.zip.zipandroid.shape.ShapeTextView
+                android:id="@+id/zip_home_ver_tv"
+                android:layout_width="252dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="Verify my loan limit"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/zip_home_money_tv"
+                app:sv_tx_background="#FFFBBC32"
+                app:sv_tx_radius="8dp">
+
+            </com.zip.zipandroid.shape.ShapeTextView>
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zip_home_top_sl">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    android:id="@+id/load_team_sl"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="15dp"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/load_daily_sl"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sv_scl_background="@color/white"
+                    app:sv_scl_radius="16dp">
+
+                    <TextView
+                        android:id="@+id/loan_team_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="13dp"
+                        android:text="Loan term"
+                        android:textColor="#ff000000"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#ff000000"
+                        android:textSize="21sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="@+id/loan_team_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/loan_team_tv"
+                        tools:text="91~180 days" />
+
+                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    android:id="@+id/load_daily_sl"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="15dp"
+                    app:layout_constraintLeft_toRightOf="@+id/load_team_sl"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sv_scl_background="@color/white"
+                    app:sv_scl_radius="16dp">
+
+                    <TextView
+                        android:id="@+id/loan_daily_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="13dp"
+                        android:text="Daily interest rate"
+                        android:textColor="#ff000000"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#ff000000"
+                        android:textSize="21sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="@+id/loan_daily_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/loan_daily_tv"
+                        tools:text="91~180 days" />
+
+                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    android:id="@+id/zip_home_private_sl"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/load_daily_sl"
+                    app:sv_scl_background="@color/white"
+                    app:sv_scl_radius="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="View the privacy policy of Ziplead"
+                        android:textColor="#ff000000"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/zip_home_search_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="23dp"
+                    app:layout_constraintTop_toBottomOf="@+id/zip_home_private_sl">
+
+                    <ImageView
+                        android:id="@+id/zip_home_happy_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/zip_home_happing_icon"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text="Happening Now"
+                        android:textColor="#ff000000"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/zip_home_happy_iv"
+                        app:layout_constraintLeft_toRightOf="@+id/zip_home_happy_iv"
+                        app:layout_constraintTop_toTopOf="@+id/zip_home_happy_iv" />
+
+                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        android:id="@+id/zip_home_zip_sl"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="11dp"
+                        app:layout_constraintTop_toBottomOf="@+id/zip_home_happy_iv"
+                        app:sv_scl_background="@color/white"
+                        app:sv_scl_radius="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Refer a friend，\n
+Get a Bonus"
+                            android:textColor="#ff000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginRight="12dp"
+                            android:src="@drawable/zip_home_zip_bottom_icon"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+
+                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="12dp"
+                        app:layout_constraintTop_toBottomOf="@+id/zip_home_zip_sl"
+                        app:sv_scl_background="@color/white"
+                        app:sv_scl_radius="16dp">
+
+                        <TextView
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Maintaining a good credit reputation helps increase your credit limit."
+                            android:textColor="#ff000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="9dp"
+                            android:src="@drawable/zip_home_bottom_money_icon"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+
+                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
