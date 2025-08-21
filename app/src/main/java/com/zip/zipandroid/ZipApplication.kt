@@ -1,7 +1,7 @@
 package com.zip.zipandroid
 
-import aai.liveness.GuardianLivenessDetectionSDK
-import ai.advance.liveness.lib.Market
+//import aai.liveness.GuardianLivenessDetectionSDK
+//import ai.advance.liveness.lib.Market
 import android.app.Application
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
@@ -29,8 +29,8 @@ class ZipApplication : Application() {
      * 初始化Advance活体sdk
      */
     private fun initAdvanceLivenessDetection() {
-        GuardianLivenessDetectionSDK.init(this, Market.Mexico)
-        GuardianLivenessDetectionSDK.isDetectOcclusion(true)  // 开启遮挡检测
+//        GuardianLivenessDetectionSDK.init(this, Market.Mexico)
+//        GuardianLivenessDetectionSDK.isDetectOcclusion(true)  // 开启遮挡检测
     }
 
 

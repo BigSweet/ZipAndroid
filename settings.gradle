@@ -1,3 +1,5 @@
 rootProject.name = "ZipAndroid"
 include ':app'
 include ':liveness'
+include ':pickerview'
+include ':wheelview'

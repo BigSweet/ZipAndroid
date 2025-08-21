@@ -136,5 +136,7 @@ dependencies {
 //    implementation project(':SpinnerDatePickerLib')
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.tencent.bugly:crashreport:latest.release'
-    implementation project(path: ':liveness')
+//    implementation project(path: ':liveness')
+//    api 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation project(':pickerview')
 }
