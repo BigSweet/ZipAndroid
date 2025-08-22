@@ -1,14 +1,18 @@
 package com.zip.zipandroid
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.adapter.LazyPagerAdapter
-import com.zip.zipandroid.base.UserInfo
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityMainBinding
@@ -21,6 +25,7 @@ import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
 import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
+import com.zip.zipandroid.utils.UserInfoUtils
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -61,19 +66,42 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     fun checkAllPer() {
         if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
+//        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())
             pop.allPerFail = {
                 //退出登录，关闭界面
-                UserInfo.getInstance().logout()
+                UserInfoUtils.clear()
                 finish()
             }
             pop.allPerSuccess = {
-                //拿所有的数据吗
+                val list = AllPerUtils.getAllPer()
+//                val list = getTestPerList()
+
+                PermissionUtils.permission(*list.toTypedArray())
+                    .callback(object : PermissionUtils.FullCallback {
+                        override fun onGranted(permissionsGranted: List<String>) {
+                            //拿数据吗
+                        }
+
+                        override fun onDenied(
+                            permissionsDeniedForever: List<String>,
+                            permissionsDenied: List<String>,
+                        ) {
+
+                        }
+                    })
+                    .request()
             }
             XPopup.Builder(getContext()).asCustom(pop).show()
 
         }
+    }
+
+    fun getTestPerList(): ArrayList<String> {
+        val list = arrayListOf<String>()
+        list.add(Manifest.permission.READ_SMS)
+        return list
     }
 
 

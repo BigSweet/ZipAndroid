@@ -28,7 +28,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("wayarHannu", phone)
         api.addParam("lambarco", code)
         api.addParam("rijistaDaga", 999)
-        api.addParam("IMEI", 999)
+//        api.addParam("IMEI", 999)
         api.addParam("nauIn", 0)
         api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)

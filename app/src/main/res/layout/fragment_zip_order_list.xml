@@ -64,7 +64,7 @@
                 android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
 
                 <com.zip.zipandroid.shape.ShapeRelativeLayout
@@ -605,7 +605,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/zip_home_max_place_tv"

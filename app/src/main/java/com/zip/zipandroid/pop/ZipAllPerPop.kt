@@ -15,28 +15,12 @@ class ZipAllPerPop(context: Context) : ZipBaseFullScreenPopupView<PopZipAllPerBi
     override fun onCreate() {
         super.onCreate()
         mBinding.privateSureTv.setOnDelayClickListener {
-
-            val list = AllPerUtils.getAllPer()
-            PermissionUtils.permission(*list.toTypedArray())
-                .callback(object : PermissionUtils.FullCallback {
-                    override fun onGranted(permissionsGranted: List<String>) {
-                        //拿数据吗
-                        allPerSuccess?.invoke()
-                        dismiss()
-                    }
-
-                    override fun onDenied(
-                        permissionsDeniedForever: List<String>,
-                        permissionsDenied: List<String>,
-                    ) {
-                        allPerFail?.invoke()
-                        dismiss()
-                    }
-                })
-                .request()
+            allPerSuccess?.invoke()
+            dismiss()
 
         }
         mBinding.privateCancelTv.setOnDelayClickListener {
+            allPerFail?.invoke()
             dismiss()
         }
     }
