@@ -86,7 +86,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
             } else {
                 loginSrc1Select = true
                 mViewBind.zipLoginSelectIv.setImageResource(R.drawable.zip_login_select_icon)
-                if ((mViewBind.zipLoginEdit.text?.toString()?.length ?: 0) > 10) {
+                if ((mViewBind.zipLoginEdit.text?.toString()?.length ?: 0) >= 10) {
                     mViewBind.zipLoginBtn.setEnabledPlus(true)
                 }
             }
@@ -131,7 +131,6 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
     var show: Calendar? = null
     fun showPickView(title: String) {
-
         val start = Calendar.getInstance()
         val end = Calendar.getInstance()
         start[Calendar.YEAR] = end[Calendar.YEAR] - 50
@@ -178,7 +177,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     }
 
     private fun getZipCode() {
-        mViewModel.getCode(mViewBind.zipLoginEdit.text.toString())
+        mViewModel.getCode("234"+mViewBind.zipLoginEdit.text.toString())
         KeyboardUtils.hideSoftInput(this)
         showLoading()
     }

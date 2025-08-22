@@ -24,7 +24,7 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
 
     override fun initView(savedInstanceState: Bundle?) {
         ThreadUtils.runOnUiThreadDelayed({
-            if (!UserInfo.getInstance().token.isNullOrEmpty()) {
+            if (!UserInfo.getInstance().userId.isNullOrEmpty()) {
                 startActivity(ZipMainActivity::class.java)
             } else {
                 if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {

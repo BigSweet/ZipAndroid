@@ -16,7 +16,7 @@ public class UserInfo {
 
 
     public String getUserId() {
-        String s = mHelper.getValue(userId) == null ? "0" : mHelper.getValue(userId);
+        String s = mHelper.getValue(userId) == null ? "" : mHelper.getValue(userId);
         return s;
     }
 

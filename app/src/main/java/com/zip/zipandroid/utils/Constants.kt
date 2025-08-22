@@ -13,5 +13,7 @@ object Constants {
     var ACCESS_KEY = ACCESS_KEY_RELEASE
     var SECRET_KEY = SECRET_KEY_RELEASE
 
+    var client_id = "c3e09a50-8a34-4ae6-92f4-d9f6559bb876"
+
 
 }
