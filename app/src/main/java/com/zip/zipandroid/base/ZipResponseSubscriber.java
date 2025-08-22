@@ -17,7 +17,7 @@ import retrofit2.HttpException;
 
 
 public class ZipResponseSubscriber<T> implements Observer<ZipBaseRes<T>> {
-    public static final int REQUEST_SUCCESS = 1000;
+    public static final int REQUEST_SUCCESS = 200;
     public static int NET_OR_SERVER_ERROR = 0X4562;
     public static int NET_TIME_OUT = 0X4563;
 

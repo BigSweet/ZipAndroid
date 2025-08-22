@@ -4,32 +4,49 @@ import com.tencent.mmkv.MMKV
 
 object UserInfoUtils {
 
-    var mSignKey: String = ""
-    var mMid: Long = 0
-    var mUserNo: String = ""
-    var mRealName: String = ""
+    private var mSignKey: String = ""
+    private  var mMid: Long = 0
+    private var mUserNo: String = ""
 
-    fun getCardNo(): String {
-        val cardNo = MMKV.defaultMMKV()?.getString("macawcardNo", "") ?: ""
-        return cardNo
+    fun setMid(mid: Long) {
+        mMid = mid
+        MMKV.defaultMMKV()?.putLong("zipmid", mid)
     }
 
-    fun setCardNo(cardNo: String) {
-        MMKV.defaultMMKV()?.putString("macawcardNo", cardNo)
-    }
 
-    fun setIdCardPath(idCardPath: String) {
-        MMKV.defaultMMKV()?.putString("idcardPath", idCardPath)
-    }
-
-    fun getIdCardPath(): String {
-        return MMKV.defaultMMKV()?.getString("idcardPath", "") ?: ""
+    fun getMid(): Long {
+        if (mMid > 0) {
+            return mMid
+        }
+        val mid = MMKV.defaultMMKV()?.getLong("zipmid", 0) ?: 0
+        if (mid > 0) {
+            mMid = mid
+        }
+        return mid
     }
 
     fun setSignKey(signKey: String) {
         mSignKey = signKey
         MMKV.defaultMMKV()?.putString("zipsignKey", signKey)
     }
+
+
+    fun getUserNo(): String {
+        if (!mUserNo.isNullOrEmpty()) {
+            return mUserNo
+        }
+        val userNo = MMKV.defaultMMKV()?.getString("zipuserNo", "") ?: ""
+        if (!userNo.isNullOrEmpty()) {
+            mUserNo = userNo
+        }
+        return userNo
+    }
+
+    fun setUserNo(userNo: String) {
+        mUserNo = userNo
+        MMKV.defaultMMKV()?.putString("zipuserNo", userNo)
+    }
+
 
     fun getSignKey(): String {
         if (!mSignKey.isNullOrEmpty()) {
@@ -44,6 +61,8 @@ object UserInfoUtils {
 
     fun clear() {
         MMKV.defaultMMKV()?.remove("zipsignKey")
+        MMKV.defaultMMKV()?.remove("zipmid")
+        MMKV.defaultMMKV()?.remove("zipuserNo")
         mSignKey = ""
         mUserNo = ""
         mMid = 0L

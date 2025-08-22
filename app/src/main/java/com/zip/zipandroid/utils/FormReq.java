@@ -1,7 +1,6 @@
 package com.zip.zipandroid.utils;
 
 import com.blankj.utilcode.util.AppUtils;
-import com.zip.zipandroid.base.UserInfo;
 
 import java.util.HashMap;
 
@@ -15,9 +14,9 @@ public class FormReq extends HashMap<String, Object> {
         req.put("fakitinAiki", AppUtils.getAppPackageName());
         req.put("sigarBincike", AppUtils.getAppVersionName());
         req.put("tushen", "ANDROID");
-        if(!UserInfo.getInstance().getUserId().isEmpty()){
-            req.put("matsakaici", "");
-            req.put("lambarMutum", "");
+        if (!UserInfoUtils.INSTANCE.getUserNo().isEmpty()) {
+            req.put("matsakaici", UserInfoUtils.INSTANCE.getMid());
+            req.put("lambarMutum", UserInfoUtils.INSTANCE.getUserNo());
         }
 
 //        req.put("idAbokinCiniki", "3a2d3b5b-ad80-4f98-a3ff-08900913b146");

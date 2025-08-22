@@ -25,11 +25,14 @@ class ZipLoginModel : ZipBaseViewModel() {
     fun zipLogin(phone: String, code: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("cxmnmtyyytobile", phone)
-        api.addParam("ctytyxmnctyode", code)
-        api.addParam("jkjjkjkjkd", 999)
+        api.addParam("wayarHannu", phone)
+        api.addParam("lambarco", code)
+        api.addParam("rijistaDaga", 999)
+        api.addParam("IMEI", 999)
+        api.addParam("nauIn", 0)
+        api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)
-        api.addParam("idlad", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).zipLogin(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipLoginResponse>() {

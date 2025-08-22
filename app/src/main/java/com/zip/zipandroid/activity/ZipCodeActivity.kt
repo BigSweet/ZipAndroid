@@ -10,9 +10,11 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import com.blankj.utilcode.util.KeyboardUtils
 import com.zip.zipandroid.R
+import com.zip.zipandroid.ZipMainActivity
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipCodeBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.VerificationAction
 import com.zip.zipandroid.viewmodel.ZipLoginModel
 
@@ -65,6 +67,7 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
 
         override fun onInputCompleted(s: CharSequence) {
             //直接去首页
+            showLoading()
             mViewModel.zipLogin(phone, s.toString())
         }
 
@@ -114,8 +117,16 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
         mViewModel.loginLiveData.observe(this) {
             //登录成功
             //去首页
+            KeyboardUtils.hideSoftInput(mViewBind.zipCodeEdit)
+            dismissLoading()
+            UserInfoUtils.setSignKey(it?.staticKey ?: "")
+            UserInfoUtils.setMid(it?.mid ?: 0)
+            UserInfoUtils.setUserNo(it?.userNo ?: "")
+            startActivity(ZipMainActivity::class.java)
+            finish()
         }
         mViewModel.failLiveData.observe(this) {
+            dismissLoading()
             mViewBind.zipCodeEdit.setUnSelectedBackgroundColor(R.color.cFFECEC)
         }
     }

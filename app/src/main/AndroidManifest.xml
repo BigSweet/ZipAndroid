@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zip.zipandroid"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zip.zipandroid">
 
     <application
         android:name=".ZipApplication"
@@ -10,17 +10,18 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/zip_app_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/net_work_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/zip_app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZipAndroid"
-        android:largeHeap="true"
         android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/net_work_security_config"
-        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
         <activity
             android:name=".ZipMainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
 
         </activity>
 
@@ -37,29 +38,28 @@
         </activity>
 
         <activity
-            android:exported="false"
             android:name=".activity.ZipLoginActivity"
+            android:exported="false"
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:exported="false"
             android:name=".activity.ZipWebActivity"
+            android:exported="false"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:exported="false"
             android:name=".activity.ZipPersonInfoActivity"
+            android:exported="false"
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:exported="false"
             android:name=".activity.ZipPerActivity"
+            android:exported="false"
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:exported="false"
             android:name=".activity.ZipCodeActivity"
+            android:exported="false"
             android:screenOrientation="portrait"></activity>
-
 
 
         <provider

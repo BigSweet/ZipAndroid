@@ -1,20 +1,13 @@
 package com.zip.zipandroid.activity
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import com.bigkoo.pickerview.builder.TimePickerBuilder
-import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.blankj.utilcode.util.ThreadUtils
 import com.tencent.mmkv.MMKV
-import com.zip.zipandroid.R
 import com.zip.zipandroid.ZipMainActivity
-import com.zip.zipandroid.base.UserInfo
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityZipSplashBinding
-import java.util.Calendar
-import java.util.Date
+import com.zip.zipandroid.utils.UserInfoUtils
 
 
 class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSplashBinding>() {
@@ -24,7 +17,7 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
 
     override fun initView(savedInstanceState: Bundle?) {
         ThreadUtils.runOnUiThreadDelayed({
-            if (!UserInfo.getInstance().userId.isNullOrEmpty()) {
+            if (!UserInfoUtils.getSignKey().isNullOrEmpty()) {
                 startActivity(ZipMainActivity::class.java)
             } else {
                 if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
@@ -40,8 +33,6 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
             finish()
         }, time)
     }
-
-
 
 
     override fun createObserver() {

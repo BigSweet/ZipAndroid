@@ -119,7 +119,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         })
 
         mViewBind.zipLoginBtn.setOnDelayClickListener {
-            showPickView("Date of Birth")
+//            showPickView("Date of Birth")
             if (loginSrc1Select == false) {
                 ToastUtils.showShort("Please check the agreement")
                 return@setOnDelayClickListener
@@ -177,7 +177,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     }
 
     private fun getZipCode() {
-        mViewModel.getCode("234"+mViewBind.zipLoginEdit.text.toString())
+        mViewModel.getCode("234" + mViewBind.zipLoginEdit.text.toString())
         KeyboardUtils.hideSoftInput(this)
         showLoading()
     }
@@ -189,6 +189,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
     override fun createObserver() {
         mViewModel.codeLiveData.observe(this) {
+            ZipCodeActivity.start(this, "234" + mViewBind.zipLoginEdit.text.toString(), it?.code
+                ?: "")
             dismissLoading()
         }
 //        ZipCodeActivity.start(this,"2336665656656","5245")

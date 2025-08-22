@@ -60,7 +60,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
     }
 
     fun checkAllPer() {
-
         if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())
