@@ -4,20 +4,13 @@ data class ZipAppConfigBean(
     val APP_CLIENTID_NAME: String,
     val APP_CONTRACT_TEMPLATE: String,
     val APP_CUSTOMER_SERVICE_EMAIL: String,
-    val APP_CUSTOMER_SERVICE_HOTLINE: String,
+    val APP_PRIVACY_AGREEMENT: String,
+    val APP_REGISTER_AGREEMENT: String,
     val APP_CUSTOMER_SERVICE_WHATSAPP: String,
     val APP_CUSTOMER_SERVICE_ZALO: String,
-    val APP_ID_CARD_PHOTO_TYPE: String,
     val APP_LOAN_CONTRACT: String,
-    val APP_MX_DEBITCARDSWITCH: String,
-    val APP_MX_LIVENESS_TYPE: String,
-    val APP_MX_SOCIAL_MS_SWITCH: String,
-    val APP_PROMOTION_DES: String,
     val APP_QA_ADV: String,
-    val APP_REPAYMENT_ACCOUNT_BANK_BRANCH: String,
     val APP_REPAYMENT_AGREEMENT: String,
-    val APP_SHOW_LOAN_VERIFICATION: String,
-    val APP_TUKU_ACT: String
 )
 
 //

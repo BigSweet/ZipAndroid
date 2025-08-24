@@ -1,11 +1,9 @@
 package com.zip.zipandroid.bean
 
 data class ZipHomeDataBean(
-    val clientId: Any,
+    val clientId: String,
     val creditOrderList: CreditOrderList,//最近一笔订单数据
-    val mid: Any,
-    val productDidInfo: ProductDidInfo,//默认的期次数据（主产品406）
-    val productDidInfos: List<ProductDidInfo>,
+    val mid: Long,
     val productList: ProductList
 )
 

@@ -44,7 +44,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         val end = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonWebUrl)
+                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonServiceUrl)
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {
@@ -62,7 +62,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         val end1 = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonWebUrl)
+                ZipWebActivity.start(this@ZipLoginActivity, Constants.commonPrivateUrl)
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {
@@ -188,6 +188,10 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     }
 
     override fun createObserver() {
+        mViewModel.configLiveData.observe(this) {
+            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "www.baidu.com"//注册协议
+            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "www.baidu.com"//隐私协议
+        }
         mViewModel.codeLiveData.observe(this) {
             ZipCodeActivity.start(this, "234" + mViewBind.zipLoginEdit.text.toString(), it?.code
                 ?: "")

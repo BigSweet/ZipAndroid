@@ -3,7 +3,8 @@ package com.zip.zipandroid.utils
 object Constants {
 
 
-    var commonWebUrl = "https://www.baidu.com"
+    var commonPrivateUrl = "https://www.baidu.com"
+    var commonServiceUrl = "https://www.baidu.com"
 
     // Release环境的 Advance sdk密钥
     private const val ACCESS_KEY_RELEASE = "091fa2d9f78efff6"

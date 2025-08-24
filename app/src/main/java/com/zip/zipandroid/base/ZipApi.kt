@@ -1,5 +1,6 @@
 package com.zip.zipandroid.base
 
+import com.zip.zipandroid.bean.ZipAdBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
@@ -22,6 +23,9 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/product/origin")
     fun getHomeData(@Body body: FormReq): Observable<ZipBaseRes<ZipHomeDataBean>>
+
+    @POST("api/v4/ziplead/selectAdvertList")
+    fun selectAdvertList(@Body body: FormReq): Observable<ZipBaseRes<ZipAdBean>>
 
     @POST("api/v4/ziplead/app-configuration")
     fun getConfig(@Body body: FormReq): Observable<ZipBaseRes<ZipAppConfigBean>>

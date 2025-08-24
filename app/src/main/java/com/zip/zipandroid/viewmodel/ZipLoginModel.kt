@@ -1,6 +1,7 @@
 package com.zip.zipandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.BuildConfig
 import com.zip.zipandroid.base.RxSchedulers
@@ -28,7 +29,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("wayarHannu", phone)
         api.addParam("lambarco", code)
         api.addParam("rijistaDaga", 999)
-//        api.addParam("IMEI", 999)
+        api.addParam("IMEI", DeviceUtils.getAndroidID())
         api.addParam("nauIn", 0)
         api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)
