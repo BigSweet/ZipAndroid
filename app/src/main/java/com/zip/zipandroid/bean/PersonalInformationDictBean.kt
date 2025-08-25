@@ -7,6 +7,10 @@ data class PersonalInformationDictBean(
     val income: List<String>,
     val industry: List<String>,
     val industryWorker: List<String>,
+    val language: List<String>,
+    val marry: List<String>,
+    val gender: List<String>,
+    val childrens: List<String>,
     val loanPurpose: List<String>,
     val relation: List<String>,
     val workType: List<String>

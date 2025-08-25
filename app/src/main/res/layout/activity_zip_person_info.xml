@@ -158,8 +158,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/sex_xx">
 
                     <com.zip.zipandroid.shape.ShapeTextView
-                        android:layout_width="0dp"
                         android:id="@+id/info_male_tv"
+                        android:layout_width="0dp"
                         android:layout_height="42dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -173,8 +173,8 @@
                     </com.zip.zipandroid.shape.ShapeTextView>
 
                     <com.zip.zipandroid.shape.ShapeTextView
-                        android:layout_width="0dp"
                         android:id="@+id/info_female_tv"
+                        android:layout_width="0dp"
                         android:layout_height="42dp"
                         android:layout_marginLeft="11dp"
                         android:layout_weight="1"
@@ -268,9 +268,9 @@
                     android:layout_marginTop="15dp"
                     app:infoHintName="Please enter"
                     app:infoTopName="Email"
+                    app:inputInfoType="3"
                     app:layout_constraintTop_toBottomOf="@+id/number_info_view"
                     app:showBottomNumber="false"
-                    app:inputInfoType="3"
                     app:showInfoArrow="false"
                     app:showX="true">
 
@@ -348,7 +348,10 @@
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:sv_tx_background="#FFAAC0FB"
+            app:sv_tx_background="#FF3667F0"
+            app:sv_tx_disable_background="#FFAAC0FB"
+            app:sv_tx_disable_color="@color/white"
+            app:sv_tx_enable="false"
             app:sv_tx_radius="8dp">
 
         </com.zip.zipandroid.shape.ShapeTextView>

@@ -109,6 +109,7 @@ class SetInfoEditView : RelativeLayout {
                             it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
                         }
                         it.clearFocus()
+                        false
                     }
                     if (inputInfoType == TYPE_ADDRESS) {
                         if ((it.text?.length ?: 0) < 2) {
@@ -119,7 +120,9 @@ class SetInfoEditView : RelativeLayout {
                             it.tag = "completed"
                             it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
                         }
+                        false
                     }
+                    it.tag = "completed"
 
                 }
                 false
@@ -167,6 +170,7 @@ class SetInfoEditView : RelativeLayout {
                                 s?.replace(1, 2, "")
                             }
                         } else {
+                            it.tag = "completed"
                             it.setBackgroundColor(
                                 Color.parseColor("#F1F5FF")
                             )
@@ -177,6 +181,7 @@ class SetInfoEditView : RelativeLayout {
 
                     if (inputInfoType == TYPE_EMAIL) {
                         if (EmailValidator.isValid(s.toString())) {
+                            it.tag = "completed"
                             it.setBackgroundColor(
                                 Color.parseColor("#F1F5FF")
                             )
@@ -200,6 +205,7 @@ class SetInfoEditView : RelativeLayout {
                         if (s.toString() != truncated) {
                             s.replace(0, s.length, truncated)
                         }
+                        it.tag = "completed"
                         it.setBackgroundColor(
                             Color.parseColor("#F1F5FF")
                         )
@@ -228,6 +234,7 @@ class SetInfoEditView : RelativeLayout {
                         if (s.toString() != formatted) {
                             s.replace(0, s.length, formatted)
                         }
+                        it.tag = "completed"
                         it.setBackgroundColor(
                             Color.parseColor("#F1F5FF")
                         )
@@ -245,12 +252,24 @@ class SetInfoEditView : RelativeLayout {
         infoEdit?.setText(text)
     }
 
+    fun getEditIsComplete(): Boolean {
+        return infoEdit?.tag == "completed" && !infoEdit?.text.isNullOrEmpty()
+    }
+
     fun showBoard() {
         infoEdit?.let { KeyboardUtils.showSoftInput(it) }
     }
 
     fun appendText(text: String) {
         infoEdit?.append(text)
+    }
+
+    fun getEditTextView(): ShapeEditTextView? {
+        return infoEdit
+    }
+
+    fun isTextNotEmpty(): Boolean {
+        return !infoEdit?.text.isNullOrEmpty()
     }
 
 
