@@ -2,10 +2,15 @@ package com.zip.zipandroid.fragment
 
 import android.os.Bundle
 import com.blankj.utilcode.util.PermissionUtils
+import com.bumptech.glide.Glide
+import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.databinding.FragmentZipOrderListBinding
+import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.AllPerUtils
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 
 class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrderListBinding>() {
@@ -39,6 +44,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
                 })
                 .request()
         }
+        mViewBind.zipHomePrivateSl.setOnDelayClickListener {
+            ZipWebActivity.start(requireActivity(), Constants.commonPrivateUrl)
+        }
         mViewModel.zipHomeData()
         mViewModel.getZipAppConfig()
     }
@@ -62,7 +70,16 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
 
         }
         mViewModel.zipAdLiveData.observe(this) {
-
+            if (it.isNullOrEmpty()) {
+                //只显示下面的
+                mViewBind.noAdShowSl.show()
+                mViewBind.zipHomeZipSl.hide()
+            } else {
+                mViewBind.noAdShowSl.hide()
+                mViewBind.zipHomeZipSl.show()
+                mViewBind.homeFirstAdTv.setText(it.first().advertContent)
+                Glide.with(requireActivity()).load(it.first().imgUrl).into(mViewBind.homeFirstAdIv)
+            }
         }
     }
 
