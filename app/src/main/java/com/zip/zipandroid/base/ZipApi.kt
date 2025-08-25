@@ -9,6 +9,7 @@ import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
+import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.FormReq
 import io.reactivex.Observable
@@ -43,6 +44,16 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/checkBvn")
     fun checkBvnInfo(@Body body: FormReq): Observable<ZipBaseRes<BvnInfoBean>>
+
+
+    @POST("api/v4/ziplead/customer/renewMemInfo")
+    fun saveUserInfo(@Body body: FormReq): Observable<ZipBaseRes<Any>>
+
+    @POST("api/v4/ziplead/customer/realName")
+    fun realName(@Body body: FormReq): Observable<ZipBaseRes<ZipRealNameBean>>
+
+    @POST("api/v4/ziplead/customer/saveMemberBehavior")
+    fun saveMemberBehavior(@Body body: FormReq): Observable<ZipBaseRes<Any>>
 
     @POST("api/v4/ziplead/mxPostalCodeInfoList")
     fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>

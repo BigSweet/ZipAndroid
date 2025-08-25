@@ -5,8 +5,9 @@ import com.tencent.mmkv.MMKV
 object UserInfoUtils {
 
     private var mSignKey: String = ""
-    private  var mMid: Long = 0
+    private var mMid: Long = 0
     private var mUserNo: String = ""
+    private var mUserPhone: String = ""
 
     fun setMid(mid: Long) {
         mMid = mid
@@ -63,11 +64,28 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.remove("zipsignKey")
         MMKV.defaultMMKV()?.remove("zipmid")
         MMKV.defaultMMKV()?.remove("zipuserNo")
+        MMKV.defaultMMKV()?.remove("zipuserNo")
+        MMKV.defaultMMKV()?.remove("zipuserphone")
         mSignKey = ""
         mUserNo = ""
         mMid = 0L
     }
 
+    fun setUserPhone(phone: String) {
+        mUserPhone = phone
+        MMKV.defaultMMKV()?.putString("zipuserphone", phone)
+    }
+
+    fun getUserPhone(): String {
+        if (!mUserPhone.isNullOrEmpty()) {
+            return mUserPhone
+        }
+        val phone = MMKV.defaultMMKV()?.getString("zipuserphone", "") ?: ""
+        if (!phone.isNullOrEmpty()) {
+            mUserPhone = phone
+        }
+        return mUserPhone
+    }
 
 
 }

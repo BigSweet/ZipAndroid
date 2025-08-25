@@ -24,6 +24,7 @@ import com.zip.zipandroid.databinding.ActivityZipLoginBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.NoSpaceInputFilter
+import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.viewmodel.ZipLoginModel
 import java.util.Calendar
@@ -133,6 +134,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
     private fun getZipCode() {
         mViewModel.getCode("234" + mViewBind.zipLoginEdit.text.toString())
+        UserInfoUtils.setUserPhone("234" + mViewBind.zipLoginEdit.text.toString())
         KeyboardUtils.hideSoftInput(this)
         showLoading()
     }

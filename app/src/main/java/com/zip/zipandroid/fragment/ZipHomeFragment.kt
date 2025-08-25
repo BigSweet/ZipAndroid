@@ -1,7 +1,7 @@
 package com.zip.zipandroid.fragment
 
 import android.os.Bundle
-import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipWebActivity
@@ -10,7 +10,6 @@ import com.zip.zipandroid.databinding.FragmentZipOrderListBinding
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
-import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 
@@ -80,6 +79,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
             } else {
                 mViewBind.noAdShowSl.hide()
                 mViewBind.zipHomeZipSl.show()
+                mViewBind.zipHomeZipSl.setOnDelayClickListener {
+                    ToastUtils.showShort("Preparations for the event are underway. Please look forward to it!")
+                }
                 mViewBind.homeFirstAdTv.setText(it.first().advertContent)
                 Glide.with(requireActivity()).load(it.first().imgUrl).into(mViewBind.homeFirstAdIv)
             }

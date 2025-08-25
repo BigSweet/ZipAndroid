@@ -1,6 +1,8 @@
 package com.zip.zipandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.JsonUtils
+import com.google.gson.Gson
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -9,6 +11,8 @@ import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.UploadImgBean
+import com.zip.zipandroid.bean.ZipIndImgBean
+import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.utils.FormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
@@ -22,8 +26,100 @@ class PersonInfoViewModel : ZipBaseViewModel() {
 
 
     var bvnInfoLiveData = MutableLiveData<BvnInfoBean>()
+    var realNameInfoLiveData = MutableLiveData<ZipRealNameBean>()
+    var saveInfoLiveData = MutableLiveData<Any>()
     var uploadImgLiveData = MutableLiveData<String>()
+    var servicePathLiveData = MutableLiveData<String>()
     var allAddressInfo = MutableLiveData<List<AddressInfoBean>>()
+
+    fun saveUserInfo(
+        age: Int, birthDate: Long, birthDateStr: String, education: String, degree: Int, identity: String, identityImg: ZipIndImgBean,
+        mbEmail: String, mbPhone: String, mbStatus: String, nowAddress: String, postalInfo: String, sex: Int, marry: Int, childrens: Int, language: String,
+        custId:Long, firstName: String, midName: String, lastName: String
+    ) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.put("shekarun", age)
+        api.put("idCustomer", custId)
+        api.put("sunanFarko", firstName)
+        api.put("sunanKarshe", lastName)
+        val realName = lastName + " " + midName + " " + firstName
+        api.put("sunanGaskiya", realName)
+        api.put("kwananHaihuwa", birthDate)
+        api.put("kwananHaihuwaSiga", birthDateStr)
+        api.put("ilimi", education)
+        api.put("digiri", degree)
+        api.put("ainihin", identity)
+        val json = Gson().toJson(identityImg)
+//        JsonUtils.formatJson()
+        api.put("hotonAinihin", json)
+        api.put("imelMB", mbEmail)
+        api.put("wayarMB", mbPhone)
+        api.put("matsayinMB", mbStatus)
+        api.put("adireshinYanzu", nowAddress)
+        api.put("bayaninPosta", postalInfo)
+        api.put("jimaI", sex)
+        api.put("aure", marry)
+        api.put("yara", childrens)
+        api.put("imelTabbaci", "1")
+        api.put("yankin", "NG")
+        api.put("harshe", language)
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    saveInfoLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+
+    fun realName(identity: String, birthDate: Long, birthDateStr: String, firstName: String, midName: String, lastName: String, sex: Int) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.put("ainihin", identity)
+        api.put("kwananHaihuwa", birthDate)
+        api.put("kwananHaihuwaSiga", birthDateStr)
+        api.put("sunanFarko", firstName)
+        api.put("sunanTsakiyanext", midName)
+        api.put("sunanKarshe", lastName)
+        val realName = lastName + " " + midName + " " + firstName
+        api.put("sunanGaskiya", realName)
+        api.put("jimaI", sex)
+        treeMap.putAll(api)
+
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).realName(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipRealNameBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipRealNameBean) {
+                    realNameInfoLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
     fun checkBvn(bvn: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -74,6 +170,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
                 }
 
                 override fun onSuccess(result: UploadImgBean) {
+                    servicePathLiveData.postValue(result.serverPath)
                     getImgPath(result.serverPath)
                 }
 

@@ -22,11 +22,15 @@ import com.zip.zipandroid.adapter.ZipPersonInfoEmailAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
+import com.zip.zipandroid.bean.PhotoPathBean
+import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.databinding.ActivityZipPersonInfoBinding
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.SingleCommonSelectPop
+import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
@@ -70,7 +74,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         } else {
             mViewBind.langInfoView.show()
         }
-        mViewBind.bvnInfoView.setContentText("22298656042")
+//        mViewBind.bvnInfoView.setContentText("22298656042")
 //        mViewModel.checkBvn("22298656042")
         mViewBind.eduInfoView.infoViewClick = {
             showSelectPop("Education", dicInfoBean?.degree, SingleCommonSelectPop.edu_type, mViewBind.eduInfoView)
@@ -114,12 +118,17 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         focusChangeCheck(mViewBind.emailInfoView)
         focusChangeCheck(mViewBind.detailAddressInfoView)
 
+        mViewBind.infoNextBtn.setOnDelayClickListener {
+            showLoading()
+            mViewModel.checkBvn(mViewBind.bvnInfoView.getEditText())
+        }
     }
 
     val emailAdapter = ZipPersonInfoEmailAdapter()
 
     var dicInfoBean: PersonalInformationDictBean? = null
     var currentIdeImg = ""
+    var servicePath = ""
 
     sealed class ProcessResult {
         object Success : ProcessResult()
@@ -207,9 +216,41 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 }
             }
         }
+        mViewModel.realNameInfoLiveData.observe(this) {
+            //更新用户信息
+            val imgBean = ZipIndImgBean(PhotoPathBean(currentIdeImg), PhotoPathBean(servicePath))
+            mViewModel.saveUserInfo(age, brithDay, brithDayStr, mViewBind.eduInfoView.getEditText(), degree, mViewBind.bvnInfoView.getEditText(),
+                imgBean, mViewBind.emailInfoView.getEditText(), UserInfoUtils.getUserPhone(), "1", mViewBind.addressInfoView.getEditText(), mViewBind.detailAddressInfoView.getEditText(), sex, marry, childrens, language, it.custId,
+                mViewBind.firstNameInfoView.getEditText(), mViewBind.middleNameInfoView.getEditText(), mViewBind.lastNameInfoView.getEditText())
+        }
+        mViewModel.saveInfoLiveData.observe(this) {
+            //保存进件到第几部了
+            mViewModel.saveMemberBehavior(Constants.TYPE_REAL)
+        }
+        mViewModel.saveMemberInfoLiveData.observe(this) {
+            if (it == Constants.TYPE_REAL) {
+                mViewModel.saveMemberBehavior(Constants.TYPE_ADDRESS)
+            }
+            if (it == Constants.TYPE_ADDRESS) {
+                mViewModel.saveMemberBehavior(Constants.TYPE_REAL)
+            }
+            if (it == Constants.TYPE_REAL) {
+                //下一个界面
+                dismissLoading()
+                ToastUtils.showShort("finish")
+
+            }
+        }
         mViewModel.uploadImgLiveData.observe(this) {
             Log.d("获取bvn图片成功", it)
             currentIdeImg = it
+            //实名
+            mViewModel.realName(mViewBind.bvnInfoView.getEditText(), brithDay, brithDayStr, mViewBind.firstNameInfoView.getEditText(), mViewBind.middleNameInfoView.getEditText(), mViewBind.lastNameInfoView.getEditText(), sex)
+
+        }
+
+        mViewModel.servicePathLiveData.observe(this) {
+            servicePath = it
         }
         mViewModel.personDicLiveData.observe(this) {
             dicInfoBean = it
@@ -223,6 +264,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 //去换成图片地址
                 mViewModel.getPhotoUrlByBase(it.photo)
             }
+        }
+        mViewModel.failLiveData.observe(this) {
+            dismissLoading()
         }
         mViewModel.userInfoLiveData.observe(this) {
             val span = SpannableStringBuilder()
@@ -267,6 +311,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 dicInfoBean?.marry?.get(it.marry - 1)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
                 marry = it.marry
             }
+//            if(it.identity.isNullOrEmpty()){
+//
+//            }
             if (it.childrens > 0) {
                 childrens = it.childrens
                 dicInfoBean?.childrens?.get(it.childrens - 1)?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
@@ -300,7 +347,8 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         // 检查是否已过生日
         if (today.get(Calendar.MONTH) < birthday.get(Calendar.MONTH) ||
             (today.get(Calendar.MONTH) == birthday.get(Calendar.MONTH) &&
-                    today.get(Calendar.DAY_OF_MONTH) < birthday.get(Calendar.DAY_OF_MONTH))) {
+                    today.get(Calendar.DAY_OF_MONTH) < birthday.get(Calendar.DAY_OF_MONTH))
+        ) {
             age--  // 如果今年还没过生日，年龄减1
         }
         return age
@@ -310,7 +358,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     fun showBirthDayPickView(title: String) {
         val start = Calendar.getInstance()
         val end = Calendar.getInstance()
-        start[Calendar.YEAR] = end[Calendar.YEAR] - 50
+        start[Calendar.YEAR] = end[Calendar.YEAR] - 75
         end[Calendar.YEAR] = end[Calendar.YEAR]
         if (show == null) {
             show = Calendar.getInstance()

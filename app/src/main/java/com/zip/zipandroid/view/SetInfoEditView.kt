@@ -66,7 +66,6 @@ class SetInfoEditView : RelativeLayout {
         infoMaxLength = view.findViewById(R.id.set_info_max_length)
 
 
-
         val a = context.obtainStyledAttributes(attrs, R.styleable.setInfoStyle)
 
         var topName = a.getString(R.styleable.setInfoStyle_infoTopName)
@@ -286,6 +285,10 @@ class SetInfoEditView : RelativeLayout {
 
     fun showBoard() {
         infoEdit?.let { KeyboardUtils.showSoftInput(it) }
+    }
+
+    fun getEditText(): String {
+        return infoEdit?.text.toString()
     }
 
     fun appendText(text: String) {

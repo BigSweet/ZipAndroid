@@ -24,9 +24,11 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
             disposables?.clear()
         }
     }
+
     var failLiveData = MutableLiveData<String>()
 
     var configLiveData = MutableLiveData<ZipAppConfigBean?>()
+    var saveMemberInfoLiveData = MutableLiveData<Int>()
     var userInfoLiveData = MutableLiveData<ZipUserInfoBean>()
     var personDicLiveData = MutableLiveData<PersonalInformationDictBean>()
 
@@ -49,12 +51,37 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
                 override fun onFailure(code: Int, message: String?) {
                     super.onFailure(code, message)
-                    failLiveData.postValue(message?:"")
+                    failLiveData.postValue(message ?: "")
                 }
             })
     }
 
-    fun getUserInfo(){
+    fun saveMemberBehavior(type: Int) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.addParam("nauIn", type)
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).saveMemberBehavior(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    saveMemberInfoLiveData.postValue(type)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun getUserInfo() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         treeMap.putAll(api)
@@ -73,12 +100,12 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
                 override fun onFailure(code: Int, message: String?) {
                     super.onFailure(code, message)
-                    failLiveData.postValue(message?:"")
+                    failLiveData.postValue(message ?: "")
                 }
             })
     }
 
-    fun getPersonInfoDic(){
+    fun getPersonInfoDic() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         treeMap.putAll(api)
@@ -89,7 +116,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
             getUserNo(),
             client_id,
             SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
-            )
+        )
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<PersonalInformationDictBean>() {
                 override fun onSubscribe(d: Disposable) {
@@ -103,16 +130,14 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
                 override fun onFailure(code: Int, message: String?) {
                     super.onFailure(code, message)
-                    failLiveData.postValue(message?:"")
+                    failLiveData.postValue(message ?: "")
                 }
             })
     }
 
-    fun updateUserInfo(){
+    fun updateUserInfo() {
 
     }
-
-
 
 
     override fun addReqDisposable(disposable: Disposable) {
