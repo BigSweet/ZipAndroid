@@ -50,6 +50,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
 
 
     override fun createObserver() {
+        mViewModel.homeLiveData.observe(this) {
+            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+        }
         mViewModel.configLiveData.observe(this) {
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {

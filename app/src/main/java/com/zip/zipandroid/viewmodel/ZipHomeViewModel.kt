@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
 class ZipHomeViewModel : ZipBaseViewModel() {
-    var homeLiveData = MutableLiveData<ZipHomeDataBean?>()
+    var homeLiveData = MutableLiveData<ZipHomeDataBean>()
     var zipAdLiveData = MutableLiveData<ZipAdBean?>()
 
 
