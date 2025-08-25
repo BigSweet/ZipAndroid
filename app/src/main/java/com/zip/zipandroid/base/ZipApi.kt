@@ -1,5 +1,6 @@
 package com.zip.zipandroid.base
 
+import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.UploadImgBean
@@ -42,6 +43,9 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/checkBvn")
     fun checkBvnInfo(@Body body: FormReq): Observable<ZipBaseRes<BvnInfoBean>>
+
+    @POST("api/v4/ziplead/mxPostalCodeInfoList")
+    fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
 
     @GET("api/v4/ziplead/dict/getPersonalInformationDict")
     fun getPersonalInformationDict(

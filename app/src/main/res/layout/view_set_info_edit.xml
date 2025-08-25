@@ -19,6 +19,7 @@
         android:textColorHint="#FFD4D4D4"
         app:layout_constraintTop_toTopOf="parent"
         app:setv_background="#FFF7F7F7"
+        android:textColor="@color/black"
         app:setv_radius="13dp">
 
     </com.zip.zipandroid.shape.ShapeEditTextView>
@@ -70,6 +71,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
         app:layout_constraintRight_toRightOf="@+id/set_info_edit" />
 
+
+    <View
+        android:id="@+id/info_view_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </View>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

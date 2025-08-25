@@ -6,16 +6,36 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder
+import com.bigkoo.pickerview.builder.TimePickerBuilder
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener
+import com.bigkoo.pickerview.listener.OnTimeSelectListener
+import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.contrarywind.view.WheelView
+import com.lxj.xpopup.XPopup
+import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipPersonInfoEmailAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
+import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.databinding.ActivityZipPersonInfoBinding
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
+import com.zip.zipandroid.pop.SingleCommonSelectPop
+import com.zip.zipandroid.utils.ZipStringUtils
+import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipPersonInfoBinding>() {
@@ -34,14 +54,13 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Personal Info")
         mViewBind.firstNameInfoView.showBoard()
-        mViewModel.getUserInfo()
-        mViewModel.getPersonInfoDic()
+
         mViewBind.recommendEmailRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
         mViewBind.recommendEmailRv.adapter = emailAdapter
         emailAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as String
-            mViewBind.emailInfoView.appendText(item)
+            mViewBind.emailInfoView.appendText("@" + item)
         }
 
         val systemLocale = Locale.getDefault()
@@ -53,13 +72,141 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         }
         mViewBind.bvnInfoView.setContentText("22298656042")
 //        mViewModel.checkBvn("22298656042")
+        mViewBind.eduInfoView.infoViewClick = {
+            showSelectPop("Education", dicInfoBean?.degree, SingleCommonSelectPop.edu_type, mViewBind.eduInfoView)
+        }
+        mViewBind.maInfoView.infoViewClick = {
+            showSelectPop("Marital Status", dicInfoBean?.marry, SingleCommonSelectPop.ma_type, mViewBind.maInfoView)
+        }
+        mViewBind.numberInfoView.infoViewClick = {
+            showSelectPop("Number of Children", dicInfoBean?.childrens, SingleCommonSelectPop.child_type, mViewBind.numberInfoView)
+        }
+        mViewBind.langInfoView.infoViewClick = {
+            showSelectPop("Languages", dicInfoBean?.language, SingleCommonSelectPop.la_type, mViewBind.langInfoView)
+        }
+        mViewBind.birthdayInfoView.infoViewClick = {
+            //showbrith
+            KeyboardUtils.hideSoftInput(this)
+            showBirthDayPickView("Date of Birth")
+        }
+        mViewBind.addressInfoView.infoViewClick = {
+            if (addressPrepare) {
+                KeyboardUtils.hideSoftInput(this)
+                showAddressPickerView()
+            } else {
+                ToastUtils.showShort("Data preparationp")
+            }
+
+        }
+
+        mViewModel.getUserInfo()
+        mViewModel.getPersonInfoDic()
+        mViewModel.getAllAddressInfo()
+        mViewBind.infoFemaleTv.setOnDelayClickListener {
+            clickFeMale()
+        }
+        mViewBind.infoMaleTv.setOnDelayClickListener {
+            clickMale()
+        }
+        focusChangeCheck(mViewBind.firstNameInfoView)
+        focusChangeCheck(mViewBind.lastNameInfoView)
+        focusChangeCheck(mViewBind.bvnInfoView)
+        focusChangeCheck(mViewBind.emailInfoView)
+        focusChangeCheck(mViewBind.detailAddressInfoView)
+
     }
 
     val emailAdapter = ZipPersonInfoEmailAdapter()
 
     var dicInfoBean: PersonalInformationDictBean? = null
     var currentIdeImg = ""
+
+    sealed class ProcessResult {
+        object Success : ProcessResult()
+        data class Error(val message: String) : ProcessResult()
+    }
+
+    fun processDataAsync(data: List<AddressInfoBean>, callback: (ProcessResult) -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
+            // 标记处理开始
+            val result = withContext(Dispatchers.IO) { // IO 线程处理数据
+                try {
+                    // 模拟耗时操作（如解析、计算、存储等）
+                    processData(data)
+                    ProcessResult.Success
+                } catch (e: Exception) {
+                    ProcessResult.Error(e.message ?: "Unknown error")
+                }
+            }
+            // 回调主线程
+            callback(result)
+        }
+    }
+
+    private fun processData(data: List<AddressInfoBean>) {
+        options1Items.clear()
+        options1Items.addAll(data)
+        data.forEach { mainData ->
+            //遍历省份
+            val cityList = arrayListOf<AddressInfoBean>() //该省的城市列表（第二级）
+            val province_AreaList = arrayListOf<ArrayList<AddressInfoBean>>() //该省的所有地区列表（第三极）
+            mainData.child?.forEach {
+                cityList.add(AddressInfoBean(it.name, null))
+                val city_AreaList = arrayListOf<AddressInfoBean>() //该城市的所有地区列表
+                it.child?.let { it1 -> city_AreaList.addAll(it1) }
+                province_AreaList.add(city_AreaList)
+            }
+            options2Items.add(cityList)
+            options3Items.add(province_AreaList)
+        }
+
+    }
+
+    private fun showAddressPickerView() { // 弹出选择器
+        val pvOptions = OptionsPickerBuilder(this, object : OnOptionsSelectListener {
+            override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
+                val opt1tx = if (options1Items.size > 0) options1Items[options1].pickerViewText else ""
+                val opt2tx: String = if (options2Items.size > 0
+                    && options2Items[options1].isNotEmpty()
+                ) options2Items[options1][options2].name else ""
+                val opt3tx: String = if (options2Items.size > 0 && options3Items[options1].isNotEmpty() && options3Items[options1][options2].isNotEmpty()) options3Items[options1][options2][options3].name else ""
+                val tx = "$opt1tx $opt2tx $opt3tx"
+                mViewBind.addressInfoView.setContentText(tx)
+//                Log.d("选择的区域是", tx)
+            }
+
+        })
+        pvOptions.setTitleText("Home Address")
+        pvOptions.setSubmitColor(Color.WHITE)
+        pvOptions.setDividerColor(Color.TRANSPARENT)
+        pvOptions.setOutSideCancelable(true)
+        pvOptions.setItemVisibleCount(12)
+        pvOptions.setDividerType(WheelView.DividerType.FILL)
+//        pvOptions.setBgColor(Color.parseColor("#FFE8EEFF"))
+        pvOptions.setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+        pvOptions.setContentTextSize(14)
+        val realView = pvOptions.build<AddressInfoBean>()
+
+        /*pvOptions.setPicker(options1Items);//一级选择器
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
+        realView.setPicker(options1Items, options2Items, options3Items) //三级选择器
+        realView.show()
+    }
+
+    private var options1Items = arrayListOf<AddressInfoBean>()
+    private val options2Items = arrayListOf<List<AddressInfoBean>>()
+    private val options3Items = arrayListOf<List<List<AddressInfoBean>>>()
+
+    var addressPrepare = false
     override fun createObserver() {
+        mViewModel.allAddressInfo.observe(this) {
+            processDataAsync(it) { result ->
+                when (result) {
+                    is ProcessResult.Success -> addressPrepare = true
+                    is ProcessResult.Error -> mViewModel.getAllAddressInfo()
+                }
+            }
+        }
         mViewModel.uploadImgLiveData.observe(this) {
             Log.d("获取bvn图片成功", it)
             currentIdeImg = it
@@ -140,20 +287,108 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             }
 
         }
-        mViewBind.infoFemaleTv.setOnDelayClickListener {
-            clickFeMale()
-        }
-        mViewBind.infoMaleTv.setOnDelayClickListener {
-            clickMale()
-        }
-    }
-
-    fun focusChangeCheck(){
 
 
     }
-    fun showSelectPop(){
+
+
+    fun calculateAge(birthday: Calendar): Int {
+        val today = Calendar.getInstance()
+
+        var age = today.get(Calendar.YEAR) - birthday.get(Calendar.YEAR)
+
+        // 检查是否已过生日
+        if (today.get(Calendar.MONTH) < birthday.get(Calendar.MONTH) ||
+            (today.get(Calendar.MONTH) == birthday.get(Calendar.MONTH) &&
+                    today.get(Calendar.DAY_OF_MONTH) < birthday.get(Calendar.DAY_OF_MONTH))) {
+            age--  // 如果今年还没过生日，年龄减1
+        }
+        return age
+    }
+
+    var show: Calendar? = null
+    fun showBirthDayPickView(title: String) {
+        val start = Calendar.getInstance()
+        val end = Calendar.getInstance()
+        start[Calendar.YEAR] = end[Calendar.YEAR] - 50
+        end[Calendar.YEAR] = end[Calendar.YEAR]
+        if (show == null) {
+            show = Calendar.getInstance()
+            show!![Calendar.YEAR] = end[Calendar.YEAR] - 30
+        }
+
+        var pickerView = TimePickerBuilder(getContext(), object : OnTimeSelectListener {
+            override fun onTimeSelect(date: Date?, v: View?) {
+                val result = Calendar.getInstance()
+                result.time = date
+                show = result
+                val calendar = Calendar.getInstance()
+                calendar.time = date
+                age = calculateAge(calendar)
+                val day = calendar[Calendar.DATE]
+                val realDay = ZipStringUtils.addZero(day)
+                val month = ZipStringUtils.addZero(calendar[Calendar.MONTH] + 1)
+                val year = calendar.get(Calendar.YEAR)
+                brithDayStr = "$year-$month-$realDay"
+                brithDay = calendar.time.time
+
+                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + brithDay)
+                mViewBind.birthdayInfoView.setContentText(brithDayStr)
+            }
+
+        })
+            .setType(booleanArrayOf(true, true, true, false, false, false)) // 默认全部显示
+            .setCancelText("Cancel") //取消按钮文字
+            .setSubmitText("Confirm") //确认按钮文字
+            //                .setContentSize(18)//滚轮文字大小
+            .setTitleText(title) //标题文字
+            .setOutSideCancelable(true) //点击屏幕，点在控件外部范围时，是否取消显示
+            .isCyclic(false) //是否循环滚动
+            .setDividerColor(Color.TRANSPARENT)
+            .setTitleColor(getResources().getColor(R.color.black)) //标题文字颜色
+            .setSubmitColor(getResources().getColor(R.color.white)) //确定按钮文字颜色
+            .setCancelColor(getResources().getColor(R.color.cFF3667F0)) //取消按钮文字颜色
+            .setTitleBgColor(Color.WHITE) //标题背景颜色 Night mode
+            .setBgColor(Color.WHITE) //滚轮背景颜色 Night mode
+            .setDate(show) // 如果不设置的话，默认是系统时间*/
+            .setRangDate(start, end) //起始终止年月日设定
+            .setLabel("", "", "", "", "", "") //默认设置为年月日时分秒
+            .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+            .isDialog(false) //是否显示为对话框样式
+            .build()
+        pickerView.show()
+    }
+
+    fun focusChangeCheck(infoView: SetInfoEditView) {
+        infoView.completeListener = {
+            checkAllDone()
+        }
+
+    }
+
+    fun showSelectPop(title: String, data: List<String>?, type: Int, infoView: SetInfoEditView) {
         //选择完成后检测
+        KeyboardUtils.hideSoftInput(this)
+        data ?: return
+        val pop = SingleCommonSelectPop(this, title, data, type)
+        pop.sureClick = object : ((String, Int, Int) -> Unit) {
+            override fun invoke(tv: String, position: Int, type: Int) {
+                if (type == SingleCommonSelectPop.edu_type) {
+                    degree = position
+                }
+                if (type == SingleCommonSelectPop.ma_type) {
+                    marry = position
+                }
+                if (type == SingleCommonSelectPop.child_type) {
+                    childrens = position
+                }
+                infoView.setContentText(tv)
+                checkAllDone()
+
+            }
+
+        }
+        XPopup.Builder(this).asCustom(pop).show()
     }
 
     fun clickFeMale() {
@@ -169,7 +404,6 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     fun checkAllDone() {
 
         val done = mViewBind.firstNameInfoView.getEditIsComplete() &&
-                mViewBind.middleNameInfoView.getEditIsComplete() &&
                 mViewBind.lastNameInfoView.getEditIsComplete() &&
                 sex != -1 &&
                 mViewBind.birthdayInfoView.isTextNotEmpty() &&
@@ -198,6 +432,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     var brithDay = 0L
     var sex = -1
     var degree = 0
+    var age = 0
     var marry = 0
     var childrens = 0
     var language = ""

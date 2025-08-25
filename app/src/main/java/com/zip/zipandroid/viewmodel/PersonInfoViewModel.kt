@@ -6,6 +6,7 @@ import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
+import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.utils.FormReq
@@ -22,6 +23,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
 
     var bvnInfoLiveData = MutableLiveData<BvnInfoBean>()
     var uploadImgLiveData = MutableLiveData<String>()
+    var allAddressInfo = MutableLiveData<List<AddressInfoBean>>()
     fun checkBvn(bvn: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -102,6 +104,31 @@ class PersonInfoViewModel : ZipBaseViewModel() {
                         uploadImgLiveData.postValue(result.get(path).toString())
 
                     }
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun getAllAddressInfo() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.put("CP", "NG")
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getAllAddressInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<List<AddressInfoBean>>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: List<AddressInfoBean>) {
+                    allAddressInfo.postValue(result)
                 }
 
                 override fun onFailure(code: Int, message: String?) {

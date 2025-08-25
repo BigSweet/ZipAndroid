@@ -8,6 +8,7 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -15,10 +16,16 @@ import android.widget.TextView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
+import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.ktx.visiblein
 import com.zip.zipandroid.shape.ShapeEditTextView
 import com.zip.zipandroid.utils.EmailValidator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class SetInfoEditView : RelativeLayout {
@@ -47,20 +54,23 @@ class SetInfoEditView : RelativeLayout {
         const val TYPE_ADDRESS = 4
     }
 
+    var infoViewClick: (() -> Unit)? = null
     fun init(context: Context?, attrs: AttributeSet?) {
         context ?: return
         var view = LayoutInflater.from(context).inflate(R.layout.view_set_info_edit, this, true)
         infoEdit = view.findViewById(R.id.set_info_edit)
+        val infoViewCl = view.findViewById<View>(R.id.info_view_cl)
         infoX = view.findViewById(R.id.set_info_xx)
         infoArrow = view.findViewById(R.id.set_info_arrow)
         infoTopName = view.findViewById(R.id.set_info_top_name)
         infoMaxLength = view.findViewById(R.id.set_info_max_length)
 
 
+
         val a = context.obtainStyledAttributes(attrs, R.styleable.setInfoStyle)
 
         var topName = a.getString(R.styleable.setInfoStyle_infoTopName)
-        var inputInfoType = a.getInt(R.styleable.setInfoStyle_inputInfoType, 1)
+        var inputInfoType = a.getInt(R.styleable.setInfoStyle_inputInfoType, 0)
         infoTopName?.setText(topName)
         var hintName = a.getString(R.styleable.setInfoStyle_infoHintName)
         infoEdit?.setHint(hintName)
@@ -76,14 +86,13 @@ class SetInfoEditView : RelativeLayout {
                 it.isEnabled = false
                 it.isFocusable = false
                 it.isFocusableInTouchMode = false
-                it.isClickable = false
+                it.isClickable = true
                 it.isLongClickable = false
-                it.keyListener = null
                 it.background = null
-                it.setOnTouchListener { _, _ -> true }
-                it.setOnKeyListener { _, _, _ -> true }
             }
-
+            infoViewCl.setOnDelayClickListener {
+                infoViewClick?.invoke()
+            }
         }
         if (inputInfoType == TYPE_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
@@ -123,7 +132,8 @@ class SetInfoEditView : RelativeLayout {
                         false
                     }
                     it.tag = "completed"
-
+                    handleInputComplete()
+                    true
                 }
                 false
             }
@@ -240,6 +250,7 @@ class SetInfoEditView : RelativeLayout {
                         )
                         isFormatting = false
                     }
+                    debounceAndCheckCompletion()
                 }
             })
         }
@@ -247,6 +258,23 @@ class SetInfoEditView : RelativeLayout {
 
         a.recycle()
     }
+
+    var completeListener: (() -> Unit)? = null
+
+    private fun handleInputComplete() {
+        completeListener?.invoke()
+    }
+
+
+    private fun debounceAndCheckCompletion() {
+        debounceJob?.cancel()
+        debounceJob = CoroutineScope(Dispatchers.Main).launch {
+            delay(800)
+            handleInputComplete()
+        }
+    }
+
+    private var debounceJob: Job? = null
 
     fun setContentText(text: String) {
         infoEdit?.setText(text)

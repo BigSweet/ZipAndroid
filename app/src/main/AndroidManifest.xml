@@ -52,6 +52,7 @@
         <activity
             android:name=".activity.ZipPersonInfoActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"></activity>
 
         <activity
