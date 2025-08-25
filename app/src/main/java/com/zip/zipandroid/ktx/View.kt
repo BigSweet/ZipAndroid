@@ -6,6 +6,10 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 /** view 扩展 */
@@ -36,7 +40,8 @@ fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun ViewGroup.inflateLayout(@LayoutRes layoutResId: Int, parent: ViewGroup? = this, attachToRoot: Boolean = false) = LayoutInflater.from(context).inflate(
+fun ViewGroup.inflateLayout(@LayoutRes layoutResId: Int, parent: ViewGroup? = this, attachToRoot: Boolean = false) =
+    LayoutInflater.from(context).inflate(
         layoutResId, parent, attachToRoot)
 
 fun View.takeScreenShot(): Bitmap {
@@ -54,7 +59,7 @@ fun View.takeScreenShot(): Bitmap {
  */
 fun View.takeScreenShotOfJustView(): Bitmap {
     this.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
     this.layout(0, 0, rootView.measuredWidth, rootView.measuredHeight)
     return takeScreenShot()
 }
@@ -71,9 +76,28 @@ fun View.setOnDelayClickListener(delay: Long = 1500, listener: View.OnClickListe
     setOnClickListener(OnDelayClickListener(delay, listener1 = listener))
 }
 
-fun View.setOnDelayClickListener(delay: Long = 1500, listener: (view: View) -> Unit) {
-    setOnClickListener(OnDelayClickListener(delay, listener2 = listener))
+//fun View.setOnDelayClickListener(delay: Long = 1500, listener: (view: View) -> Unit) {
+//    setOnClickListener(OnDelayClickListener(delay, listener2 = listener))
+//}
+fun View.setOnDelayClickListener(
+    delayMillis: Long = 600,
+    onClick: (View) -> Unit,
+) {
+    val scope = MainScope()
+    var isClickable = true
+
+    setOnClickListener { view ->
+        if (isClickable) {
+            isClickable = false
+            onClick(view)
+            scope.launch(Dispatchers.Main) {
+                delay(delayMillis)
+                isClickable = true
+            }
+        }
+    }
 }
+
 
 private class OnDelayClickListener(val delay: Long, val listener1: View.OnClickListener? = null, val listener2: ((view: View) -> Unit)? = null) : View.OnClickListener {
     private var clickTime: Long = 0

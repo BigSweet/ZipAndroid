@@ -18,6 +18,7 @@ import com.zip.zipandroid.R
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.ktx.visiblein
 import com.zip.zipandroid.shape.ShapeEditTextView
+import com.zip.zipandroid.utils.EmailValidator
 import java.util.Locale
 
 class SetInfoEditView : RelativeLayout {
@@ -42,6 +43,8 @@ class SetInfoEditView : RelativeLayout {
     companion object {
         const val TYPE_NAME = 1
         const val TYPE_BVN = 2
+        const val TYPE_EMAIL = 3
+        const val TYPE_ADDRESS = 4
     }
 
     fun init(context: Context?, attrs: AttributeSet?) {
@@ -107,6 +110,16 @@ class SetInfoEditView : RelativeLayout {
                         }
                         it.clearFocus()
                     }
+                    if (inputInfoType == TYPE_ADDRESS) {
+                        if ((it.text?.length ?: 0) < 2) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Minimum input length of two digits")
+                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                    }
 
                 }
                 false
@@ -162,6 +175,36 @@ class SetInfoEditView : RelativeLayout {
 
                     }
 
+                    if (inputInfoType == TYPE_EMAIL) {
+                        if (EmailValidator.isValid(s.toString())) {
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                        } else {
+                            it.setBackgroundColor(
+                                Color.parseColor("#FFF1F1")
+                            )
+                        }
+                    }
+                    if (inputInfoType == TYPE_ADDRESS) {
+                        if (isFormatting || s.isNullOrEmpty()) return
+                        // 1. 移除所有空格 + 过滤非法字符
+                        isFormatting = true
+                        val filtered = s.toString()
+                            .replace("\\s+".toRegex(), "")
+                            .replace(forbiddenRegex, "")
+
+                        // 2. 自动截断超长内容（避免粘贴绕过）
+                        val truncated = if (filtered.length > 100) filtered.substring(0, 100) else filtered
+                        // 4. 回写处理后的文本
+                        if (s.toString() != truncated) {
+                            s.replace(0, s.length, truncated)
+                        }
+                        it.setBackgroundColor(
+                            Color.parseColor("#F1F5FF")
+                        )
+                        isFormatting = false
+                    }
                     if (inputInfoType == TYPE_NAME) {
                         //
                         if (isFormatting || s.isNullOrEmpty()) return
@@ -198,8 +241,16 @@ class SetInfoEditView : RelativeLayout {
         a.recycle()
     }
 
+    fun setContentText(text: String) {
+        infoEdit?.setText(text)
+    }
+
     fun showBoard() {
         infoEdit?.let { KeyboardUtils.showSoftInput(it) }
+    }
+
+    fun appendText(text: String) {
+        infoEdit?.append(text)
     }
 
 

@@ -18,14 +18,15 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
     override fun initView(savedInstanceState: Bundle?) {
         ThreadUtils.runOnUiThreadDelayed({
             if (!UserInfoUtils.getSignKey().isNullOrEmpty()) {
-                startActivity(ZipMainActivity::class.java)
+//                startActivity(ZipMainActivity::class.java)
+                    startActivity(ZipPersonInfoActivity::class.java)
+
             } else {
                 if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
                     //没接受隐私的
                     ZipPerActivity.start(this)
                 } else {
                     startActivity(ZipLoginActivity::class.java)
-//                    startActivity(ZipPersonInfoActivity::class.java)
 
                 }
 
