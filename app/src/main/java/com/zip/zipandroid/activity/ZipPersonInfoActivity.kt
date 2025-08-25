@@ -333,6 +333,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 dicInfoBean?.language?.get(it.language - 1)?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
             }
 
+            if (!it.mbPhone.isNullOrEmpty()) {
+                UserInfoUtils.setUserPhone(it.mbPhone)
+            }
         }
 
 
@@ -429,6 +432,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 }
                 if (type == SingleCommonSelectPop.child_type) {
                     childrens = position
+                }
+                if (type == SingleCommonSelectPop.la_type) {
+                    languageIndex = position
                 }
                 infoView.setContentText(tv)
                 checkAllDone()
