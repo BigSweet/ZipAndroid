@@ -7,7 +7,7 @@ import com.zip.zipandroid.base.pop.ZipBaseBottomPop
 import com.zip.zipandroid.databinding.PopSingleCommonSelectBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 
-class SingleCommonSelectPop(context: Context, val title: String, val data: List<String>?, val type: Int) : ZipBaseBottomPop<PopSingleCommonSelectBinding>(context) {
+class SingleCommonSelectPop(context: Context, val title: String, val data: List<String>?, val type: Int, val selectPosition: Int) : ZipBaseBottomPop<PopSingleCommonSelectBinding>(context) {
 
 
     companion object {
@@ -15,6 +15,8 @@ class SingleCommonSelectPop(context: Context, val title: String, val data: List<
         const val ma_type = 2
         const val child_type = 3
         const val la_type = 4
+        const val occ_type = 5
+        const val emp_status_type = 6
     }
 
     var sureClick: ((String, Int, Int) -> Unit)? = null
@@ -34,6 +36,9 @@ class SingleCommonSelectPop(context: Context, val title: String, val data: List<
         }
         mBinding.singleCommonRv.layoutManager = LinearLayoutManager(context)
         mBinding.singleCommonRv.adapter = selectAdapter
+        if (selectPosition > -1) {
+            selectAdapter.selectPosition = selectPosition
+        }
         selectAdapter.setNewData(data)
         selectAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as String

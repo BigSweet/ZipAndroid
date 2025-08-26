@@ -26,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.util.Locale
 
 class SetInfoEditView : RelativeLayout {
@@ -52,6 +53,8 @@ class SetInfoEditView : RelativeLayout {
         const val TYPE_BVN = 2
         const val TYPE_EMAIL = 3
         const val TYPE_ADDRESS = 4
+        const val TYPE_PAY_DAY = 5
+        const val TYPE_INCOME = 6
     }
 
     var infoViewClick: (() -> Unit)? = null
@@ -95,10 +98,41 @@ class SetInfoEditView : RelativeLayout {
         }
         if (inputInfoType == TYPE_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
+        } else if (inputInfoType == TYPE_INCOME) {
+            // 设置输入类型为数字
+            infoEdit?.inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            // 初始显示 ₦ 符号
+//            infoEdit?.setText("₦")
+//            infoEdit?.setSelection(1) // 光标在 ₦ 后
+
+//             添加 TextWatcher
+//            infoEdit?.addTextChangedListener(CurrencyIncomeTextWatcher(infoEdit!!))
+
+//            // 可选：监听焦点变化，确保始终显示 ₦
+//            editText.setOnFocusChangeListener { _, hasFocus ->
+//                if (hasFocus && editText.text.toString() == "₦") {
+//                    editText.setSelection(1)
+//                }
+//            }
         } else if (inputInfoType == TYPE_BVN) {
             infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
 //            infoEdit?.maxEms = 11
             infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(11))
+        } else if (inputInfoType == TYPE_PAY_DAY) {
+            infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
+            infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(2), InputFilter { source, start, end, dest, dstart, dend ->
+                // 只允许输入数字
+                if (source.toString().matches(Regex("\\d+"))) {
+                    val newText = dest.replaceRange(dstart, dend, source.substring(start, end))
+                    if (newText.isNotEmpty()) {
+                        val value = newText.toString().toInt()
+                        if (value !in 1..31) return@InputFilter "" // 拒绝无效输入
+                    }
+                    null // 接受输入
+                } else {
+                    "" // 拒绝非数字输入
+                }
+            })
         } else {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
         }
@@ -107,6 +141,19 @@ class SetInfoEditView : RelativeLayout {
 
             it.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (inputInfoType == TYPE_PAY_DAY) {
+                        if ((it.text?.length ?: 0) < 1) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Please enter a valid day")
+                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        it.clearFocus()
+                        false
+                    }
+
                     if (inputInfoType == TYPE_NAME) {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
@@ -200,6 +247,9 @@ class SetInfoEditView : RelativeLayout {
                             )
                         }
                     }
+                    if (inputInfoType == TYPE_PAY_DAY) {
+
+                    }
                     if (inputInfoType == TYPE_ADDRESS) {
                         if (isFormatting || s.isNullOrEmpty()) return
                         // 1. 移除所有空格 + 过滤非法字符
@@ -249,6 +299,43 @@ class SetInfoEditView : RelativeLayout {
                         )
                         isFormatting = false
                     }
+                    if (inputInfoType == TYPE_INCOME) {
+                        if (isFormatting) return
+                        isFormatting = true
+
+                        try {
+                            // 1. 移除所有非数字字符（包括可能的逗号和 ₦）
+                            val originalString = s.toString().replace(Regex("[^\\d]"), "")
+
+                            if (originalString.isNotEmpty()) {
+                                // 2. 限制长度 1-10 位
+                                val trimmedString = if (originalString.length > 10) {
+                                    originalString.substring(0, 10)
+                                } else {
+                                    originalString
+                                }
+
+                                // 3. 格式化数字（添加千分位逗号和 ₦）
+                                val number = trimmedString.toLong()
+                                val formatted = "₦${decimalFormat.format(number)}"
+
+                                // 4. 更新 EditText 显示
+                                it.setText(formatted)
+                                it.setSelection(formatted.length) // 光标移到末尾
+                            } else {
+                                // 5. 如果用户删除了所有数字，移除 ₦ 符号
+                                it.setText("")
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        } finally {
+                            it.tag = "completed"
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                            isFormatting = false
+                        }
+                    }
                     debounceAndCheckCompletion()
                 }
             })
@@ -257,6 +344,8 @@ class SetInfoEditView : RelativeLayout {
 
         a.recycle()
     }
+
+    private val decimalFormat = DecimalFormat("#,###")
 
     var completeListener: (() -> Unit)? = null
 
@@ -293,6 +382,19 @@ class SetInfoEditView : RelativeLayout {
 
     fun appendText(text: String) {
         infoEdit?.append(text)
+    }
+
+    fun warSetX(show: Boolean) {
+        infoX?.visiblein = show
+    }
+
+    fun setTagComplete() {
+        infoEdit?.tag = "completed"
+        infoEdit?.background?.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+    }
+
+    fun getRawNumericValue(): String {
+        return infoEdit?.text.toString().replace(Regex("[^\\d]"), "")
     }
 
     fun getEditTextView(): ShapeEditTextView? {

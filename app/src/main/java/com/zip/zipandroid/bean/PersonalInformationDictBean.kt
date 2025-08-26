@@ -6,6 +6,7 @@ data class PersonalInformationDictBean(
     val expectPeriod: List<String>,
     val income: List<String>,
     val industry: List<String>,
+    val employmentStatus: List<String>,
     val industryWorker: List<String>,
     val language: List<String>,
     val marry: List<String>,

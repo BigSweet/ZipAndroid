@@ -103,6 +103,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
     fun showAddressPickerView(selectListener: ((String,String,String) -> Unit)?) { // 弹出选择器
+        KeyboardUtils.hideSoftInput(this)
         val pvOptions = OptionsPickerBuilder(this, object : OnOptionsSelectListener {
             override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
                 val opt1tx = if (options1Items.size > 0) options1Items[options1].pickerViewText else ""
@@ -136,6 +137,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 
 
     fun showBirthDayPickView(title: String, selectListener: ((Calendar) -> Unit)? = null) {
+        KeyboardUtils.hideSoftInput(this)
         val start = Calendar.getInstance()
         val end = Calendar.getInstance()
         start[Calendar.YEAR] = end[Calendar.YEAR] - 75
@@ -183,16 +185,16 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
 
-    fun processDataAsync(data: List<AddressInfoBean>, callback: (ZipPersonInfoActivity.ProcessResult) -> Unit) {
+    fun processDataAsync(data: List<AddressInfoBean>, callback: (ProcessResult) -> Unit) {
         CoroutineScope(Dispatchers.Main).launch {
             // 标记处理开始
             val result = withContext(Dispatchers.IO) { // IO 线程处理数据
                 try {
                     // 模拟耗时操作（如解析、计算、存储等）
                     processData(data)
-                    ZipPersonInfoActivity.ProcessResult.Success
+                    ProcessResult.Success
                 } catch (e: Exception) {
-                    ZipPersonInfoActivity.ProcessResult.Error(e.message ?: "Unknown error")
+                    ProcessResult.Error(e.message ?: "Unknown error")
                 }
             }
             // 回调主线程
@@ -211,11 +213,11 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
 
-    fun showSelectPop(title: String, data: List<String>?, type: Int, infoView: SetInfoEditView,selectListener:((String,Int,Int)->Unit)?=null) {
+    fun showSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int,infoView: SetInfoEditView,selectListener:((String,Int,Int)->Unit)?=null) {
         //选择完成后检测
         KeyboardUtils.hideSoftInput(this)
         data ?: return
-        val pop = SingleCommonSelectPop(this, title, data, type)
+        val pop = SingleCommonSelectPop(this, title, data, type,selectPosition)
         pop.sureClick = object : ((String, Int, Int) -> Unit) {
             override fun invoke(tv: String, position: Int, type: Int) {
                 infoView.setContentText(tv)
@@ -225,6 +227,12 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         }
         XPopup.Builder(this).asCustom(pop).show()
     }
+
+    sealed class ProcessResult {
+        object Success : ProcessResult()
+        data class Error(val message: String) : ProcessResult()
+    }
+
 
 
 }

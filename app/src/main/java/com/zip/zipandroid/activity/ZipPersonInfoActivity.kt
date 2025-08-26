@@ -66,20 +66,20 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 //        mViewBind.bvnInfoView.setContentText("22298656042")
 //        mViewModel.checkBvn("22298656042")
         mViewBind.eduInfoView.infoViewClick = {
-            showSelectPop("Education", dicInfoBean?.degree, SingleCommonSelectPop.edu_type, mViewBind.eduInfoView)
+            showSelectPop("Education", dicInfoBean?.degree, SingleCommonSelectPop.edu_type, degree, mViewBind.eduInfoView)
         }
         mViewBind.maInfoView.infoViewClick = {
-            showSelectPop("Marital Status", dicInfoBean?.marry, SingleCommonSelectPop.ma_type, mViewBind.maInfoView)
+            showSelectPop("Marital Status", dicInfoBean?.marry, SingleCommonSelectPop.ma_type, marry, mViewBind.maInfoView)
         }
         mViewBind.numberInfoView.infoViewClick = {
-            showSelectPop("Number of Children", dicInfoBean?.childrens, SingleCommonSelectPop.child_type, mViewBind.numberInfoView)
+            showSelectPop("Number of Children", dicInfoBean?.childrens, SingleCommonSelectPop.child_type, childrens, mViewBind.numberInfoView)
         }
         mViewBind.langInfoView.infoViewClick = {
-            showSelectPop("Languages", dicInfoBean?.language, SingleCommonSelectPop.la_type, mViewBind.langInfoView)
+            showSelectPop("Languages", dicInfoBean?.language, SingleCommonSelectPop.la_type, languageIndex, mViewBind.langInfoView)
         }
         mViewBind.birthdayInfoView.infoViewClick = {
             //showbrith
-            KeyboardUtils.hideSoftInput(this)
+
             showBirthDayPickView("Date of Birth") {
                 val calendar = it
                 age = calculateAge(calendar)
@@ -92,11 +92,11 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
                 Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + brithDay)
                 mViewBind.birthdayInfoView.setContentText(brithDayStr)
+                mViewBind.birthdayInfoView.setTagComplete()
             }
         }
         mViewBind.addressInfoView.infoViewClick = {
             if (addressPrepare) {
-                KeyboardUtils.hideSoftInput(this)
                 showAddressPickerView(object : ((String, String, String) -> Unit) {
                     override fun invoke(opt1tx: String, opt2tx: String, opt3tx: String) {
                         val tx = "$opt1tx $opt2tx $opt3tx"
@@ -104,6 +104,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                         addressUploadBean.town = opt2tx
                         addressUploadBean.area = opt3tx
                         mViewBind.addressInfoView.setContentText(tx)
+                        mViewBind.addressInfoView.setTagComplete()
                     }
                 })
             } else {
@@ -138,11 +139,6 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     var dicInfoBean: PersonalInformationDictBean? = null
     var currentIdeImg = ""
     var servicePath = ""
-
-    sealed class ProcessResult {
-        object Success : ProcessResult()
-        data class Error(val message: String) : ProcessResult()
-    }
 
 
     var addressPrepare = false
@@ -312,11 +308,11 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
     }
 
-    fun showSelectPop(title: String, data: List<String>?, type: Int, infoView: SetInfoEditView) {
+    fun showSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int, infoView: SetInfoEditView) {
         //选择完成后检测
         KeyboardUtils.hideSoftInput(this)
         data ?: return
-        showSelectPop(title, data, type, infoView, object : ((String, Int, Int) -> Unit) {
+        showSelectPop(title, data, type, selectPosition, infoView, object : ((String, Int, Int) -> Unit) {
             override fun invoke(tv: String, position: Int, type: Int) {
                 if (type == SingleCommonSelectPop.edu_type) {
                     degree = position
@@ -330,6 +326,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 if (type == SingleCommonSelectPop.la_type) {
                     languageIndex = position
                 }
+                infoView.setTagComplete()
                 checkAllDone()
             }
         })

@@ -19,7 +19,7 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
         ThreadUtils.runOnUiThreadDelayed({
             if (!UserInfoUtils.getSignKey().isNullOrEmpty()) {
 //                startActivity(ZipMainActivity::class.java)
-                    startActivity(ZipPersonInfoActivity::class.java)
+                    startActivity(ZipWorkInfoActivity::class.java)
 
             } else {
                 if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
