@@ -115,6 +115,9 @@ public class ZipHttpLoggingInterceptor implements Interceptor {
         // 为了保险起见，这里最大长度设置成 3600
         int segmentSize = 3600;
         long length = text.length();
+        if (length > 30000) {
+            return;
+        }
         if (length <= segmentSize) {
             // 长度小于等于限制直接打印
             printLog(tag, text);

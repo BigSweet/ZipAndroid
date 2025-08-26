@@ -38,9 +38,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipPersonInfoBinding>() {
     companion object {
@@ -232,14 +234,11 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 mViewModel.saveMemberBehavior(Constants.TYPE_ADDRESS)
             }
             if (it == Constants.TYPE_ADDRESS) {
-                mViewModel.saveMemberBehavior(Constants.TYPE_REAL)
-            }
-            if (it == Constants.TYPE_REAL) {
                 //下一个界面
                 dismissLoading()
                 ToastUtils.showShort("finish")
-
             }
+
         }
         mViewModel.uploadImgLiveData.observe(this) {
             Log.d("获取bvn图片成功", it)
@@ -294,43 +293,43 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                     clickFeMale()
                 }
             }
-            if (!it.birthDateStr.isNullOrEmpty()) {
-                brithDayStr = it.birthDateStr
+            if (it.birthDate>0) {
+                brithDayStr = formatTimestamp(it.birthDate)
                 brithDay = it.birthDate
-                mViewBind.birthdayInfoView.setContentText(it.birthDateStr)
+                mViewBind.birthdayInfoView.setContentText(brithDayStr)
             }
             if (!it.identity.isNullOrEmpty()) {
                 mViewBind.bvnInfoView.setContentText(it.identity)
             }
-            if (it.degree > 0) {
+            if (it.degree >= 0) {
                 //学历
-                dicInfoBean?.degree?.get(it.degree - 1)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
+                dicInfoBean?.degree?.get(it.degree)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
                 degree = it.degree
             }
-            if (it.marry > 0) {
-                dicInfoBean?.marry?.get(it.marry - 1)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
+            if (it.marry >= 0) {
+                dicInfoBean?.marry?.get(it.marry)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
                 marry = it.marry
             }
 //            if(it.identity.isNullOrEmpty()){
 //
 //            }
-            if (it.childrens > 0) {
+            if (it.childrens >= 0) {
                 childrens = it.childrens
-                dicInfoBean?.childrens?.get(it.childrens - 1)?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
+                dicInfoBean?.childrens?.get(it.childrens)?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
             }
             if (!it.mbEmail.isNullOrEmpty()) {
                 mbEmail = it.mbEmail
                 mViewBind.emailInfoView.setContentText(it.mbEmail)
             }
-            if (!it.idAddress.isNullOrEmpty()) {
-                mViewBind.addressInfoView.setContentText(it.idAddress)
+            if (!it.postalInfo.isNullOrEmpty()) {
+                mViewBind.addressInfoView.setContentText(it.postalInfo)
             }
             if (!it.nowAddress.isNullOrEmpty()) {
                 mViewBind.detailAddressInfoView.setContentText(it.nowAddress)
             }
-            if (it.language > 0) {
+            if (it.language >= 0) {
                 languageIndex = it.language
-                dicInfoBean?.language?.get(it.language - 1)?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
+                dicInfoBean?.language?.get(it.language)?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
             }
 
             if (!it.mbPhone.isNullOrEmpty()) {
@@ -339,6 +338,15 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         }
 
 
+    }
+
+    fun formatTimestamp(timestamp: Long): String {
+        // 创建 SimpleDateFormat 实例，目标格式为 yyyy-MM-dd
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        // 设置时区（可选，默认是系统时区）
+        sdf.timeZone = TimeZone.getDefault()
+        // 将时间戳转为 Date 对象，再格式化为字符串
+        return sdf.format(Date(timestamp))
     }
 
 
