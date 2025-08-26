@@ -74,6 +74,14 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         //ume
         focusChangeCheck(mViewBind.lengthOfUmView)
         focusChangeCheck(mViewBind.umeIncomeView)
+
+        //school
+        focusChangeCheck(mViewBind.schoolDetailNameInfoView)
+        focusChangeCheck(mViewBind.schoolAddressInfoView)
+        focusChangeCheck(mViewBind.schoolNameInfoView)
+        focusChangeCheck(mViewBind.schoolIncomeInfoView)
+        focusChangeCheck(mViewBind.schoolTimeWorkInfoView)
+
         mViewBind.companyAddressInfoView.infoViewClick = {
             if (addressPrepare) {
                 showAddressPickerView(object : ((String, String, String) -> Unit) {
@@ -113,6 +121,37 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             singleButtonAdapter.notifyDataSetChanged()
             checkDoneByType()
         }
+        mViewBind.schoolAddressInfoView.infoViewClick = {
+            if (addressPrepare) {
+                showAddressPickerView(object : ((String, String, String) -> Unit) {
+                    override fun invoke(opt1tx: String, opt2tx: String, opt3tx: String) {
+                        val tx = "$opt1tx $opt2tx $opt3tx"
+                        addressUploadBean.state = opt1tx
+                        addressUploadBean.town = opt2tx
+                        addressUploadBean.area = opt3tx
+                        mViewBind.schoolAddressInfoView.setContentText(tx)
+                        mViewBind.schoolAddressInfoView.setTagComplete()
+                    }
+                })
+            } else {
+                ToastUtils.showShort("Data preparationp")
+            }
+        }
+        mViewBind.schoolTimeWorkInfoView.infoViewClick = {
+            showBirthDayPickView("The time school begins") {
+                val calendar = it
+                val day = calendar[Calendar.DATE]
+                val realDay = ZipStringUtils.addZero(day)
+                val month = ZipStringUtils.addZero(calendar[Calendar.MONTH] + 1)
+                val year = calendar.get(Calendar.YEAR)
+                val dateStr = "$year-$month-$realDay"
+                val dateTime = calendar.time.time
+                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + dateTime)
+                mViewBind.schoolTimeWorkInfoView.setContentText(dateStr)
+                mViewBind.schoolTimeWorkInfoView.setTagComplete()
+            }
+        }
+
 
         mViewBind.infoNextBtn.setOnDelayClickListener {
             if (currentType == type_company || currentType == type_free) {
@@ -124,7 +163,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 mViewModel.saveWorkUmeInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, ontherIncome, mViewBind.lengthOfUmView.getEditText(), mViewBind.umeIncomeView.getRawNumericValue())
             }
             if (currentType == type_student) {
-                mViewModel.saveStudentInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status,  mViewBind.schoolNameInfoView.getEditText(), addressUploadBean,mViewBind.schoolDetailNameInfoView.getEditText(), mViewBind.schoolIncomeInfoView.getRawNumericValue(), mViewBind.schoolTimeWorkInfoView.getEditText())
+                addressUploadBean.detail = mViewBind.schoolDetailNameInfoView.getEditText()
+                mViewModel.saveStudentInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.schoolNameInfoView.getEditText(), addressUploadBean, mViewBind.schoolDetailNameInfoView.getEditText(), mViewBind.schoolIncomeInfoView.getRawNumericValue(), mViewBind.schoolTimeWorkInfoView.getEditText())
             }
         }
 
@@ -159,7 +199,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
 
-    fun checkStudentDone(){
+    fun checkStudentDone() {
         val done = mViewBind.schoolIncomeInfoView.isTextNotEmpty() &&
                 mViewBind.schoolTimeWorkInfoView.isTextNotEmpty() &&
                 mViewBind.occInfoInfoView.getEditIsComplete() &&
@@ -169,6 +209,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 mViewBind.schoolDetailNameInfoView.getEditIsComplete()
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
+
     fun checkNormalDone() {
         val done = mViewBind.incomeInfoView.isTextNotEmpty() &&
                 mViewBind.timeWorkInfoView.isTextNotEmpty() &&
@@ -203,7 +244,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                     industry = position
                 }
 
-                checkAllDone()
+                checkDoneByType()
             }
         })
     }
@@ -269,7 +310,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.personDicLiveData.observe(this) {
             dicInfoBean = it
             mViewModel.getUserInfo()
-            if(!it.ontherIncome.isNullOrEmpty()){
+            if (!it.ontherIncome.isNullOrEmpty()) {
                 singleButtonAdapter.setNewData(it.ontherIncome)
             }
         }
@@ -310,8 +351,14 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
             if (!it.companyName.isNullOrEmpty()
             ) {
-                mViewBind.companyNameInfoView.setContentText(it.companyName)
-                mViewBind.companyNameInfoView.setTagComplete()
+
+                if (currentType == type_student) {
+                    mViewBind.schoolNameInfoView.setContentText(it.companyName)
+                    mViewBind.schoolNameInfoView.setTagComplete()
+                }else{
+                    mViewBind.companyNameInfoView.setContentText(it.companyName)
+                    mViewBind.companyNameInfoView.setTagComplete()
+                }
             }
 
             if (!it.companyLocation.isNullOrEmpty()) {
@@ -320,28 +367,51 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 val opt2tx = addressUploadBean.town
                 val opt3tx = addressUploadBean.area
                 val tx = "$opt1tx $opt2tx $opt3tx"
-                mViewBind.companyAddressInfoView.setContentText(tx)
-                mViewBind.companyAddressInfoView.setTagComplete()
+
+                if (currentType == type_student) {
+                    mViewBind.schoolAddressInfoView.setContentText(tx)
+                    mViewBind.schoolAddressInfoView.setTagComplete()
+                }else{
+                    mViewBind.companyAddressInfoView.setContentText(tx)
+                    mViewBind.companyAddressInfoView.setTagComplete()
+                }
             }
             if (!it.companyDistrict.isNullOrEmpty()) {
-                mViewBind.detailWorkInfoView.setContentText(it.companyDistrict)
-                mViewBind.detailWorkInfoView.setTagComplete()
+                if (currentType == type_student) {
+                    mViewBind.schoolDetailNameInfoView.setContentText(it.companyDistrict)
+                    mViewBind.schoolDetailNameInfoView.setTagComplete()
+                }else{
+                    mViewBind.detailWorkInfoView.setContentText(it.companyDistrict)
+                    mViewBind.detailWorkInfoView.setTagComplete()
+                }
             }
             if (!it.payDay.isNullOrEmpty()) {
                 mViewBind.payDayView.setContentText(it.payDay)
                 mViewBind.payDayView.setTagComplete()
             }
             if (!it.income.isNullOrEmpty()) {
-                mViewBind.incomeInfoView.setContentText(it.income)
-                mViewBind.incomeInfoView.setTagComplete()
+                if (currentType == type_ume) {
+                    mViewBind.umeIncomeView.setContentText(it.income)
+                    mViewBind.umeIncomeView.setTagComplete()
+                } else if (currentType == type_student) {
+                    mViewBind.schoolIncomeInfoView.setContentText(it.income)
+                    mViewBind.schoolIncomeInfoView.setTagComplete()
+                } else {
+                    mViewBind.incomeInfoView.setContentText(it.income)
+                    mViewBind.incomeInfoView.setTagComplete()
+                }
 
-                mViewBind.umeIncomeView.setContentText(it.income)
-                mViewBind.umeIncomeView.setTagComplete()
             }
             if (it.timeWorkBegins > 0) {
                 val brithDayStr = formatTimestamp(it.timeWorkBegins)
-                mViewBind.timeWorkInfoView.setContentText(brithDayStr)
-                mViewBind.timeWorkInfoView.setTagComplete()
+
+                if (currentType == type_student) {
+                    mViewBind.schoolTimeWorkInfoView.setContentText(brithDayStr)
+                    mViewBind.schoolTimeWorkInfoView.setTagComplete()
+                }else{
+                    mViewBind.timeWorkInfoView.setContentText(brithDayStr)
+                    mViewBind.timeWorkInfoView.setTagComplete()
+                }
             }
 
 
@@ -382,23 +452,6 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         if (currentType == type_student) {
             checkStudentDone()
         }
-    }
-
-
-    fun checkAllDone() {
-//
-//        val done = mViewBind.firstNameInfoView.getEditIsComplete() &&
-//                mViewBind.lastNameInfoView.getEditIsComplete() &&
-//                sex != -1 &&
-//                mViewBind.birthdayInfoView.isTextNotEmpty() &&
-//                mViewBind.bvnInfoView.getEditIsComplete() &&
-//                mViewBind.eduInfoView.isTextNotEmpty() &&
-//                mViewBind.maInfoView.isTextNotEmpty() &&
-//                mViewBind.numberInfoView.isTextNotEmpty() &&
-//                mViewBind.emailInfoView.getEditIsComplete() &&
-//                mViewBind.addressInfoView.isTextNotEmpty() &&
-//                mViewBind.detailAddressInfoView.isTextNotEmpty() && !language.isNullOrEmpty()
-//        mViewBind.infoNextBtn.setEnabledPlus(done)
     }
 
 
