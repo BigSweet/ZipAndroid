@@ -14,6 +14,7 @@ import com.zip.zipandroid.ZipMainActivity
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipCodeBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.VerificationAction
 import com.zip.zipandroid.viewmodel.ZipLoginModel
@@ -123,6 +124,11 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
             UserInfoUtils.setMid(it?.mid ?: 0)
             UserInfoUtils.setUserNo(it?.userNo ?: "")
             startActivity(ZipMainActivity::class.java)
+            if (it.isRegister == 1) {
+                mViewModel.saveMemberBehavior(Constants.TYPE_REGISTER)
+            } else {
+                mViewModel.saveMemberBehavior(Constants.TYPE_LOGIN)
+            }
             finish()
         }
         mViewModel.failLiveData.observe(this) {

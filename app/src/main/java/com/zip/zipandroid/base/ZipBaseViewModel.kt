@@ -67,7 +67,6 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
             .subscribe(object : ZipResponseSubscriber<Any>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
-                    addReqDisposable(d)
                 }
 
                 override fun onSuccess(result: Any) {
