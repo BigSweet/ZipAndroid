@@ -2,7 +2,6 @@ package com.zip.zipandroid.activity
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
+import com.zip.zipandroid.adapter.SingleButtonAdapter
 import com.zip.zipandroid.adapter.ZipPersonInfoEmailAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.AddressUploadBean
@@ -39,6 +39,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         }
     }
 
+    var singleButtonAdapter = SingleButtonAdapter()
     var addressUploadBean = AddressUploadBean("", "", "", "")
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
@@ -56,6 +57,14 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             mViewBind.emailInfoView.appendText("@" + item)
         }
 
+        mViewBind.sexRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        mViewBind.sexRv.adapter = singleButtonAdapter
+        singleButtonAdapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
+            singleButtonAdapter.selectPosition = i
+            sex = i
+            singleButtonAdapter.notifyDataSetChanged()
+            checkAllDone()
+        }
         val systemLocale = Locale.getDefault()
         language = systemLocale.language
         if (!language?.isNullOrEmpty()) {
@@ -116,12 +125,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         mViewModel.getUserInfo()
         mViewModel.getPersonInfoDic()
         mViewModel.getAllAddressInfo()
-        mViewBind.infoFemaleTv.setOnDelayClickListener {
-            clickFeMale()
-        }
-        mViewBind.infoMaleTv.setOnDelayClickListener {
-            clickMale()
-        }
+
         focusChangeCheck(mViewBind.firstNameInfoView)
         focusChangeCheck(mViewBind.lastNameInfoView)
         focusChangeCheck(mViewBind.bvnInfoView)
@@ -191,6 +195,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 //email
                 emailAdapter.setNewData(it.emailSuffix)
             }
+            if (!it.gender.isNullOrEmpty()) {
+                singleButtonAdapter.setNewData(it.gender)
+            }
         }
         mViewModel.bvnInfoLiveData.observe(this) {
             if (!it.photo.isNullOrEmpty()) {
@@ -223,11 +230,8 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             //0和1
             if (!it.sex.isNullOrEmpty()) {
                 //0 女 1 男
-                if (it.sex == "1") {
-                    clickMale()
-                } else if (it.sex == "0") {
-                    clickFeMale()
-                }
+                singleButtonAdapter.selectPosition = it.sex.toInt()
+                singleButtonAdapter.notifyDataSetChanged()
             }
             if (it.birthDate > 0) {
                 brithDayStr = formatTimestamp(it.birthDate)
@@ -237,21 +241,24 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.identity.isNullOrEmpty()) {
                 mViewBind.bvnInfoView.setContentText(it.identity)
             }
-            if ((it.degree ?:-1)>= 0) {
+            if ((it.degree ?: -1) >= 0) {
                 //学历
-                dicInfoBean?.degree?.get(it.degree ?:-1)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
-                degree =it.degree ?:-1
+                dicInfoBean?.degree?.get(it.degree
+                    ?: -1)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
+                degree = it.degree ?: -1
             }
-            if ((it.marry?:-1) >= 0) {
-                dicInfoBean?.marry?.get(it.marry?:-1)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
-                marry = it.marry?:-1
+            if ((it.marry ?: -1) >= 0) {
+                dicInfoBean?.marry?.get(it.marry
+                    ?: -1)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
+                marry = it.marry ?: -1
             }
 //            if(it.identity.isNullOrEmpty()){
 //
 //            }
-            if ((it.childrens?:-1) >= 0) {
-                childrens = (it.childrens?:-1)
-                dicInfoBean?.childrens?.get((it.childrens?:-1))?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
+            if ((it.childrens ?: -1) >= 0) {
+                childrens = (it.childrens ?: -1)
+                dicInfoBean?.childrens?.get((it.childrens
+                    ?: -1))?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
             }
             if (!it.mbEmail.isNullOrEmpty()) {
                 mbEmail = it.mbEmail
@@ -268,9 +275,10 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.nowAddress.isNullOrEmpty()) {
                 mViewBind.detailAddressInfoView.setContentText(it.nowAddress)
             }
-            if ((it.language?:-1) >= 0) {
-                languageIndex = (it.language?:-1)
-                dicInfoBean?.language?.get((it.language?:-1))?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
+            if ((it.language ?: -1) >= 0) {
+                languageIndex = (it.language ?: -1)
+                dicInfoBean?.language?.get((it.language
+                    ?: -1))?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
             }
 
             if (!it.mbPhone.isNullOrEmpty()) {
@@ -332,15 +340,6 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         })
     }
 
-    fun clickFeMale() {
-        checkAllDone()
-        mViewBind.infoFemaleTv.setBackground(Color.parseColor("#F1F5FF"))
-        mViewBind.infoFemaleTv.setTextColor(Color.parseColor("#3667F0"))
-        mViewBind.infoMaleTv.setBackground(Color.parseColor("#F7F7F7"))
-        mViewBind.infoMaleTv.setTextColor(Color.parseColor("#000000"))
-        sex = 0
-
-    }
 
     fun checkAllDone() {
 
@@ -358,14 +357,6 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
 
-    fun clickMale() {
-        checkAllDone()
-        mViewBind.infoMaleTv.setBackground(Color.parseColor("#F1F5FF"))
-        mViewBind.infoMaleTv.setTextColor(Color.parseColor("#3667F0"))
-        mViewBind.infoFemaleTv.setBackground(Color.parseColor("#F7F7F7"))
-        mViewBind.infoFemaleTv.setTextColor(Color.parseColor("#000000"))
-        sex = 1
-    }
 
     var brithDayStr = ""
     var mbEmail = ""

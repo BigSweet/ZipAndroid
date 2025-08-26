@@ -157,36 +157,13 @@
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/sex_xx">
 
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/info_male_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Male"
-                        android:textColor="@color/black"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        app:sv_tx_background="#FFF7F7F7"
-                        app:sv_tx_radius="13dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/sex_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    </com.zip.zipandroid.shape.ShapeTextView>
+                    </androidx.recyclerview.widget.RecyclerView>
 
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/info_female_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="11dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Female"
-                        android:textColor="@color/black"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        app:sv_tx_background="#FFF7F7F7"
-                        app:sv_tx_radius="13dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
                 </LinearLayout>
 
 
