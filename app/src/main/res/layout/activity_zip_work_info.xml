@@ -116,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view">
 
                     <com.zip.zipandroid.view.SetInfoEditView
@@ -140,6 +141,7 @@
                         android:layout_marginTop="15dp"
                         app:infoHintName="Please choose"
                         app:infoTopName="School Address"
+                        app:inputInfoType="4"
                         app:layout_constraintTop_toBottomOf="@+id/school_name_info_view"
                         app:showBottomNumber="false"
                         app:showInfoArrow="true"
@@ -171,7 +173,8 @@
                         app:infoTopName="Monthly Income"
                         app:layout_constraintTop_toBottomOf="@+id/school_detail_name_info_view"
                         app:showBottomNumber="false"
-                        app:showInfoArrow="true"
+                        app:showInfoArrow="false"
+                        app:inputInfoType="6"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -199,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
 
                     <TextView

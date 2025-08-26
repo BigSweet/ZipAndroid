@@ -122,7 +122,9 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
             if (currentType == type_ume) {
                 mViewModel.saveWorkUmeInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, ontherIncome, mViewBind.lengthOfUmView.getEditText(), mViewBind.umeIncomeView.getRawNumericValue())
-
+            }
+            if (currentType == type_student) {
+                mViewModel.saveStudentInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status,  mViewBind.schoolNameInfoView.getEditText(), addressUploadBean,mViewBind.schoolDetailNameInfoView.getEditText(), mViewBind.schoolIncomeInfoView.getRawNumericValue(), mViewBind.schoolTimeWorkInfoView.getEditText())
             }
         }
 
@@ -157,6 +159,16 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
 
+    fun checkStudentDone(){
+        val done = mViewBind.schoolIncomeInfoView.isTextNotEmpty() &&
+                mViewBind.schoolTimeWorkInfoView.isTextNotEmpty() &&
+                mViewBind.occInfoInfoView.getEditIsComplete() &&
+                mViewBind.empStatusInfoView.getEditIsComplete() &&
+                mViewBind.schoolNameInfoView.getEditIsComplete() &&
+                mViewBind.schoolAddressInfoView.isTextNotEmpty() &&
+                mViewBind.schoolDetailNameInfoView.getEditIsComplete()
+        mViewBind.infoNextBtn.setEnabledPlus(done)
+    }
     fun checkNormalDone() {
         val done = mViewBind.incomeInfoView.isTextNotEmpty() &&
                 mViewBind.timeWorkInfoView.isTextNotEmpty() &&
@@ -366,6 +378,9 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
         if (currentType == type_ume) {
             checkUmeDone()
+        }
+        if (currentType == type_student) {
+            checkStudentDone()
         }
     }
 
