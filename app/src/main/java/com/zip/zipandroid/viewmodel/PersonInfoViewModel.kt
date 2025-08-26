@@ -1,7 +1,6 @@
 package com.zip.zipandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.JsonUtils
 import com.google.gson.Gson
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
@@ -9,6 +8,7 @@ import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.AddressInfoBean
+import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipIndImgBean
@@ -34,8 +34,8 @@ class PersonInfoViewModel : ZipBaseViewModel() {
 
     fun saveUserInfo(
         age: Int, birthDate: Long, birthDateStr: String, education: String, degree: Int, identity: String, identityImg: ZipIndImgBean,
-        mbEmail: String, mbPhone: String, mbStatus: String, nowAddress: String, postalInfo: String, sex: Int, marry: Int, childrens: Int, language: String,
-        custId:Long, firstName: String, midName: String, lastName: String
+        mbEmail: String, mbPhone: String, mbStatus: String, nowAddress: String, postalInfo: AddressUploadBean, sex: Int, marry: Int, childrens: Int, language: String,
+        custId: Long, firstName: String, midName: String, lastName: String,
     ) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -51,13 +51,13 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         api.put("digiri", degree)
         api.put("ainihin", identity)
         val json = Gson().toJson(identityImg)
-//        JsonUtils.formatJson()
         api.put("hotonAinihin", json)
         api.put("imelMB", mbEmail)
         api.put("wayarMB", mbPhone)
         api.put("matsayinMB", mbStatus)
-        api.put("adireshinYanzu", postalInfo)
-        api.put("bayaninPosta", nowAddress)
+        val realpostalInfo = Gson().toJson(postalInfo)
+        api.put("adireshinYanzu", nowAddress)//这个是nowAddress
+        api.put("bayaninPosta", realpostalInfo)
         api.put("jimaI", sex)
         api.put("aure", marry)
         api.put("yara", childrens)
