@@ -237,7 +237,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     }
 
     //companyDistrict 公司或者学校
-    fun saveCompanyInfo(industry: Int,industryName:String, employmentStatus: Int, companyName: String, companyLocation: AddressUploadBean, companyDistrict: String, payDay: String, income: String, timeWorkBegins: String) {
+    fun saveCompanyInfo(industry: Int, industryName: String, employmentStatus: Int, companyName: String, companyLocation: AddressUploadBean, companyDistrict: String, payDay: String, income: String, timeWorkBegins: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         api.put("masanaAntu", industry)//职业下标
@@ -250,6 +250,36 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         api.put("kwananBiya", payDay)//发薪日
         api.put("kudinShiga", income)//收入
         api.put("lokacinFarawaAiki", timeWorkBegins)//开始工作时间
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    saveWorkNomralLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun saveWorkUmeInfo(industry: Int, industryName: String, employmentStatus: Int, ontherIncome: Int, lengthOfUmView: String, income: String) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.put("masanaAntu", industry)//职业下标
+        api.put("sunanMasanaAntu", industryName)//职业名称
+        api.put("matsayinAiki", employmentStatus)//就业状态
+        api.put("sauranKudinShiga", ontherIncome)//其他收入
+        api.put("tsawonRashinAiki", lengthOfUmView)//失业时长
+        api.put("kudinShiga", income)//收入
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)

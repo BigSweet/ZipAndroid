@@ -237,21 +237,21 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.identity.isNullOrEmpty()) {
                 mViewBind.bvnInfoView.setContentText(it.identity)
             }
-            if (it.degree >= 0) {
+            if ((it.degree ?:-1)>= 0) {
                 //学历
-                dicInfoBean?.degree?.get(it.degree)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
-                degree = it.degree
+                dicInfoBean?.degree?.get(it.degree ?:-1)?.let { it1 -> mViewBind.eduInfoView.setContentText(it1) }
+                degree =it.degree ?:-1
             }
-            if (it.marry >= 0) {
-                dicInfoBean?.marry?.get(it.marry)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
-                marry = it.marry
+            if ((it.marry?:-1) >= 0) {
+                dicInfoBean?.marry?.get(it.marry?:-1)?.let { it1 -> mViewBind.maInfoView.setContentText(it1) }
+                marry = it.marry?:-1
             }
 //            if(it.identity.isNullOrEmpty()){
 //
 //            }
-            if (it.childrens >= 0) {
-                childrens = it.childrens
-                dicInfoBean?.childrens?.get(it.childrens)?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
+            if ((it.childrens?:-1) >= 0) {
+                childrens = (it.childrens?:-1)
+                dicInfoBean?.childrens?.get((it.childrens?:-1))?.let { it1 -> mViewBind.numberInfoView.setContentText(it1) }
             }
             if (!it.mbEmail.isNullOrEmpty()) {
                 mbEmail = it.mbEmail
@@ -268,9 +268,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.nowAddress.isNullOrEmpty()) {
                 mViewBind.detailAddressInfoView.setContentText(it.nowAddress)
             }
-            if (it.language >= 0) {
-                languageIndex = it.language
-                dicInfoBean?.language?.get(it.language)?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
+            if ((it.language?:-1) >= 0) {
+                languageIndex = (it.language?:-1)
+                dicInfoBean?.language?.get((it.language?:-1))?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
             }
 
             if (!it.mbPhone.isNullOrEmpty()) {

@@ -2,10 +2,12 @@ package com.zip.zipandroid.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
@@ -66,6 +68,10 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         focusChangeCheck(mViewBind.companyAddressInfoView)
         focusChangeCheck(mViewBind.detailWorkInfoView)
         focusChangeCheck(mViewBind.payDayView)
+
+        //ume
+        focusChangeCheck(mViewBind.lengthOfUmView)
+        focusChangeCheck(mViewBind.umeIncomeView)
         mViewBind.companyAddressInfoView.infoViewClick = {
             if (addressPrepare) {
                 showAddressPickerView(object : ((String, String, String) -> Unit) {
@@ -96,6 +102,13 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 mViewBind.timeWorkInfoView.setTagComplete()
             }
         }
+        mViewBind.infoYesTv.setOnDelayClickListener {
+            clickYes()
+        }
+
+        mViewBind.infoNoTv.setOnDelayClickListener {
+            clickNo()
+        }
         mViewBind.infoNextBtn.setOnDelayClickListener {
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
@@ -103,14 +116,34 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 mViewModel.saveCompanyInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.companyNameInfoView.getEditText(), addressUploadBean, mViewBind.detailWorkInfoView.getEditText(), mViewBind.payDayView.getEditText(), mViewBind.incomeInfoView.getRawNumericValue(), mViewBind.timeWorkInfoView.getEditText())
             }
             if (currentType == type_ume) {
+                mViewModel.saveWorkUmeInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, ontherIncome, mViewBind.lengthOfUmView.getEditText(), mViewBind.umeIncomeView.getRawNumericValue())
 
             }
         }
-        mViewModel.saveWorkNomralLiveData.observe(this) {
-            //公司信息
-        }
 
     }
+
+    fun clickNo() {
+        checkDoneByType()
+        mViewBind.infoNoTv.setBackground(Color.parseColor("#F1F5FF"))
+        mViewBind.infoNoTv.setTextColor(Color.parseColor("#3667F0"))
+        mViewBind.infoYesTv.setBackground(Color.parseColor("#F7F7F7"))
+        mViewBind.infoYesTv.setTextColor(Color.parseColor("#000000"))
+        ontherIncome = 1
+
+    }
+
+    fun clickYes() {
+        checkDoneByType()
+        mViewBind.infoYesTv.setBackground(Color.parseColor("#F1F5FF"))
+        mViewBind.infoYesTv.setTextColor(Color.parseColor("#3667F0"))
+        mViewBind.infoNoTv.setBackground(Color.parseColor("#F7F7F7"))
+        mViewBind.infoNoTv.setTextColor(Color.parseColor("#000000"))
+        ontherIncome = 0
+    }
+
+    var ontherIncome = -1
+    var lengthOfUnemployment = ""
 
     var addressUploadBean = AddressUploadBean("", "", "", "")
     var industry = 0//职业下标
@@ -121,6 +154,15 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         val done = mViewBind.incomeInfoView.getEditIsComplete() &&
                 mViewBind.timeWorkInfoView.getEditIsComplete() &&
                 mViewBind.occInfoInfoView.getEditIsComplete() &&
+                mViewBind.empStatusInfoView.getEditIsComplete()
+        mViewBind.infoNextBtn.setEnabledPlus(done)
+    }
+
+    fun checkUmeDone() {
+        val done = mViewBind.umeIncomeView.getEditIsComplete() &&
+                mViewBind.timeWorkInfoView.getEditIsComplete() &&
+                mViewBind.lengthOfUmView.getEditIsComplete() &&
+                ontherIncome != -1 &&
                 mViewBind.empStatusInfoView.getEditIsComplete()
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
@@ -152,47 +194,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
                     emp_status = position
                     //检测显示哪些
-                    if (tv == "Employee (working in a company)" || tv == "Freelancer/Street Vendor" || tv == "Employer (has employees/owns a company)" || tv == "Self-employed Individual (business license)") {
-                        mViewBind.companyCl.show()
-                        mViewBind.studentCl.hide()
-                        mViewBind.umeCl.hide()
-                        if (tv == "Freelancer/Street Vendor") {
-                            currentType = type_free
-                            mViewBind.companyNameInfoView.warSetX(false)
-                            mViewBind.companyAddressInfoView.warSetX(false)
-                            mViewBind.detailWorkInfoView.warSetX(false)
-                            mViewBind.payDayView.warSetX(false)
-                            mViewBind.incomeInfoView.warSetX(true)
-                            mViewBind.timeWorkInfoView.warSetX(true)
-                            // //com必填项变更
-//                            Monthly Income
-//                                    The time work begins
-                        } else {
-                            currentType = type_company
-                            mViewBind.companyNameInfoView.warSetX(true)
-                            mViewBind.companyAddressInfoView.warSetX(true)
-                            mViewBind.detailWorkInfoView.warSetX(true)
-                            mViewBind.payDayView.warSetX(true)
-                            mViewBind.incomeInfoView.warSetX(true)
-                            mViewBind.timeWorkInfoView.warSetX(true)
-                            //com所有必选
+                    checkEmpStatus(position)
 
-//                            Monthly Income
-//                                    The time work begins
-                        }
-                    }
-                    if (tv == "Unemployment") {
-                        currentType = type_ume
-                        mViewBind.companyCl.hide()
-                        mViewBind.studentCl.hide()
-                        mViewBind.umeCl.show()
-                    }
-                    if (tv == "Student") {
-                        currentType = type_student
-                        mViewBind.companyCl.hide()
-                        mViewBind.studentCl.show()
-                        mViewBind.umeCl.hide()
-                    }
                 }
                 if (type == SingleCommonSelectPop.occ_type) {
                     industry = position
@@ -201,6 +204,52 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 checkAllDone()
             }
         })
+    }
+
+    private fun checkEmpStatus(position: Int) {
+        if (position == 4) {
+            currentType = type_ume
+            mViewBind.companyCl.hide()
+            mViewBind.studentCl.hide()
+            mViewBind.umeCl.show()
+        }
+        if (position == 5) {
+            currentType = type_student
+            mViewBind.companyCl.hide()
+            mViewBind.studentCl.show()
+            mViewBind.umeCl.hide()
+        }
+
+        if (position in 0..3) {
+            mViewBind.companyCl.show()
+            mViewBind.studentCl.hide()
+            mViewBind.umeCl.hide()
+            if (position == 3) {
+                currentType = type_free
+                mViewBind.companyNameInfoView.warSetX(false)
+                mViewBind.companyAddressInfoView.warSetX(false)
+                mViewBind.detailWorkInfoView.warSetX(false)
+                mViewBind.payDayView.warSetX(false)
+                mViewBind.incomeInfoView.warSetX(true)
+                mViewBind.timeWorkInfoView.warSetX(true)
+                // //com必填项变更
+                //                            Monthly Income
+                //                                    The time work begins
+            } else {
+                currentType = type_company
+                mViewBind.companyNameInfoView.warSetX(true)
+                mViewBind.companyAddressInfoView.warSetX(true)
+                mViewBind.detailWorkInfoView.warSetX(true)
+                mViewBind.payDayView.warSetX(true)
+                mViewBind.incomeInfoView.warSetX(true)
+                mViewBind.timeWorkInfoView.warSetX(true)
+                //com所有必选
+
+                //                            Monthly Income
+                //                                    The time work begins
+            }
+            checkDoneByType()
+        }
     }
 
 
@@ -241,21 +290,68 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
         mViewModel.userInfoLiveData.observe(this) {
 
-            if (it.industry > -1) {
-                industry = it.industry
+            if ((it.industry ?: -1) > -1) {
+                industry = it.industry ?: -1
                 industryName = it.industryName
                 mViewBind.occInfoInfoView.setContentText(industryName)
+                mViewBind.occInfoInfoView.setTagComplete()
             }
-            if (it.employmentStatus > -1) {
-                emp_status = it.employmentStatus
-                dicInfoBean?.employmentStatus?.get(it.employmentStatus)?.let { it1 -> mViewBind.empStatusInfoView.setContentText(it1) }
-                if (it.employmentStatus in 0..2) {
+            if ((it.employmentStatus ?: -1) > -1) {
+                emp_status = (it.employmentStatus ?: -1)
+                dicInfoBean?.employmentStatus?.get((it.employmentStatus
+                    ?: -1))?.let { it1 -> mViewBind.empStatusInfoView.setContentText(it1) }
+                checkEmpStatus((it.employmentStatus ?: -1))
+                mViewBind.empStatusInfoView.setTagComplete()
+            }
+            if (!it.companyName.isNullOrEmpty()
+            ) {
+                mViewBind.companyNameInfoView.setContentText(it.companyName)
+                mViewBind.companyNameInfoView.setTagComplete()
+            }
 
+            if (!it.companyLocation.isNullOrEmpty()) {
+                addressUploadBean = Gson().fromJson(it.companyLocation, AddressUploadBean::class.java)
+                val opt1tx = addressUploadBean.state
+                val opt2tx = addressUploadBean.town
+                val opt3tx = addressUploadBean.area
+                val tx = "$opt1tx $opt2tx $opt3tx"
+                mViewBind.companyAddressInfoView.setContentText(tx)
+                mViewBind.companyAddressInfoView.setTagComplete()
+            }
+            if (!it.companyDistrict.isNullOrEmpty()) {
+                mViewBind.detailWorkInfoView.setContentText(it.companyDistrict)
+                mViewBind.detailWorkInfoView.setTagComplete()
+            }
+            if (!it.payDay.isNullOrEmpty()) {
+                mViewBind.payDayView.setContentText(it.payDay)
+                mViewBind.payDayView.setTagComplete()
+            }
+            if (!it.income.isNullOrEmpty()) {
+                mViewBind.incomeInfoView.setContentText(it.income)
+                mViewBind.incomeInfoView.setTagComplete()
+
+                mViewBind.umeIncomeView.setContentText(it.income)
+                mViewBind.umeIncomeView.setTagComplete()
+            }
+            if (it.timeWorkBegins > 0) {
+                val brithDayStr = formatTimestamp(it.timeWorkBegins)
+                mViewBind.timeWorkInfoView.setContentText(brithDayStr)
+                mViewBind.timeWorkInfoView.setTagComplete()
+            }
+
+
+            //ume
+            if (!it.lengthOfUnemployment.isNullOrEmpty()) {
+                lengthOfUnemployment = it.lengthOfUnemployment
+                mViewBind.lengthOfUmView.setContentText(it.lengthOfUnemployment)
+            }
+            if ((it.ontherIncome ?: -1) > -1) {
+                ontherIncome = it.ontherIncome ?: -1
+                if (it.ontherIncome == 0) {
+                    clickYes()
+                } else {
+                    clickNo()
                 }
-                if(it.employmentStatus==3){
-
-                }
-
             }
 
         }
@@ -266,14 +362,21 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     fun focusChangeCheck(infoView: SetInfoEditView) {
         infoView.completeListener = {
-            if (currentType == type_company) {
-                checkNormalDone()
-            }
-            if (currentType == type_free) {
-                checkFreeDone()
-            }
+            checkDoneByType()
         }
 
+    }
+
+    private fun checkDoneByType() {
+        if (currentType == type_company) {
+            checkNormalDone()
+        }
+        if (currentType == type_free) {
+            checkFreeDone()
+        }
+        if (currentType == type_ume) {
+            checkUmeDone()
+        }
     }
 
 

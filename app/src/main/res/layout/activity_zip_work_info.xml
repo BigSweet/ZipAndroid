@@ -198,7 +198,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view">
+                    app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
+                    tools:visibility="visible">
 
 
                     <TextView
@@ -275,7 +276,8 @@
                         app:infoTopName="Length of unemployment"
                         app:layout_constraintTop_toBottomOf="@+id/add_icome_ll"
                         app:showBottomNumber="false"
-                        app:showInfoArrow="true"
+                        app:showInfoArrow="false"
+                        app:inputInfoType="7"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -290,7 +292,8 @@
                         app:infoTopName="Monthly Income"
                         app:layout_constraintTop_toBottomOf="@+id/length_of_um_view"
                         app:showBottomNumber="false"
-                        app:showInfoArrow="true"
+                        app:showInfoArrow="false"
+                        app:inputInfoType="6"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -304,7 +307,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
 
                     <com.zip.zipandroid.view.SetInfoEditView

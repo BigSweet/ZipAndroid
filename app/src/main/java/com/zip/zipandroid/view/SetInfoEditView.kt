@@ -55,6 +55,7 @@ class SetInfoEditView : RelativeLayout {
         const val TYPE_ADDRESS = 4
         const val TYPE_PAY_DAY = 5
         const val TYPE_INCOME = 6
+        const val TYPE_UME_LENGTH = 7
     }
 
     var infoViewClick: (() -> Unit)? = null
@@ -98,6 +99,9 @@ class SetInfoEditView : RelativeLayout {
         }
         if (inputInfoType == TYPE_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
+        } else if (inputInfoType == TYPE_UME_LENGTH) {
+            infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
+            infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(5))
         } else if (inputInfoType == TYPE_INCOME) {
             // 设置输入类型为数字
             infoEdit?.inputType = android.text.InputType.TYPE_CLASS_NUMBER
@@ -208,6 +212,33 @@ class SetInfoEditView : RelativeLayout {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
+                    if (inputInfoType == TYPE_UME_LENGTH) {
+                        val input = s?.toString() ?: ""
+
+                        if (input.any { !it.isDigit() }) {
+                            val filtered = input.filter { it.isDigit() }.take(5) // 只保留数字，最多5位
+                            it.removeTextChangedListener(this)
+                            it.setText(filtered)
+                            it.setSelection(filtered.length)
+                            it.addTextChangedListener(this)
+                            it.tag = "completed"
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                            return
+                        }
+
+                        if (input.isEmpty()) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Minimum input length of one digits")
+                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                        }
+                    }
                     if (inputInfoType == TYPE_BVN) {
                         if (s.toString().length == 1) {
                             if (!s.toString().startsWith("2")) {
@@ -248,7 +279,10 @@ class SetInfoEditView : RelativeLayout {
                         }
                     }
                     if (inputInfoType == TYPE_PAY_DAY) {
-
+                        it.tag = "completed"
+                        it.setBackgroundColor(
+                            Color.parseColor("#F1F5FF")
+                        )
                     }
                     if (inputInfoType == TYPE_ADDRESS) {
                         if (isFormatting || s.isNullOrEmpty()) return
