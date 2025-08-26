@@ -2,12 +2,14 @@ package com.zip.zipandroid.activity
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
+import com.zip.zipandroid.adapter.SingleButtonAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
@@ -102,13 +104,16 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 mViewBind.timeWorkInfoView.setTagComplete()
             }
         }
-        mViewBind.infoYesTv.setOnDelayClickListener {
-            clickYes()
+
+        mViewBind.umeRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        mViewBind.umeRv.adapter = singleButtonAdapter
+        singleButtonAdapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
+            singleButtonAdapter.selectPosition = i
+            ontherIncome = i
+            singleButtonAdapter.notifyDataSetChanged()
+            checkDoneByType()
         }
 
-        mViewBind.infoNoTv.setOnDelayClickListener {
-            clickNo()
-        }
         mViewBind.infoNextBtn.setOnDelayClickListener {
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
@@ -123,24 +128,9 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     }
 
-    fun clickNo() {
-        checkDoneByType()
-        mViewBind.infoNoTv.setBackground(Color.parseColor("#F1F5FF"))
-        mViewBind.infoNoTv.setTextColor(Color.parseColor("#3667F0"))
-        mViewBind.infoYesTv.setBackground(Color.parseColor("#F7F7F7"))
-        mViewBind.infoYesTv.setTextColor(Color.parseColor("#000000"))
-        ontherIncome = 1
 
-    }
+    var singleButtonAdapter = SingleButtonAdapter()
 
-    fun clickYes() {
-        checkDoneByType()
-        mViewBind.infoYesTv.setBackground(Color.parseColor("#F1F5FF"))
-        mViewBind.infoYesTv.setTextColor(Color.parseColor("#3667F0"))
-        mViewBind.infoNoTv.setBackground(Color.parseColor("#F7F7F7"))
-        mViewBind.infoNoTv.setTextColor(Color.parseColor("#000000"))
-        ontherIncome = 0
-    }
 
     var ontherIncome = -1
     var lengthOfUnemployment = ""
@@ -267,6 +257,9 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.personDicLiveData.observe(this) {
             dicInfoBean = it
             mViewModel.getUserInfo()
+            if(!it.ontherIncome.isNullOrEmpty()){
+                singleButtonAdapter.setNewData(it.ontherIncome)
+            }
         }
 
         mViewModel.saveWorkNomralLiveData.observe(this) {
@@ -347,11 +340,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
             if ((it.ontherIncome ?: -1) > -1) {
                 ontherIncome = it.ontherIncome ?: -1
-                if (it.ontherIncome == 0) {
-                    clickYes()
-                } else {
-                    clickNo()
-                }
+                singleButtonAdapter.selectPosition = it.ontherIncome ?: -1
+                singleButtonAdapter.notifyDataSetChanged()
             }
 
         }

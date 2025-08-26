@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="11dp">
+
+    <com.zip.zipandroid.shape.ShapeTextView
+        android:id="@+id/item_single_button_tv"
+        android:layout_width="159dp"
+        android:layout_height="42dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_tx_background="#FFF7F7F7"
+        app:sv_tx_radius="13dp"
+        tools:text="Yes">
+
+    </com.zip.zipandroid.shape.ShapeTextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

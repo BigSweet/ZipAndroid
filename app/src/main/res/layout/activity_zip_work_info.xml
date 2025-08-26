@@ -234,36 +234,13 @@
                         android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@+id/add_place_xx">
 
-                        <com.zip.zipandroid.shape.ShapeTextView
-                            android:id="@+id/info_yes_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Yes"
-                            android:textColor="@color/black"
-                            android:textSize="17dp"
-                            android:textStyle="bold"
-                            app:sv_tx_background="#FFF7F7F7"
-                            app:sv_tx_radius="13dp">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:id="@+id/ume_rv"
+                            android:layout_height="wrap_content">
 
-                        </com.zip.zipandroid.shape.ShapeTextView>
+                        </androidx.recyclerview.widget.RecyclerView>
 
-                        <com.zip.zipandroid.shape.ShapeTextView
-                            android:id="@+id/info_no_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_marginLeft="11dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="NO"
-                            android:textColor="@color/black"
-                            android:textSize="17dp"
-                            android:textStyle="bold"
-                            app:sv_tx_background="#FFF7F7F7"
-                            app:sv_tx_radius="13dp">
-
-                        </com.zip.zipandroid.shape.ShapeTextView>
                     </LinearLayout>
 
 
