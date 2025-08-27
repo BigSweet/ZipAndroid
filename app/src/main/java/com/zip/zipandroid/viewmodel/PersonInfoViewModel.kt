@@ -353,7 +353,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
                 }
 
                 override fun onSuccess(result: Any) {
-                    saveWorkNomralLiveData.postValue(result)
+                    saveInfoLiveData.postValue(result)
                 }
 
                 override fun onFailure(code: Int, message: String?) {

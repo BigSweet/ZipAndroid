@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.reflect.TypeToken
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipContractAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
+import com.zip.zipandroid.bean.OriginUploadContractBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipContractBean
@@ -57,9 +60,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.contractRv.layoutManager = LinearLayoutManager(this)
 //        mViewBind.contractRv.adapter = adapter
         adapter.bindToRecyclerView(mViewBind.contractRv)
-        initList.add(ZipContractBean(1, "Family member", true))
-        initList.add(ZipContractBean(2, "Colleague/Friend", true))
-        adapter.setNewData(initList)
+
         adapter.popClick = {
             val setInfoView = adapter.getViewByPosition(it, (R.id.item_contract_relation_tv)) as SetInfoEditView?
             if (setInfoView != null) {
@@ -197,6 +198,44 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     override fun createObserver() {
         mViewModel.personDicLiveData.observe(this) {
             dicInfoBean = it
+        }
+        mViewModel.userInfoLiveData.observe(this) {
+            if (!it.emergencyContactPerson.isNullOrEmpty()) {
+                initList.clear()
+                val list = GsonUtils.fromJson<List<OriginUploadContractBean>>(it.emergencyContactPerson, object : TypeToken<List<OriginUploadContractBean>>() {}.type)
+                if (!list.isNullOrEmpty()) {
+                    list.forEachIndexed { index, originUploadContractBean ->
+                        if (index == 0) {
+                            val firstBean = ZipContractBean(1, "Family member", true)
+                            firstBean.contactPhone = originUploadContractBean.contactPhone
+                            firstBean.contactName = originUploadContractBean.contactName
+                            firstBean.relation = originUploadContractBean.relation
+                            firstBean.relationValue = originUploadContractBean.relationValue
+                            initList.add(firstBean)
+                        } else if (index == 1) {
+                            val firstBean = ZipContractBean(2, "Colleague/Friend", true)
+                            firstBean.contactPhone = originUploadContractBean.contactPhone
+                            firstBean.contactName = originUploadContractBean.contactName
+                            firstBean.relation = originUploadContractBean.relation
+                            firstBean.relationValue = originUploadContractBean.relationValue
+                            initList.add(firstBean)
+                        } else {
+                            val otherContract = ZipContractBean(idx++, "Colleague/Friend", false)
+                            otherContract.contactPhone = originUploadContractBean.contactPhone
+                            otherContract.contactName = originUploadContractBean.contactName
+                            otherContract.relation = originUploadContractBean.relation
+                            otherContract.relationValue = originUploadContractBean.relationValue
+                            initList.add(otherContract)
+                        }
+
+                    }
+                    adapter.setNewData(initList)
+                }
+            } else {
+                initList.add(ZipContractBean(1, "Family member", true))
+                initList.add(ZipContractBean(2, "Colleague/Friend", true))
+                adapter.setNewData(initList)
+            }
         }
     }
 
