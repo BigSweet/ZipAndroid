@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="69dp">
 
@@ -10,19 +11,34 @@
         android:layout_height="69dp"
         android:layout_marginHorizontal="15dp"
         android:background="@null"
-        android:imeOptions="actionNext"
-        android:singleLine="true"
         android:gravity="bottom"
         android:hint="Please choose"
+        android:imeOptions="actionNext"
         android:paddingLeft="15dp"
         android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
         android:textColorHint="#FFD4D4D4"
         app:layout_constraintTop_toTopOf="parent"
         app:setv_background="#FFF7F7F7"
-        android:textColor="@color/black"
         app:setv_radius="13dp">
 
     </com.zip.zipandroid.shape.ShapeEditTextView>
+
+    <TextView
+        android:id="@+id/set_info_left_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="+234"
+        android:textColor="#ff000000"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
+        app:layout_constraintLeft_toLeftOf="@+id/set_info_edit"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/set_info_xx"
@@ -37,10 +53,10 @@
         app:layout_constraintTop_toTopOf="@+id/set_info_edit" />
 
     <ImageView
+        android:id="@+id/set_info_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:id="@+id/set_info_arrow"
         android:layout_marginBottom="13dp"
         android:src="@drawable/zip_select_arrow_icon"
         app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
@@ -49,10 +65,10 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/set_info_top_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Marital Status"
-        android:id="@+id/set_info_top_name"
         android:textColor="@color/black"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/set_info_xx"

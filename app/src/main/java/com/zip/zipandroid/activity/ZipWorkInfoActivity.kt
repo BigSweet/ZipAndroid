@@ -48,7 +48,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
         }
-        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Personal Info")
+        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Work Info")
 
         mViewModel.getPersonInfoDic()
         mViewModel.getAllAddressInfo()

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
@@ -47,6 +48,7 @@ class SetInfoEditView : RelativeLayout {
     private var infoX: TextView? = null
     private var infoTopName: TextView? = null
     private var infoMaxLength: TextView? = null
+    private var set_info_left_number: TextView? = null
 
     companion object {
         const val TYPE_NAME = 1
@@ -56,6 +58,7 @@ class SetInfoEditView : RelativeLayout {
         const val TYPE_PAY_DAY = 5
         const val TYPE_INCOME = 6
         const val TYPE_UME_LENGTH = 7
+        const val TYPE_PHONE = 8
     }
 
     var infoViewClick: (() -> Unit)? = null
@@ -68,6 +71,7 @@ class SetInfoEditView : RelativeLayout {
         infoArrow = view.findViewById(R.id.set_info_arrow)
         infoTopName = view.findViewById(R.id.set_info_top_name)
         infoMaxLength = view.findViewById(R.id.set_info_max_length)
+        set_info_left_number = view.findViewById(R.id.set_info_left_number)
 
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.setInfoStyle)
@@ -82,8 +86,15 @@ class SetInfoEditView : RelativeLayout {
         var showX = a.getBoolean(R.styleable.setInfoStyle_showX, false)
         infoX?.visiblein = showX
         var showNumber = a.getBoolean(R.styleable.setInfoStyle_showBottomNumber, false)
+        var showLeftNumber = a.getBoolean(R.styleable.setInfoStyle_showLeftNumber, false)
         infoMaxLength?.visible = showNumber
+        set_info_left_number?.visible = showLeftNumber
 
+        if (showLeftNumber) {
+            infoEdit?.setPadding(ConvertUtils.dp2px(65f), 0, 0, ConvertUtils.dp2px(10f))
+        } else {
+            infoEdit?.setPadding(ConvertUtils.dp2px(15f), 0, 0, ConvertUtils.dp2px(10f))
+        }
         if (showArrow) {
             infoEdit?.let {
                 it.isEnabled = false
@@ -102,6 +113,9 @@ class SetInfoEditView : RelativeLayout {
         } else if (inputInfoType == TYPE_UME_LENGTH) {
             infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
             infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(5))
+        } else if (inputInfoType == TYPE_PHONE) {
+            infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
+            infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(11))
         } else if (inputInfoType == TYPE_INCOME) {
             // 设置输入类型为数字
             infoEdit?.inputType = android.text.InputType.TYPE_CLASS_NUMBER
@@ -162,6 +176,18 @@ class SetInfoEditView : RelativeLayout {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
                             ToastUtils.showShort("Please enter a valid name")
+                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        it.clearFocus()
+                        false
+                    }
+                    if (inputInfoType == TYPE_PHONE) {
+                        if ((it.text?.length ?: 0) !in 10..11) {
+                            ToastUtils.showShort("Please enter 10 or 11 digits")
+                            it.tag = "error"
                             it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -333,6 +359,25 @@ class SetInfoEditView : RelativeLayout {
                         )
                         isFormatting = false
                     }
+                    if (inputInfoType == TYPE_PHONE) {
+                        val input = s?.toString() ?: ""
+
+                        // 实时显示错误提示（校验通过时清除错误）
+                        it.error = when {
+                            !input.matches(Regex("\\d+")) -> "Only numbers can be entered"
+                            else -> validatePhoneFormat(input) // 具体格式校验
+                        }
+                        if (!it.error.isNullOrEmpty()) {
+                            ToastUtils.showShort(it.error)
+                            it.background.setTint(Color.parseColor("#FFF1F1"))
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                        }
+
+                    }
                     if (inputInfoType == TYPE_INCOME) {
                         if (isFormatting) return
                         isFormatting = true
@@ -377,6 +422,28 @@ class SetInfoEditView : RelativeLayout {
 
 
         a.recycle()
+    }
+
+    private fun validatePhoneFormat(number: String): String? {
+        return when (number.length) {
+            10 -> {
+                when {
+                    number[0] == '0' -> "The first digit cannot be 0"
+                    number.toSet().size == 1 -> "Cannot all be the same number" // 如1111111111
+                    else -> null // 校验通过
+                }
+            }
+
+            11 -> {
+                when {
+                    number[0] != '0' -> "The first digit must be 0"
+                    number[1] == '0' -> "The second digit cannot be 0"
+                    else -> null // 校验通过
+                }
+            }
+
+            else -> null
+        }
     }
 
     private val decimalFormat = DecimalFormat("#,###")

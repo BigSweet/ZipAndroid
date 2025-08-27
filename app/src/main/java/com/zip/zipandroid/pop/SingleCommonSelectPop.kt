@@ -17,6 +17,7 @@ class SingleCommonSelectPop(context: Context, val title: String, val data: List<
         const val la_type = 4
         const val occ_type = 5
         const val emp_status_type = 6
+        const val relation_type = 7
     }
 
     var sureClick: ((String, Int, Int) -> Unit)? = null
