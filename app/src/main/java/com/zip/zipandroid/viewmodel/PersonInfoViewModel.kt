@@ -10,6 +10,7 @@ import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.BvnInfoBean
+import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipRealNameBean
@@ -29,7 +30,6 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     var realNameInfoLiveData = MutableLiveData<ZipRealNameBean>()
     var saveInfoLiveData = MutableLiveData<Any>()
     var saveWorkNomralLiveData = MutableLiveData<Any>()
-    var saveStudentlLiveData = MutableLiveData<Any>()
     var uploadImgLiveData = MutableLiveData<String>()
     var servicePathLiveData = MutableLiveData<String>()
     var allAddressInfo = MutableLiveData<List<AddressInfoBean>>()
@@ -273,7 +273,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     }
 
     //companyDistrict 公司或者学校
-    fun saveStudentInfo(industry: Int, industryName: String, employmentStatus: Int, schoolName: String, schoolAddress: AddressUploadBean, companyDistrict: String,income:String, timeWorkBegins: String) {
+    fun saveStudentInfo(industry: Int, industryName: String, employmentStatus: Int, schoolName: String, schoolAddress: AddressUploadBean, companyDistrict: String, income: String, timeWorkBegins: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         api.put("masanaAntu", industry)//职业下标
@@ -316,6 +316,33 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         api.put("tsawonRashinAiki", lengthOfUmView)//失业时长
         api.put("kudinShiga", income)//收入
         treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    saveWorkNomralLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun saveContractInfo(list: ArrayList<UploadContractBean>) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        val contractJson = Gson().toJson(list)
+        api.put("mutuminGaggawa", contractJson)
+        treeMap.putAll(api)
+        api.put("lambobinGaggawa", list)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
             .compose(RxSchedulers.io_main())

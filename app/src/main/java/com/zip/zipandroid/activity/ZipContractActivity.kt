@@ -12,10 +12,12 @@ import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipContractAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.PersonalInformationDictBean
+import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipContractBean
 import com.zip.zipandroid.databinding.ActivityZipContractBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.SingleCommonSelectPop
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 
@@ -43,6 +45,8 @@ import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 //relationValue
 
 class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipContractBinding>() {
+
+
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
@@ -87,6 +91,36 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.getPersonInfoDic()
         mViewModel.getUserInfo()
 
+        mViewBind.infoNextBtn.setOnDelayClickListener {
+            showLoading()
+            val list = convertData()
+            mViewModel.saveContractInfo(list)
+        }
+        mViewModel.saveInfoLiveData.observe(this) {
+            //保存进件到第几部了
+            mViewModel.saveMemberBehavior(Constants.TYPE_CONS)
+        }
+        mViewModel.saveMemberInfoLiveData.observe(this) {
+            if (it == Constants.TYPE_CONS) {
+                dismissLoading()
+                ToastUtils.showShort("finish3")
+            }
+        }
+    }
+
+    private fun convertData(): ArrayList<UploadContractBean> {
+        val list = arrayListOf<UploadContractBean>()
+        adapter.data.forEachIndexed { index, zipContractBean ->
+            if ((zipContractBean.relation ?: -1) > -1) {
+                val nameValue = adapter.getViewByPosition(index, R.id.item_contract_name_tv) as SetInfoEditView
+                val numberValue = adapter.getViewByPosition(index, R.id.item_contract_number_tv) as SetInfoEditView
+                val relationValue = adapter.getViewByPosition(index, R.id.item_contract_relation_tv) as SetInfoEditView
+                val bean = UploadContractBean(nameValue.getEditText(), numberValue.getRealPhone(), zipContractBean.relation
+                    ?: -1, relationValue.getEditText())
+                list.add(bean)
+            }
+        }
+        return list
 
     }
 

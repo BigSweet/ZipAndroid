@@ -190,8 +190,16 @@ class SetInfoEditView : RelativeLayout {
                             it.tag = "error"
                             it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
-                            it.tag = "completed"
-                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                            if ((it.text?.length ?: 0) == 10 && (it.text?.get(0) ?: "") == "0") {
+                                ToastUtils.showShort("The first digit cannot be 0")
+                                it.tag = "error"
+                                it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            }else{
+                                it.tag = "completed"
+                                it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                            }
+
+
                         }
                         it.clearFocus()
                         false
@@ -428,7 +436,7 @@ class SetInfoEditView : RelativeLayout {
         return when (number.length) {
             10 -> {
                 when {
-                    number[0] == '0' -> "The first digit cannot be 0"
+//                    number[0] == '0' -> "The first digit cannot be 0"
                     number.toSet().size == 1 -> "Cannot all be the same number" // 如1111111111
                     else -> null // 校验通过
                 }
@@ -500,6 +508,26 @@ class SetInfoEditView : RelativeLayout {
 
     fun getEditTextView(): ShapeEditTextView? {
         return infoEdit
+    }
+
+
+    fun getRealPhone(): String {
+        val tv = infoEdit?.text.toString()
+        val formatTv = formatPhoneNumber(tv)
+//        return "234$formatTv"
+        return "$formatTv"
+    }
+
+    fun formatPhoneNumber(input: String): String {
+        // 1. 移除所有非数字字符（如空格、-等）
+        val cleaned = input.replace(Regex("[^0-9]"), "")
+
+        // 2. 如果是11位且以0开头，去掉首个0
+        return if (cleaned.length == 11 && cleaned.startsWith("0")) {
+            cleaned.substring(1)
+        } else {
+            cleaned // 其他情况原样返回（可根据需求调整）
+        }
     }
 
     fun isTextNotEmpty(): Boolean {
