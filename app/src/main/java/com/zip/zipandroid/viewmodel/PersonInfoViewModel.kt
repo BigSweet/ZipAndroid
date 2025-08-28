@@ -14,6 +14,7 @@ import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.UploadImgBean
+import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipUploadQuestionBean
@@ -35,6 +36,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     var saveInfoLiveData = MutableLiveData<Any>()
     var saveWorkNomralLiveData = MutableLiveData<Any>()
     var uploadImgLiveData = MutableLiveData<String>()
+    var bankListLiveData = MutableLiveData<ZipBankNameListBean>()
     var servicePathLiveData = MutableLiveData<String>()
     var allAddressInfo = MutableLiveData<List<AddressInfoBean>>()
     var creditLiveData = MutableLiveData<CreditListBean>()
@@ -208,6 +210,30 @@ class PersonInfoViewModel : ZipBaseViewModel() {
                         uploadImgLiveData.postValue(result.get(path).toString())
 
                     }
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun getBankList() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getBankList(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipBankNameListBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipBankNameListBean) {
+                    bankListLiveData.postValue(result)
                 }
 
                 override fun onFailure(code: Int, message: String?) {

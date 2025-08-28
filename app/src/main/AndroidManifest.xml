@@ -69,6 +69,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ZipBandCardActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"></activity>
 
 
         <activity

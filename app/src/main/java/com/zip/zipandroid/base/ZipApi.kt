@@ -7,6 +7,7 @@ import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
+import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
@@ -84,4 +85,7 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/file/getPath")
     fun getImgPath(@Body body: FormReq): Observable<ZipBaseRes<HashMap<Any,Any>>>
+
+    @POST("api/v4/ziplead/bankCard/bankList")
+    fun getBankList(@Body body: FormReq): Observable<ZipBaseRes<ZipBankNameListBean>>
 }

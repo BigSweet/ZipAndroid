@@ -59,8 +59,10 @@ class SetInfoEditView : RelativeLayout {
         const val TYPE_INCOME = 6
         const val TYPE_UME_LENGTH = 7
         const val TYPE_PHONE = 8
+        const val TYPE_BANK = 9
     }
 
+    var maxValue = 11
     var infoViewClick: (() -> Unit)? = null
     fun init(context: Context?, attrs: AttributeSet?) {
         context ?: return
@@ -80,6 +82,7 @@ class SetInfoEditView : RelativeLayout {
         var inputInfoType = a.getInt(R.styleable.setInfoStyle_inputInfoType, 0)
         infoTopName?.setText(topName)
         var hintName = a.getString(R.styleable.setInfoStyle_infoHintName)
+        maxValue = a.getInt(R.styleable.setInfoStyle_maxNumberValue, 11)
         infoEdit?.setHint(hintName)
         var showArrow = a.getBoolean(R.styleable.setInfoStyle_showInfoArrow, false)
         infoArrow?.visible = showArrow
@@ -88,6 +91,7 @@ class SetInfoEditView : RelativeLayout {
         var showNumber = a.getBoolean(R.styleable.setInfoStyle_showBottomNumber, false)
         var showLeftNumber = a.getBoolean(R.styleable.setInfoStyle_showLeftNumber, false)
         infoMaxLength?.visible = showNumber
+        infoMaxLength?.setText("0/${maxValue}")
         set_info_left_number?.visible = showLeftNumber
 
         if (showLeftNumber) {
@@ -113,6 +117,9 @@ class SetInfoEditView : RelativeLayout {
         } else if (inputInfoType == TYPE_UME_LENGTH) {
             infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
             infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(5))
+        } else if (inputInfoType == TYPE_BANK) {
+            infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
+            infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(10))
         } else if (inputInfoType == TYPE_PHONE) {
             infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
             infoEdit?.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(11))
@@ -194,7 +201,7 @@ class SetInfoEditView : RelativeLayout {
                                 ToastUtils.showShort("The first digit cannot be 0")
                                 it.tag = "error"
                                 it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
-                            }else{
+                            } else {
                                 it.tag = "completed"
                                 it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
                             }
@@ -296,8 +303,17 @@ class SetInfoEditView : RelativeLayout {
                                 Color.parseColor("#F1F5FF")
                             )
                         }
-                        infoMaxLength?.setText(s.toString().length.toString() + "/11")
+                        infoMaxLength?.setText(s.toString().length.toString() + "/${maxValue}")
 
+                    }
+                    if (inputInfoType == TYPE_BANK) {
+                        infoMaxLength?.setText(s.toString().length.toString() + "/${maxValue}")
+                        if (s?.length == 10) {
+                            it.tag = "completed"
+                            it.setBackgroundColor(
+                                Color.parseColor("#F1F5FF")
+                            )
+                        }
                     }
 
                     if (inputInfoType == TYPE_EMAIL) {
@@ -476,6 +492,7 @@ class SetInfoEditView : RelativeLayout {
     fun setContentText(text: String) {
         infoEdit?.setText(text)
     }
+
     fun setTopName(topName: String) {
         infoTopName?.setText(topName)
     }
