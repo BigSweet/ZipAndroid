@@ -2,6 +2,7 @@ package com.zip.zipandroid.fragment
 
 import android.os.Bundle
 import com.lxj.xpopup.XPopup
+import com.zip.zipandroid.activity.ZipAboutUsActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -40,6 +41,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
         }
         mViewBind.zipMineAboutSl.setOnDelayClickListener {
             //关于我们的
+            startActivity(ZipAboutUsActivity::class.java)
         }
         mViewBind.zipMineLogoutSl.setOnDelayClickListener {
             val pop = ZipLogoutPop(requireActivity())

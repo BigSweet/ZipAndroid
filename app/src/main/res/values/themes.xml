@@ -50,6 +50,13 @@
         <attr name="scaleWidth" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="zipScoreView">
+        <attr name="itemScoreWidth" format="dimension" />
+        <attr name="itemStarMargin" format="dimension" />
+        <attr name="scoreSelectIv" format="reference" />
+        <attr name="scoreUnSelectIv" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="MaxHeightRecyclerView">
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>

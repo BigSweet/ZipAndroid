@@ -50,6 +50,10 @@
             android:exported="false"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.ZipAboutUsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.ZipPersonInfoActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"

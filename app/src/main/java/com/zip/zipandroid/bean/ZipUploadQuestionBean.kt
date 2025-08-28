@@ -1,4 +1,4 @@
 package com.zip.zipandroid.bean
 
-class ZipUploadQuestionBean(val amsoshi:String,val fihirisarTambaya:Int,val darajarTambaya:String) {
+class ZipUploadQuestionBean(val amsa:String,val fihirisarTambaya:Int,val darajarTambaya:String) {
 }
