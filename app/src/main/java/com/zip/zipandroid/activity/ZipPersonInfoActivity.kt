@@ -174,7 +174,8 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (it == Constants.TYPE_ADDRESS) {
                 //下一个界面
                 dismissLoading()
-                ToastUtils.showShort("finish")
+                startActivity(ZipWorkInfoActivity::class.java)
+//                ToastUtils.showShort("finish")
             }
 
         }

@@ -144,7 +144,8 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.saveMemberInfoLiveData.observe(this) {
             if (it == Constants.TYPE_QA) {
                 dismissLoading()
-                ToastUtils.showShort("finish4")
+//                ToastUtils.showShort("finish4")
+                startActivity(ZipBandCardActivity::class.java)
             }
         }
     }

@@ -3,8 +3,12 @@ package com.zip.zipandroid.fragment
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
+import com.zip.zipandroid.activity.ZipBandCardActivity
+import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
+import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.activity.ZipWebActivity
+import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.databinding.FragmentZipOrderListBinding
 import com.zip.zipandroid.ktx.hide
@@ -25,9 +29,11 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
 
     override fun initView(savedInstanceState: Bundle?) {
 
+
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
-            startActivity(ZipPersonInfoActivity::class.java)
+            mViewModel.getUserInfo()
+//            startActivity(ZipPersonInfoActivity::class.java)
 //            val list = AllPerUtils.getAllPer()
 ////                val list = getTestPerList()
 //
@@ -71,6 +77,21 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrde
             }
 
         }
+        mViewModel.userInfoLiveData.observe(this) {
+            if (it.firstName.isNullOrEmpty()) {
+                startActivity(ZipPersonInfoActivity::class.java)
+            } else if (it.industryName.isNullOrEmpty()) {
+                startActivity(ZipWorkInfoActivity::class.java)
+            } else if (it.emergencyContactPerson.isNullOrEmpty()) {
+                startActivity(ZipContractActivity::class.java)
+            } else if (it.questions.isNullOrEmpty()) {
+                startActivity(ZipQuestionActivity::class.java)
+            } else if (it.bankId.isNullOrEmpty()) {
+                startActivity(ZipBandCardActivity::class.java)
+            }
+
+        }
+
         mViewModel.zipAdLiveData.observe(this) {
             if (it.isNullOrEmpty()) {
                 //只显示下面的

@@ -91,7 +91,8 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it == Constants.TYPE_BANK) {
                 //下一个界面
                 dismissLoading()
-                ToastUtils.showShort("finish5")
+//                ToastUtils.showShort("finish5")
+                //进入额度计算页面
             }
         }
 

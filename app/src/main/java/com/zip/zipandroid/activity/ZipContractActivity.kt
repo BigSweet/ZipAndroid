@@ -104,7 +104,8 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.saveMemberInfoLiveData.observe(this) {
             if (it == Constants.TYPE_CONS) {
                 dismissLoading()
-                ToastUtils.showShort("finish3")
+//                ToastUtils.showShort("finish3")
+                startActivity(ZipQuestionActivity::class.java)
             }
         }
     }

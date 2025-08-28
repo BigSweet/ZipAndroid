@@ -326,7 +326,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it == Constants.TYPE_WORK_SURE) {
                 //下一个界面
                 dismissLoading()
-                ToastUtils.showShort("finish2")
+//                ToastUtils.showShort("finish2")
+                startActivity(ZipContractActivity::class.java)
             }
 
         }
