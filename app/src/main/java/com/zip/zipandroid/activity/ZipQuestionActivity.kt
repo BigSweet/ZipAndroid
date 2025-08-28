@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipQuestionAdapter
@@ -122,13 +123,16 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 checkPopDone()
             } else {
                 questionAdapter.data.forEach { adaterData ->
-                    val adapterItem = it.questions.find {
+                    val questionItem = it.questions.find {
                         it.questionIndex == adaterData.questionIndex
                     }
                     //同步adapter的信息
-                    adaterData.questionAnswer = adapterItem?.questionAnswer
-
+                    adaterData.questionAnswer = questionItem?.questionAnswer
                 }
+                questionAdapter.notifyDataSetChanged()
+                ThreadUtils.runOnUiThreadDelayed({
+                    checkPopDone()
+                }, 500)
 
             }
 
