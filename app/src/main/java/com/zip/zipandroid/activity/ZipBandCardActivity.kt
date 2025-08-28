@@ -81,9 +81,9 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //    }
 //
     override fun createObserver() {
-        mViewModel.bankListLiveData.observe(this) {
-            dismissLoading()
-        }
+//        mViewModel.bankListLiveData.observe(this) {
+//            dismissLoading()
+//        }
         mViewModel.bandCardLiveData.observe(this) {
             mViewModel.saveMemberBehavior(Constants.TYPE_BANK)
         }
@@ -97,6 +97,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
 
         mViewModel.bankListLiveData.observe(this) {
+//            dismissLoading()
             dataPrepare = true
             bankList = it
             bankList?.forEach {

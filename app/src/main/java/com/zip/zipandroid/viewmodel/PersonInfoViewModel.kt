@@ -222,6 +222,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     fun getBankList() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
+        api.addParam("nauInTsarawa",3)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getBankList(api)

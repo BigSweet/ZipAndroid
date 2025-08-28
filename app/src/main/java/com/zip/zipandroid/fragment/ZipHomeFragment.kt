@@ -87,9 +87,17 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             } else if (it.questions.isNullOrEmpty()) {
                 startActivity(ZipQuestionActivity::class.java)
             } else if (it.bankId.isNullOrEmpty()) {
-                startActivity(ZipBandCardActivity::class.java)
+                mViewModel.zipQueryCard()
+
             }
 
+        }
+        mViewModel.cardListLiveData.observe(this) {
+            if (it.isNullOrEmpty()) {
+                startActivity(ZipBandCardActivity::class.java)
+            } else {
+                //去额度计算页面
+            }
         }
 
         mViewModel.zipAdLiveData.observe(this) {

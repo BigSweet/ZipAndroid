@@ -12,6 +12,7 @@ import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
+import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.FormReq
@@ -41,6 +42,9 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/app-configuration")
     fun getConfig(@Body body: FormReq): Observable<ZipBaseRes<ZipAppConfigBean>>
+
+    @POST("api/v4/ziplead/bankCard/queryCard")
+    fun zipQueryCard(@Body body: FormReq): Observable<ZipBaseRes<ZipQueryCardBean>>
 
     @POST("api/v4/ziplead/customer/queryBaseInfo")
     fun getUserInfo(@Body body: FormReq): Observable<ZipBaseRes<ZipUserInfoBean>>
