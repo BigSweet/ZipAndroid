@@ -16,6 +16,12 @@ class ZipAboutUsActivity : ZipBaseBindingActivity<ZipHomeViewModel, ActivityZipA
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("About Us")
 
+        mViewBind.zipAboutCustomSl.setOnDelayClickListener {
+            startActivity(ZipCustomServiceActivity::class.java)
+        }
+        mViewBind.zipAboutVersionSl.setOnDelayClickListener {
+            startActivity(ZipVersionInfoActivity::class.java)
+        }
         mViewBind.zipAboutRateSl.setOnDelayClickListener {
 
             val pop = ZipRatePop(this)

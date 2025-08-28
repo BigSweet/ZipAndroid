@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF0F2F5">
+
+
+        <include
+            android:id="@+id/private_include_title"
+            layout="@layout/include_title_bar" />
+
+
+        <ImageView
+            android:id="@+id/zip_custom_app_logo_iv"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="58dp"
+            android:src="@drawable/zip_app_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/private_include_title" />
+
+        <TextView
+            android:id="@+id/zip_custom_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Ziplead"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zip_custom_app_logo_iv" />
+
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/zip_what_app_sl"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="21dp"
+            app:layout_constraintTop_toBottomOf="@+id/zip_custom_app_name"
+            app:sv_scl_background="@color/white"
+            app:sv_scl_radius="12dp">
+
+            <ImageView
+                android:id="@+id/zip_what_app_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/zip_whats_app_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/what_app_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="14dp"
+                android:text="Whatsapp"
+                android:textColor="#ff959db2"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/zip_what_app_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/zip_what_app_tv"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="898980980"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/what_app_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/what_app_title_tv" />
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/zip_email_sl"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/zip_what_app_sl"
+            app:sv_scl_background="@color/white"
+            app:sv_scl_radius="12dp">
+
+            <ImageView
+                android:id="@+id/zip_email_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/zip_whats_app_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/email_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="14dp"
+                android:text="Customer Service Mailbox"
+                android:textColor="#ff959db2"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/zip_email_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="898980980"
+                android:textColor="@color/black"
+                android:id="@+id/zip_email_Tv"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/email_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/email_title_tv" />
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/zip_phone_sl"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/zip_email_sl"
+            app:sv_scl_background="@color/white"
+            app:sv_scl_radius="12dp">
+
+            <ImageView
+                android:id="@+id/zip_phone_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/zip_whats_app_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/phone_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="14dp"
+                android:text="Contact Phone Number"
+                android:textColor="#ff959db2"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/zip_phone_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="898980980"
+                android:id="@+id/zip_phone_tv"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/phone_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/phone_title_tv" />
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
