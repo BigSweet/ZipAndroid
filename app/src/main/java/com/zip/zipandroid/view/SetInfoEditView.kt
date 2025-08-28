@@ -476,6 +476,9 @@ class SetInfoEditView : RelativeLayout {
     fun setContentText(text: String) {
         infoEdit?.setText(text)
     }
+    fun setTopName(topName: String) {
+        infoTopName?.setText(topName)
+    }
 
     fun getEditIsComplete(): Boolean {
         return infoEdit?.tag == "completed" && !infoEdit?.text.isNullOrEmpty()

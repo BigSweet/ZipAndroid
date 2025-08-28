@@ -2,6 +2,7 @@ package com.zip.zipandroid.base
 
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
+import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
@@ -57,6 +58,15 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/mxPostalCodeInfoList")
     fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
+
+    @GET("api/v4/ziplead/dict/getCreditHistoryDict")
+    fun getCreditHistoryDict(  @Query("fakitinAiki") fakitinAiki: String,
+                               @Query("sigarBincike") sigarBincike: String,
+                               @Query("tushen") tushen: String,
+                               @Query("matsakaici") matsakaici: String,
+                               @Query("lambarMutum") lambarMutum: String,
+                               @Query("idAbokinCiniki") idAbokinCiniki: String,
+                               @Query("sanyaHannu") sanyaHannu: String,): Observable<ZipBaseRes<CreditListBean>>
 
     @GET("api/v4/ziplead/dict/getPersonalInformationDict")
     fun getPersonalInformationDict(

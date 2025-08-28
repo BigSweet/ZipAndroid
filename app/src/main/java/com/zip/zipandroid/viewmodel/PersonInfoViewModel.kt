@@ -1,6 +1,7 @@
 package com.zip.zipandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.AppUtils
 import com.google.gson.Gson
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
@@ -10,10 +11,13 @@ import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.BvnInfoBean
+import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipRealNameBean
+import com.zip.zipandroid.bean.ZipUploadQuestionBean
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.FormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
@@ -33,6 +37,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     var uploadImgLiveData = MutableLiveData<String>()
     var servicePathLiveData = MutableLiveData<String>()
     var allAddressInfo = MutableLiveData<List<AddressInfoBean>>()
+    var creditLiveData = MutableLiveData<CreditListBean>()
 
     fun saveUserInfo(
         age: Int, birthDate: Long, birthDateStr: String, education: String, degree: Int, identity: String, identityImg: ZipIndImgBean,
@@ -212,6 +217,36 @@ class PersonInfoViewModel : ZipBaseViewModel() {
             })
     }
 
+    fun getCreditHistoryDict() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        treeMap.putAll(api)
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getCreditHistoryDict(AppUtils.getAppPackageName(),
+            AppUtils.getAppVersionName(),
+            "ANDROID",
+            UserInfoUtils.getMid().toString(),
+            UserInfoUtils.getUserNo(),
+            Constants.client_id,
+            SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
+        )
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<CreditListBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: CreditListBean) {
+                    creditLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
     fun getAllAddressInfo() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -343,6 +378,31 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         api.put("mutuminGaggawa", contractJson)
         treeMap.putAll(api)
         api.put("lambobinGaggawa", list)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    saveInfoLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun saveQuestionList(list: List<ZipUploadQuestionBean>) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        treeMap.putAll(api)
+        api.put("tambayoyi", list)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)
             .compose(RxSchedulers.io_main())
