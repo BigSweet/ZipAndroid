@@ -72,8 +72,8 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             override fun invoke(tv: String, position: Int, type: Int) {
                 bean.questionAnswer = tv
                 infoView.setTagComplete()
-                checkAllDone()
                 checkPopDone()
+                checkAllDone()
             }
         })
     }
@@ -127,11 +127,12 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                         it.questionIndex == adaterData.questionIndex
                     }
                     //同步adapter的信息
-                    adaterData.questionAnswer = questionItem?.questionAnswer
+                    adaterData.questionAnswer = questionItem?.answer
                 }
                 questionAdapter.notifyDataSetChanged()
                 ThreadUtils.runOnUiThreadDelayed({
                     checkPopDone()
+                    checkAllDone()
                 }, 500)
 
             }

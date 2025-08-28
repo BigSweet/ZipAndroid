@@ -6,6 +6,7 @@ import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipBankNameListBeanItem
+import com.zip.zipandroid.bean.ZipQueryCardBeanItem
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.ActivityZipBandCardBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
@@ -24,12 +25,12 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Bank Info")
         mViewBind.zipBankName.infoViewClick = {
             if (!dataPrepare) {
-
                 ToastUtils.showShort("Data preparation")
             } else {
                 showBankListPop()
             }
         }
+        mViewModel.zipQueryCard()
         mViewModel.getBankList()
         mViewModel.getUserInfo()
         focusChangeCheck(mViewBind.zipBankAccount)
@@ -96,6 +97,16 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
         }
 
+        mViewModel.cardListLiveData.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                val data = it.find {
+                    it.status == 1
+                }
+                if (data != null) {
+                    setCurrentBankData(data)
+                }
+            }
+        }
         mViewModel.bankListLiveData.observe(this) {
 //            dismissLoading()
             dataPrepare = true
@@ -104,6 +115,16 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 it.getNamePin()
             }
         }
+    }
+
+    private fun setCurrentBankData(data: ZipQueryCardBeanItem) {
+        val currentData = ZipBankNameListBeanItem(data.bankName, "", data.bankId, data.cardType)
+        currentBandCardBean = currentData
+        mViewBind.zipBankName.setContentText(currentData.bankName)
+        mViewBind.zipBankName.setTagComplete()
+        mViewBind.zipBankAccount.setContentText(data.cardNo.toString())
+        mViewBind.zipBankAccount.setTagComplete()
+        checkDone()
     }
 
     var bankList: ZipBankNameListBean? = null

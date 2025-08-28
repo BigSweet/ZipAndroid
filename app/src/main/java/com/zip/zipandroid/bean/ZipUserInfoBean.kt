@@ -65,7 +65,7 @@ data class ZipUserInfoBean(
     val pincode: Any,
     val postalInfo: String,
     val purpose: Any,
-    val questions: List<CreditListBeanItem>,
+    val questions: List<UserCreditListBeanItem>,
     val realname: String,
     val regFrom: Int?=-1,
     val regTime: Long,
