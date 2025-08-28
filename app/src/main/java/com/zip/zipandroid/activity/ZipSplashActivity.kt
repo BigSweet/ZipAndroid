@@ -18,8 +18,8 @@ class ZipSplashActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipSp
     override fun initView(savedInstanceState: Bundle?) {
         ThreadUtils.runOnUiThreadDelayed({
             if (!UserInfoUtils.getSignKey().isNullOrEmpty()) {
-//                startActivity(ZipMainActivity::class.java)
-                    startActivity(ZipBandCardActivity::class.java)
+                startActivity(ZipMainActivity::class.java)
+//                    startActivity(ZipBandCardActivity::class.java)
 
             } else {
                 if (MMKV.defaultMMKV()?.decodeString("app_per").isNullOrEmpty()) {
