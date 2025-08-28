@@ -1,5 +1,7 @@
 package com.zip.zipandroid.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
 import com.lxj.xpopup.XPopup
@@ -17,7 +19,19 @@ import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 
 class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipBandCardBinding>() {
+
+    companion object{
+        @JvmStatic
+        fun start(context: Context,fromMine:Boolean) {
+            val starter = Intent(context, ZipBandCardActivity::class.java)
+                .putExtra("fromMine",fromMine)
+            context.startActivity(starter)
+        }
+
+    }
+    var fromMine = false
     override fun initView(savedInstanceState: Bundle?) {
+        fromMine = intent.getBooleanExtra("fromMine",false)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
@@ -35,6 +49,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.getUserInfo()
         focusChangeCheck(mViewBind.zipBankAccount)
         mViewBind.infoNextBtn.setOnDelayClickListener {
+
             showLoading()
             currentBandCardBean?.let {
                 mViewModel.zipBandCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
@@ -92,8 +107,14 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it == Constants.TYPE_BANK) {
                 //下一个界面
                 dismissLoading()
-//                ToastUtils.showShort("finish5")
-                //进入额度计算页面
+                if(fromMine){
+                    finish()
+                }else{
+//                    ToastUtils.showShort("finish5")
+                    //进入额度计算页面
+                }
+//
+
             }
         }
 

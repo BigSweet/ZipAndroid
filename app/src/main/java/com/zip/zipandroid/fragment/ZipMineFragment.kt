@@ -3,6 +3,7 @@ package com.zip.zipandroid.fragment
 import android.os.Bundle
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipAboutUsActivity
+import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipCouponActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
@@ -40,6 +41,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
 
         mViewBind.zipMineBankSl.setOnDelayClickListener {
             //银行卡页面
+            startActivity(ZipBandCardActivity::class.java)
         }
         mViewBind.zipMineAboutSl.setOnDelayClickListener {
             //关于我们的
