@@ -23,5 +23,22 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+
+        <com.zip.zipandroid.shape.ShapeTextView
+            android:id="@+id/coupon_sure_tv"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="41dp"
+            android:gravity="center"
+            android:text="Confirm"
+            android:layout_marginBottom="55dp"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:sv_tx_background="#FF205EDB"
+            app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
