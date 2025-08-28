@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.AppUtils
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
+import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.Constants.client_id
 import com.zip.zipandroid.utils.FormReq
@@ -30,6 +31,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
     var configLiveData = MutableLiveData<ZipAppConfigBean?>()
     var saveMemberInfoLiveData = MutableLiveData<Int>()
     var userInfoLiveData = MutableLiveData<ZipUserInfoBean>()
+    var bandCardLiveData = MutableLiveData<ZipBandCardBean>()
     var personDicLiveData = MutableLiveData<PersonalInformationDictBean>()
 
     fun getZipAppConfig() {
@@ -95,6 +97,39 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
                 override fun onSuccess(result: ZipUserInfoBean) {
                     userInfoLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun zipBandCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.addParam("idBanki", bankId)
+        api.addParam("sunanBanki", bankName)
+        api.addParam("lambarKatin", cardNo)
+        api.addParam("nauInKatin", cardType)
+        api.addParam("sunanFarko", firstName)
+        api.addParam("cikakkenSunan", fullName)
+        api.addParam("lambarKatinAinihin", identityCardNo)
+        api.addParam("wayar", phone)
+        api.addParam("sunanKarshe", lastName)
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).zipBandCard(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipBandCardBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipBandCardBean) {
+                    bandCardLiveData.postValue(result)
                 }
 
                 override fun onFailure(code: Int, message: String?) {

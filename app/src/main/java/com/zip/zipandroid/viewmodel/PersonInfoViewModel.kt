@@ -397,6 +397,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
             })
     }
 
+
     fun saveContractInfo(list: ArrayList<UploadContractBean>) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()

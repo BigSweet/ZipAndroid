@@ -7,6 +7,7 @@ import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
+import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
@@ -44,6 +45,9 @@ interface ZipApi {
     @POST("api/v4/ziplead/customer/queryBaseInfo")
     fun getUserInfo(@Body body: FormReq): Observable<ZipBaseRes<ZipUserInfoBean>>
 
+    @POST("api/v4/ziplead/bankCard/bindCard")
+    fun zipBandCard(@Body body: FormReq): Observable<ZipBaseRes<ZipBandCardBean>>
+
     @POST("api/v4/ziplead/checkBvn")
     fun checkBvnInfo(@Body body: FormReq): Observable<ZipBaseRes<BvnInfoBean>>
 
@@ -61,13 +65,15 @@ interface ZipApi {
     fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
 
     @GET("api/v4/ziplead/dict/getCreditHistoryDict")
-    fun getCreditHistoryDict(  @Query("fakitinAiki") fakitinAiki: String,
-                               @Query("sigarBincike") sigarBincike: String,
-                               @Query("tushen") tushen: String,
-                               @Query("matsakaici") matsakaici: String,
-                               @Query("lambarMutum") lambarMutum: String,
-                               @Query("idAbokinCiniki") idAbokinCiniki: String,
-                               @Query("sanyaHannu") sanyaHannu: String,): Observable<ZipBaseRes<CreditListBean>>
+    fun getCreditHistoryDict(
+        @Query("fakitinAiki") fakitinAiki: String,
+        @Query("sigarBincike") sigarBincike: String,
+        @Query("tushen") tushen: String,
+        @Query("matsakaici") matsakaici: String,
+        @Query("lambarMutum") lambarMutum: String,
+        @Query("idAbokinCiniki") idAbokinCiniki: String,
+        @Query("sanyaHannu") sanyaHannu: String,
+    ): Observable<ZipBaseRes<CreditListBean>>
 
     @GET("api/v4/ziplead/dict/getPersonalInformationDict")
     fun getPersonalInformationDict(
@@ -84,7 +90,7 @@ interface ZipApi {
     fun uploadImg(@Body body: RequestBody): Observable<ZipBaseRes<UploadImgBean>>
 
     @POST("api/v4/ziplead/file/getPath")
-    fun getImgPath(@Body body: FormReq): Observable<ZipBaseRes<HashMap<Any,Any>>>
+    fun getImgPath(@Body body: FormReq): Observable<ZipBaseRes<HashMap<Any, Any>>>
 
     @POST("api/v4/ziplead/bankCard/bankList")
     fun getBankList(@Body body: FormReq): Observable<ZipBaseRes<ZipBankNameListBean>>
