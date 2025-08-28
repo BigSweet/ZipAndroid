@@ -10,14 +10,14 @@ import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
-import com.zip.zipandroid.databinding.FragmentZipOrderListBinding
+import com.zip.zipandroid.databinding.FragmentZipHomeBinding
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 
-class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipOrderListBinding>() {
+class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHomeBinding>() {
     companion object {
         fun newInstance(): ZipHomeFragment {
             val args = Bundle()
