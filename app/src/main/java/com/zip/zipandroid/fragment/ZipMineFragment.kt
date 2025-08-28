@@ -3,6 +3,7 @@ package com.zip.zipandroid.fragment
 import android.os.Bundle
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipAboutUsActivity
+import com.zip.zipandroid.activity.ZipCouponActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -34,6 +35,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
 
         mViewBind.mineCopCl.setOnDelayClickListener {
             //优惠券页面
+            startActivity(ZipCouponActivity::class.java)
         }
 
         mViewBind.zipMineBankSl.setOnDelayClickListener {

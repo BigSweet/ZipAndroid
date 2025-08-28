@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_coupon_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:shadowColor="#808d6726"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="3.0"
+            android:textColor="#ffffffff"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="₦1,000" />
+
+
+        <TextView
+            android:id="@+id/item_coupon_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="9dp"
+            android:text="Interest Discount Coupon"
+            android:textColor="#ffcd8f06"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toRightOf="@+id/item_coupon_price_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_coupon_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="#ffb8ac94"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/item_coupon_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/item_coupon_name_tv"
+            tools:text="Expiration Date: Dec 12, 2025" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
