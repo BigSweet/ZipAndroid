@@ -32,6 +32,9 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
 
 
     override fun initView(savedInstanceState: Bundle?) {
+        mViewBind.privateSureTv.setOnDelayClickListener {
+            finish()
+        }
 
         val common_title_rl = mViewBind.commonReviewTitleCl.commonTitleRl
         val common_back_iv = mViewBind.commonReviewTitleCl.commonBackIv

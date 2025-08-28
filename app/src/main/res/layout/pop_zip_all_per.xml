@@ -42,7 +42,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="80dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -424,7 +423,8 @@
 
             <com.zip.zipandroid.shape.ShapeConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="73dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:sv_scl_background="@color/white">
 
@@ -460,7 +460,27 @@
                     app:sv_tx_background="#FF205EDB"
                     app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
 
+
+                <com.zip.zipandroid.shape.ShapeTextView
+                    android:id="@+id/from_about_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="41dp"
+                    android:gravity="center"
+                    android:paddingVertical="12dp"
+                    android:text=" I acknowledge and accept the requested permissions"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sv_tx_background="#FF205EDB"
+                    app:sv_tx_radius="12dp"></com.zip.zipandroid.shape.ShapeTextView>
+
+
             </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
 
         </com.zip.zipandroid.shape.ShapeLinearLayout>
 

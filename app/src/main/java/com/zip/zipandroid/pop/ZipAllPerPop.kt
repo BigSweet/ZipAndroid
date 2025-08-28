@@ -1,19 +1,26 @@
 package com.zip.zipandroid.pop
 
 import android.content.Context
-import com.blankj.utilcode.util.PermissionUtils
 import com.zip.zipandroid.base.pop.ZipBaseFullScreenPopupView
 import com.zip.zipandroid.databinding.PopZipAllPerBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
-import com.zip.zipandroid.utils.AllPerUtils
+import com.zip.zipandroid.ktx.visible
 
-class ZipAllPerPop(context: Context) : ZipBaseFullScreenPopupView<PopZipAllPerBinding>(context) {
+class ZipAllPerPop(context: Context, val fromAbout: Boolean? = false) : ZipBaseFullScreenPopupView<PopZipAllPerBinding>(context) {
 
 
     var allPerSuccess: (() -> Unit)? = null
     var allPerFail: (() -> Unit)? = null
     override fun onCreate() {
         super.onCreate()
+
+        mBinding.fromAboutTv.visible = fromAbout == true
+        mBinding.privateSureTv.visible = fromAbout == false
+        mBinding.privateCancelTv.visible = fromAbout == false
+        mBinding.fromAboutTv.setOnDelayClickListener {
+            dismiss()
+        }
+
         mBinding.privateSureTv.setOnDelayClickListener {
             allPerSuccess?.invoke()
             dismiss()
