@@ -13,6 +13,7 @@ import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
+import com.zip.zipandroid.bean.ZipOrderListBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
@@ -71,6 +72,10 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/mxPostalCodeInfoList")
     fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
+
+
+    @POST("api/v4/ziplead/orders")
+    fun getAllOrderList(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderListBean>>
 
     @GET("api/v4/ziplead/dict/getCreditHistoryDict")
     fun getCreditHistoryDict(

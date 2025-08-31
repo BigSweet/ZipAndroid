@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.zip.zipandroid.shape.ShapeConstraintLayout
+        android:id="@+id/zip_order_item_main_cl"
+        android:layout_width="match_parent"
+        android:layout_height="197dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_scl_background="#FFFF4343"
+        app:sv_scl_radius="24dp">
+
+
+        <TextView
+            android:id="@+id/item_zip_order_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="8dp"
+            android:text="Due Date: Jan 03, 2026"
+            android:textColor="#ffffffff"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/zip_order_item_inner_cl"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:sv_scl_background="#FFFFE4E4"
+            app:sv_scl_radius="24dp">
+
+
+            <TextView
+                android:id="@+id/zip_item_order_no_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="12dp"
+                android:textColor="#ff000000"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Order No. 84238984932" />
+
+            <TextView
+                android:id="@+id/zip_order_amount_place_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Outstanding Amount"
+                android:textColor="#ffb06464"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@+id/zip_item_order_no_tv"
+                app:layout_constraintTop_toBottomOf="@+id/zip_item_order_no_tv" />
+
+            <TextView
+                android:id="@+id/zip_order_item_install_place_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="21dp"
+                android:text="Outstanding Installments"
+                android:textColor="#ffb06464"
+                android:textSize="12sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/zip_order_amount_place_tv" />
+
+            <TextView
+                android:id="@+id/zip_order_item_install_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#ff000000"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="@+id/zip_order_item_install_place_tv"
+                app:layout_constraintTop_toBottomOf="@+id/zip_order_item_install_place_tv"
+                tools:text="Installment 2 / 3" />
+
+            <TextView
+                android:id="@+id/zip_item_order_amount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#ff000000"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/zip_order_amount_place_tv"
+                app:layout_constraintTop_toBottomOf="@+id/zip_order_amount_place_tv"
+                tools:text="₦ 5,915.39" />
+
+            <TextView
+                android:id="@+id/zip_order_item_show_detail_tv"
+                android:layout_width="119dp"
+                android:layout_height="38dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_order_over_detail"
+                android:gravity="center"
+                android:text="More Details"
+                android:textColor="#FFFF4343"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/zip_item_order_amount_tv" />
+
+
+            <com.zip.zipandroid.shape.ShapeTextView
+                android:id="@+id/zip_order_item_repay_btn"
+                android:layout_width="150dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="19dp"
+                android:gravity="center"
+                android:text="Settle Now"
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/zip_order_item_show_detail_tv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:sv_tx_background="#FFFF4343"
+                app:sv_tx_radius="8dp">
+
+            </com.zip.zipandroid.shape.ShapeTextView>
+
+            <com.zip.zipandroid.shape.ShapeTextView
+                android:id="@+id/zip_item_amount_update"
+                android:layout_width="50dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:text="Updated"
+                android:textColor="#FFFF4343"
+                android:textSize="11dp"
+                app:layout_constraintBottom_toBottomOf="@+id/zip_item_order_amount_tv"
+                app:layout_constraintLeft_toRightOf="@+id/zip_item_order_amount_tv"
+                app:layout_constraintTop_toTopOf="@+id/zip_item_order_amount_tv"
+                app:sv_tx_background="#FFFFC790"
+                app:sv_tx_radius="4dp" />
+
+
+            <com.zip.zipandroid.shape.ShapeTextView
+                android:id="@+id/zip_item_order_inner_top_tv"
+                android:layout_width="127dp"
+                android:layout_height="31dp"
+                android:gravity="center"
+                android:textColor="#FFFF4343"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sv_tx_background="#FFFFBDBD"
+                app:sv_tx_radius_bottom_right="24dp"
+                app:sv_tx_radius_top_right="24dp"
+                tools:text="OVERDUE: 3 DAYS">
+
+            </com.zip.zipandroid.shape.ShapeTextView>
+
+            <TextView
+                android:id="@+id/bottom_status_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="#ffdc9f19"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="You'll receive the review outcome in a
+ few minutes" />
+
+
+            <TextView
+                android:id="@+id/zip_order_item_finish_detail_tv"
+                android:layout_width="119dp"
+                android:layout_height="38dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:background="@drawable/bg_order_finish_detail"
+                android:gravity="center"
+                android:text="More Details"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
