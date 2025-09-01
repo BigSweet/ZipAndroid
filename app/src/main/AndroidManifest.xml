@@ -96,6 +96,10 @@
             android:name=".activity.ZipPerActivity"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ZipOrderDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.ZipCodeActivity"

@@ -252,6 +252,7 @@ class SetInfoEditView : RelativeLayout {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
 
+
                 override fun afterTextChanged(s: Editable?) {
                     if (inputInfoType == TYPE_UME_LENGTH) {
                         val input = s?.toString() ?: ""

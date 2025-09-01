@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply from: 'aab_proguard.gradle'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdk 34

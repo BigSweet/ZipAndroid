@@ -1,7 +1,11 @@
 package com.zip.zipandroid.bean
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 class ZipOrderListBean : ArrayList<ZipOrderListBeanItem>()
 
+@Parcelize
 data class ZipOrderListBeanItem(
     val allAmountDue: String,
     val amountDue: String,
@@ -9,15 +13,15 @@ data class ZipOrderListBeanItem(
     val applyPeriod: String,
     val applyPeriodNew: String,
     val applyTime: Long,
-    val approveOpinion: Any,
+    val approveOpinion: String,
     val approveTime: Long,
     val bankId: String,
     val bankName: String,
     val bizId: String,
     val capital: String,
     val cardNo: String,
-    val cardType: Any,
-    val collectorName: Any,
+    val cardType: String,
+    val collectorName: String,
     val count: Int,
     val couponAmount: String,
     val creditNo: String,
@@ -29,18 +33,18 @@ data class ZipOrderListBeanItem(
     val factInterest: String,
     val factOtherTotalFee: String,
     val factOverdueFee: String,
-    val fees: Any,
+    val fees: ArrayList<Int>,
     val hairCutAmount: String,
-    val ifscCode: Any,
+    val ifscCode: String,
     val interest: String,
-    val interestTime: Any,
+    val interestTime: String,
     val isLoan: String,
     val lid: Long,
     val loanAmount: String,
-    val loanCancelStatus: Any,
-    val loanRefusedDuration: Any,
+    val loanCancelStatus: String,
+    val loanRefusedDuration: String,
     val mid: String,
-    val noPayStages: Any,
+    val noPayStages: String,
     val otherFee: Int,
     val overdueDays: Int,
     val penalty: String,
@@ -49,8 +53,8 @@ data class ZipOrderListBeanItem(
     val periodTimeStr: String,
     val phoneNum: String,
     val productType: String,
-    val rate: Any,
-    val releaseTime: Any,
+    val rate: String,
+    val releaseTime: String,
     val repaymentResponseList: List<RepaymentResponse>,
     val shouldCapital: String,
     val shouldFine: String,
@@ -68,42 +72,39 @@ data class ZipOrderListBeanItem(
     val totalInterestReal: String,
     val updateTime: Long,
     val userConfirmStatus: Int,
-    val waitRepayStatus: Any
-)
+    val waitRepayStatus: String
+):Parcelable
 
+
+@Parcelize
 data class RepaymentResponse(
     val allAmountDue: Int,
     val amountDue: Double,
     val applyAmount: Double,
     val bizId: String,
     val capital: Double,
-    val collectorName: Any,
+    val collectorName: String,
     val couponAmount: Double,
-    val extendDays: Any,
-    val extendsFee: Any,
     val extendsShouldAmount: Int,
     val factCapital: Double,
     val factFine: Double,
     val factInterest: Double,
     val factOtherTotalFee: Double,
     val factOverdueFee: Double,
-    val fees: Any,
+    val fees: ArrayList<Int>,
     val hairCutAmount: Int,
     val interest: Double,
     val isExtends: Int,
     val lid: Long,
-    val livingSignStatus: Any,
     val loanAmount: Double,
-    val loanStatus: Any,
-    val noPayStages: Any,
+    val noPayStages: String,
     val otherFee: Int,
     val overdueDays: Int,
     val penalty: Double,
     val period: Int,
     val periodTime: Long,
     val rate: Int,
-    val releaseTime: Any,
-    val repaymentResponseList: Any,
+    val releaseTime: String,
     val shouldCapital: Double,
     val shouldFine: Double,
     val shouldInterest: Double,
@@ -117,6 +118,6 @@ data class RepaymentResponse(
     val subtractOtherTotalFee: Double,
     val subtractOverdueFee: Double,
     val totalIVA: Int,
-    val totalIndex: Any,
+    val totalIndex: String,
     val totalInterestReal: Int
-)
+):Parcelable

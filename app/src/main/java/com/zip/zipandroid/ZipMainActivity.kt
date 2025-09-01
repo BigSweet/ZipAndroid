@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
+import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -20,6 +21,7 @@ import com.zip.zipandroid.event.ZipSwitchIndexEvent
 import com.zip.zipandroid.fragment.ZipHomeFragment
 import com.zip.zipandroid.fragment.ZipMineFragment
 import com.zip.zipandroid.fragment.ZipOrderListFragment
+import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipAllPerPop
 import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
@@ -62,6 +64,9 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.vpMain.setOffscreenPageLimit(mFragments.size)
         EventBusUtils.register(this)
         checkAllPer()
+        mViewBind.testBtn.setOnDelayClickListener {
+            ZipOrderDetailActivity.start(this,null)
+        }
     }
 
     fun checkAllPer() {

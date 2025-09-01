@@ -11,6 +11,7 @@ import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.shape.ShapeConstraintLayout
 import com.zip.zipandroid.shape.ShapeTextView
+import com.zip.zipandroid.view.toN
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,6 +47,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 //
 
     override fun convert(holder: BaseViewHolder, item: ZipOrderListBeanItem) {
+        holder.addOnClickListener(R.id.zip_order_item_show_detail_tv, R.id.zip_order_item_repay_btn, R.id.zip_order_item_finish_detail_tv)
         val zip_order_item_main_cl = holder.getView<ShapeConstraintLayout>(R.id.zip_order_item_main_cl)
         val zip_order_item_inner_cl = holder.getView<ShapeConstraintLayout>(R.id.zip_order_item_inner_cl)
         val zip_item_order_inner_top_tv = holder.getView<ShapeTextView>(R.id.zip_item_order_inner_top_tv)
@@ -61,7 +63,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         val zip_item_order_amount_tv = holder.getView<TextView>(R.id.zip_item_order_amount_tv)
         val zip_order_item_install_tv = holder.getView<TextView>(R.id.zip_order_item_install_tv)
         zip_item_order_no_tv.setText("Order No. " + item.bizId)
-        zip_item_order_amount_tv.setText(item.allAmountDue)
+        zip_item_order_amount_tv.setText(item.amountDue.toInt().toN())
 
 
         zip_order_item_show_detail_tv.hide()

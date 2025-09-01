@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zip.zipandroid.R
+import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.adapter.OrderItemListAdapter
 import com.zip.zipandroid.base.ZipBaseBindingFragment
+import com.zip.zipandroid.bean.ZipOrderListBeanItem
 import com.zip.zipandroid.databinding.FragmentZipItemOrderBinding
 import com.zip.zipandroid.viewmodel.OrderItemViewModel
 
@@ -28,6 +30,13 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         mViewModel.getOrderListInfo(queryType)
         mViewBind.itemOrderListRv.layoutManager = LinearLayoutManager(requireActivity())
         mViewBind.itemOrderListRv.adapter = adapter
+        adapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
+            val item = baseQuickAdapter.getItem(i) as ZipOrderListBeanItem
+            if(view.id==R.id.zip_order_item_finish_detail_tv || view.id==R.id.zip_order_item_show_detail_tv){
+                //订单详情页面
+                ZipOrderDetailActivity.start(requireActivity(),item)
+            }
+        }
 
 
     }
