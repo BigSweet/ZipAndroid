@@ -73,10 +73,11 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
         }
         mViewBind.detailSettleNowTv.hide()
         mViewBind.detailSettleNowTv.setOnDelayClickListener {
+            PayOrderDetailActivity.start(this, orderData)
 
         }
 
-        if(true){
+        if (true) {
             //如果有下一期 没下一期就隐藏
 
             orderData?.let {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zip.zipandroid.R
+import com.zip.zipandroid.activity.PayOrderDetailActivity
 import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.adapter.OrderItemListAdapter
 import com.zip.zipandroid.base.ZipBaseBindingFragment
@@ -35,6 +36,9 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
             if(view.id==R.id.zip_order_item_finish_detail_tv || view.id==R.id.zip_order_item_show_detail_tv){
                 //订单详情页面
                 ZipOrderDetailActivity.start(requireActivity(),item)
+            }
+            if(view.id==R.id.zip_order_item_repay_btn){
+                PayOrderDetailActivity.start(requireActivity(),item)
             }
         }
 
