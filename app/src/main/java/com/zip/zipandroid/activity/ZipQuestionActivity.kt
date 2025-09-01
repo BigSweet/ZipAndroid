@@ -13,10 +13,14 @@ import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.CreditListBeanItem
 import com.zip.zipandroid.bean.ZipUploadQuestionBean
 import com.zip.zipandroid.databinding.ActivityZipQuestionBinding
+import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipQuestionBinding>() {
 
@@ -27,6 +31,21 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             context.startActivity(starter)
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipFinishInfoEvent) {
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBusUtils.unregister(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBusUtils.register(this)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

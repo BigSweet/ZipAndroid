@@ -8,6 +8,7 @@ data class ZipAppConfigBean(
     val APP_REGISTER_AGREEMENT: String,
     val APP_CUSTOMER_SERVICE_WHATSAPP: String,
     val APP_CUSTOMER_SERVICE_ZALO: String,
+    val APP_MX_SOCIAL_MS_SWITCH: String,
     val APP_LOAN_CONTRACT: String,
     val APP_QA_ADV: String,
     val APP_REPAYMENT_AGREEMENT: String,

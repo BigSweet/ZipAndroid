@@ -34,6 +34,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
     var saveMemberInfoLiveData = MutableLiveData<Int>()
     var userInfoLiveData = MutableLiveData<ZipUserInfoBean>()
     var bandCardLiveData = MutableLiveData<ZipBandCardBean>()
+    var changeCardLiveData = MutableLiveData<Any>()
     var personDicLiveData = MutableLiveData<PersonalInformationDictBean>()
 
     fun getZipAppConfig() {
@@ -156,6 +157,42 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
                 override fun onSuccess(result: ZipBandCardBean) {
                     bandCardLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
+    fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.addParam("idBanki", bankId)
+        api.addParam("sunanBanki", bankName)
+        api.addParam("lambarKatin", cardNo)
+        api.addParam("nauInKatin", cardType)
+        api.addParam("sunanFarko", firstName)
+        api.addParam("cikakkenSunan", fullName)
+        api.addParam("lambarKatinAinihin", identityCardNo)
+        api.addParam("wayar", phone)
+        api.addParam("sunanKarshe", lastName)
+        api.addParam("status", "1")
+        api.addParam("id", id)
+        api.addParam("cvv2", cvv2)
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).changeCard(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<Any>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: Any) {
+                    changeCardLiveData.postValue(result)
                 }
 
                 override fun onFailure(code: Int, message: String?) {

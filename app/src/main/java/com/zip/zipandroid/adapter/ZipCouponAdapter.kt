@@ -3,6 +3,7 @@ package com.zip.zipandroid.adapter
 import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.zip.zipandroid.R
@@ -18,6 +19,8 @@ class ZipCouponAdapter : BaseQuickAdapter<ZipCouponItemBean, BaseViewHolder>(R.l
     var selectPosition = -1
     override fun convert(holder: BaseViewHolder, item: ZipCouponItemBean) {
         val item_coupon_price_tv = holder.getView<TextView>(R.id.item_coupon_price_tv)
+        val coupon_cl = holder.getView<ConstraintLayout>(R.id.coupon_cl)
+
         val item_coupon_name_tv = holder.getView<TextView>(R.id.item_coupon_name_tv)
         val select_coupon_iv = holder.getView<ImageView>(R.id.select_coupon_iv)
         select_coupon_iv.visible = selectCoupon == true
@@ -29,9 +32,13 @@ class ZipCouponAdapter : BaseQuickAdapter<ZipCouponItemBean, BaseViewHolder>(R.l
         val item_coupon_date_tv = holder.getView<TextView>(R.id.item_coupon_date_tv)
         if (couponStatus == 1) {
             //背景图也要改变一下
+            coupon_cl.setBackgroundResource(R.drawable.zip_bg_coupon)
+
             item_coupon_name_tv.setTextColor(Color.parseColor("#ffcd8f06"))
             item_coupon_date_tv.setTextColor(Color.parseColor("#ffb8ac94"))
         } else {
+            coupon_cl.setBackgroundResource(R.drawable.zip_bg_coupon_over)
+
             item_coupon_name_tv.setTextColor(Color.parseColor("#FF909AAA"))
             item_coupon_date_tv.setTextColor(Color.parseColor("#FFACBACF"))
         }

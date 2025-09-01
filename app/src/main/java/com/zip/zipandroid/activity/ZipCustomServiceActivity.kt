@@ -45,8 +45,9 @@ class ZipCustomServiceActivity : ZipBaseBindingActivity<ZipHomeViewModel, Activi
     override fun createObserver() {
         mViewModel.configLiveData.observe(this) {
             val whatApp = it?.APP_CUSTOMER_SERVICE_WHATSAPP
+            val phone = it?.APP_MX_SOCIAL_MS_SWITCH
             val email = it?.APP_CUSTOMER_SERVICE_EMAIL
-            mViewBind.zipPhoneTv.setText(whatApp)
+            mViewBind.zipPhoneTv.setText(phone)
             mViewBind.zipWhatAppTv.setText(whatApp)
             mViewBind.zipEmailTv.setText(email)
 

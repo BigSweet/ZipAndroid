@@ -57,6 +57,9 @@ interface ZipApi {
     @POST("api/v4/ziplead/bankCard/bindCard")
     fun zipBandCard(@Body body: FormReq): Observable<ZipBaseRes<ZipBandCardBean>>
 
+    @POST("api/v4/ziplead/bankCard/changeCard")
+    fun changeCard(@Body body: FormReq): Observable<ZipBaseRes<Any>>
+
     @POST("api/v4/ziplead/checkBvn")
     fun checkBvnInfo(@Body body: FormReq): Observable<ZipBaseRes<BvnInfoBean>>
 

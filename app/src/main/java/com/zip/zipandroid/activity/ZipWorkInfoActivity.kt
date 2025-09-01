@@ -14,14 +14,18 @@ import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.databinding.ActivityZipWorkInfoBinding
+import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.Calendar
 
 class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipWorkInfoBinding>() {
@@ -31,6 +35,21 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             val starter = Intent(context, ZipWorkInfoActivity::class.java)
             context.startActivity(starter)
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipFinishInfoEvent) {
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBusUtils.unregister(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBusUtils.register(this)
     }
 
     //income和time必选 Freelancer

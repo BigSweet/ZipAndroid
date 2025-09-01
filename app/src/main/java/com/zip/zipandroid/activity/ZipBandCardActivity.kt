@@ -11,12 +11,16 @@ import com.zip.zipandroid.bean.ZipBankNameListBeanItem
 import com.zip.zipandroid.bean.ZipQueryCardBeanItem
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.ActivityZipBandCardBinding
+import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipBankNamePop
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipBandCardBinding>() {
 
@@ -29,6 +33,22 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipFinishInfoEvent) {
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBusUtils.unregister(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBusUtils.register(this)
+    }
+
     var fromMine = false
     override fun initView(savedInstanceState: Bundle?) {
         fromMine = intent.getBooleanExtra("fromMine",false)
@@ -101,6 +121,13 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //            dismissLoading()
 //        }
         mViewModel.bandCardLiveData.observe(this) {
+            currentBandCardBean?.let {
+                mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
+                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone())
+            }
+
+        }
+        mViewModel.changeCardLiveData.observe(this){
             mViewModel.saveMemberBehavior(Constants.TYPE_BANK)
         }
         mViewModel.saveMemberInfoLiveData.observe(this) {
@@ -112,6 +139,9 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 }else{
 //                    ToastUtils.showShort("finish5")
                     //进入额度计算页面
+                    EventBusUtils.post(ZipFinishInfoEvent())
+                    //选择放款银行卡
+                    finish()
                 }
 //
 
