@@ -119,6 +119,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
                 }
 
                 override fun onSuccess(result: ZipRealNameBean) {
+                    UserInfoUtils.saveCusId(result.custId)
                     realNameInfoLiveData.postValue(result)
                 }
 

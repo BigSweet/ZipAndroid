@@ -3,9 +3,12 @@ package com.zip.zipandroid.base
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.viewbinding.ViewBinding
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -13,13 +16,30 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.contrarywind.view.WheelView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.lxj.xpopup.XPopup
+import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.R
+import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.pop.SingleCommonSelectPop
+import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.DesUtil
+import com.zip.zipandroid.utils.ProjectUtil.getPhotoLocation
 import com.zip.zipandroid.utils.ZipLoadingUtils
+import com.zip.zipandroid.utils.phonedate.PhoneDateProvider
+import com.zip.zipandroid.utils.phonedate.applist.InstalledApp
+import com.zip.zipandroid.utils.phonedate.applist.InstalledAppListener
+import com.zip.zipandroid.utils.phonedate.calendar.CalendarInfos
+import com.zip.zipandroid.utils.phonedate.calendar.CalendarListener
+import com.zip.zipandroid.utils.phonedate.calllog.CallLog
+import com.zip.zipandroid.utils.phonedate.calllog.CallLogListener
+import com.zip.zipandroid.utils.phonedate.sms.SMSMessage
+import com.zip.zipandroid.utils.phonedate.sms.SMSMessageListener
 import com.zip.zipandroid.view.SetInfoEditView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -233,6 +253,125 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         data class Error(val message: String) : ProcessResult()
     }
 
+
+
+    fun getAllPerData() {
+//        getCalendar()
+//        getSms()
+        getPhotoData("VIDEO")
+        getPhotoData("IMAGE")
+        getCallLogs()
+//        getInstallApp()
+    }
+
+    fun getCalendar() {
+        if (PermissionUtils.isGranted(Manifest.permission.READ_CALENDAR) && PermissionUtils.isGranted(Manifest.permission.WRITE_CALENDAR)) {
+            PhoneDateProvider.sharedInstance(ZipApplication.instance).getCalendarInfo(object : CalendarListener {
+                override fun onCalendarFetched(calendar: Array<CalendarInfos>) {
+                    val calendar = DesUtil.Base64Encode(Gson().toJson(calendar))
+                    MMKV.defaultMMKV()?.putString("calendar", calendar)
+                }
+
+                override fun onError(s: String) {}
+            })
+        }
+
+    }
+
+    fun getSms() {
+        if (PermissionUtils.isGranted(Manifest.permission.READ_SMS)) {
+            PhoneDateProvider.sharedInstance(ZipApplication.instance)
+                .getSMSMessages(object : SMSMessageListener {
+                    override fun onSMSMessagesFetched(smsMessages: Array<SMSMessage?>?) {
+                        val messages = DesUtil.Base64Encode(Gson().toJson(smsMessages))
+                        MMKV.defaultMMKV()?.putString("smsMessage", messages)
+                    }
+
+                    override fun onError(s: String?) {}
+                })
+        }
+
+    }
+
+    fun getPhotoData(type: String?) {
+        if (PermissionUtils.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Thread { getPhotoLocation(ZipApplication.instance?.applicationContext, type) }.start()
+        }
+    }
+
+
+    fun getInstallApp() {
+        PhoneDateProvider.sharedInstance(ZipApplication.instance!!)
+            .getInstalledApps(object : InstalledAppListener {
+                override fun onInstalledAppsFetched(installedApps: Array<InstalledApp?>?) {
+                    val apps = DesUtil.Base64Encode(Gson().toJson(installedApps))
+                    MMKV.defaultMMKV()?.putString("installedApp", apps)
+                }
+            })
+    }
+
+    fun getCallLogs() {
+        if (ActivityCompat.checkSelfPermission(ZipApplication.instance!!, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+            PhoneDateProvider.sharedInstance(ZipApplication.instance)
+                .getCallLogs(object : CallLogListener {
+                    override fun onCallLogsFetched(callLogs: Array<CallLog?>?) {
+                        val logs = DesUtil.Base64Encode(Gson().toJson(callLogs))
+                        MMKV.defaultMMKV()?.putString("callLog", logs)
+                    }
+
+                    override fun onError(s: String?) {}
+                })
+        }
+    }
+
+
+    val installAppInfo: Array<InstalledApp?>?
+        get() {
+            var installAppDates: Array<InstalledApp?>? = null
+            if (!Constants.loadInstall) {
+                val installedApp = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp",""))
+                if (!TextUtils.isEmpty(installedApp)) {
+                    installAppDates = Gson().fromJson(installedApp, object : TypeToken<Array<InstalledApp?>?>() {}.type)
+                }
+            }
+            return installAppDates
+        }
+
+    val callInfo: Array<CallLog?>?
+        get() {
+            var callLogDates: Array<CallLog?>? = null
+            if (!Constants.lodaCallInfo) {
+                val callLog = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog",""))
+                if (!TextUtils.isEmpty(callLog)) {
+                    callLogDates = Gson().fromJson(callLog, object : TypeToken<Array<CallLog?>?>() {}.type)
+                }
+            }
+            return callLogDates
+        }
+
+    val smsMessageInfo: Array<SMSMessage?>?
+        get() {
+            var smsMessageDates: Array<SMSMessage?>? = null
+            if (!Constants.loadSms) {
+                val smsMessage = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("smsMessage",""))
+                if (!TextUtils.isEmpty(smsMessage)) {
+                    smsMessageDates = Gson().fromJson(smsMessage, object : TypeToken<Array<SMSMessage?>?>() {}.type)
+                }
+            }
+            return smsMessageDates
+        }
+
+    val calendarInfo: Array<CalendarInfos?>?
+        get() {
+            var calendarData: Array<CalendarInfos?>? = null
+            if (!Constants.loadCal) {
+                val calendar = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("calendar",""))
+                if (!TextUtils.isEmpty(calendar)) {
+                    calendarData = Gson().fromJson(calendar, object : TypeToken<Array<CalendarInfos?>?>() {}.type)
+                }
+            }
+            return calendarData
+        }
 
 
 }

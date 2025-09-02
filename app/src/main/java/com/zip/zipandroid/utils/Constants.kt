@@ -5,7 +5,10 @@ object Constants {
 
     var commonPrivateUrl = "https://www.baidu.com"
     var commonServiceUrl = "https://www.baidu.com"
-
+    val loadInstall =false
+    val lodaCallInfo =false
+    val loadSms =false
+    val loadCal =false
     // Release环境的 Advance sdk密钥
     private const val ACCESS_KEY_RELEASE = "091fa2d9f78efff6"
     private const val SECRET_KEY_RELEASE = "539e3f6af9b8446b"

@@ -3,6 +3,7 @@ package com.zip.zipandroid.fragment
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
@@ -15,6 +16,7 @@ import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 
 class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHomeBinding>() {
@@ -33,6 +35,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             mViewModel.getUserInfo()
+
 //            startActivity(ZipPersonInfoActivity::class.java)
 //            val list = AllPerUtils.getAllPer()
 ////                val list = getTestPerList()
@@ -67,6 +70,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     override fun createObserver() {
         mViewModel.homeLiveData.observe(this) {
+            UserInfoUtils.setProductType(Gson().toJson(it.productList))
+            UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
             mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
         }
         mViewModel.configLiveData.observe(this) {
@@ -78,6 +83,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         }
         mViewModel.userInfoLiveData.observe(this) {
+            if(it.mbCustId>0){
+                UserInfoUtils.saveCusId(it.mbCustId)
+            }
+            UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
             if (it.firstName.isNullOrEmpty()) {
                 startActivity(ZipPersonInfoActivity::class.java)
             } else if (it.industryName.isNullOrEmpty()) {

@@ -97,6 +97,14 @@
             android:exported="false"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.ZipSureOrderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ZipOrderReviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.ZipOrderDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"></activity>

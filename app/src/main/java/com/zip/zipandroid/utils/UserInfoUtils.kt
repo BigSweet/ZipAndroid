@@ -1,6 +1,10 @@
 package com.zip.zipandroid.utils
 
+import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
+import com.zip.zipandroid.bean.ProductDidInfo
+import com.zip.zipandroid.bean.ProductList
+import com.zip.zipandroid.bean.ZipUserInfoBean
 
 object UserInfoUtils {
 
@@ -8,6 +12,8 @@ object UserInfoUtils {
     private var mMid: Long = 0
     private var mUserNo: String = ""
     private var mUserPhone: String = ""
+    private var productType: String = ""
+    private var custId: Long = 0
 
     fun setMid(mid: Long) {
         mMid = mid
@@ -24,6 +30,17 @@ object UserInfoUtils {
             mMid = mid
         }
         return mid
+    }
+
+    fun getCusId(): Long {
+        if (custId > 0) {
+            return custId
+        }
+        val custId = MMKV.defaultMMKV()?.getLong("custId", 0) ?: 0
+        if (custId > 0) {
+            this.custId = custId
+        }
+        return custId
     }
 
     fun setSignKey(signKey: String) {
@@ -63,9 +80,12 @@ object UserInfoUtils {
     fun clear() {
         MMKV.defaultMMKV()?.remove("zipsignKey")
         MMKV.defaultMMKV()?.remove("zipmid")
-        MMKV.defaultMMKV()?.remove("zipuserNo")
+        MMKV.defaultMMKV()?.remove("custId")
         MMKV.defaultMMKV()?.remove("zipuserNo")
         MMKV.defaultMMKV()?.remove("zipuserphone")
+        MMKV.defaultMMKV()?.remove("zipproductDue")
+        MMKV.defaultMMKV()?.remove("zipuserInfo")
+        MMKV.defaultMMKV()?.remove("productType")
         mSignKey = ""
         mUserNo = ""
         mMid = 0L
@@ -85,6 +105,51 @@ object UserInfoUtils {
             mUserPhone = phone
         }
         return mUserPhone
+    }
+
+
+    fun getUserInfo(): ZipUserInfoBean {
+        val infoStr = MMKV.defaultMMKV()?.getString("zipuserInfo", "")
+        info = Gson().fromJson(infoStr, ZipUserInfoBean::class.java)
+        return info!!
+    }
+
+    fun saveUserInfo(userInfo: String) {
+        MMKV.defaultMMKV()?.putString("zipuserInfo", userInfo)
+    }
+
+
+    private var info: ZipUserInfoBean? = null
+    private var product: ProductList? = null
+
+    fun getProductType(): ProductList {
+        val infoStr = MMKV.defaultMMKV()?.getString("productType", "")
+        product = Gson().fromJson(infoStr, ProductList::class.java)
+        return product!!
+    }
+
+    fun setProductType(productType: String) {
+        this.productType = productType
+        MMKV.defaultMMKV()?.putString("productType", productType)
+    }
+
+
+    fun saveProductDue(productDue: String) {
+        MMKV.defaultMMKV()?.putString("zipproductDue", productDue)
+    }
+
+    var mMacawProductDue: ProductDidInfo? = null
+    fun getProductDue(): ProductDidInfo {
+        if (mMacawProductDue == null) {
+            val infoStr = MMKV.defaultMMKV()?.getString("zipproductDue", "")
+            mMacawProductDue = Gson().fromJson(infoStr, ProductDidInfo::class.java)
+        }
+        return mMacawProductDue!!
+    }
+
+    fun saveCusId(custId: Long) {
+        this.custId = custId
+        MMKV.defaultMMKV()?.putLong("custId", custId)
     }
 
 

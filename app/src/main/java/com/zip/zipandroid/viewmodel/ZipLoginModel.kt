@@ -31,6 +31,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("rijistaDaga", 999)
         api.addParam("IMEI", DeviceUtils.getAndroidID())
         api.addParam("nauIn", 0)
+//        api.addParam("channelUtmInfo", ZipChannelUtmInfo())
         api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

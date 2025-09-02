@@ -142,6 +142,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                     EventBusUtils.post(ZipFinishInfoEvent())
                     //选择放款银行卡
                     finish()
+                    ZipOrderReviewActivity.start(this,it.toString())
                 }
 //
 

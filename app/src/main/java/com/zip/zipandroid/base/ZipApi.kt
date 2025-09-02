@@ -4,18 +4,23 @@ import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
+import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipBankNameListBean
+import com.zip.zipandroid.bean.ZipBizBean
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
+import com.zip.zipandroid.bean.ZipOrderAdmissionBean
 import com.zip.zipandroid.bean.ZipOrderListBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
+import com.zip.zipandroid.bean.ZipRiskLevelBean
+import com.zip.zipandroid.bean.ZipTriaBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.FormReq
 import io.reactivex.Observable
@@ -32,8 +37,19 @@ interface ZipApi {
     fun getCode(@Body body: FormReq): Observable<ZipBaseRes<ZipCodeBean>>
 
 
+    @POST("api/v4/ziplead/product/trial")
+    fun orderTrial(@Body body: FormReq): Observable<ZipBaseRes<ZipTriaBean>>
+
+
+
+    @POST("api/v4/ziplead/product/findProductDueByPid")
+    fun findProductDueByPid(@Body body: FormReq): Observable<ZipBaseRes<ProductPidBean>>
+
     @POST("api/v4/ziplead/customer/login")
     fun zipLogin(@Body body: FormReq): Observable<ZipBaseRes<ZipLoginResponse>>
+
+    @POST("api/v4/ziplead/risk_level")
+    fun getRiskLevel(@Body body: FormReq): Observable<ZipBaseRes<ZipRiskLevelBean>>
 
 
     @POST("api/v4/ziplead/product/origin")
@@ -110,4 +126,13 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/bankCard/bankList")
     fun getBankList(@Body body: FormReq): Observable<ZipBaseRes<ZipBankNameListBean>>
+
+
+    @POST("api/v4/ziplead/admittanceSubmmit")
+    fun admission(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderAdmissionBean>>
+
+
+    @POST("api/v4/ziplead/creationOrderBefore")
+    fun creationOrderBefore(@Body body: FormReq): Observable<ZipBaseRes<ZipBizBean>>
+
 }
