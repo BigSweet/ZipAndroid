@@ -40,6 +40,11 @@ interface ZipApi {
     @POST("api/v4/ziplead/product/trial")
     fun orderTrial(@Body body: FormReq): Observable<ZipBaseRes<ZipTriaBean>>
 
+    @POST("api/v4/ziplead/creationOrderByMx")
+    fun creationOrderByMx(@Body body: FormReq): Observable<ZipBaseRes<ZipBizBean>>
+
+
+
 
 
     @POST("api/v4/ziplead/product/findProductDueByPid")

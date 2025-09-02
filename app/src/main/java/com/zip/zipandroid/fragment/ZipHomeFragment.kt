@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
+import com.zip.zipandroid.activity.ZipOrderReviewActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.activity.ZipWebActivity
@@ -83,10 +84,17 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         }
         mViewModel.userInfoLiveData.observe(this) {
-            if(it.mbCustId>0){
+
+            if (it.mbCustId > 0) {
                 UserInfoUtils.saveCusId(it.mbCustId)
             }
             UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
+            if (it.doubleLoan == 1) {
+                //复贷用户直接跳计算
+                ZipOrderReviewActivity.start(requireActivity(), "")
+                return@observe
+            }
+
             if (it.firstName.isNullOrEmpty()) {
                 startActivity(ZipPersonInfoActivity::class.java)
             } else if (it.industryName.isNullOrEmpty()) {
@@ -106,6 +114,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 startActivity(ZipBandCardActivity::class.java)
             } else {
                 //去额度计算页面
+                ZipOrderReviewActivity.start(requireActivity(), "")
             }
         }
 

@@ -63,6 +63,35 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     }
 
     override fun createObserver() {
+        mViewModel.preOrderLiveData.observe(this) {
+            it ?: return@observe
+            preBizId = it.bizId ?: ""
+            getRiskLevel(it.bizId ?: "")
+        }
+        mViewModel.admissionLiveData.observe(this) {
+            if (it.admission == 0) {
+                preOrder()
+            }
+        }
+
+        mViewModel.productLiveData.observe(this) {
+            if (!it.productDueList.isNullOrEmpty()) {
+                did = (it.productDueList?.first()?.did ?: 0L).toString()
+                ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
+                    ?: "")
+            }
+        }
+
+        mViewModel.realOrderLiveData.observe(this) {
+            currentBizId = it?.bizId ?: ""
+            interValRange(it?.bizId ?: "")
+        }
+
+        mViewModel.riskLevelLiveData.observe(this) {
+            levelBean = it
+            amount = it.grantAmount.toString()
+            getPidProduct(it.riskLevel ?: "")
+        }
 //        mViewModel.userOrderLiveData.observe(this) {
 //            it ?: return@observe
 //            if (it.status == "WAITING") {
@@ -83,11 +112,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
 
     fun preOrder() {
         mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, currentBizId)
-        mViewModel.preOrderLiveData.observe(this) {
-            it ?: return@observe
-            preBizId = it.bizId ?: ""
-            getRiskLevel(it.bizId ?: "")
-        }
+
     }
 
     override fun getData() {
@@ -100,41 +125,24 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     var levelBean: ZipRiskLevelBean? = null
     fun getRiskLevel(bizId: String) {
         mViewModel.getRiskLevel(bizId)
-        mViewModel.riskLevelLiveData.observe(this) {
-            levelBean = it
-            amount = it.grantAmount.toString()
-            getPidProduct(it.riskLevel ?: "")
-        }
+
     }
 
     fun getPidProduct(riskGrade: String) {
         mViewModel.getPidProduct(riskGrade)
-        mViewModel.productLiveData.observe(this) {
-            if (!it.productDueList.isNullOrEmpty()) {
-                did = (it.productDueList?.first()?.did ?: 0L).toString()
-                ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
-                    ?: "")
-            }
-        }
+
     }
 
 
     private fun orderAdmission() {
         mViewModel.admission()
-        mViewModel.admissionLiveData.observe(this) {
-            if (it.admission == 0) {
-                preOrder()
-            }
-        }
+
     }
 
-//    fun realOrder() {
-//        mViewModel.realOrder(amount, did, myBankName, myBankId, fullName, levelBean?.riskLevel.toString(), preBizId, callInfo, installAppInfo, smsMessageInfo, calendarInfo)
-//        mViewModel.realOrderLiveData.observe(this) {
-//            currentBizId = it?.bizId ?: ""
-//            interValRange(it?.bizId ?: "")
-//        }
-//    }
+    fun realOrder() {
+        mViewModel.realOrder(amount, did, myBankName, myBankId, fullName, levelBean?.riskLevel.toString(), preBizId, callInfo, installAppInfo, smsMessageInfo, calendarInfo)
+
+    }
 
     var currentBizId = ""
 

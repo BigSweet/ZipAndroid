@@ -24,11 +24,11 @@ import org.greenrobot.eventbus.ThreadMode
 
 class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, ActivityZipBandCardBinding>() {
 
-    companion object{
+    companion object {
         @JvmStatic
-        fun start(context: Context,fromMine:Boolean) {
+        fun start(context: Context, fromMine: Boolean) {
             val starter = Intent(context, ZipBandCardActivity::class.java)
-                .putExtra("fromMine",fromMine)
+                .putExtra("fromMine", fromMine)
             context.startActivity(starter)
         }
 
@@ -51,7 +51,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     var fromMine = false
     override fun initView(savedInstanceState: Bundle?) {
-        fromMine = intent.getBooleanExtra("fromMine",false)
+        fromMine = intent.getBooleanExtra("fromMine", false)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
@@ -127,22 +127,22 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
 
         }
-        mViewModel.changeCardLiveData.observe(this){
+        mViewModel.changeCardLiveData.observe(this) {
             mViewModel.saveMemberBehavior(Constants.TYPE_BANK)
         }
         mViewModel.saveMemberInfoLiveData.observe(this) {
             if (it == Constants.TYPE_BANK) {
                 //下一个界面
                 dismissLoading()
-                if(fromMine){
+                if (fromMine) {
                     finish()
-                }else{
+                } else {
 //                    ToastUtils.showShort("finish5")
                     //进入额度计算页面
                     EventBusUtils.post(ZipFinishInfoEvent())
                     //选择放款银行卡
                     finish()
-                    ZipOrderReviewActivity.start(this,it.toString())
+                    ZipOrderReviewActivity.start(this, "")
                 }
 //
 

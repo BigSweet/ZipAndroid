@@ -2,6 +2,8 @@ package com.zip.zipandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.AppUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
@@ -178,6 +180,68 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
 
     }
+
+
+
+    fun realOrder(
+        applyAmount: String,
+        applyPeriod: String,
+        myBankName: String,
+        myBankId: String,
+        fullName: String,
+        riskLevel: String,
+        bizId: String,
+        callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
+    ) {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api.addParam("productName", UserInfoUtils.getProductType().productName.toString())
+        api
+            .addParam("userNo", UserInfoUtils.getUserNo())
+            .addParam("applyPeriod", applyPeriod)
+            .addParam("custId", UserInfoUtils.getUserInfo().custId.toString())
+            .addParam("applyAmount", applyAmount)
+            .addParam("deviceId", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)
+            .addParam("productType", UserInfoUtils.getProductType().productType.toString())
+            .addParam("bizId", bizId)
+            .addParam("source", "ANDROID")
+            .addParam("mid", UserInfoUtils.getMid().toString())
+            .addParam("repayment", "0")
+        val pushData = ZipPushData()
+        pushData.setCallLogs(callInfo)
+        pushData.setInstalledApps(installAppInfo)
+        pushData.setMessage(smsMessageInfo)
+        pushData.setCalendarInfos(calendarInfo)
+        pushData.setMediaData()
+        val bean = UserInfoUtils.getUserInfo()
+//        bean.cardNo = UserInfoUtils.getSelectBank().cardNo.toString()
+//        bean.riskLevel = riskLevel.toString()
+//        bean.bankName = myBankName
+//        bean.cardName = myBankName
+//        bean.bankId = myBankId
+//        bean.accountName = fullName
+////        bean.taxNumber = UserInfoUtils.getShuiNumber()
+//        bean.emergentContacts = Gson().fromJson(bean.emergencyContactPerson,
+//            object : TypeToken<List<MacawEmergentContactsBean>>() {}.type)
+        treeMap.putAll(api)
+        api.addParam("pushData", pushData)
+        api.addParam("customerInfo", bean)
+        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderByMx(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipBizBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipBizBean) {
+                    realOrderLiveData.postValue(result)
+                }
+            })
+
+    }
+    val realOrderLiveData = MutableLiveData<ZipBizBean?>()
 
     val preOrderLiveData = MutableLiveData<ZipBizBean?>()
 
