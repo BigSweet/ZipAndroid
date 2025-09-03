@@ -56,7 +56,7 @@ data class CreditOrderList(
     val phoneNum: String,
     val productType: String,
     val rate: Any,
-    val releaseTime: Any,
+    val releaseTime: Long,
     val repaymentResponseList: Any,
     val shouldCapital: Any,
     val shouldFine: Any,

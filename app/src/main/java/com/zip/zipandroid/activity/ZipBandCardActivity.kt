@@ -120,10 +120,10 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //        mViewModel.bankListLiveData.observe(this) {
 //            dismissLoading()
 //        }
-        mViewModel.bandCardLiveData.observe(this) {
+        mViewModel.bandCardLiveData.observe(this) { bandIt->
             currentBandCardBean?.let {
                 mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
-                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone())
+                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(),bandIt.tiedCardId)
             }
 
         }

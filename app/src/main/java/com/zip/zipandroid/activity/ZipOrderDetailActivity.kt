@@ -56,7 +56,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
             mViewBind.detailTotalTermsTv.setText(it.stageCount)
             mViewBind.detailOrderNoTv.setText(it.bizId)
             mViewBind.detailApplicationTimeTv.setText(it.applyTime.formatTimestampToDate())
-            mViewBind.detailLoadDisTimeTv.setText(it.releaseTime)
+            mViewBind.detailLoadDisTimeTv.setText(it.releaseTime.formatTimestampToDate())
             mViewBind.detailReceAccountTv.setText(it.bankId)
 
 

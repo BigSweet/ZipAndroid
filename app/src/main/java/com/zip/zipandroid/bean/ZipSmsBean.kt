@@ -1,21 +1,21 @@
 package com.zip.zipandroid.bean
 
 class ZipSmsBean {
-    var address: String? = null
-    var body: String? = null
-    var date: String? = null
-    var dateSent: String? = null
-    var status: String? = null
+    var adireshin: String? = null
+    var jiki: String? = null
+    var kwananWata: String? = null
+    var kwananWataAika: String? = null
+    var matsayin: String? = null
         private set
-    var type: String? = null
+    var nauIn: String? = null
         private set
 
     fun setStatus(status: Int) {
-        this.status = getStatusEnumString(status)
+        this.matsayin = getStatusEnumString(status)
     }
 
     fun setType(type: Int) {
-        this.type = getTypeEnumString(type)
+        this.nauIn = getTypeEnumString(type)
     }
 
     private fun getStatusEnumString(status: Int): String {

@@ -87,7 +87,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
             .addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
-            .addParam("nauInSamfur", UserInfoUtils.getProductType())
+            .addParam("nauInSamfur", UserInfoUtils.getProductType().productType)
         treeMap.putAll(api)
         api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).admission(api)
@@ -138,16 +138,16 @@ class ZipReviewModel : ZipBaseViewModel() {
     ) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("sourceChannel", "google-play")
-        api.addParam("bizId", currentBizId)
-        api.addParam("applyAmount", "")
-        api.addParam("applyPeriod", "")
-        api.addParam("productType", UserInfoUtils.getProductType().productType)
-        api.addParam("productName", UserInfoUtils.getProductType().productName)
-        api.addParam("ambushThirdKeyInfo", "")
-        api.addParam("repayment", "4")
-        api.addParam("custId", UserInfoUtils.getUserInfo().custId.toString())
-        api.addParam("deviceId", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)
+        api.addParam("tasharTushe", "google-play")
+//        api.addParam("bizId", currentBizId)
+//        api.addParam("applyAmount", "")
+//        api.addParam("applyPeriod", "")
+        api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
+        api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
+        api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
+//        api.addParam("repayment", "4")
+        api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
+        api.addParam("idNaUra", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
         val pushData = ZipPushData()
         pushData.setCallLogs(callInfo)
         pushData.setInstalledApps(installAppInfo)
@@ -163,8 +163,8 @@ class ZipReviewModel : ZipBaseViewModel() {
 //        bean.emergentContacts = Gson().fromJson(bean.emergencyContactPerson,
 //            object : TypeToken<List<MacawEmergentContactsBean>>() {}.type)
         treeMap.putAll(api)
-        api.addParam("pushData", pushData)
-        api.addParam("customerInfo", bean)
+        api.addParam("turaBayanan", pushData)
+        api.addParam("bayaninAbokinCiniki", bean)
         api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderBefore(api)
             .compose(RxSchedulers.io_main())

@@ -166,7 +166,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
             })
     }
 
-    fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String) {
+    fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String,tiedCardId:String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         api.addParam("idBanki", bankId)
@@ -179,7 +179,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
         api.addParam("wayar", phone)
         api.addParam("sunanKarshe", lastName)
         api.addParam("status", "1")
-//        api.addParam("id", id)
+        api.addParam("ID", tiedCardId)
 //        api.addParam("cvv2", cvv2)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

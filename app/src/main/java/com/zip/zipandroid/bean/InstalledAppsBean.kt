@@ -1,8 +1,8 @@
 package com.zip.zipandroid.bean
 
 class InstalledAppsBean {
-    var appLabel: String? = null
-    var firstInstallTime: String? = null
-    var lastUpdateTime: String? = null
-    var packageName: String? = null
+    var alamarAiki: String? = null
+    var lokacinShigarFarko: String? = null
+    var lokacinSabuntawaKarshe: String? = null
+    var sunanFakitin: String? = null
 }

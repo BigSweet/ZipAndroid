@@ -1,13 +1,13 @@
 package com.zip.zipandroid.bean
 
 class ZipCallLogBean {
-    var name: String? = null
-    var number: String? = null
-    var date: String? = null
-    var duration: String? = null
+    var sunan: String? = null
+    var lambar: String? = null
+    var kwananWata: String? = null
+    var tsawonLokaci: String? = null
 
     //            this.type = getCallTypeEnumString(type);
-    var type: String? = null
+    var nauIn: String? = null
 
     private fun getCallTypeEnumString(type: Int): String {
         var desc = "UNKNOWN_TYPE"

