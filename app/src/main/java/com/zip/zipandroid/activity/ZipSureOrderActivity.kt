@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
+import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 
@@ -24,6 +25,12 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var amount = ""
     var riskLevel = ""
     override fun initView(savedInstanceState: Bundle?) {
+        updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
+        mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            finish()
+        }
+        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
+
         mViewModel.orderTrial(amount, riskLevel, UserInfoUtils.getProductDue()?.did)
     }
 

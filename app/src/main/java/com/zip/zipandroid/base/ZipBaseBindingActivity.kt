@@ -254,14 +254,15 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
 
+//    设备信息、短信、日历、蓝牙、Advertising ID、WIFI这些都要吗
 
     fun getAllPerData() {
-//        getCalendar()
-//        getSms()
-        getPhotoData("VIDEO")
-        getPhotoData("IMAGE")
-        getCallLogs()
-//        getInstallApp()
+        getCalendar()
+        getSms()
+//        getPhotoData("VIDEO")
+//        getPhotoData("IMAGE")
+//        getCallLogs()
+        getInstallApp()
     }
 
     fun getCalendar() {

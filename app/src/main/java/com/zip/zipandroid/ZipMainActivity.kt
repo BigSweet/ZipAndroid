@@ -88,6 +88,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
                     .callback(object : PermissionUtils.FullCallback {
                         override fun onGranted(permissionsGranted: List<String>) {
                             //拿数据吗
+                            getAllPerData()
                         }
 
                         override fun onDenied(
@@ -101,6 +102,8 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             }
             XPopup.Builder(getContext()).asCustom(pop).show()
 
+        }else{
+            getAllPerData()
         }
     }
 

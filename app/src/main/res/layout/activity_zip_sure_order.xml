@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,5 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.zip.zipandroid.shape.ShapeRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="204dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sv_rl_background="#3667F0"
+            app:sv_rl_radius_bottom_left="52dp"
+            app:sv_rl_radius_bottom_right="52dp" />
+
+        <include
+            android:id="@+id/private_include_title"
+            layout="@layout/include_title_bar" />
+
+
+        <ImageView
+            android:id="@+id/sure_order_top_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="74dp"
+            android:src="@drawable/zip_sure_order_top_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="71dp"
+            android:src="@drawable/zip_sure_order_coin_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sure_order_top_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

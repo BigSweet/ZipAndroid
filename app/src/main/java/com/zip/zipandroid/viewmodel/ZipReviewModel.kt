@@ -3,7 +3,6 @@ package com.zip.zipandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.AppUtils
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
@@ -12,6 +11,7 @@ import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.ZipBizBean
+import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
 import com.zip.zipandroid.bean.ZipPushData
 import com.zip.zipandroid.bean.ZipRiskLevelBean
@@ -89,7 +89,7 @@ class ZipReviewModel : ZipBaseViewModel() {
             .addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
             .addParam("nauInSamfur", UserInfoUtils.getProductType().productType)
         treeMap.putAll(api)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).admission(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipOrderAdmissionBean>() {
@@ -134,7 +134,6 @@ class ZipReviewModel : ZipBaseViewModel() {
     //设备信息、短信、日历、蓝牙、Advertising ID、WIFI这些都要吗
     fun preOrder(
         callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
-        currentBizId: String,
     ) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -154,6 +153,8 @@ class ZipReviewModel : ZipBaseViewModel() {
         pushData.setMessage(smsMessageInfo)
         pushData.setCalendarInfos(calendarInfo)
         pushData.setMediaData()
+        val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
+        pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
 //        bean.cardNo = UserInfoUtils.getSelectBank().cardNo.toString()
 //        bean.accountName = accountName
@@ -165,7 +166,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         treeMap.putAll(api)
         api.addParam("turaBayanan", pushData)
         api.addParam("bayaninAbokinCiniki", bean)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderBefore(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipBizBean>() {
@@ -180,7 +181,6 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
 
     }
-
 
 
     fun realOrder(
@@ -241,6 +241,7 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
 
     }
+
     val realOrderLiveData = MutableLiveData<ZipBizBean?>()
 
     val preOrderLiveData = MutableLiveData<ZipBizBean?>()

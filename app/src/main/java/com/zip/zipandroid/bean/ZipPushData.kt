@@ -18,7 +18,7 @@ class ZipPushData {
     var aikaceAikaceSanya: Array<InstalledAppsBean?>? = null
         private set
     var bayaninNaUra: DeviceInfoModel
-    var photoData: PhotoData = PhotoData()
+    var bayaninHoto: PhotoData = PhotoData()
 //    var calendarInfo: Array<CalendarInfos?>? = null
 //    var mediaDatas: MutableList<PhotoDataModel>? = null
 

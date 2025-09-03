@@ -178,7 +178,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
         api.addParam("lambarKatinAinihin", identityCardNo)
         api.addParam("wayar", phone)
         api.addParam("sunanKarshe", lastName)
-        api.addParam("status", "1")
+        api.addParam("matsayin", "1")
         api.addParam("ID", tiedCardId)
 //        api.addParam("cvv2", cvv2)
         treeMap.putAll(api)

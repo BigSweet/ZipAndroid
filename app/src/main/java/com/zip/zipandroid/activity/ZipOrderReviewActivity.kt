@@ -69,7 +69,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
             getRiskLevel(it.bizId ?: "")
         }
         mViewModel.admissionLiveData.observe(this) {
-            if (it.admission == 0) {
+            if (it.admission) {
                 preOrder()
             }
         }
@@ -111,7 +111,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     }
 
     fun preOrder() {
-        mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, currentBizId)
+        mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo)
 
     }
 
