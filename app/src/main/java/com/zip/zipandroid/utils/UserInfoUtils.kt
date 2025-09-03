@@ -89,6 +89,7 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.remove("zipproductDue")
         MMKV.defaultMMKV()?.remove("zipuserInfo")
         MMKV.defaultMMKV()?.remove("productType")
+        MMKV.defaultMMKV()?.remove("bankData")
         MMKV.defaultMMKV()?.remove("zipuploaduserInfo")
         mSignKey = ""
         mUserNo = ""

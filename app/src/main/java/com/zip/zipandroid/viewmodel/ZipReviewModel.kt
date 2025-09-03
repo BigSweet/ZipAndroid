@@ -16,6 +16,8 @@ import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipBizBean
+import com.zip.zipandroid.bean.ZipCouponItemBean
+import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
 import com.zip.zipandroid.bean.ZipPushData
@@ -38,7 +40,7 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     //    var userOrderLiveData = MutableLiveData<MacawOrderPayBean?>()
     var uploadUserInfoLiveData = MutableLiveData<RealUploadUserBean>()
-    fun getPidProduct(riskGrade: String) {
+    fun getPidProduct() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         api
@@ -59,17 +61,19 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
     }
 
-    fun orderTrial(loanAmount: String, riskGrade: String, did: Long) {
+    fun orderTrial(realAmount: Int, riskGrade: String, did: Long,couponId:String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("mid", UserInfoUtils.getMid().toString())
-            .addParam("userNo", UserInfoUtils.getUserNo())
-            .addParam("version", AppUtils.getAppVersionName())
-            .addParam("loanAmount", loanAmount)
-            .addParam("riskGrade", riskGrade)
-            .addParam("did", did)
+        if(!couponId.isNullOrEmpty()){
+            api
+                .addParam("idKatinTalla", couponId)
+        }
+        api
+            .addParam("adadinBashi", realAmount)
+            .addParam("matakinHadari", riskGrade)
+            .addParam("dNaUraid", did)
         treeMap.putAll(api)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).orderTrial(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipTriaBean>() {
@@ -279,6 +283,31 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
 
     }
+    var topCouponLiveData = MutableLiveData<ZipCouponItemBean?>()
+    fun topPriorityCoupon() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).topPriorityCoupon(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipCouponItemBean?>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipCouponItemBean?) {
+                    topCouponLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
 
     val realOrderLiveData = MutableLiveData<ZipBizBean?>()
 

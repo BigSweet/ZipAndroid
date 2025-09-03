@@ -14,6 +14,7 @@ import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipBizBean
 import com.zip.zipandroid.bean.ZipCodeBean
+import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
@@ -71,6 +72,10 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/coupon/myCouponList")
     fun getCouponList(@Body body: FormReq): Observable<ZipBaseRes<ZipCouponListBean>>
+
+    @POST("api/v4/ziplead/coupon/topPriorityCoupon")
+    fun topPriorityCoupon(@Body body: FormReq): Observable<ZipBaseRes<ZipCouponItemBean?>>
+
 
     @POST("api/v4/ziplead/bankCard/queryCard")
     fun zipQueryCard(@Body body: FormReq): Observable<ZipBaseRes<ZipQueryCardBean>>

@@ -11,6 +11,8 @@ class ZipTriaBean(
     val serviceFee: String,
     val shouldTime: Long,
     val totalAmount: String,
+    val couponAmount: String,
+    val count: Int,
     val totalFee: String,
     val totalInsterst: String,
 ) {
@@ -21,8 +23,9 @@ data class ZipRepayment(
     val factCapital: Int,
     val loanFeeDTO: List<ZipLoanFeeDTO>? = null,
     val rate: Int,
-    val shouldCapital: Int,
-    val shouldInterest: Int,
+    val shouldCapital: Double,
+    val shouldInterest: Double,
+    val shouldAmount: Double,
     val shouldTime: Long,
 )
 

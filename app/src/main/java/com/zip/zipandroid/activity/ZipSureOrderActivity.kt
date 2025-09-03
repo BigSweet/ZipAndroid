@@ -2,39 +2,227 @@ package com.zip.zipandroid.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
+import androidx.annotation.NonNull
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.zip.zipandroid.R
+import com.zip.zipandroid.adapter.ZipDurationAdapter
+import com.zip.zipandroid.adapter.ZipInstallAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
+import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
+import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.ktx.show
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipSureOrderBinding>() {
 
     companion object {
         @JvmStatic
         fun start(context: Context, amount: String, riskLevel: String) {
-            val starter = Intent(context, ZipSureOrderActivity::class.java)
-                .putExtra("amount", amount)
-                .putExtra("riskLevel", riskLevel)
+            val starter = Intent(context, ZipSureOrderActivity::class.java).putExtra("amount", amount).putExtra("riskLevel", riskLevel)
             context.startActivity(starter)
         }
 
     }
 
     var amount = ""
+    var realAmount = 0
     var riskLevel = ""
     override fun initView(savedInstanceState: Bundle?) {
+        amount = intent.getStringExtra("amount") ?: ""
+        riskLevel = intent.getStringExtra("riskLevel") ?: ""
+        realAmount = amount.toInt()
+        mViewBind.orderAddIv.setOnDelayClickListener {
+            //加金额 步长默认2000
+            if (realAmount > 2000) {
+                realAmount = realAmount + 2000
+            }
+            mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+        }
+
+        mViewBind.orderSubIv.setOnDelayClickListener {
+            //减金额
+            mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+        }
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
         }
-        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
+        mViewBind.zipSureInstallRv.layoutManager = LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)
+        mViewBind.zipSureDurationRv.layoutManager = LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)
+        mViewBind.zipSureInstallRv.adapter = installAdapter
+        mViewBind.zipSureDurationRv.adapter = duraAdapter
+        duraAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
+            val item = baseQuickAdapter.getItem(i) as ProductDidInfo
+            duraAdapter.selectPosition = i
+            duraAdapter.notifyDataSetChanged()
+            currentDid = item.did
+            mViewModel.orderTrial(realAmount, riskLevel, currentDid, currentCouponId)
+        }
 
-        mViewModel.orderTrial(amount, riskLevel, UserInfoUtils.getProductDue()?.did)
+        mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+
+        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
+        mViewModel.getPidProduct()
+        currentDid = UserInfoUtils.getProductDue()?.did
+        mViewModel.topPriorityCoupon()
+
     }
 
+    var currentDid = 0L
+    var currentCouponId = ""
+
+    var installAdapter = ZipInstallAdapter()
+    var duraAdapter = ZipDurationAdapter()
+
+    var currentPidBean: ProductDidInfo? = null
     override fun createObserver() {
+        mViewModel.topCouponLiveData.observe(this) {
+
+            if (it != null) {
+                currentCouponId = it.id.toString()
+                mViewModel.orderTrial(realAmount, riskLevel, currentDid, currentCouponId)
+
+            } else {
+                mViewModel.orderTrial(realAmount, riskLevel, currentDid, "")
+
+            }
+
+        }
+        mViewModel.productLiveData.observe(this) {
+            var realIndex = 0
+            it.forEachIndexed { index, productDidInfo ->
+                if (currentDid == productDidInfo.did) {
+                    currentPidBean = productDidInfo
+                    realIndex = index
+                }
+
+            }
+            if (currentPidBean != null) {
+                duraAdapter.selectPosition = realIndex
+            }
+            duraAdapter.setNewData(it)
+        }
+
+
+        mViewBind.orderPrivateClickView.setOnDelayClickListener {
+            if (orderSrc1Select) {
+                orderSrc1Select = false
+                mViewBind.zipOrderSelectIv.setImageResource(R.drawable.zip_login_normal_icon)
+                mViewBind.orderAcceptLoan.setEnabledPlus(false)
+            } else {
+                orderSrc1Select = true
+                mViewBind.zipOrderSelectIv.setImageResource(R.drawable.zip_login_select_icon)
+                mViewBind.orderAcceptLoan.setEnabledPlus(true)
+            }
+        }
+
+
+
+        mViewModel.orderTrialLiveData.observe(this) {
+            val list = splitNumber(it.count)
+            var realList = listOf<Int>()
+            if (list.size > 3) {
+                realList = list.subList(0, 3)
+            } else {
+                realList = list
+            }
+            installAdapter.setNewData(arrayListOf(it.count))
+//            installAdapter.setNewData(realList)
+            mViewBind.couponInterTv.setText(it.couponAmount)
+            mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())
+            mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
+            mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
+
+            mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
+            mViewBind.totalAmountTv.setText(it.totalAmount.toDouble().toN())
+            if (!it.repaymentList.isNullOrEmpty()) {
+                val itemRepay = it.repaymentList.first()
+                mViewBind.planPriceTv.setText(itemRepay.shouldAmount.toInt().toN())
+                mViewBind.planTimeTv.setText(formatTimestampToDate(itemRepay.shouldTime))
+            }
+            if (it.couponAmount != null && it.couponAmount.toInt() > 0) {
+                mViewBind.couponInterTv.show()
+                mViewBind.couponLineView.show()
+            } else {
+                mViewBind.couponLineView.hide()
+                mViewBind.couponInterTv.hide()
+
+            }
+        }
+
+
+        val span = SpannableStringBuilder()
+        span.append("I confirm that I have reviewed and accepted the ")
+        val start = span.length
+        span.append("Loan Agreement")
+        val end = span.length
+        span.setSpan(object : ClickableSpan() {
+            override fun onClick(@NonNull widget: View) {
+                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_LOAN_CONTRACT)
+            }
+
+            override fun updateDrawState(@NonNull ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = Color.parseColor("#00000000")
+            }
+        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        span.setSpan(ForegroundColorSpan(Color.parseColor("#FF3667F0")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        span.append(" and ")
+
+        val star1 = span.length
+        span.append("Repayment Contract")
+        val end1 = span.length
+        span.setSpan(object : ClickableSpan() {
+            override fun onClick(@NonNull widget: View) {
+                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_REPAYMENT_AGREEMENT)
+            }
+
+            override fun updateDrawState(@NonNull ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = Color.parseColor("#00000000")
+            }
+        }, star1, end1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        span.setSpan(ForegroundColorSpan(Color.parseColor("#FF3667F0")), star1, end1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+
+        mViewBind.zipOrderPrivateTv.movementMethod = LinkMovementMethod.getInstance()
+        mViewBind.zipOrderPrivateTv.highlightColor = Color.TRANSPARENT
+        mViewBind.zipOrderPrivateTv.setText(span)
+
+
+    }
+
+    var orderSrc1Select = false
+    fun splitNumber(n: Int): List<Int> {
+        require(n > 0) { "n must be a positive integer" }
+        return (1..n).toList()
+    }
+
+    fun formatTimestampToDate(timestamp: Long): String {
+        val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US) // 英文月份格式
+        val date = Date(timestamp)
+        return "${dateFormat.format(date)}"
     }
 
     override fun getData() {

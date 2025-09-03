@@ -19,3 +19,13 @@ fun Int.toN(): String {
     val formatted = "₦${decimalFormat.format(this)}"
     return formatted
 }
+
+fun String.toN():String{
+    val formatted = "₦${decimalFormat.format(this)}"
+    return formatted
+}
+
+fun Double.toN(): String {
+    val formatted = "₦${decimalFormat.format(this)}"
+    return formatted
+}

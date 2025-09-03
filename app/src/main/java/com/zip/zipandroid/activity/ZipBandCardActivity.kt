@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.ZipBankNameListBean
@@ -121,6 +122,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //            dismissLoading()
 //        }
         mViewModel.bandCardLiveData.observe(this) { bandIt->
+            UserInfoUtils.saveBankData(Gson().toJson(currentBandCardBean))
             currentBandCardBean?.let {
                 mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
                     userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(),bandIt.tiedCardId)

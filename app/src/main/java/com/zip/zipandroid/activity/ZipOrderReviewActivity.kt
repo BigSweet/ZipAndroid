@@ -91,13 +91,13 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
             mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it)
         }
 
-        mViewModel.productLiveData.observe(this) {
-            if (!it.isNullOrEmpty()) {
-                did = (it?.first()?.did ?: 0L).toString()
-                ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
-                    ?: "")
-            }
-        }
+//        mViewModel.productLiveData.observe(this) {
+//            if (!it.isNullOrEmpty()) {
+//                did = (it?.first()?.did ?: 0L).toString()
+//                ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
+//                    ?: "")
+//            }
+//        }
 
         mViewModel.realOrderLiveData.observe(this) {
             currentBizId = it?.bizId ?: ""
@@ -147,8 +147,10 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     }
 
     fun getPidProduct(riskGrade: String) {
-        mViewModel.getPidProduct(riskGrade)
-
+//        mViewModel.getPidProduct()
+        ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
+            ?: "")
+        finish()
     }
 
 

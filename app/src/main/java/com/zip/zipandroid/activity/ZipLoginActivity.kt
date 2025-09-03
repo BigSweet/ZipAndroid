@@ -11,11 +11,8 @@ import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import androidx.annotation.NonNull
-import com.bigkoo.pickerview.builder.TimePickerBuilder
-import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
@@ -25,10 +22,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.NoSpaceInputFilter
 import com.zip.zipandroid.utils.UserInfoUtils
-import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.viewmodel.ZipLoginModel
-import java.util.Calendar
-import java.util.Date
 
 
 class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginBinding>() {
@@ -127,9 +121,9 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
             }
             getZipCode()
         }
+        mViewModel.getZipAppConfig()
 //        show = Calendar.getInstance()
     }
-
 
 
     private fun getZipCode() {
@@ -148,6 +142,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         mViewModel.configLiveData.observe(this) {
             Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "www.baidu.com"//注册协议
             Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "www.baidu.com"//隐私协议
+            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "www.baidu.com"//隐私协议
+            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT ?: "www.baidu.com"//隐私协议
         }
         mViewModel.codeLiveData.observe(this) {
             ZipCodeActivity.start(this, "234" + mViewBind.zipLoginEdit.text.toString(), it?.code
