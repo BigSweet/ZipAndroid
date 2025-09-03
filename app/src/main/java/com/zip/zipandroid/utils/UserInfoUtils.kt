@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.ProductList
+import com.zip.zipandroid.bean.ZipUploadUserInfoBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 
 object UserInfoUtils {
@@ -111,6 +112,12 @@ object UserInfoUtils {
     fun getUserInfo(): ZipUserInfoBean {
         val infoStr = MMKV.defaultMMKV()?.getString("zipuserInfo", "")
         info = Gson().fromJson(infoStr, ZipUserInfoBean::class.java)
+        return info!!
+    }
+
+    fun getUploadUserInfo(): ZipUploadUserInfoBean {
+        val infoStr = MMKV.defaultMMKV()?.getString("zipuserInfo", "")
+        val info = Gson().fromJson(infoStr, ZipUploadUserInfoBean::class.java)
         return info!!
     }
 

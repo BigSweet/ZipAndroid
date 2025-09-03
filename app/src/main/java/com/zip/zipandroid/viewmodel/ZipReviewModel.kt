@@ -138,13 +138,9 @@ class ZipReviewModel : ZipBaseViewModel() {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
         api.addParam("tasharTushe", "google-play")
-//        api.addParam("bizId", currentBizId)
-//        api.addParam("applyAmount", "")
-//        api.addParam("applyPeriod", "")
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
         api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
-//        api.addParam("repayment", "4")
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
         api.addParam("idNaUra", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
         val pushData = ZipPushData()
@@ -155,7 +151,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         pushData.setMediaData()
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
-        val bean = UserInfoUtils.getUserInfo()
+        val bean = UserInfoUtils.getUploadUserInfo()
 //        bean.cardNo = UserInfoUtils.getSelectBank().cardNo.toString()
 //        bean.accountName = accountName
 //        bean.bankName = bankName
