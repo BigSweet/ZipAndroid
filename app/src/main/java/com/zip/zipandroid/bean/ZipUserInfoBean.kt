@@ -1,7 +1,7 @@
 package com.zip.zipandroid.bean
 
 data class ZipUserInfoBean(
-    val accountName: String,
+    var accountName: String,
     val age: Int?=-1,
     val bankId: String,
     val birthDate: Long,

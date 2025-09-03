@@ -5,6 +5,7 @@ import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.ProductPidBean
+import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
@@ -21,6 +22,7 @@ import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipTriaBean
+import com.zip.zipandroid.bean.ZipUploadUserInfoBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.FormReq
 import io.reactivex.Observable
@@ -74,6 +76,9 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/customer/queryBaseInfo")
     fun getUserInfo(@Body body: FormReq): Observable<ZipBaseRes<ZipUserInfoBean>>
+
+    @POST("api/v4/ziplead/customer/queryBaseInfo")
+    fun getUploadUserInfo(@Body body: FormReq): Observable<ZipBaseRes<RealUploadUserBean>>
 
     @POST("api/v4/ziplead/bankCard/bindCard")
     fun zipBandCard(@Body body: FormReq): Observable<ZipBaseRes<ZipBandCardBean>>

@@ -114,6 +114,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 startActivity(ZipBandCardActivity::class.java)
             } else {
                 //去额度计算页面
+                UserInfoUtils.saveBankData(Gson().toJson(it.first()))
                 ZipOrderReviewActivity.start(requireActivity(), "")
             }
         }

@@ -3,13 +3,17 @@ package com.zip.zipandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.AppUtils
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.base.RxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
+import com.zip.zipandroid.bean.OriginUploadContractBean
 import com.zip.zipandroid.bean.ProductPidBean
+import com.zip.zipandroid.bean.RealUploadUserBean
+import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipBizBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
@@ -30,8 +34,9 @@ import java.util.TreeMap
 class ZipReviewModel : ZipBaseViewModel() {
     val productLiveData = MutableLiveData<ProductPidBean>()
     val orderTrialLiveData = MutableLiveData<ZipTriaBean>()
-//    var userOrderLiveData = MutableLiveData<MacawOrderPayBean?>()
 
+    //    var userOrderLiveData = MutableLiveData<MacawOrderPayBean?>()
+    var uploadUserInfoLiveData = MutableLiveData<RealUploadUserBean>()
     fun getPidProduct(riskGrade: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -131,9 +136,34 @@ class ZipReviewModel : ZipBaseViewModel() {
     }
 
 
+    fun getUploadUserInfo() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getUploadUserInfo(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<RealUploadUserBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: RealUploadUserBean) {
+                    uploadUserInfoLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
     //设备信息、短信、日历、蓝牙、Advertising ID、WIFI这些都要吗
     fun preOrder(
         callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
+        info: RealUploadUserBean,
     ) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
@@ -151,17 +181,20 @@ class ZipReviewModel : ZipBaseViewModel() {
         pushData.setMediaData()
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
-        val bean = UserInfoUtils.getUploadUserInfo()
-//        bean.cardNo = UserInfoUtils.getSelectBank().cardNo.toString()
-//        bean.accountName = accountName
+        val bean = UserInfoUtils.getUserInfo()
+        info.cardNo = UserInfoUtils.getBankData().cardNo.toString()
+        info.accountName = UserInfoUtils.getUserInfo().accountName
 //        bean.bankName = bankName
-//        bean.bankId = bankId
+        info.bankId = UserInfoUtils.getBankData().bankId.toString()
 //        bean.taxNumber = UserInfoUtils.getShuiNumber()
-//        bean.emergentContacts = Gson().fromJson(bean.emergencyContactPerson,
-//            object : TypeToken<List<MacawEmergentContactsBean>>() {}.type)
+        val list: List<OriginUploadContractBean> = Gson().fromJson(bean.emergencyContactPerson,
+            object : TypeToken<List<OriginUploadContractBean>>() {}.type)
+
+        val realConList = convertData(list)
+        info.emergentContacts = realConList
         treeMap.putAll(api)
         api.addParam("turaBayanan", pushData)
-        api.addParam("bayaninAbokinCiniki", bean)
+        api.addParam("bayaninAbokinCiniki", info)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderBefore(api)
             .compose(RxSchedulers.io_main())
@@ -175,6 +208,19 @@ class ZipReviewModel : ZipBaseViewModel() {
                     preOrderLiveData.postValue(result)
                 }
             })
+
+    }
+
+    private fun convertData(datas: List<OriginUploadContractBean>): ArrayList<UploadContractBean> {
+        val list = arrayListOf<UploadContractBean>()
+        datas.forEachIndexed { index, zipContractBean ->
+            if ((zipContractBean.relation ?: -1) > -1) {
+                val bean = UploadContractBean(zipContractBean.contactName, zipContractBean.contactPhone, zipContractBean.relation
+                    ?: -1, zipContractBean.relationValue)
+                list.add(bean)
+            }
+        }
+        return list
 
     }
 

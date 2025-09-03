@@ -3,70 +3,176 @@ package com.zip.zipandroid.bean
 import com.google.gson.annotations.SerializedName
 
 data class ZipUploadUserInfoBean(
-    @SerializedName("sunanAsusu")
-    val accountName: String,
-    @SerializedName("shekarun")
-    val age: Int?=-1,
-    @SerializedName("idBanki")
-    val bankId: String,
-    val birthDate: Long,
-    @SerializedName("idBanki")
-    val birthDateStr: String,
-    @SerializedName("idBanki")
-    val cardName: String,
-    val cardNo: String,
-    val cardType: Int?=-1,
-    val certEmail: Int?=-1,
-    val certIdentity: Int?=-1,
-    val channel: String,
-    val childrens: Int?=-1,
-    val companyAddress: String,
-    val companyDistrict: String,
-    val payDay: String,
-    val companyLocation: String,
-    val companyName: String,
-    val creditAuthorized: Int?=-1,
-    val creditHistory: String,
-    val custId: Long,
-    val degree: Int?=-1,
-    val doubleLoan: Int?=-1,
-    val doubleLoanCount: Int?=-1,
-    val emergencyContactPerson: String,
-    val fatherName: String,
-    val firstName: String,
-    val idAddress: String,
-    val identity: String,
-    val identityImg: String,
-    val income: String,
-    val lengthOfUnemployment: String,
-    val timeWorkBegins: Long,
-    val ontherIncome: Int?=-1,
-    val industry: Int?=-1,
-    val employmentStatus: Int?=-1,
-    val industryName: String,
-    val lastName: String,
-    val lastOrderstate: Int?=-1,
-    val marry: Int?=-1,
-    val mbCustId: Long,
-    val mbEmail: String,
-    val mbPhone: String,
-    val mbStatus: Int?=-1,
-    val language: Int?=-1,
-    val mbSubject: Long,
-    val mid: Long,
-    val midName: String,
-    val motherName: String,
-    val nowAddress: String,
-    val postalInfo: String,
-    val questions: List<UserCreditListBeanItem>,
-    val realname: String,
-    val regFrom: Int?=-1,
-    val regTime: Long,
-    val region: String,
-    val sex: String,
-    val taxNumber: String,
-    val togetherLiver: String,
-    val workQuestions: List<WorkQuestion>,
-    val workType: String,
+    @SerializedName("accountName")
+    @JvmField
+    var sunanAsusu: String,
+    @SerializedName("age")
+    @JvmField
+    var shekarun: Int? = -1,
+    @SerializedName("bankId")
+    @JvmField
+    var idBanki: String,
+    @SerializedName("birthDate")
+    @JvmField
+    var kwananHaihuwa: Long,
+    @SerializedName("birthDateStr")
+    @JvmField
+    var kwananHaihuwaSiga: String,
+    @SerializedName("cardName")
+    @JvmField
+    var sunanKatin: String,
+    @SerializedName("cardNo")
+    @JvmField
+    var lambarKatin: String,
+    @SerializedName("cardType")
+    @JvmField
+    var nauInKatin: Int? = -1,
+    @SerializedName("certEmail")
+    @JvmField
+    var imelTabbaci: Int? = -1,
+    @SerializedName("channel")
+    @JvmField
+    var tashoshi: String,
+    @SerializedName("childrens")
+    @JvmField
+    var yara: Int? = -1,
+    @SerializedName("companyDistrict")
+    @JvmField
+    var gundumarKamfani: String,
+    @SerializedName("payDay")
+    @JvmField
+    var kwananBiya: String,
+    @SerializedName("companyLocation")
+    @JvmField
+    var wurinKamfani: String,
+    @SerializedName("companyName")
+    @JvmField
+    var sunanKamfani: String,
+    @SerializedName("creditAuthorized")
+    @JvmField
+    var bashiHalatta: Int? = -1,
+    @SerializedName("custId")
+    @JvmField
+    var idCustomer: Long,
+    @SerializedName("degree")
+    @JvmField
+    var digiri: Int? = -1,
+    @SerializedName("doubleLoan")
+    @JvmField
+    var bashiBiyu: Int? = -1,
+    @SerializedName("emergencyContactPerson")
+    @JvmField
+    var mutuminGaggawa: String,
+    @SerializedName("fatherName")
+    @JvmField
+    var sunanUba: String,
+    @SerializedName("firstName")
+    @JvmField
+    var sunanFarko: String,
+    @SerializedName("identity")
+    @JvmField
+    var ainihin: String,
+    @SerializedName("identityImg")
+    @JvmField
+    var hotonAinihin: String,
+    @SerializedName("income")
+    @JvmField
+    var kudinShiga: String,
+    @SerializedName("lengthOfUnemployment")
+    @JvmField
+    var tsawonRashinAiki: String,
+    @SerializedName("timeWorkBegins")
+    @JvmField
+    var lokacinFarawaAiki: Long,
+    @SerializedName("ontherIncome")
+    @JvmField
+    var sauranKudinShiga: Int? = -1,
+    @SerializedName("industry")
+    @JvmField
+    var masanaAntu: Int? = -1,
+    @SerializedName("employmentStatus")
+    @JvmField
+    var matsayinAiki: Int? = -1,
+    @SerializedName("industryName")
+    @JvmField
+    var sunanMasanaAntu: String,
+    @SerializedName("lastName")
+    @JvmField
+    var sunanKarshe: String,
+    @SerializedName("marry")
+    @JvmField
+    var aure: Int? = -1,
+    @SerializedName("mbEmail")
+    @JvmField
+    var imelMB: String,
+    @SerializedName("mbPhone")
+    @JvmField
+    var wayarMB: String,
+    @SerializedName("mbStatus")
+    @JvmField
+    var matsayinMB: Int? = -1,
+    @SerializedName("language")
+    @JvmField
+    var harshe: Int? = -1,
+    @SerializedName("mid")
+    @JvmField
+    var matsakaici: Long,
+    @SerializedName("midName")
+    @JvmField
+    var sunanTsakiya: String,
+    @SerializedName("motherName")
+    @JvmField
+    var sunanUwa: String,
+    @SerializedName("nowAddress")
+    @JvmField
+    var adireshinYanzu: String,
+    @SerializedName("postalInfo")
+    @JvmField
+    var bayaninPosta: String,
+    @SerializedName("questions")
+    @JvmField
+    var tambayoyi: List<UploadUserCreditListBeanItem>,
+    @SerializedName("realname")
+    @JvmField
+    var sunanGaskiya: String,
+    @SerializedName("region")
+    @JvmField
+    var yankin: String,
+    @SerializedName("sex")
+    @JvmField
+    var jimaI: String,
+    @SerializedName("taxNumber")
+    @JvmField
+    var lambarHaraji: String,
+    @SerializedName("workQuestions")
+    @JvmField
+    var tambayoyinAiki: List<UploadWorkQuestion>,
+    @SerializedName("workType")
+    @JvmField
+    var nauInAiki: String,
+)
+
+data class UploadUserCreditListBeanItem(
+    @SerializedName("answer")
+    @JvmField
+    var amsa: String,
+    @SerializedName("questionIndex")
+    @JvmField
+    var fihirisarTambaya: String,
+    @SerializedName("questionvarue")
+    @JvmField
+    var darajarTambaya: String,
+)
+
+data class UploadWorkQuestion(
+    @SerializedName("ansCode")
+    @JvmField
+    var lambarAmsa: String,
+    @SerializedName("answer")
+    @JvmField
+    var amsa: String,
+    @SerializedName("quesCode")
+    @JvmField
+    var lambarTambaya: String,
 )
 

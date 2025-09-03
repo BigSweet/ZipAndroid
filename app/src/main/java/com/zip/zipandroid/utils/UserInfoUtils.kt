@@ -4,7 +4,9 @@ import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.ProductList
-import com.zip.zipandroid.bean.ZipUploadUserInfoBean
+import com.zip.zipandroid.bean.RealUploadUserBean
+import com.zip.zipandroid.bean.ZipQueryCardBean
+import com.zip.zipandroid.bean.ZipQueryCardBeanItem
 import com.zip.zipandroid.bean.ZipUserInfoBean
 
 object UserInfoUtils {
@@ -87,6 +89,7 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.remove("zipproductDue")
         MMKV.defaultMMKV()?.remove("zipuserInfo")
         MMKV.defaultMMKV()?.remove("productType")
+        MMKV.defaultMMKV()?.remove("zipuploaduserInfo")
         mSignKey = ""
         mUserNo = ""
         mMid = 0L
@@ -115,10 +118,14 @@ object UserInfoUtils {
         return info!!
     }
 
-    fun getUploadUserInfo(): ZipUploadUserInfoBean {
-        val infoStr = MMKV.defaultMMKV()?.getString("zipuserInfo", "")
-        val info = Gson().fromJson(infoStr, ZipUploadUserInfoBean::class.java)
-        return info!!
+    fun saveUploadUserInfo(userInfo: String) {
+        MMKV.defaultMMKV()?.putString("zipuploaduserInfo", userInfo)
+    }
+
+    fun getUploadUserInfo(): RealUploadUserBean {
+        val infoStr = MMKV.defaultMMKV()?.getString("zipuploaduserInfo", "")
+        uploadInfo = Gson().fromJson(infoStr, RealUploadUserBean::class.java)
+        return uploadInfo!!
     }
 
     fun saveUserInfo(userInfo: String) {
@@ -127,6 +134,7 @@ object UserInfoUtils {
 
 
     private var info: ZipUserInfoBean? = null
+    private var uploadInfo: RealUploadUserBean? = null
     private var product: ProductList? = null
 
     fun getProductType(): ProductList {
@@ -145,7 +153,20 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.putString("zipproductDue", productDue)
     }
 
+    fun saveBankData(bankData: String) {
+        MMKV.defaultMMKV()?.putString("bankData", bankData)
+    }
+
+    fun getBankData(): ZipQueryCardBeanItem {
+        if (mBankData == null) {
+            val infoStr = MMKV.defaultMMKV()?.getString("bankData", "")
+            mBankData = Gson().fromJson(infoStr, ZipQueryCardBeanItem::class.java)
+        }
+        return mBankData!!
+    }
+
     var mMacawProductDue: ProductDidInfo? = null
+    var mBankData: ZipQueryCardBeanItem? = null
     fun getProductDue(): ProductDidInfo {
         if (mMacawProductDue == null) {
             val infoStr = MMKV.defaultMMKV()?.getString("zipproductDue", "")
