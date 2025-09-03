@@ -3,8 +3,6 @@ package com.zip.zipandroid.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -85,17 +83,17 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
             val gson = GsonBuilder()
                 .setFieldNamingStrategy { field ->
                     val annotation = field.getAnnotation(SerializedName::class.java)
-                    annotation?.value
+                    annotation?.value ?: field.name
                 }
                 .create()
 
             UserInfoUtils.saveUploadUserInfo(gson.toJson(it).toString())
-            mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo,it)
+            mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it)
         }
 
         mViewModel.productLiveData.observe(this) {
-            if (!it.productDueList.isNullOrEmpty()) {
-                did = (it.productDueList?.first()?.did ?: 0L).toString()
+            if (!it.isNullOrEmpty()) {
+                did = (it?.first()?.did ?: 0L).toString()
                 ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
                     ?: "")
             }

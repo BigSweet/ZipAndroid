@@ -149,7 +149,7 @@ class RealUploadUserBean(
     @SerializedName(value = "nauInAiki", alternate = ["workType"])
     val workType: String,
 
-    var emergentContacts: List<UploadContractBean>?,
+    var lambobinGaggawa: List<UploadContractBean>?,
 )
 
 data class RealUploadUserCreditListBeanItem(

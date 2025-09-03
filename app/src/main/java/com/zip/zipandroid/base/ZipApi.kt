@@ -4,6 +4,7 @@ import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
+import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadImgBean
@@ -49,8 +50,8 @@ interface ZipApi {
 
 
 
-    @POST("api/v4/ziplead/product/findProductDueByPid")
-    fun findProductDueByPid(@Body body: FormReq): Observable<ZipBaseRes<ProductPidBean>>
+    @POST("api/v4/ziplead/product/findProductByPid")
+    fun findProductDueByPid(@Body body: FormReq): Observable<ZipBaseRes<List<ProductDidInfo>>>
 
     @POST("api/v4/ziplead/customer/login")
     fun zipLogin(@Body body: FormReq): Observable<ZipBaseRes<ZipLoginResponse>>

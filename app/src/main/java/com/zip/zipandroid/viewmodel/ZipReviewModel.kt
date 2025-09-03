@@ -11,6 +11,7 @@ import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.OriginUploadContractBean
+import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadContractBean
@@ -32,7 +33,7 @@ import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
 class ZipReviewModel : ZipBaseViewModel() {
-    val productLiveData = MutableLiveData<ProductPidBean>()
+    val productLiveData = MutableLiveData<List<ProductDidInfo>>()
     val orderTrialLiveData = MutableLiveData<ZipTriaBean>()
 
     //    var userOrderLiveData = MutableLiveData<MacawOrderPayBean?>()
@@ -40,22 +41,19 @@ class ZipReviewModel : ZipBaseViewModel() {
     fun getPidProduct(riskGrade: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("mid", UserInfoUtils.getMid().toString())
-            .addParam("userNo", UserInfoUtils.getUserNo())
-            .addParam("riskGrade", riskGrade)
-            .addParam("version", AppUtils.getAppVersionName())
-            .addParam("pid", UserInfoUtils.getProductType().pid.toString())
+        api
+            .addParam("idprd", UserInfoUtils.getProductType().pid.toString())
         treeMap.putAll(api)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).findProductDueByPid(api)
             .compose(RxSchedulers.io_main())
-            .subscribe(object : ZipResponseSubscriber<ProductPidBean>() {
+            .subscribe(object : ZipResponseSubscriber<List<ProductDidInfo>>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
                     addReqDisposable(d)
                 }
 
-                override fun onSuccess(result: ProductPidBean) {
+                override fun onSuccess(result: List<ProductDidInfo>) {
                     productLiveData.postValue(result)
                 }
             })
@@ -114,13 +112,11 @@ class ZipReviewModel : ZipBaseViewModel() {
 
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("mid", UserInfoUtils.getMid().toString())
-            .addParam("userNo", UserInfoUtils.getUserNo())
-            .addParam("custId", UserInfoUtils.getUserInfo().custId.toString())
-            .addParam("bizId", bizId)
-            .addParam("version", AppUtils.getAppVersionName())
+        api
+            .addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
+            .addParam("idKasuwancin", bizId)
         treeMap.putAll(api)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getRiskLevel(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipRiskLevelBean>() {
@@ -183,7 +179,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
         info.cardNo = UserInfoUtils.getBankData().cardNo.toString()
-        info.accountName = UserInfoUtils.getUserInfo().accountName
+        info.accountName = UserInfoUtils.getUserInfo().realname
 //        bean.bankName = bankName
         info.bankId = UserInfoUtils.getBankData().bankId.toString()
 //        bean.taxNumber = UserInfoUtils.getShuiNumber()
@@ -191,7 +187,7 @@ class ZipReviewModel : ZipBaseViewModel() {
             object : TypeToken<List<OriginUploadContractBean>>() {}.type)
 
         val realConList = convertData(list)
-        info.emergentContacts = realConList
+        info.lambobinGaggawa = realConList
         treeMap.putAll(api)
         api.addParam("turaBayanan", pushData)
         api.addParam("bayaninAbokinCiniki", info)
