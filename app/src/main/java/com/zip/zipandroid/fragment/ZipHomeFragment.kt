@@ -13,12 +13,16 @@ import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.databinding.FragmentZipHomeBinding
+import com.zip.zipandroid.event.ZipRefreshHomeEvent
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHomeBinding>() {
     companion object {
@@ -31,30 +35,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
-
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             mViewModel.getUserInfo()
-
-//            startActivity(ZipPersonInfoActivity::class.java)
-//            val list = AllPerUtils.getAllPer()
-////                val list = getTestPerList()
-//
-//            PermissionUtils.permission(*list.toTypedArray())
-//                .callback(object : PermissionUtils.FullCallback {
-//                    override fun onGranted(permissionsGranted: List<String>) {
-//                        //拿数据吗
-//                    }
-//
-//                    override fun onDenied(
-//                        permissionsDeniedForever: List<String>,
-//                        permissionsDenied: List<String>,
-//                    ) {
-//
-//                    }
-//                })
-//                .request()
         }
         mViewBind.zipHomePrivateSl.setOnDelayClickListener {
             ZipWebActivity.start(requireActivity(), Constants.commonPrivateUrl)
@@ -64,12 +47,19 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     }
 
 
-    private fun readSmsMessages() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipRefreshHomeEvent) {
+        mViewModel.zipHomeData()
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        EventBusUtils.unregister(this)
     }
 
 
     override fun createObserver() {
+        EventBusUtils.register(this)
         mViewModel.homeLiveData.observe(this) {
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))

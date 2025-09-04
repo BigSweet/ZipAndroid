@@ -20,6 +20,7 @@ import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
+import com.zip.zipandroid.bean.ZipOrderStatusBean
 import com.zip.zipandroid.bean.ZipPushData
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipTriaBean
@@ -38,7 +39,38 @@ class ZipReviewModel : ZipBaseViewModel() {
     val productLiveData = MutableLiveData<List<ProductDidInfo>>()
     val orderTrialLiveData = MutableLiveData<ZipTriaBean>()
 
-    //    var userOrderLiveData = MutableLiveData<MacawOrderPayBean?>()
+        var userOrderLiveData = MutableLiveData<ZipOrderStatusBean?>()
+
+
+    fun getUserOrder(bizId: String) {
+
+        val treeMap = TreeMap<String, Any?>()
+        val api = FormReq.create()
+        api
+            .addParam("idKasuwancin", bizId)
+        treeMap.putAll(api)
+        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getCreditxStatus(api)
+            .compose(RxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipOrderStatusBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipOrderStatusBean) {
+                    userOrderLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    userOrderLiveData.postValue(null)
+                }
+            })
+
+    }
+
+
     var uploadUserInfoLiveData = MutableLiveData<RealUploadUserBean>()
     fun getPidProduct() {
         val treeMap = TreeMap<String, Any?>()

@@ -98,6 +98,10 @@
             android:exported="false"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.ZipOrderNextActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.ZipSureOrderActivity"
             android:exported="false"
             android:screenOrientation="portrait"></activity>

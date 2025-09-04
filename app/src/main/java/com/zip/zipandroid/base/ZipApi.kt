@@ -20,6 +20,7 @@ import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipLoginResponse
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
 import com.zip.zipandroid.bean.ZipOrderListBean
+import com.zip.zipandroid.bean.ZipOrderStatusBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipRiskLevelBean
@@ -39,6 +40,9 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/customer/sendSmsCode")
     fun getCode(@Body body: FormReq): Observable<ZipBaseRes<ZipCodeBean>>
+
+    @POST("api/v4/ziplead/getCreditxStatus")
+    fun getCreditxStatus(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderStatusBean>>
 
 
     @POST("api/v4/ziplead/product/trial")
