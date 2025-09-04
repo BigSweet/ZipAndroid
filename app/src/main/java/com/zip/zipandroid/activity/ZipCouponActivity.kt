@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
@@ -14,25 +13,30 @@ import com.zip.zipandroid.adapter.ZipCouponAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.databinding.ActivityZipCouponBinding
+import com.zip.zipandroid.event.ZipSelectCouponEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.viewmodel.CouponViewModel
 
 class ZipCouponActivity : ZipBaseBindingActivity<CouponViewModel, ActivityZipCouponBinding>() {
 
     companion object {
         @JvmStatic
-        fun start(context: Context, selectCoupon: Boolean) {
+        fun start(context: Context, selectCoupon: Boolean, couponId: String? = null) {
             val starter = Intent(context, ZipCouponActivity::class.java)
                 .putExtra("selectCoupon", selectCoupon)
+                .putExtra("couponId", couponId)
             context.startActivity(starter)
         }
     }
 
     var selectCoupon = false
+    var couponId = ""
 
     override fun initView(savedInstanceState: Bundle?) {
+        couponId = intent.getStringExtra("couponId") ?: ""
         selectCoupon = intent.getBooleanExtra("selectCoupon", false)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
@@ -41,11 +45,13 @@ class ZipCouponActivity : ZipBaseBindingActivity<CouponViewModel, ActivityZipCou
         mViewBind.couponSureTv.visible = selectCoupon
         mViewBind.couponSureTv.setOnDelayClickListener {
             //选择优惠券
-            if(couponAdapter.selectPosition==-1){
+            if (couponAdapter.selectPosition == -1) {
                 ToastUtils.showShort("Please select a coupon")
                 return@setOnDelayClickListener
             }
             //返回给上个页面加载优惠券信息
+            val couponId = couponAdapter.data.get(couponAdapter.selectPosition).id
+            EventBusUtils.post(ZipSelectCouponEvent(couponId.toString()))
             finish()
         }
 
@@ -63,6 +69,7 @@ class ZipCouponActivity : ZipBaseBindingActivity<CouponViewModel, ActivityZipCou
         mViewBind.zipCouponRv.layoutManager = LinearLayoutManager(this)
         mViewBind.zipCouponRv.adapter = couponAdapter
         couponAdapter.selectCoupon = selectCoupon
+        couponAdapter.couponId = couponId
         mViewModel.getCouponList(couponStatus)
         if (selectCoupon) {
             couponAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->

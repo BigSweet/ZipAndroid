@@ -18,15 +18,21 @@ import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipDurationAdapter
 import com.zip.zipandroid.adapter.ZipInstallAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
-import com.zip.zipandroid.bean.ProductDidInfo
+import com.zip.zipandroid.bean.PeriodStage
+import com.zip.zipandroid.bean.ZipCouponItemBean
+import com.zip.zipandroid.bean.ZipProductPeriodItem
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
+import com.zip.zipandroid.event.ZipSelectCouponEvent
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -51,15 +57,29 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         realAmount = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
             //加金额 步长默认2000
-            if (realAmount > 2000) {
-                realAmount = realAmount + 2000
+            if (realAmount + limitInterval > limitMax) {
+                //超过了就默认最大
+                realAmount = limitMax
+            } else {
+                realAmount = realAmount + limitInterval
             }
             mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+            //试算
+            orderTrialData()
         }
 
         mViewBind.orderSubIv.setOnDelayClickListener {
             //减金额
+            //加金额 步长默认2000
+            if (realAmount - limitInterval < limitMin) {
+                //超过了就默认最大
+                realAmount = limitMin
+            } else {
+                realAmount = realAmount - limitInterval
+            }
             mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+            //试算
+            orderTrialData()
         }
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
@@ -70,57 +90,113 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.zipSureInstallRv.adapter = installAdapter
         mViewBind.zipSureDurationRv.adapter = duraAdapter
         duraAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
-            val item = baseQuickAdapter.getItem(i) as ProductDidInfo
+            val item = baseQuickAdapter.getItem(i) as ZipProductPeriodItem
             duraAdapter.selectPosition = i
             duraAdapter.notifyDataSetChanged()
+            installAdapter.setNewData(item.periodStages)
+            if (!item.periodStages.isNullOrEmpty()) {
+                currentDid = item.periodStages.first().did
+            }
+            orderTrialData()
+        }
+        installAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
+            val item = baseQuickAdapter.getItem(i) as PeriodStage
+            installAdapter.selectPosition = i
+            installAdapter.notifyDataSetChanged()
             currentDid = item.did
-            mViewModel.orderTrial(realAmount, riskLevel, currentDid, currentCouponId)
+            orderTrialData()
         }
 
         mViewBind.sureOrderAmountTv.setText(realAmount.toN())
 
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
-        mViewModel.getPidProduct()
-        currentDid = UserInfoUtils.getProductDue()?.did
-        mViewModel.topPriorityCoupon()
+//        mViewModel.getPidProduct()
+//        currentDid = UserInfoUtils.getProductDue()?.did.toString()
+
+        mViewModel.zipHomeData()
 
     }
 
-    var currentDid = 0L
+    private fun orderTrialData() {
+        mViewModel.orderTrial(realAmount, riskLevel, currentDid.toString(), currentCouponId)
+    }
+
+    var limitMax = 0
+    var limitMin = 0
+    var limitInterval = 0
+    var currentDid = ""
     var currentCouponId = ""
 
     var installAdapter = ZipInstallAdapter()
     var duraAdapter = ZipDurationAdapter()
 
-    var currentPidBean: ProductDidInfo? = null
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipSelectCouponEvent) {
+
+        if (!allCouponList.isNullOrEmpty()) {
+            val data = allCouponList?.find {
+                it.id.toString() == event.couponId
+            }
+            if (data != null) {
+                currentCouponId = data.id.toString()
+                setCouponData(data)
+            }
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBusUtils.unregister(this)
+    }
+
+    var allCouponList: List<ZipCouponItemBean>? = null
     override fun createObserver() {
-        mViewModel.topCouponLiveData.observe(this) {
+        mViewBind.couponCenterCl.setOnDelayClickListener {
+            //去选择优惠券界面
+            ZipCouponActivity.start(this, true)
+        }
+        EventBusUtils.register(this)
+        mViewModel.couponLiveData.observe(this) {
+            mViewBind.couponPriceTv.hide()
+            mViewBind.orderCouponNameTv.hide()
+            allCouponList = it.couponList
+            if (it.couponList.isNullOrEmpty()) {
+                //空的
+                orderTrialData()
+                mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_empty_coupon_icon)
 
-            if (it != null) {
-                currentCouponId = it.id.toString()
-                mViewModel.orderTrial(realAmount, riskLevel, currentDid, currentCouponId)
-
+                //空
             } else {
-                mViewModel.orderTrial(realAmount, riskLevel, currentDid, "")
+                if (it.couponList.size == 1) {
+                    //选中
+                    currentCouponId = it.couponList.first().id.toString()
+                    setCouponData(it.couponList.first())
+                } else {
+                    //空
+                    mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_empty_coupon_icon)
 
-            }
-
-        }
-        mViewModel.productLiveData.observe(this) {
-            var realIndex = 0
-            it.forEachIndexed { index, productDidInfo ->
-                if (currentDid == productDidInfo.did) {
-                    currentPidBean = productDidInfo
-                    realIndex = index
+                    orderTrialData()
                 }
+            }
 
-            }
-            if (currentPidBean != null) {
-                duraAdapter.selectPosition = realIndex
-            }
-            duraAdapter.setNewData(it)
         }
-
+        mViewModel.homeLiveData.observe(this) {
+            var realIndex = 0
+            duraAdapter.selectPosition = realIndex
+            duraAdapter.setNewData(it.productList.productPeriods)
+            if (!it.productList.productPeriods.isNullOrEmpty()) {
+                installAdapter.setNewData(it.productList.productPeriods.first().periodStages)
+                if (!it.productList.productPeriods.first().periodStages.isNullOrEmpty()) {
+                    currentDid = it.productList.productPeriods.first().periodStages.first().did
+                }
+            }
+            limitMax = it.productList.limitMax.toDouble().toInt()
+            limitMin = it.productList.limitMin.toDouble().toInt()
+            limitInterval = it.productList.limitInterval
+            mViewModel.getCouponList(1)
+        }
 
         mViewBind.orderPrivateClickView.setOnDelayClickListener {
             if (orderSrc1Select) {
@@ -137,20 +213,10 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
 
         mViewModel.orderTrialLiveData.observe(this) {
-            val list = splitNumber(it.count)
-            var realList = listOf<Int>()
-            if (list.size > 3) {
-                realList = list.subList(0, 3)
-            } else {
-                realList = list
-            }
-            installAdapter.setNewData(arrayListOf(it.count))
-//            installAdapter.setNewData(realList)
             mViewBind.couponInterTv.setText(it.couponAmount)
             mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())
             mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
             mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
-
             mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
             mViewBind.totalAmountTv.setText(it.totalAmount.toDouble().toN())
             if (!it.repaymentList.isNullOrEmpty()) {
@@ -211,6 +277,15 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.zipOrderPrivateTv.setText(span)
 
 
+    }
+
+    private fun setCouponData(data: ZipCouponItemBean) {
+        mViewBind.couponPriceTv.show()
+        mViewBind.orderCouponNameTv.show()
+        mViewBind.couponPriceTv.setText(data.worth.toString())
+        mViewBind.orderCouponNameTv.setText(data.typeStr.toString())
+        mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_bg_coupon)
+        orderTrialData()
     }
 
     var orderSrc1Select = false

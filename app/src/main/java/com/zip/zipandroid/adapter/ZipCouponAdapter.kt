@@ -16,6 +16,7 @@ import java.util.Locale
 class ZipCouponAdapter : BaseQuickAdapter<ZipCouponItemBean, BaseViewHolder>(R.layout.item_zip_coupon) {
     var couponStatus = 1
     var selectCoupon = false
+    var couponId = ""
     var selectPosition = -1
     override fun convert(holder: BaseViewHolder, item: ZipCouponItemBean) {
         val item_coupon_price_tv = holder.getView<TextView>(R.id.item_coupon_price_tv)
@@ -24,9 +25,9 @@ class ZipCouponAdapter : BaseQuickAdapter<ZipCouponItemBean, BaseViewHolder>(R.l
         val item_coupon_name_tv = holder.getView<TextView>(R.id.item_coupon_name_tv)
         val select_coupon_iv = holder.getView<ImageView>(R.id.select_coupon_iv)
         select_coupon_iv.visible = selectCoupon == true
-        if(holder.adapterPosition == selectPosition){
+        if (holder.adapterPosition == selectPosition || couponId == item.id.toString()) {
             select_coupon_iv.setImageResource(R.drawable.zip_item_select_coupon_icon)
-        }else{
+        } else {
             select_coupon_iv.setImageResource(R.drawable.zip_item_not_select_coupon)
         }
         val item_coupon_date_tv = holder.getView<TextView>(R.id.item_coupon_date_tv)

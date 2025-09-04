@@ -99,6 +99,7 @@ data class ProductList(
     val productName: String,
     val productType: Int,
     val remark: String,
+    val productPeriods: ZipProductPeriod,
     val state: Int
 )
 
