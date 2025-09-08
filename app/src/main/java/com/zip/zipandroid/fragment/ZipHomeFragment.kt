@@ -20,6 +20,8 @@ import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipTimeUtils
+import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -38,6 +40,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             mViewModel.getUserInfo()
+        }
+        mViewBind.newHomeSwpie.setOnRefreshListener {
+            mViewModel.zipHomeData()
         }
         mViewBind.zipHomePrivateSl.setOnDelayClickListener {
             ZipWebActivity.start(requireActivity(), Constants.commonPrivateUrl)
@@ -58,12 +63,73 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     }
 
 
+//
+//    WAITING 挂起状态，跳转到订单确认页面，等待用户确认，用户确认或取消后跳转到首页。
+//
+//
+//
+//    status：FAIL 表示放款失败
+//
+//    TRANSACTION 放款中
+//    REFUSED 已拒绝  审核失败页面//审核失败
+//
+
+
     override fun createObserver() {
         EventBusUtils.register(this)
         mViewModel.homeLiveData.observe(this) {
+            if (mViewBind.newHomeSwpie.isRefreshing) {
+                mViewBind.newHomeSwpie.isRefreshing = false
+            }
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
             mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+            mViewBind.homeReviewCl.hide()
+            mViewBind.homeOrderNormalCl.hide()
+            mViewBind.homeDelayCl.hide()
+            mViewBind.homePayingCl.hide()
+            mViewBind.homeSubmitRefuseCl.hide()
+            mViewBind.homeBankFailCl.hide()
+
+
+            if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
+                mViewBind.homePayingCl.show()
+                mViewBind.payingDateTv.setText(it.creditOrderList?.applyAmount.toN())
+                mViewBind.payingMoneyTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.applyTime))
+                mViewBind.payNowTv.setOnDelayClickListener {
+                    //去还款
+                }
+            }
+            if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
+                mViewBind.homeOrderNormalCl.show()
+                mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+                mViewBind.zipHomeVerTv.setOnDelayClickListener {
+                    //查到了第几部，在去进件
+                    mViewModel.getUserInfo()
+                }
+            }
+            if (it.creditOrderList?.status == "OVERDUE") {
+                mViewBind.homeDelayCl.show()
+                mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
+                mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                mViewBind.delayDesBottomTv.setText("Your payment is ${it.creditOrderList?.overdueDays} days past due, please make your repayment as soon as possible.")
+                mViewBind.delayNowTv.setOnDelayClickListener {
+                    //去还款
+                }
+            }
+            if (it.creditOrderList?.status == "FAIL") {
+                mViewBind.homeBankFailCl.show()
+                mViewBind.updateBankTv.setOnDelayClickListener {
+                    //跳转过去后是什么逻辑
+                    ZipBandCardActivity.start(requireActivity(), false)
+                }
+            }
+            if (it.creditOrderList?.status == "REFUSED") {
+                mViewBind.homeSubmitRefuseCl.show()
+            }
+            if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING" || it.creditOrderList?.status == "TRANSACTION") {
+                mViewBind.homeReviewCl.show()
+            }
         }
         mViewModel.configLiveData.observe(this) {
 

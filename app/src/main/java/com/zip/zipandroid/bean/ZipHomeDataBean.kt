@@ -2,7 +2,7 @@ package com.zip.zipandroid.bean
 
 data class ZipHomeDataBean(
     val clientId: String,
-    val creditOrderList: CreditOrderList,//最近一笔订单数据
+    val creditOrderList: CreditOrderList?,//最近一笔订单数据
     val mid: Long,
     val productDidInfo: ProductDidInfo,
     val productList: ProductList
@@ -10,7 +10,7 @@ data class ZipHomeDataBean(
 
 data class CreditOrderList(
     val allAmountDue: Any,
-    val amountDue: Any,
+    val amountDue: Double,
     val applyAmount: String,
     val applyPeriod: String,
     val applyPeriodNew: String,
@@ -48,10 +48,10 @@ data class CreditOrderList(
     val mid: String,
     val noPayStages: Any,
     val otherFee: Any,
-    val overdueDays: Any,
+    val overdueDays: Int,
     val penalty: Any,
     val period: Any,
-    val periodTime: Any,
+    val periodTime: Long,
     val periodTimeStr: Any,
     val phoneNum: String,
     val productType: String,
