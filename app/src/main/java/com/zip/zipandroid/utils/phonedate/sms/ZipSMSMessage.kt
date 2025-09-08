@@ -5,7 +5,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.Serializable
 
-class SMSMessage : Serializable {
+class ZipSMSMessage : Serializable {
     var body // content
             : String? = null
     var id // id in sms database
@@ -18,7 +18,7 @@ class SMSMessage : Serializable {
     var status = 0
 
     companion object {
-        fun toJSONObject(message: SMSMessage): JSONObject {
+        fun toJSONObject(message: ZipSMSMessage): JSONObject {
             val jsonObject = JSONObject()
             try {
                 jsonObject.put("body", message.body)
@@ -33,7 +33,7 @@ class SMSMessage : Serializable {
             return jsonObject
         }
 
-        fun jsonArrayFromArray(messages: Array<SMSMessage>): JSONArray {
+        fun jsonArrayFromArray(messages: Array<ZipSMSMessage>): JSONArray {
             val array = JSONArray()
             for (message in messages) {
                 array.put(toJSONObject(message))

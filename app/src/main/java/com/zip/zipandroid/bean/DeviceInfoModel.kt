@@ -1,7 +1,7 @@
 package com.zip.zipandroid.bean
 
 import com.zip.zipandroid.ZipApplication
-import com.zip.zipandroid.utils.phonedate.location.device.DeviceInfoUtil
+import com.zip.zipandroid.utils.phonedate.location.device.ZipDeviceInfoUtil
 
 
 class DeviceInfoModel {
@@ -27,26 +27,26 @@ class DeviceInfoModel {
     private val idTallaGoogle: String?
 
     init {
-        val deviceInfoUtil = DeviceInfoUtil(ZipApplication.instance)
+        val zipDeviceInfoUtil = ZipDeviceInfoUtil(ZipApplication.instance)
 //        simSerialNumber = deviceInfoUtil.getSimId()
-        idAndroid = deviceInfoUtil.getAndroidId()
-        naKwaikwayi = deviceInfoUtil.isSimulator()
-        sigarTsarinAiki = deviceInfoUtil.getOSVersion()
-        kasa = deviceInfoUtil.getCountry()
-        nauInCibiyarSadarwa = deviceInfoUtil.getNetworkType()
-        adireshinMAC = deviceInfoUtil.getMacAddress()
-        idNaUraGaba = deviceInfoUtil.getGenaralDeviceId()
-        idMaiSaya = deviceInfoUtil.idForVendor
-        sunanDaukar = deviceInfoUtil.getCarrierName()
-        samfurin = deviceInfoUtil.getModel()
-        adadinKwaKwalwa = deviceInfoUtil.getTotalMemory()
-        warwareNunin = deviceInfoUtil.getDisplayResolution()
-        tsarinNaUra = deviceInfoUtil.getDeviceArch()
-        adadinAjiya = deviceInfoUtil.getTotalStorage()
-        UUID = deviceInfoUtil.getUUID()
-        adadinCPU = deviceInfoUtil.getCPUCount()
-        saurinCPU = deviceInfoUtil.getCPUSpeed()
-        adireshinIP = deviceInfoUtil.getIPAddress()
+        idAndroid = zipDeviceInfoUtil.getAndroidId()
+        naKwaikwayi = zipDeviceInfoUtil.isSimulator()
+        sigarTsarinAiki = zipDeviceInfoUtil.getOSVersion()
+        kasa = zipDeviceInfoUtil.getCountry()
+        nauInCibiyarSadarwa = zipDeviceInfoUtil.getNetworkType()
+        adireshinMAC = zipDeviceInfoUtil.getMacAddress()
+        idNaUraGaba = zipDeviceInfoUtil.getGenaralDeviceId()
+        idMaiSaya = zipDeviceInfoUtil.idForVendor
+        sunanDaukar = zipDeviceInfoUtil.getCarrierName()
+        samfurin = zipDeviceInfoUtil.getModel()
+        adadinKwaKwalwa = zipDeviceInfoUtil.getTotalMemory()
+        warwareNunin = zipDeviceInfoUtil.getDisplayResolution()
+        tsarinNaUra = zipDeviceInfoUtil.getDeviceArch()
+        adadinAjiya = zipDeviceInfoUtil.getTotalStorage()
+        UUID = zipDeviceInfoUtil.getUUID()
+        adadinCPU = zipDeviceInfoUtil.getCPUCount()
+        saurinCPU = zipDeviceInfoUtil.getCPUSpeed()
+        adireshinIP = zipDeviceInfoUtil.getIPAddress()
 
 
 

@@ -12,11 +12,11 @@ import android.text.TextUtils
 import androidx.core.content.PermissionChecker
 import java.util.*
 
-class CallLogsProvider(private val context: Context) {
-    private var listeners: ArrayList<CallLogListener>
+class ZipCallLogsProvider(private val context: Context) {
+    private var listeners: ArrayList<ZipCallLogListener>
     private var isFetching = false
     @SuppressLint("WrongConstant")
-    fun fetchCallLogs(list: Array<CallLogListener>) {
+    fun fetchCallLogs(list: Array<ZipCallLogListener>) {
         synchronized(this) {
             for (listener in list) {
                 if (!listeners.contains(listener)) {
@@ -39,7 +39,7 @@ class CallLogsProvider(private val context: Context) {
         Thread(Runnable {
             try {
                 val callLogs =
-                    this@CallLogsProvider.fetchCallLogs()
+                    this@ZipCallLogsProvider.fetchCallLogs()
                 onFinishedWithCallLogs(callLogs)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -49,37 +49,37 @@ class CallLogsProvider(private val context: Context) {
     }
 
     @SuppressLint("MissingPermission")
-    private fun fetchCallLogs(): Array<CallLog?> {
-        val callLogs =
-            ArrayList<CallLog>()
+    private fun fetchCallLogs(): Array<ZipCallLog?> {
+        val zipCallLogs =
+            ArrayList<ZipCallLog>()
         val cr = context.contentResolver
         val cursor =
             cr.query(Calls.CONTENT_URI, null, null, null, Calls.DEFAULT_SORT_ORDER)
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    val callLog =
-                        CallLog()
-                    callLog.date = cursor.getLong(cursor.getColumnIndex(Calls.DATE))
-                    callLog.duration = cursor.getInt(cursor.getColumnIndex(Calls.DURATION))
-                    callLog.number = cursor.getString(cursor.getColumnIndex(Calls.NUMBER))
+                    val zipCallLog =
+                        ZipCallLog()
+                    zipCallLog.date = cursor.getLong(cursor.getColumnIndex(Calls.DATE))
+                    zipCallLog.duration = cursor.getInt(cursor.getColumnIndex(Calls.DURATION))
+                    zipCallLog.number = cursor.getString(cursor.getColumnIndex(Calls.NUMBER))
                     val name =
                         cursor.getString(cursor.getColumnIndex(Calls.CACHED_NAME))
-                    callLog.name = if (TextUtils.isEmpty(name)) numberToName(
+                    zipCallLog.name = if (TextUtils.isEmpty(name)) numberToName(
                         context,
-                        callLog.number
+                        zipCallLog.number
                     ) else name
-                    callLog.type = cursor.getInt(cursor.getColumnIndex(Calls.TYPE))
-                    callLogs.add(callLog)
+                    zipCallLog.type = cursor.getInt(cursor.getColumnIndex(Calls.TYPE))
+                    zipCallLogs.add(zipCallLog)
                 } while (cursor.moveToNext())
             }
             cursor.close()
         }
-        return callLogs.toArray(arrayOf<CallLog>())
+        return zipCallLogs.toArray(arrayOf<ZipCallLog>())
     }
 
-    private fun syncGetListenersAndClear(): ArrayList<CallLogListener> {
-        var list: ArrayList<CallLogListener>
+    private fun syncGetListenersAndClear(): ArrayList<ZipCallLogListener> {
+        var list: ArrayList<ZipCallLogListener>
         synchronized(this) {
             list = listeners
             listeners = ArrayList()
@@ -88,11 +88,11 @@ class CallLogsProvider(private val context: Context) {
         return list
     }
 
-    private fun onFinishedWithCallLogs(callLogs: Array<CallLog?>) {
+    private fun onFinishedWithCallLogs(zipCallLogs: Array<ZipCallLog?>) {
         val listenerList = syncGetListenersAndClear()
         if (listenerList != null && listenerList.size > 0) {
             for (i in listenerList.indices) {
-                listenerList[i].onCallLogsFetched(callLogs)
+                listenerList[i].onCallLogsFetched(zipCallLogs)
             }
         }
     }

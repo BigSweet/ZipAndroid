@@ -9,15 +9,15 @@ import android.os.Bundle
 import androidx.core.content.PermissionChecker
 import java.util.*
 
-class LocationProvider(private val context: Context) {
-    private var listeners: ArrayList<LocationListener>
+class ZipLocationProvider(private val context: Context) {
+    private var listeners: ArrayList<ZipLocationListener>
     private var isFetching = false
     private var locationManager: LocationManager? = null
     private var gpsListener: android.location.LocationListener? = null
     private var networkListener: android.location.LocationListener? = null
     private var passiveListener: android.location.LocationListener? = null
     private var timer: Timer? = null
-    fun fetchLocation(list: Array<LocationListener>) {
+    fun fetchLocation(list: Array<ZipLocationListener>) {
         synchronized(this) {
             for (listener in list) {
                 if (!listeners.contains(listener)) {
@@ -107,8 +107,8 @@ class LocationProvider(private val context: Context) {
         }
     }
 
-    private fun syncGetListenersAndClear(): ArrayList<LocationListener> {
-        var list: ArrayList<LocationListener>
+    private fun syncGetListenersAndClear(): ArrayList<ZipLocationListener> {
+        var list: ArrayList<ZipLocationListener>
         synchronized(this) {
             list = listeners
             listeners = ArrayList()

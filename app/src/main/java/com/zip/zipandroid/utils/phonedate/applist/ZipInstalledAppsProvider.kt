@@ -5,12 +5,12 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import java.util.*
 
-class InstalledAppsProvider(private val context: Context) {
-    private var listeners: ArrayList<InstalledAppListener>
+class ZipInstalledAppsProvider(private val context: Context) {
+    private var listeners: ArrayList<ZipInstalledAppListener>
     private var isFetching = false
-    fun fetchInstalledApps(listeners: Array<InstalledAppListener>) {
+    fun fetchInstalledApps(listeners: Array<ZipInstalledAppListener>) {
         synchronized(this) {
-            for (listener: InstalledAppListener in listeners) {
+            for (listener: ZipInstalledAppListener in listeners) {
                 if (!this.listeners.contains(listener)) {
                     this.listeners.add(listener)
                 }
@@ -21,26 +21,26 @@ class InstalledAppsProvider(private val context: Context) {
             isFetching = true
         }
         Thread(Runnable {
-            var installedApps = arrayOfNulls<InstalledApp>(0)
+            var zipInstalledApps = arrayOfNulls<ZipInstalledApp>(0)
             try {
-                installedApps = fetchAppInfos()
+                zipInstalledApps = fetchAppInfos()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            onFinishedWithAppInfos(installedApps)
+            onFinishedWithAppInfos(zipInstalledApps)
         }).start()
     }
 
-    private fun fetchAppInfos(): Array<InstalledApp?> {
+    private fun fetchAppInfos(): Array<ZipInstalledApp?> {
         val pm = context.packageManager
         val infos =
             pm.getInstalledPackages(0)
-        val appInfos: MutableList<InstalledApp> =
+        val appInfos: MutableList<ZipInstalledApp> =
             ArrayList()
         for (info: PackageInfo in infos) {
             //third party app
             if ((info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM) {
-                val appInfo = InstalledApp()
+                val appInfo = ZipInstalledApp()
                 appInfo.appLabel = info.applicationInfo.loadLabel(pm).toString()
                 appInfo.firstInstallTime = info.firstInstallTime.toString()
                 appInfo.lastUpdateTime = info.lastUpdateTime.toString()
@@ -54,8 +54,8 @@ class InstalledAppsProvider(private val context: Context) {
         return appInfos.toTypedArray()
     }
 
-    private fun onFinishedWithAppInfos(infos: Array<InstalledApp?>) {
-        var listenerList: ArrayList<InstalledAppListener>
+    private fun onFinishedWithAppInfos(infos: Array<ZipInstalledApp?>) {
+        var listenerList: ArrayList<ZipInstalledAppListener>
         synchronized(this) {
             listenerList = listeners
             listeners = ArrayList()

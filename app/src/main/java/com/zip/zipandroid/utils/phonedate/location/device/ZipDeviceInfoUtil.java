@@ -55,12 +55,12 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 
-public class DeviceInfoUtil {
+public class ZipDeviceInfoUtil {
 
     private Context context;
     private static int MB = 1024 * 1024;
 
-    public DeviceInfoUtil(Context context) {
+    public ZipDeviceInfoUtil(Context context) {
         this.context = context;
     }
 

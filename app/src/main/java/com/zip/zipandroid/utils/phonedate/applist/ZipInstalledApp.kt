@@ -5,7 +5,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.Serializable
 
-class InstalledApp : Serializable {
+class ZipInstalledApp : Serializable {
     var firstInstallTime: String? = null
     var lastUpdateTime: String? = null
     var packageName: String? = null
@@ -14,7 +14,7 @@ class InstalledApp : Serializable {
     var appLabel: String? = null
 
     companion object {
-        private fun toJSONObject(info: InstalledApp): JSONObject {
+        private fun toJSONObject(info: ZipInstalledApp): JSONObject {
             val jsonObject = JSONObject()
             try {
                 jsonObject.put("firstInstallTime", info.firstInstallTime)
@@ -28,7 +28,7 @@ class InstalledApp : Serializable {
             return jsonObject
         }
 
-        fun jsonArrayFromArray(apps: Array<InstalledApp>): JSONArray {
+        fun jsonArrayFromArray(apps: Array<ZipInstalledApp>): JSONArray {
             val array = JSONArray()
             for (app in apps) {
                 array.put(toJSONObject(app))

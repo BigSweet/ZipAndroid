@@ -94,7 +94,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
                 .create()
 
             UserInfoUtils.saveUploadUserInfo(gson.toJson(it).toString())
-            mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it)
+            mViewModel.preOrder(callInfo, installAppInfo, zipSmsMessageInfos, calendarInfo, it)
         }
         mViewModel.riskLevelLiveData.observe(this) {
             levelBean = it

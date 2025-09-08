@@ -11,20 +11,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CalendarProvider {
+public class ZipCalendarProvider {
     private static String CALENDER_EVENT_URL = "content://com.android.calendar/events";
     private Context context;
-    private ArrayList<CalendarListener> listeners;
+    private ArrayList<ZipCalendarListener> listeners;
     private boolean isFetching = false;
 
-    public CalendarProvider(Context context) {
+    public ZipCalendarProvider(Context context) {
         this.context = context;
         listeners = new ArrayList<>();
     }
 
-    public void fetchCalendar(CalendarListener[] listeners) {
+    public void fetchCalendar(ZipCalendarListener[] listeners) {
         synchronized (this) {
-            for (CalendarListener listener : listeners) {
+            for (ZipCalendarListener listener : listeners) {
                 if (!this.listeners.contains(listener)) {
                     this.listeners.add(listener);
                 }
@@ -38,25 +38,25 @@ public class CalendarProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CalendarInfos[] calendarInfo = new CalendarInfos[0];
+                ZipCalendarInfos[] calendarInfo = new ZipCalendarInfos[0];
                 try {
-                    calendarInfo = CalendarProvider.this.fetchCalendar();
+                    calendarInfo = ZipCalendarProvider.this.fetchCalendar();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                CalendarProvider.this.onFinishedfetchCalendar(calendarInfo);
+                ZipCalendarProvider.this.onFinishedfetchCalendar(calendarInfo);
             }
         }).start();
     }
 
 
     @SuppressLint("Range")
-    private CalendarInfos[] fetchCalendar() {
-        ArrayList<CalendarInfos> calendarInfo=new ArrayList<CalendarInfos>();
+    private ZipCalendarInfos[] fetchCalendar() {
+        ArrayList<ZipCalendarInfos> calendarInfo=new ArrayList<ZipCalendarInfos>();
         Cursor eventCursor = context.getContentResolver().query(Uri.parse(CALENDER_EVENT_URL), null,
                 null, null,  "dtstart"+" DESC");
         while (eventCursor.moveToNext()){
-            CalendarInfos bean = new CalendarInfos();
+            ZipCalendarInfos bean = new ZipCalendarInfos();
             bean.setTitle(eventCursor.getString(eventCursor.getColumnIndex("title")));
             bean.setDescription(eventCursor.getString(eventCursor.getColumnIndex("description")));
             bean.setEventLocation(eventCursor.getString(eventCursor.getColumnIndex("eventLocation")));
@@ -71,11 +71,11 @@ public class CalendarProvider {
             }
             calendarInfo.add(bean);
         }
-        return calendarInfo.toArray(new CalendarInfos[]{});
+        return calendarInfo.toArray(new ZipCalendarInfos[]{});
     }
 
-    private void onFinishedfetchCalendar(CalendarInfos[] infos) {
-        ArrayList<CalendarListener> listenerList;
+    private void onFinishedfetchCalendar(ZipCalendarInfos[] infos) {
+        ArrayList<ZipCalendarListener> listenerList;
         synchronized (this) {
             listenerList = this.listeners;
             this.listeners = new ArrayList<>();

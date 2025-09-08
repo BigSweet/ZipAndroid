@@ -91,7 +91,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         }
 
         mViewModel.uploadUserInfoLiveData.observe(this) {
-            mViewModel.realOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it,
+            mViewModel.realOrder(callInfo, installAppInfo, zipSmsMessageInfos, calendarInfo, it,
                 realAmount, currentPaidType, currentDid.toString(), currentCouponId, currentDid, preBizId, riskLevel)
         }
 

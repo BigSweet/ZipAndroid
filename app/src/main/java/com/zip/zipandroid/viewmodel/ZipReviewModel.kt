@@ -13,7 +13,6 @@ import com.zip.zipandroid.bean.OriginUploadContractBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipBizBean
-import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipCouponListBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipIndImgBean
@@ -25,11 +24,11 @@ import com.zip.zipandroid.bean.ZipTriaBean
 import com.zip.zipandroid.utils.FormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
-import com.zip.zipandroid.utils.phonedate.applist.InstalledApp
-import com.zip.zipandroid.utils.phonedate.calendar.CalendarInfos
-import com.zip.zipandroid.utils.phonedate.calllog.CallLog
-import com.zip.zipandroid.utils.phonedate.location.device.DeviceInfoUtil
-import com.zip.zipandroid.utils.phonedate.sms.SMSMessage
+import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
+import com.zip.zipandroid.utils.phonedate.calendar.ZipCalendarInfos
+import com.zip.zipandroid.utils.phonedate.calllog.ZipCallLog
+import com.zip.zipandroid.utils.phonedate.location.device.ZipDeviceInfoUtil
+import com.zip.zipandroid.utils.phonedate.sms.ZipSMSMessage
 import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
@@ -220,7 +219,7 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     //设备信息、短信、日历、蓝牙、Advertising ID、WIFI这些都要吗
     fun preOrder(
-        callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
+        callInfo: Array<ZipCallLog?>?, installAppInfo: Array<ZipInstalledApp?>?, zipSmsMessageInfo: Array<ZipSMSMessage?>?, calendarInfo: Array<ZipCalendarInfos?>?,
         info: RealUploadUserBean,
     ) {
         val treeMap = TreeMap<String, Any?>()
@@ -230,11 +229,11 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
         api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
-        api.addParam("idNaUra", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
+        api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
         val pushData = ZipPushData()
         pushData.setCallLogs(callInfo)
         pushData.setInstalledApps(installAppInfo)
-        pushData.setMessage(smsMessageInfo)
+        pushData.setMessage(zipSmsMessageInfo)
         pushData.setCalendarInfos(calendarInfo)
         pushData.setMediaData()
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
@@ -289,9 +288,9 @@ class ZipReviewModel : ZipBaseViewModel() {
 
 
     fun realOrder(
-        callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
+        callInfo: Array<ZipCallLog?>?, installAppInfo: Array<ZipInstalledApp?>?, zipSmsMessageInfo: Array<ZipSMSMessage?>?, calendarInfo: Array<ZipCalendarInfos?>?,
         info: RealUploadUserBean,
-        realAmount: Int, currentPaidType: String, did: String, couponId: String,applyPeriod:String,preBizId:String,riskGrade:String
+        realAmount: Int, currentPaidType: String, did: String, couponId: String, applyPeriod:String, preBizId:String, riskGrade:String
     ) {
         //要不要加上一笔订单的id
         //repayment//paytype
@@ -306,7 +305,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
         api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
-        api.addParam("idNaUra", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
+        api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
 //        api.addParam("adadinBashi", realAmount)
         api.addParam("adadinNema", realAmount)
         api.addParam("dNaUraid", did)
@@ -315,7 +314,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         val pushData = ZipPushData()
         pushData.setCallLogs(callInfo)
         pushData.setInstalledApps(installAppInfo)
-        pushData.setMessage(smsMessageInfo)
+        pushData.setMessage(zipSmsMessageInfo)
         pushData.setCalendarInfos(calendarInfo)
         pushData.setMediaData()
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)

@@ -2,19 +2,17 @@ package com.zip.zipandroid.utils.phonedate.sms
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.Telephony
-import androidx.core.content.PermissionChecker
 import com.blankj.utilcode.util.PermissionUtils
 import java.util.*
 
-class SMSMessagesProvider(private val context: Context) {
-    private var listeners: ArrayList<SMSMessageListener>
+class ZipSMSMessagesProvider(private val context: Context) {
+    private var listeners: ArrayList<ZipSMSMessageListener>
     private var isFetching = false
-    fun fetchSMSMessages(list: Array<SMSMessageListener>) {
+    fun fetchSMSMessages(list: Array<ZipSMSMessageListener>) {
         synchronized(this) {
             for (listener in list) {
                 if (!listeners.contains(listener)) {
@@ -38,7 +36,7 @@ class SMSMessagesProvider(private val context: Context) {
         Thread(Runnable {
             try {
                 val messages =
-                    this@SMSMessagesProvider.fetchSMSMessages()
+                    this@ZipSMSMessagesProvider.fetchSMSMessages()
                 onFinishedWithSMSMessages(messages)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -47,8 +45,8 @@ class SMSMessagesProvider(private val context: Context) {
         }).start()
     }
 
-    private fun syncGetListenersAndClear(): ArrayList<SMSMessageListener> {
-        var list: ArrayList<SMSMessageListener>
+    private fun syncGetListenersAndClear(): ArrayList<ZipSMSMessageListener> {
+        var list: ArrayList<ZipSMSMessageListener>
         synchronized(this) {
             list = listeners
             listeners = ArrayList()
@@ -57,7 +55,7 @@ class SMSMessagesProvider(private val context: Context) {
         return list
     }
 
-    private fun onFinishedWithSMSMessages(messages: Array<SMSMessage?>) {
+    private fun onFinishedWithSMSMessages(messages: Array<ZipSMSMessage?>) {
         val listenerList = syncGetListenersAndClear()
         if (listenerList != null && listenerList.size > 0) {
             for (i in listenerList.indices) {
@@ -75,8 +73,8 @@ class SMSMessagesProvider(private val context: Context) {
         }
     }
 
-    private fun fetchSMSMessages(): Array<SMSMessage?> {
-        val messages = ArrayList<SMSMessage>()
+    private fun fetchSMSMessages(): Array<ZipSMSMessage?> {
+        val messages = ArrayList<ZipSMSMessage>()
         val cr = context.contentResolver
         var cursor: Cursor? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -110,7 +108,7 @@ class SMSMessagesProvider(private val context: Context) {
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
-                        val message = SMSMessage()
+                        val message = ZipSMSMessage()
                         message.body = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY))
                         message.id = cursor.getLong(cursor.getColumnIndex(Telephony.Sms._ID))
                         message.date = cursor.getLong(cursor.getColumnIndex(Telephony.Sms.DATE))
@@ -130,7 +128,7 @@ class SMSMessagesProvider(private val context: Context) {
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
-                        val message = SMSMessage()
+                        val message = ZipSMSMessage()
                         message.body = cursor.getString(cursor.getColumnIndex("body"))
                         message.id = cursor.getLong(cursor.getColumnIndex(Telephony.Sms._ID))
                         message.date = cursor.getLong(cursor.getColumnIndex("date"))
@@ -144,7 +142,7 @@ class SMSMessagesProvider(private val context: Context) {
                 cursor.close()
             }
         }
-        return messages.toArray(arrayOf<SMSMessage>())
+        return messages.toArray(arrayOf<ZipSMSMessage>())
     }
 
     init {

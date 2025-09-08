@@ -3,7 +3,7 @@ package com.zip.zipandroid.utils.phonedate.calendar
 import java.io.Serializable
 
 
-class CalendarInfos : Serializable{
+class ZipCalendarInfos : Serializable{
     var title: String? = null
     var description: String? = null
     var eventLocation: String? = null

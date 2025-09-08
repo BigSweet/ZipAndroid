@@ -6,7 +6,7 @@ import org.json.JSONObject
 import java.io.Serializable
 import java.util.*
 
-class Contact : Serializable {
+class ZipContact : Serializable {
     class ContactItem(var label: String, var value: String) :
         Serializable
 
@@ -97,22 +97,22 @@ class Contact : Serializable {
 
     companion object {
         fun toJSONArrayFromArray(
-            contacts: Array<Contact>,
+            zipContacts: Array<ZipContact>,
             repaceRiskCharacters: Boolean
         ): JSONArray {
             val jsonArray = JSONArray()
-            for (i in contacts.indices) {
-                val contact = contacts[i]
+            for (i in zipContacts.indices) {
+                val contact = zipContacts[i]
                 jsonArray.put(contact.toJSONObject(repaceRiskCharacters))
             }
             return jsonArray
         }
 
         fun toJSONStringFromArray(
-            contacts: Array<Contact>,
+            zipContacts: Array<ZipContact>,
             repaceRiskCharacters: Boolean
         ): String {
-            return toJSONArrayFromArray(contacts, repaceRiskCharacters).toString()
+            return toJSONArrayFromArray(zipContacts, repaceRiskCharacters).toString()
         }
 
         private val riskCharactersToBeReplaced: HashMap<String?, String?> =

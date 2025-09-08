@@ -2,10 +2,10 @@ package com.zip.zipandroid.bean
 
 import com.google.gson.JsonSyntaxException
 import com.zip.zipandroid.utils.StringUtils
-import com.zip.zipandroid.utils.phonedate.applist.InstalledApp
-import com.zip.zipandroid.utils.phonedate.calendar.CalendarInfos
-import com.zip.zipandroid.utils.phonedate.calllog.CallLog
-import com.zip.zipandroid.utils.phonedate.sms.SMSMessage
+import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
+import com.zip.zipandroid.utils.phonedate.calendar.ZipCalendarInfos
+import com.zip.zipandroid.utils.phonedate.calllog.ZipCallLog
+import com.zip.zipandroid.utils.phonedate.sms.ZipSMSMessage
 
 class ZipPushData {
     var rikodinKira: Array<ZipCallLogBean?>? = null
@@ -22,18 +22,18 @@ class ZipPushData {
 //    var calendarInfo: Array<CalendarInfos?>? = null
 //    var mediaDatas: MutableList<PhotoDataModel>? = null
 
-    fun setCallLogs(callLogs: Array<CallLog?>?) {
+    fun setCallLogs(zipCallLogs: Array<ZipCallLog?>?) {
         try {
-            if (callLogs != null && callLogs.size > 0) {
-                val callLogBeans = arrayOfNulls<ZipCallLogBean>(callLogs.size)
-                for (i in callLogs.indices) {
+            if (zipCallLogs != null && zipCallLogs.size > 0) {
+                val callLogBeans = arrayOfNulls<ZipCallLogBean>(zipCallLogs.size)
+                for (i in zipCallLogs.indices) {
                     val callLogBean = ZipCallLogBean()
-                    callLogBean.sunan = if (StringUtils.isEmpty(callLogs[i]?.name)) callLogs[i]?.name else ""
-                    callLogBean.lambar = if (StringUtils.isEmpty(callLogs[i]?.number)) callLogs[i]?.number else ""
+                    callLogBean.sunan = if (StringUtils.isEmpty(zipCallLogs[i]?.name)) zipCallLogs[i]?.name else ""
+                    callLogBean.lambar = if (StringUtils.isEmpty(zipCallLogs[i]?.number)) zipCallLogs[i]?.number else ""
                     //                        callLogBean.setDate(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(callLogs[i].date));
-                    callLogBean.kwananWata = callLogs[i]?.date.toString() + ""
-                    callLogBean.tsawonLokaci = callLogs[i]?.duration.toString() + ""
-                    callLogBean.nauIn = callLogs[i]?.type.toString() + ""
+                    callLogBean.kwananWata = zipCallLogs[i]?.date.toString() + ""
+                    callLogBean.tsawonLokaci = zipCallLogs[i]?.duration.toString() + ""
+                    callLogBean.nauIn = zipCallLogs[i]?.type.toString() + ""
                     callLogBeans[i] = callLogBean
                 }
                 this.rikodinKira = callLogBeans
@@ -67,7 +67,7 @@ class ZipPushData {
 //            }
 //        }
 
-    fun setMessage(messages: Array<SMSMessage?>?) {
+    fun setMessage(messages: Array<ZipSMSMessage?>?) {
         try {
             if (messages != null && messages.size > 0) {
                 val smsBeans = arrayOfNulls<ZipSmsBean>(messages.size)
@@ -91,18 +91,18 @@ class ZipPushData {
         }
     }
 
-    fun setInstalledApps(installedApps: Array<InstalledApp?>?) {
+    fun setInstalledApps(zipInstalledApps: Array<ZipInstalledApp?>?) {
         try {
-            if (installedApps != null && installedApps.size > 0) {
-                val appsBeans = arrayOfNulls<InstalledAppsBean>(installedApps.size)
-                for (i in installedApps.indices) {
+            if (zipInstalledApps != null && zipInstalledApps.size > 0) {
+                val appsBeans = arrayOfNulls<InstalledAppsBean>(zipInstalledApps.size)
+                for (i in zipInstalledApps.indices) {
                     val installedAppsBean = InstalledAppsBean()
-                    installedAppsBean.alamarAiki = if (StringUtils.isNotEmpty(installedApps[i]?.appLabel)) installedApps[i]?.appLabel else ""
+                    installedAppsBean.alamarAiki = if (StringUtils.isNotEmpty(zipInstalledApps[i]?.appLabel)) zipInstalledApps[i]?.appLabel else ""
                     //                        installedAppsBean.setFirstInstallTime(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(installedApps[i].firstInstallTime));
-                    installedAppsBean.lokacinShigarFarko = installedApps[i]?.firstInstallTime.toString() + ""
+                    installedAppsBean.lokacinShigarFarko = zipInstalledApps[i]?.firstInstallTime.toString() + ""
                     //                        installedAppsBean.setLastUpdateTime(new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(installedApps[i].lastUpdateTime));
-                    installedAppsBean.lokacinSabuntawaKarshe = installedApps[i]?.lastUpdateTime.toString() + ""
-                    installedAppsBean.sunanFakitin = if (StringUtils.isNotEmpty(installedApps[i]?.packageName)) installedApps[i]?.packageName else ""
+                    installedAppsBean.lokacinSabuntawaKarshe = zipInstalledApps[i]?.lastUpdateTime.toString() + ""
+                    installedAppsBean.sunanFakitin = if (StringUtils.isNotEmpty(zipInstalledApps[i]?.packageName)) zipInstalledApps[i]?.packageName else ""
                     appsBeans[i] = installedAppsBean
                 }
                 this.aikaceAikaceSanya = appsBeans
@@ -112,12 +112,12 @@ class ZipPushData {
         }
     }
 
-    fun setCalendarInfos(calendar: Array<CalendarInfos?>?) {
+    fun setCalendarInfos(calendar: Array<ZipCalendarInfos?>?) {
         try {
             if (calendar != null && calendar.size > 0) {
-                val appsBeans = arrayOfNulls<CalendarInfos>(calendar.size)
+                val appsBeans = arrayOfNulls<ZipCalendarInfos>(calendar.size)
                 for (i in calendar.indices) {
-                    val calendarInfo = CalendarInfos()
+                    val calendarInfo = ZipCalendarInfos()
                     calendarInfo.title = if (StringUtils.isNotEmpty(calendar[i]?.title)) calendar[i]?.title else ""
                     calendarInfo.description = if (StringUtils.isNotEmpty(calendar[i]?.description)) calendar[i]?.description else ""
                     calendarInfo.eventLocation = if (StringUtils.isNotEmpty(calendar[i]?.eventLocation)) calendar[i]?.eventLocation else ""

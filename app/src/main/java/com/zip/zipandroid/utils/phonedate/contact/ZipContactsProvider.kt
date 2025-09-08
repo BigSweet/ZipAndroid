@@ -9,14 +9,14 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.*
 import android.text.TextUtils
 import androidx.core.content.PermissionChecker
-import com.zip.zipandroid.utils.phonedate.contact.Contact.ContactItem
+import com.zip.zipandroid.utils.phonedate.contact.ZipContact.ContactItem
 import java.util.*
 
-class ContactsProvider(private val context: Context) {
-    private var listeners: ArrayList<ContactListener>
+class ZipContactsProvider(private val context: Context) {
+    private var listeners: ArrayList<ZipContactListener>
     private var isFetching = false
     @SuppressLint("WrongConstant")
-    fun fetchAllContacts(list: Array<ContactListener>) {
+    fun fetchAllContacts(list: Array<ZipContactListener>) {
         synchronized(this) {
             for (listener in list) {
                 if (!listeners.contains(listener)) {
@@ -47,8 +47,8 @@ class ContactsProvider(private val context: Context) {
         }).start()
     }
 
-    private fun syncGetListenersAndClear(): ArrayList<ContactListener> {
-        var list: ArrayList<ContactListener>
+    private fun syncGetListenersAndClear(): ArrayList<ZipContactListener> {
+        var list: ArrayList<ZipContactListener>
         synchronized(this) {
             list = listeners
             listeners = ArrayList()
@@ -57,11 +57,11 @@ class ContactsProvider(private val context: Context) {
         return list
     }
 
-    private fun onFinishedWithContacts(contacts: Array<Contact?>) {
+    private fun onFinishedWithContacts(zipContacts: Array<ZipContact?>) {
         val listenerList = syncGetListenersAndClear()
         if (listenerList != null && listenerList.size > 0) {
             for (i in listenerList.indices) {
-                listenerList[i].onContactFetched(contacts)
+                listenerList[i].onContactFetched(zipContacts)
             }
         }
     }
@@ -75,8 +75,8 @@ class ContactsProvider(private val context: Context) {
         }
     }
 
-    private fun fetchContacts(): Array<Contact?> {
-        var everyoneElse: Map<String?, Contact?>
+    private fun fetchContacts(): Array<ZipContact?> {
+        var everyoneElse: Map<String?, ZipContact?>
         run {
             val cursor = this.context.contentResolver.query(
                 ContactsContract.Data.CONTENT_URI,
@@ -99,12 +99,12 @@ class ContactsProvider(private val context: Context) {
         }
         val contacts =
             ArrayList(everyoneElse.values)
-        val arrayContacts = arrayOfNulls<Contact>(contacts.size)
-        return contacts.toArray(arrayContacts)
+        val arrayZipContacts = arrayOfNulls<ZipContact>(contacts.size)
+        return contacts.toArray(arrayZipContacts)
     }
 
-    private fun loadContactsFrom(cursor: Cursor?): Map<String?, Contact?> {
-        val map: MutableMap<String?, Contact?> =
+    private fun loadContactsFrom(cursor: Cursor?): Map<String?, ZipContact?> {
+        val map: MutableMap<String?, ZipContact?> =
             LinkedHashMap()
         while (cursor != null && cursor.moveToNext()) {
             val columnIndex = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)
@@ -116,7 +116,7 @@ class ContactsProvider(private val context: Context) {
                 contactId = (-1).toString() //no contact id for 'ME' user
             }
             if (!map.containsKey(contactId)) {
-                map[contactId] = Contact()
+                map[contactId] = ZipContact()
             }
             val contact = map[contactId]
             val mimeType =

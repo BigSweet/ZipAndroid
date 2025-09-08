@@ -5,7 +5,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.Serializable
 
-class CallLog : Serializable {
+class ZipCallLog : Serializable {
     var date: Long = 0
     var duration = 0
     var number // number of other party
@@ -27,9 +27,9 @@ class CallLog : Serializable {
     }
 
     companion object {
-        fun jsonArrayFromArray(callLogs: Array<CallLog>): JSONArray {
+        fun jsonArrayFromArray(zipCallLogs: Array<ZipCallLog>): JSONArray {
             val jsonArray = JSONArray()
-            for (callLog in callLogs) {
+            for (callLog in zipCallLogs) {
                 jsonArray.put(callLog.toJSONObject())
             }
             return jsonArray
