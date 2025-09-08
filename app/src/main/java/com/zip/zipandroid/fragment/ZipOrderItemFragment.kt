@@ -28,14 +28,14 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
     var queryType = 0 //0是全部订单
     override fun initView(savedInstanceState: Bundle?) {
         queryType = arguments?.getInt("queryType", 0) ?: 0
-        mViewModel.getOrderListInfo(queryType)
+
         mViewBind.itemOrderListRv.layoutManager = LinearLayoutManager(requireActivity())
         mViewBind.itemOrderListRv.adapter = adapter
         adapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as ZipOrderListBeanItem
             if (view.id == R.id.zip_order_item_finish_detail_tv || view.id == R.id.zip_order_item_show_detail_tv) {
                 //订单详情页面
-                ZipOrderDetailActivity.start(requireActivity(), item)
+                ZipOrderDetailActivity.start(requireActivity(), item.bizId,queryType)
             }
             if (view.id == R.id.zip_order_item_repay_btn) {
                 PayOrderDetailActivity.start(requireActivity(), item)
@@ -43,6 +43,11 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getOrderListInfo(queryType)
     }
 
     val adapter = OrderItemListAdapter()

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -70,6 +71,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
         mViewModel.preOrderLiveData.observe(this) {
             it ?: return@observe
             preBizId = it.bizId ?: ""
+            UserInfoUtils.savePreBizId(preBizId)
             getRiskLevel(it.bizId ?: "")
         }
         mViewModel.admissionLiveData.observe(this) {
@@ -94,37 +96,12 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
             UserInfoUtils.saveUploadUserInfo(gson.toJson(it).toString())
             mViewModel.preOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it)
         }
-
-//        mViewModel.productLiveData.observe(this) {
-//            if (!it.isNullOrEmpty()) {
-//                did = (it?.first()?.did ?: 0L).toString()
-//                ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
-//                    ?: "")
-//            }
-//        }
-
-
         mViewModel.riskLevelLiveData.observe(this) {
             levelBean = it
             amount = it.grantAmount.toString()
+            UserInfoUtils.saveLevelData(Gson().toJson(levelBean))
             getPidProduct(it.riskLevel ?: "")
         }
-//        mViewModel.userOrderLiveData.observe(this) {
-//            it ?: return@observe
-//            if (it.status == "WAITING") {
-//                EventBusUtils.post(RefreshHomeEvent())
-//                dismissLoading()
-//                disposable?.dispose()
-//                MacawUserSureOrderActivityMacawMacaw.start(this@ZipOrderReviewActivity, currentBizId)
-//                finish()
-//            }
-//            if (it.status == "EXECUTING") {
-//                EventBusUtils.post(RefreshHomeEvent())
-//                dismissLoading()
-//                disposable?.dispose()
-//                finish()
-//            }
-//        }
     }
 
     fun preOrder() {

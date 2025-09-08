@@ -6,6 +6,7 @@ import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.ProductList
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.ZipQueryCardBeanItem
+import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 
 object UserInfoUtils {
@@ -82,6 +83,7 @@ object UserInfoUtils {
     fun clear() {
         MMKV.defaultMMKV()?.remove("zipsignKey")
         MMKV.defaultMMKV()?.remove("zipmid")
+        MMKV.defaultMMKV()?.remove("levelData")
         MMKV.defaultMMKV()?.remove("custId")
         MMKV.defaultMMKV()?.remove("zipuserNo")
         MMKV.defaultMMKV()?.remove("zipuserphone")
@@ -89,6 +91,7 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.remove("zipuserInfo")
         MMKV.defaultMMKV()?.remove("productType")
         MMKV.defaultMMKV()?.remove("bankData")
+        MMKV.defaultMMKV()?.remove("preBizId")
         MMKV.defaultMMKV()?.remove("zipuploaduserInfo")
         mSignKey = ""
         mUserNo = ""
@@ -150,6 +153,28 @@ object UserInfoUtils {
     fun saveProductDue(productDue: String) {
         MMKV.defaultMMKV()?.putString("zipproductDue", productDue)
     }
+
+
+    fun getLevelData(): ZipRiskLevelBean {
+        val infoStr = MMKV.defaultMMKV()?.getString("levelData", "")
+        mLevelData = Gson().fromJson(infoStr, ZipRiskLevelBean::class.java)
+        return mLevelData!!
+    }
+
+    var mLevelData: ZipRiskLevelBean? = null
+
+    fun saveLevelData(bankData: String) {
+        MMKV.defaultMMKV()?.putString("levelData", bankData)
+    }
+
+    fun savePreBizId(bizId: String) {
+        MMKV.defaultMMKV()?.putString("preBizId", bizId)
+    }
+
+    fun getPreBizId(): String {
+        return MMKV.defaultMMKV()?.getString("preBizId", "") ?: ""
+    }
+
 
     fun saveBankData(bankData: String) {
         MMKV.defaultMMKV()?.putString("bankData", bankData)

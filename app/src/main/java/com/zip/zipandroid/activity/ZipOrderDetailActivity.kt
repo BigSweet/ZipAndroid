@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import com.zip.zipandroid.base.ZipBaseBindingActivity
-import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.bean.ZipOrderListBeanItem
 import com.zip.zipandroid.databinding.ActivityZipOrderDetailBinding
 import com.zip.zipandroid.ktx.hide
@@ -14,27 +13,49 @@ import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.view.formatTimestampToDate
 import com.zip.zipandroid.view.toN
+import com.zip.zipandroid.viewmodel.OrderItemViewModel
 
-class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipOrderDetailBinding>() {
+class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, ActivityZipOrderDetailBinding>() {
 
     companion object {
         @JvmStatic
-        fun start(context: Context, data: ZipOrderListBeanItem?) {
+        fun start(context: Context, bizId: String?, queryType: Int) {
             val starter = Intent(context, ZipOrderDetailActivity::class.java)
-                .putExtra("data", data)
+                .putExtra("bizId", bizId)
+                .putExtra("queryType", queryType)
             context.startActivity(starter)
         }
 
     }
 
-    var orderData: ZipOrderListBeanItem? = null
+    var bizId: String = ""
+    var queryType = 0
     override fun initView(savedInstanceState: Bundle?) {
-        orderData = intent.getParcelableExtra("data")
+        bizId = intent.getStringExtra("bizId") ?: ""
+        queryType = intent.getIntExtra("queryType", 0)
+        mViewModel.getOrderListInfo(queryType)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Order Details")
+
+
+    }
+
+    var orderData: ZipOrderListBeanItem? = null
+    override fun createObserver() {
+        mViewModel.orderListLiveData.observe(this) {
+            orderData = it.find {
+                it.bizId == bizId
+            }
+            if (orderData != null) {
+                setDataInfo()
+            }
+        }
+    }
+
+    private fun setDataInfo() {
         val status = orderData?.status ?: ""
 
         mViewBind.detailTopOverTv.hide()
@@ -52,7 +73,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
             mViewBind.detailInterReduceTv.setText(it.subtractInterest.toInt().toN())
 
 
-            if(!it.allAmountDue.isNullOrEmpty()){
+            if (!it.allAmountDue.isNullOrEmpty()) {
                 mViewBind.detailTotalAmountTv.setText(it.allAmountDue?.toInt()?.toN())
             }
             mViewBind.detailTotalTermsTv.setText(it.stageCount)
@@ -76,12 +97,10 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
         mViewBind.detailSettleNowTv.hide()
         mViewBind.detailSettleNowTv.setOnDelayClickListener {
             PayOrderDetailActivity.start(this, orderData)
-
         }
 
         if (true) {
             //如果有下一期 没下一期就隐藏
-
             orderData?.let {
                 it.approveTime
             }
@@ -111,10 +130,6 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
 
             mViewBind.detailRepaidTv.setTextColor(Color.parseColor("#FF9F9F9F"))
         }
-
-    }
-
-    override fun createObserver() {
     }
 
     override fun getData() {

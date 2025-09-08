@@ -6,12 +6,15 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
+import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.activity.ZipOrderReviewActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipQuestionActivity
+import com.zip.zipandroid.activity.ZipSureOrderActivity
 import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
+import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.FragmentZipHomeBinding
 import com.zip.zipandroid.event.ZipRefreshHomeEvent
 import com.zip.zipandroid.ktx.hide
@@ -39,16 +42,25 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     override fun initView(savedInstanceState: Bundle?) {
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
-            mViewModel.getUserInfo()
+            checkUserInfo()
         }
         mViewBind.newHomeSwpie.setOnRefreshListener {
-            mViewModel.zipHomeData()
+            getAllData()
         }
         mViewBind.zipHomePrivateSl.setOnDelayClickListener {
             ZipWebActivity.start(requireActivity(), Constants.commonPrivateUrl)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getAllData()
+    }
+
+    fun getAllData() {
         mViewModel.zipHomeData()
         mViewModel.getZipAppConfig()
+        mViewModel.getUserInfo()
     }
 
 
@@ -65,13 +77,6 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
 //
 //    WAITING 挂起状态，跳转到订单确认页面，等待用户确认，用户确认或取消后跳转到首页。
-//
-//
-//
-//    status：FAIL 表示放款失败
-//
-//    TRANSACTION 放款中
-//    REFUSED 已拒绝  审核失败页面//审核失败
 //
 
 
@@ -90,14 +95,26 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             mViewBind.homePayingCl.hide()
             mViewBind.homeSubmitRefuseCl.hide()
             mViewBind.homeBankFailCl.hide()
+            mViewBind.homeCanLoanCl.hide()
 
+            if (it.creditOrderList?.status == "WAITING") {
+                //直接去下单页面
+                mViewBind.homeCanLoanCl.show()
+                //授信后返回的金额？
+                mViewBind.canLoanMoneyTv.setText(UserInfoUtils.getLevelData().grantAmount)
+                mViewBind.canLoanNowTv.setOnDelayClickListener {
+                    ZipSureOrderActivity.start(requireActivity(), UserInfoUtils.getLevelData().grantAmount, UserInfoUtils.getLevelData().riskLevel, UserInfoUtils.getPreBizId())
+                }
+            }
 
             if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
                 mViewBind.homePayingCl.show()
                 mViewBind.payingDateTv.setText(it.creditOrderList?.applyAmount.toN())
                 mViewBind.payingMoneyTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.applyTime))
+                val bizId = it.creditOrderList.bizId
                 mViewBind.payNowTv.setOnDelayClickListener {
                     //去还款
+                    ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
                 }
             }
             if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
@@ -105,7 +122,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
                 mViewBind.zipHomeVerTv.setOnDelayClickListener {
                     //查到了第几部，在去进件
-                    mViewModel.getUserInfo()
+                    checkUserInfo()
                 }
             }
             if (it.creditOrderList?.status == "OVERDUE") {
@@ -113,14 +130,16 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
                 mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                 mViewBind.delayDesBottomTv.setText("Your payment is ${it.creditOrderList?.overdueDays} days past due, please make your repayment as soon as possible.")
+                val bizId = it.creditOrderList.bizId
                 mViewBind.delayNowTv.setOnDelayClickListener {
                     //去还款
+                    ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
                 }
             }
             if (it.creditOrderList?.status == "FAIL") {
                 mViewBind.homeBankFailCl.show()
                 mViewBind.updateBankTv.setOnDelayClickListener {
-                    //跳转过去后是什么逻辑
+                    //跳转过去后继续授信在进件
                     ZipBandCardActivity.start(requireActivity(), false)
                 }
             }
@@ -145,29 +164,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         }
         mViewModel.userInfoLiveData.observe(this) {
-
-            if (it.mbCustId > 0) {
-                UserInfoUtils.saveCusId(it.mbCustId)
-            }
-            UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
-            if (it.doubleLoan == 1) {
-                //复贷用户直接跳计算
-                ZipOrderReviewActivity.start(requireActivity(), "")
-                return@observe
-            }
-
-            if (it.firstName.isNullOrEmpty()) {
-                startActivity(ZipPersonInfoActivity::class.java)
-            } else if (it.industryName.isNullOrEmpty()) {
-                startActivity(ZipWorkInfoActivity::class.java)
-            } else if (it.emergencyContactPerson.isNullOrEmpty()) {
-                startActivity(ZipContractActivity::class.java)
-            } else if (it.questions.isNullOrEmpty()) {
-                startActivity(ZipQuestionActivity::class.java)
-            } else if (it.bankId.isNullOrEmpty()) {
-                mViewModel.zipQueryCard()
-
-            }
+            userInfo = it
 
         }
         mViewModel.cardListLiveData.observe(this) {
@@ -194,6 +191,33 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.homeFirstAdTv.setText(it.first().advertContent)
                 Glide.with(requireActivity()).load(it.first().imgUrl).into(mViewBind.homeFirstAdIv)
             }
+        }
+    }
+
+    var userInfo: ZipUserInfoBean? = null
+    fun checkUserInfo() {
+        val it = userInfo ?: return
+        if (it.mbCustId > 0) {
+            UserInfoUtils.saveCusId(it.mbCustId)
+        }
+        UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
+        if (it.doubleLoan == 1) {
+            //复贷用户直接跳计算
+            ZipOrderReviewActivity.start(requireActivity(), "")
+            return
+        }
+
+        if (it.firstName.isNullOrEmpty()) {
+            startActivity(ZipPersonInfoActivity::class.java)
+        } else if (it.industryName.isNullOrEmpty()) {
+            startActivity(ZipWorkInfoActivity::class.java)
+        } else if (it.emergencyContactPerson.isNullOrEmpty()) {
+            startActivity(ZipContractActivity::class.java)
+        } else if (it.questions.isNullOrEmpty()) {
+            startActivity(ZipQuestionActivity::class.java)
+        } else if (it.bankId.isNullOrEmpty()) {
+            mViewModel.zipQueryCard()
+
         }
     }
 
