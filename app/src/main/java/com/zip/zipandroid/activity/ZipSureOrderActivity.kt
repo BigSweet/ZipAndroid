@@ -14,6 +14,7 @@ import android.view.View
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipDurationAdapter
 import com.zip.zipandroid.adapter.ZipInstallAdapter
@@ -21,11 +22,13 @@ import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.PeriodStage
 import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipProductPeriodItem
+import com.zip.zipandroid.bean.ZipTriaBean
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
 import com.zip.zipandroid.event.ZipSelectCouponEvent
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
+import com.zip.zipandroid.pop.ZipRepaymentPlanPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
@@ -66,6 +69,10 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             mViewBind.sureOrderAmountTv.setText(realAmount.toN())
             //试算
             orderTrialData()
+        }
+        mViewBind.planSl.setOnDelayClickListener {
+            val pop = ZipRepaymentPlanPop(this,zipTriaBean)
+            XPopup.Builder(this).asCustom(pop).show()
         }
 
         mViewBind.orderSubIv.setOnDelayClickListener {
@@ -214,6 +221,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         mViewModel.orderTrialLiveData.observe(this) {
             mViewBind.couponInterTv.setText(it.couponAmount)
+            zipTriaBean = it
             mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())
             mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
             mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
@@ -278,6 +286,8 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
 
     }
+
+    var zipTriaBean: ZipTriaBean? = null
 
     private fun setCouponData(data: ZipCouponItemBean) {
         mViewBind.couponPriceTv.show()

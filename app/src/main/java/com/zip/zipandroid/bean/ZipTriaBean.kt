@@ -28,6 +28,31 @@ data class ZipRepayment(
     val shouldAmount: Double,
     val shouldTime: Long,
 )
+//indexs
+//number
+//true
+//还款期次
+//shouldAmount
+//string
+//true
+//应还金额
+//shouldCapital
+//string
+//true
+//应还本金
+//shouldInterest
+//string
+//true
+//应还利息
+//shouldOtherTotalFee
+//string
+//true
+//应还其他费用
+//shouldTime
+//number
+//true
+//应还时间
+
 
 data class ZipLoanFeeDTO(
     val chargeType: Int,

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/item_zip_repayment_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="@+id/item_zip_repayment_time_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1/6" />
+
+    <TextView
+        android:id="@+id/item_zip_repayment_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="4dp"
+        tools:text="Dec 20,2025"
+        android:textColor="#ff000000"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_zip_repayment_count_tv" />
+
+    <com.zip.zipandroid.shape.ShapeRelativeLayout
+        android:id="@+id/play_center_round_view"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginLeft="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_zip_repayment_time_tv"
+        app:layout_constraintLeft_toRightOf="@+id/item_zip_repayment_time_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_zip_repayment_count_tv"
+        app:sv_rl_background="#3667F0"
+        app:sv_rl_radius="13dp">
+
+        <com.zip.zipandroid.shape.ShapeRelativeLayout
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_centerInParent="true"
+            app:sv_rl_background="@color/white"
+            app:sv_rl_radius="6dp">
+
+        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+    </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+    <TextView
+        android:id="@+id/item_payment_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textColor="#ff000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/play_center_round_view"
+        app:layout_constraintLeft_toRightOf="@+id/play_center_round_view"
+        app:layout_constraintTop_toTopOf="@+id/play_center_round_view"
+        tools:text="₦6,715.39" />
+
+
+    <TextView
+        android:id="@+id/item_discount_price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginLeft="7dp"
+        android:textColor="#BCC3D4"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_payment_price_tv"
+        app:layout_constraintLeft_toRightOf="@+id/item_payment_price_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_payment_price_tv"
+        tools:text="N 1000" />
+
+    <View
+        android:id="@+id/coupon_line_view"
+        android:layout_width="27dp"
+        android:layout_height="1dp"
+        android:background="#BCC3D4"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_discount_price_tv"
+        app:layout_constraintRight_toRightOf="@+id/item_discount_price_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_discount_price_tv">
+
+    </View>
+
+    <com.zip.zipandroid.view.VerticalDashedLineView
+        android:id="@+id/plan_top_line_view"
+        android:layout_width="1dp"
+        android:layout_height="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/play_center_round_view"
+        app:layout_constraintLeft_toLeftOf="@+id/play_center_round_view"
+        app:layout_constraintRight_toRightOf="@+id/play_center_round_view" />
+
+    <com.zip.zipandroid.view.VerticalDashedLineView
+        android:id="@+id/plan_bottom_line_view"
+        android:layout_width="1dp"
+        android:layout_height="59dp"
+        app:layout_constraintLeft_toLeftOf="@+id/play_center_round_view"
+        app:layout_constraintRight_toRightOf="@+id/play_center_round_view"
+        app:layout_constraintTop_toBottomOf="@+id/play_center_round_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

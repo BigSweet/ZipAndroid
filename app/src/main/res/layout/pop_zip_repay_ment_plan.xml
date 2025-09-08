@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.zip.zipandroid.shape.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
+        app:sv_scl_background="@color/white"
+        app:sv_scl_radius="19dp">
+
+        <TextView
+            android:id="@+id/plan_close_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
+            android:text="Cancel"
+            android:textColor="#ff3667f0"
+            android:textSize="14sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/plan_title_palce_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:text="Repayment Plan"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/pop_repayment_plan_rv"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/pop_total_place_tv"
+            app:layout_constraintTop_toBottomOf="@+id/plan_title_palce_tv">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/pop_total_place_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginBottom="17dp"
+            android:text="Total Repayment Amount"
+            android:textColor="#ff000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/plan_bottom_confirm_tv"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/total_discount_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginRight="7dp"
+            android:textColor="#BCC3D4"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/total_bottom_tv"
+            app:layout_constraintRight_toLeftOf="@+id/total_bottom_tv"
+            app:layout_constraintTop_toTopOf="@+id/total_bottom_tv"
+            tools:text="N 1000" />
+
+        <View
+            android:id="@+id/coupon_line_view"
+            android:visibility="gone"
+            android:layout_width="27dp"
+            android:layout_height="1dp"
+            android:background="#BCC3D4"
+            app:layout_constraintBottom_toBottomOf="@+id/total_discount_price_tv"
+            app:layout_constraintRight_toRightOf="@+id/total_discount_price_tv"
+            app:layout_constraintTop_toTopOf="@+id/total_discount_price_tv">
+
+        </View>
+
+        <TextView
+            android:id="@+id/total_bottom_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="14dp"
+            android:textColor="#ff3667f0"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/pop_total_place_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pop_total_place_tv"
+            tools:text="₦ 20,146.16" />
+
+        <com.zip.zipandroid.shape.ShapeConstraintLayout
+            android:id="@+id/plan_bottom_confirm_tv"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:sv_scl_background="@color/white">
+
+
+            <com.zip.zipandroid.shape.ShapeTextView
+                android:id="@+id/private_sure_tv"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginHorizontal="41dp"
+                android:gravity="center"
+                android:text="Confirm"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sv_tx_background="#FF205EDB"
+                app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+
+        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+</layout>
