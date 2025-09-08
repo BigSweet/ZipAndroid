@@ -107,76 +107,82 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
             mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
             mViewBind.homeReviewCl.hide()
-            mViewBind.homeOrderNormalCl.hide()
+
             mViewBind.homeDelayCl.hide()
             mViewBind.homePayingCl.hide()
             mViewBind.homeSubmitRefuseCl.hide()
             mViewBind.homeBankFailCl.hide()
             mViewBind.homeCanLoanCl.hide()
             mViewBind.homeLoaningIv.hide()
-
-            if (it.creditOrderList?.status == "WAITING") {
-                //直接去下单页面
-                mViewBind.homeCanLoanCl.show()
-                //授信后返回的金额？
-                mViewBind.canLoanMoneyTv.setText(UserInfoUtils.getLevelData().grantAmount)
-                mViewBind.canLoanNowTv.setOnDelayClickListener {
-                    ZipSureOrderActivity.start(requireActivity(), UserInfoUtils.getLevelData().grantAmount, UserInfoUtils.getLevelData().riskLevel, UserInfoUtils.getPreBizId())
-                }
-            }
-
-            if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
-                mViewBind.homePayingCl.show()
-                mViewBind.payingDateTv.setText(it.creditOrderList?.applyAmount.toN())
-                mViewBind.payingMoneyTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.applyTime))
-                val bizId = it.creditOrderList.bizId
-                mViewBind.payNowTv.setOnDelayClickListener {
-                    //去还款
-                    ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
-                }
-            }
-            if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
+            if (it.creditOrderList == null) {
                 mViewBind.homeOrderNormalCl.show()
-                mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
-                mViewBind.zipHomeVerTv.setOnDelayClickListener {
-                    //查到了第几部，在去进件
-                    checkUserInfo()
+            }else{
+                mViewBind.homeOrderNormalCl.hide()
+                if (it.creditOrderList?.status == "WAITING") {
+                    //直接去下单页面
+                    mViewBind.homeCanLoanCl.show()
+                    //授信后返回的金额？
+                    mViewBind.canLoanMoneyTv.setText(UserInfoUtils.getLevelData().grantAmount)
+                    mViewBind.canLoanNowTv.setOnDelayClickListener {
+                        ZipSureOrderActivity.start(requireActivity(), UserInfoUtils.getLevelData().grantAmount, UserInfoUtils.getLevelData().riskLevel, UserInfoUtils.getPreBizId())
+                    }
+                }
+
+                if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
+                    mViewBind.homePayingCl.show()
+                    mViewBind.payingDateTv.setText(it.creditOrderList?.applyAmount.toN())
+                    mViewBind.payingMoneyTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.applyTime))
+                    val bizId = it.creditOrderList.bizId
+                    mViewBind.payNowTv.setOnDelayClickListener {
+                        //去还款
+                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
+                    }
+                }
+                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
+                    mViewBind.homeOrderNormalCl.show()
+                    mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+                    mViewBind.zipHomeVerTv.setOnDelayClickListener {
+                        //查到了第几部，在去进件
+                        checkUserInfo()
+                    }
+                }
+                if (it.creditOrderList?.status == "OVERDUE") {
+                    mViewBind.homeDelayCl.show()
+                    mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
+                    mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                    val span = SpannableStringBuilder()
+                    span.append("Your payment is ")
+                    val start = span.length
+                    span.append("${it.creditOrderList?.overdueDays} days")
+                    val end = span.length
+                    span.setSpan(ForegroundColorSpan(Color.parseColor("#FF6E69")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    span.append("past due, please make your repayment as soon as possible.")
+                    mViewBind.delayDesBottomTv.setText(span)
+                    val bizId = it.creditOrderList.bizId
+                    mViewBind.delayNowTv.setOnDelayClickListener {
+                        //去还款
+                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
+                    }
+                }
+                if (it.creditOrderList?.status == "FAIL") {
+                    mViewBind.homeBankFailCl.show()
+                    mViewBind.updateBankTv.setOnDelayClickListener {
+                        //跳转过去后继续授信在进件
+                        ZipBandCardActivity.start(requireActivity(), false)
+                    }
+                }
+                if (it.creditOrderList?.status == "REFUSED") {
+                    mViewBind.homeSubmitRefuseCl.show()
+                }
+                if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING") {
+                    mViewBind.homeReviewCl.show()
+                }
+                if (it.creditOrderList?.status == "TRANSACTION") {
+                    mViewBind.homeLoaningIv.show()
                 }
             }
-            if (it.creditOrderList?.status == "OVERDUE") {
-                mViewBind.homeDelayCl.show()
-                mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
-                mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
-                val span = SpannableStringBuilder()
-                span.append("Your payment is ")
-                val start = span.length
-                span.append("${it.creditOrderList?.overdueDays} days")
-                val end = span.length
-                span.setSpan(ForegroundColorSpan(Color.parseColor("#FF6E69")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                span.append("past due, please make your repayment as soon as possible.")
-                mViewBind.delayDesBottomTv.setText(span)
-                val bizId = it.creditOrderList.bizId
-                mViewBind.delayNowTv.setOnDelayClickListener {
-                    //去还款
-                    ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
-                }
-            }
-            if (it.creditOrderList?.status == "FAIL") {
-                mViewBind.homeBankFailCl.show()
-                mViewBind.updateBankTv.setOnDelayClickListener {
-                    //跳转过去后继续授信在进件
-                    ZipBandCardActivity.start(requireActivity(), false)
-                }
-            }
-            if (it.creditOrderList?.status == "REFUSED") {
-                mViewBind.homeSubmitRefuseCl.show()
-            }
-            if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING") {
-                mViewBind.homeReviewCl.show()
-            }
-            if (it.creditOrderList?.status == "TRANSACTION") {
-                mViewBind.homeLoaningIv.show()
-            }
+
+
         }
         mViewModel.configLiveData.observe(this) {
 

@@ -82,8 +82,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             }
             pop.allPerSuccess = {
                 val list = AllPerUtils.getAllPer()
-//                val list = getTestPerList()
-
                 PermissionUtils.permission(*list.toTypedArray())
                     .callback(object : PermissionUtils.FullCallback {
                         override fun onGranted(permissionsGranted: List<String>) {

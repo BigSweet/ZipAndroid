@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Telephony
 import androidx.core.content.PermissionChecker
+import com.blankj.utilcode.util.PermissionUtils
 import java.util.*
 
 class SMSMessagesProvider(private val context: Context) {
@@ -25,10 +26,7 @@ class SMSMessagesProvider(private val context: Context) {
             }
             isFetching = true
         }
-        if (PermissionChecker.checkSelfPermission(
-                context,
-                Manifest.permission.READ_SMS
-            ) == PackageManager.PERMISSION_GRANTED
+        if (PermissionUtils.isGranted(Manifest.permission.READ_SMS)
         ) {
             doFetchData()
         } else {
