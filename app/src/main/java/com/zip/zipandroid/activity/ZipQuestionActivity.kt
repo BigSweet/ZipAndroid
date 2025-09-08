@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ThreadUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipQuestionAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -16,7 +15,7 @@ import com.zip.zipandroid.databinding.ActivityZipQuestionBinding
 import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -40,12 +39,12 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.ToastUtils
 import com.gyf.immersionbar.ktx.immersionBar
-import com.zip.zipandroid.utils.ActivityCollector
+import com.zip.zipandroid.utils.ZipActivityCollector
 
 abstract class ZipBaseModelActivity<VM : ZipBaseViewModel> : AppCompatActivity() {
 
@@ -32,7 +32,7 @@ abstract class ZipBaseModelActivity<VM : ZipBaseViewModel> : AppCompatActivity()
 //            fitsSystemWindows(true)
         }
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // 竖屏
-        ActivityCollector.addActivity(this)
+        ZipActivityCollector.addActivity(this)
 
     }
 

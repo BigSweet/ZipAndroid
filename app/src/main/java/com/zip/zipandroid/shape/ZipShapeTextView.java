@@ -10,10 +10,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.zip.zipandroid.R;
-import com.zip.zipandroid.utils.ScaleClickHelper;
+import com.zip.zipandroid.utils.ZipScaleClickHelper;
 
 
-public class ShapeTextView extends AppCompatTextView {
+public class ZipShapeTextView extends AppCompatTextView {
     protected int orientation;
     protected float[] radius;
     int[] colors = null;
@@ -26,16 +26,16 @@ public class ShapeTextView extends AppCompatTextView {
     String disableText;
     String enableText;
 
-    public ShapeTextView(Context context) {
+    public ZipShapeTextView(Context context) {
         super(context);
     }
 
-    public ShapeTextView(Context context, AttributeSet attrs) {
+    public ZipShapeTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(attrs);
     }
 
-    public ShapeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ZipShapeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
     }
@@ -119,7 +119,7 @@ public class ShapeTextView extends AppCompatTextView {
 
 
             if (needScale) {
-                ScaleClickHelper.setScaleClick(this);
+                ZipScaleClickHelper.setScaleClick(this);
             }
         }
     }

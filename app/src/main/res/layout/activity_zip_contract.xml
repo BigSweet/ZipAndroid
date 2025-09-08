@@ -85,7 +85,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeTextView
+        <com.zip.zipandroid.shape.ZipShapeTextView
             android:id="@+id/info_next_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -103,7 +103,7 @@
             app:sv_tx_enable="false"
             app:sv_tx_radius="8dp">
 
-        </com.zip.zipandroid.shape.ShapeTextView>
+        </com.zip.zipandroid.shape.ZipShapeTextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

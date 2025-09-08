@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
 
-        <com.zip.zipandroid.shape.ShapeRelativeLayout
+        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
             android:id="@+id/item_order_top_sl"
             android:layout_width="match_parent"
             android:layout_height="96dp"
@@ -31,7 +31,7 @@
                 android:textColor="#ffffffff"
                 android:textSize="17sp"
                 android:textStyle="bold" />
-        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+        </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/ordermagicIndicator"

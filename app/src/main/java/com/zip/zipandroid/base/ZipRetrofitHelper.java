@@ -24,7 +24,7 @@ public class ZipRetrofitHelper {
         ZipHttpLoggingInterceptor loggingInterceptor = new ZipHttpLoggingInterceptor();
         loggingInterceptor.setLevel(ZipHttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.addInterceptor(new SecurityInterceptor());
+        builder.addInterceptor(new ZipSecurityInterceptor());
         builder.addInterceptor(loggingInterceptor);
 
         if (BuildConfig.DEBUG) {

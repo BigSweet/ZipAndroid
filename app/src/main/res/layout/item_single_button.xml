@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginRight="11dp">
 
-    <com.zip.zipandroid.shape.ShapeTextView
+    <com.zip.zipandroid.shape.ZipShapeTextView
         android:id="@+id/item_single_button_tv"
         android:layout_width="159dp"
         android:layout_height="42dp"
@@ -20,6 +20,6 @@
         app:sv_tx_radius="13dp"
         tools:text="Yes">
 
-    </com.zip.zipandroid.shape.ShapeTextView>
+    </com.zip.zipandroid.shape.ZipShapeTextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,18 +2,13 @@ package com.zip.zipandroid
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipBandCardActivity
-import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -26,7 +21,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipAllPerPop
 import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
 import com.zip.zipandroid.utils.UserInfoUtils
 import net.lucode.hackware.magicindicator.ViewPagerHelper
@@ -63,7 +58,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.vpMain.adapter = LazyPagerAdapter(supportFragmentManager, mFragments)
         ViewPagerHelper.bind(mViewBind.magicIndicator, mViewBind.vpMain)
         mViewBind.vpMain.setOffscreenPageLimit(mFragments.size)
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
         checkAllPer()
         mViewBind.testBtn.setOnDelayClickListener {
             startActivity(ZipBandCardActivity::class.java)
@@ -119,7 +114,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     override fun createObserver() {

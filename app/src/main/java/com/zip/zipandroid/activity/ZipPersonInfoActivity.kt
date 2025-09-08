@@ -24,8 +24,8 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
@@ -50,12 +50,12 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
     }
 
     var singleButtonAdapter = SingleButtonAdapter()
@@ -78,7 +78,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
         mViewBind.sexRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         mViewBind.sexRv.adapter = singleButtonAdapter
-        singleButtonAdapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
+        singleButtonAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
             singleButtonAdapter.selectPosition = i
             sex = i
             singleButtonAdapter.notifyDataSetChanged()
@@ -220,9 +220,12 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             }
         }
         mViewModel.bvnInfoLiveData.observe(this) {
-            if (!it.photo.isNullOrEmpty()) {
+            if (!it?.photo.isNullOrEmpty()) {
                 //去换成图片地址
-                mViewModel.getPhotoUrlByBase(it.photo)
+                mViewModel.getPhotoUrlByBase(it?.photo ?: "")
+            } else {
+                dismissLoading()
+                ToastUtils.showShort("bvn error")
             }
         }
         mViewModel.failLiveData.observe(this) {

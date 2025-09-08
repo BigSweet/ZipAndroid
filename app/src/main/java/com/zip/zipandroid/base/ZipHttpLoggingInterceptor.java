@@ -103,7 +103,7 @@ public class ZipHttpLoggingInterceptor implements Interceptor {
     }
 
     public static void printJson(@NonNull String tag, @Nullable String json) {
-        String text = EasyUtils.formatJson(json);
+        String text = ZipEasyUtils.formatJson(json);
         if (TextUtils.isEmpty(text)) {
             return;
         }

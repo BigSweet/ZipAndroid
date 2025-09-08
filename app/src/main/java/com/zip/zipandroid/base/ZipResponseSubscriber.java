@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zip.zipandroid.event.ZipLoginOutEvent;
-import com.zip.zipandroid.utils.EventBusUtils;
+import com.zip.zipandroid.utils.ZipEventBusUtils;
 import com.zip.zipandroid.utils.ZipLoadingUtils;
 
 import java.net.SocketTimeoutException;
@@ -87,7 +87,7 @@ public class ZipResponseSubscriber<T> implements Observer<ZipBaseRes<T>> {
             } else {
                 try {
                     if (t.getResultCode() == 1001) {
-                        EventBusUtils.post(new ZipLoginOutEvent());
+                        ZipEventBusUtils.post(new ZipLoginOutEvent());
                     } else {
                         onFailure(t.getResultCode(), t.getMsg());
                     }

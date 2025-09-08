@@ -14,8 +14,8 @@ object SignUtils {
         }
 
         val keyStr = stringBuilder.append(signKey)
-        val md51 = Md5Utils.md5(keyStr.toString())
-        val md52 = Md5Utils.md5(md51 + (signRandomCode))
+        val md51 = ZipMd5Utils.md5(keyStr.toString())
+        val md52 = ZipMd5Utils.md5(md51 + (signRandomCode))
         return md52
     }
 }

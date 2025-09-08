@@ -6,17 +6,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.Calendar;
 
-public abstract class OnNoDoubleItemChildClickListener implements
+public abstract class ZipOnNoDoubleItemChildClickListener implements
         BaseQuickAdapter.OnItemChildClickListener {
 
     public static int MIN_CLICK_DELAY_TIME = 500;
     private long lastClickTime = 0;
 
-    public OnNoDoubleItemChildClickListener(int MIN_CLICK_DELAY_TIME) {
-        OnNoDoubleItemChildClickListener.MIN_CLICK_DELAY_TIME = MIN_CLICK_DELAY_TIME;
+    public ZipOnNoDoubleItemChildClickListener(int MIN_CLICK_DELAY_TIME) {
+        ZipOnNoDoubleItemChildClickListener.MIN_CLICK_DELAY_TIME = MIN_CLICK_DELAY_TIME;
     }
 
-    public OnNoDoubleItemChildClickListener() {
+    public ZipOnNoDoubleItemChildClickListener() {
         MIN_CLICK_DELAY_TIME = 500;
     }
 

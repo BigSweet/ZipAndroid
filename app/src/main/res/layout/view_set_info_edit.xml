@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="69dp">
 
-    <com.zip.zipandroid.shape.ShapeEditTextView
+    <com.zip.zipandroid.shape.ZipShapeEditTextView
         android:id="@+id/set_info_edit"
         android:layout_width="match_parent"
         android:layout_height="69dp"
@@ -23,7 +23,7 @@
         app:setv_background="#FFF7F7F7"
         app:setv_radius="13dp">
 
-    </com.zip.zipandroid.shape.ShapeEditTextView>
+    </com.zip.zipandroid.shape.ZipShapeEditTextView>
 
     <TextView
         android:id="@+id/set_info_left_number"

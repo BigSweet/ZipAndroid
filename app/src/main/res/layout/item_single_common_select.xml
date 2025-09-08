@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zip.zipandroid.shape.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zip.zipandroid.shape.ZipShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_single_select_cl"
@@ -23,4 +23,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Bachelor's Degree" />
 
-</com.zip.zipandroid.shape.ShapeConstraintLayout>
+</com.zip.zipandroid.shape.ZipShapeConstraintLayout>

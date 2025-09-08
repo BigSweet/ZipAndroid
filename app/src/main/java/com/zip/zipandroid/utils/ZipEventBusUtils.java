@@ -7,7 +7,7 @@ import org.greenrobot.eventbus.EventBus;
  *
  * @author Teemo
  */
-public class EventBusUtils {
+public class ZipEventBusUtils {
 
     /**
      * 注册EventBus

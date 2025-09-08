@@ -22,7 +22,7 @@ import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -61,12 +61,12 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

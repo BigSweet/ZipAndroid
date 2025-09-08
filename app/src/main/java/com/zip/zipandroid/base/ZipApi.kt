@@ -5,7 +5,6 @@ import com.zip.zipandroid.bean.BvnInfoBean
 import com.zip.zipandroid.bean.CreditListBean
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.ProductDidInfo
-import com.zip.zipandroid.bean.ProductPidBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadImgBean
 import com.zip.zipandroid.bean.ZipAdBean
@@ -25,9 +24,8 @@ import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipTriaBean
-import com.zip.zipandroid.bean.ZipUploadUserInfoBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
-import com.zip.zipandroid.utils.FormReq
+import com.zip.zipandroid.utils.ZipFormReq
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -39,82 +37,82 @@ interface ZipApi {
 
 
     @POST("api/v4/ziplead/customer/sendSmsCode")
-    fun getCode(@Body body: FormReq): Observable<ZipBaseRes<ZipCodeBean>>
+    fun getCode(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipCodeBean>>
 
     @POST("api/v4/ziplead/getCreditxStatus")
-    fun getCreditxStatus(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderStatusBean>>
+    fun getCreditxStatus(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderStatusBean>>
 
 
     @POST("api/v4/ziplead/product/trial")
-    fun orderTrial(@Body body: FormReq): Observable<ZipBaseRes<ZipTriaBean>>
+    fun orderTrial(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipTriaBean>>
 
     @POST("api/v4/ziplead/creationOrderByMx")
-    fun creationOrderByMx(@Body body: FormReq): Observable<ZipBaseRes<ZipBizBean>>
+    fun creationOrderByMx(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipBizBean>>
 
 
 
 
 
     @POST("api/v4/ziplead/product/findProductByPid")
-    fun findProductDueByPid(@Body body: FormReq): Observable<ZipBaseRes<List<ProductDidInfo>>>
+    fun findProductDueByPid(@Body body: ZipFormReq): Observable<ZipBaseRes<List<ProductDidInfo>>>
 
     @POST("api/v4/ziplead/customer/login")
-    fun zipLogin(@Body body: FormReq): Observable<ZipBaseRes<ZipLoginResponse>>
+    fun zipLogin(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipLoginResponse>>
 
     @POST("api/v4/ziplead/risk_level")
-    fun getRiskLevel(@Body body: FormReq): Observable<ZipBaseRes<ZipRiskLevelBean>>
+    fun getRiskLevel(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipRiskLevelBean>>
 
 
     @POST("api/v4/ziplead/product/origin")
-    fun getHomeData(@Body body: FormReq): Observable<ZipBaseRes<ZipHomeDataBean>>
+    fun getHomeData(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipHomeDataBean>>
 
     @POST("api/v4/ziplead/selectAdvertList")
-    fun selectAdvertList(@Body body: FormReq): Observable<ZipBaseRes<ZipAdBean>>
+    fun selectAdvertList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipAdBean>>
 
     @POST("api/v4/ziplead/app-configuration")
-    fun getConfig(@Body body: FormReq): Observable<ZipBaseRes<ZipAppConfigBean>>
+    fun getConfig(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipAppConfigBean>>
 
     @POST("api/v4/ziplead/coupon/myCouponList")
-    fun getCouponList(@Body body: FormReq): Observable<ZipBaseRes<ZipCouponListBean>>
+    fun getCouponList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipCouponListBean>>
 
     @POST("api/v4/ziplead/coupon/topPriorityCoupon")
-    fun topPriorityCoupon(@Body body: FormReq): Observable<ZipBaseRes<ZipCouponItemBean?>>
+    fun topPriorityCoupon(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipCouponItemBean?>>
 
 
     @POST("api/v4/ziplead/bankCard/queryCard")
-    fun zipQueryCard(@Body body: FormReq): Observable<ZipBaseRes<ZipQueryCardBean>>
+    fun zipQueryCard(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipQueryCardBean>>
 
     @POST("api/v4/ziplead/customer/queryBaseInfo")
-    fun getUserInfo(@Body body: FormReq): Observable<ZipBaseRes<ZipUserInfoBean>>
+    fun getUserInfo(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipUserInfoBean>>
 
     @POST("api/v4/ziplead/customer/queryBaseInfo")
-    fun getUploadUserInfo(@Body body: FormReq): Observable<ZipBaseRes<RealUploadUserBean>>
+    fun getUploadUserInfo(@Body body: ZipFormReq): Observable<ZipBaseRes<RealUploadUserBean>>
 
     @POST("api/v4/ziplead/bankCard/bindCard")
-    fun zipBandCard(@Body body: FormReq): Observable<ZipBaseRes<ZipBandCardBean>>
+    fun zipBandCard(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipBandCardBean>>
 
     @POST("api/v4/ziplead/bankCard/changeCard")
-    fun changeCard(@Body body: FormReq): Observable<ZipBaseRes<Any>>
+    fun changeCard(@Body body: ZipFormReq): Observable<ZipBaseRes<Any>>
 
     @POST("api/v4/ziplead/checkBvn")
-    fun checkBvnInfo(@Body body: FormReq): Observable<ZipBaseRes<BvnInfoBean>>
+    fun checkBvnInfo(@Body body: ZipFormReq): Observable<ZipBaseRes<BvnInfoBean?>>
 
 
     @POST("api/v4/ziplead/customer/renewMemInfo")
-    fun saveUserInfo(@Body body: FormReq): Observable<ZipBaseRes<Any>>
+    fun saveUserInfo(@Body body: ZipFormReq): Observable<ZipBaseRes<Any>>
 
     @POST("api/v4/ziplead/customer/realName")
-    fun realName(@Body body: FormReq): Observable<ZipBaseRes<ZipRealNameBean>>
+    fun realName(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipRealNameBean>>
 
     @POST("api/v4/ziplead/customer/saveMemberBehavior")
-    fun saveMemberBehavior(@Body body: FormReq): Observable<ZipBaseRes<Any>>
+    fun saveMemberBehavior(@Body body: ZipFormReq): Observable<ZipBaseRes<Any>>
 
     @POST("api/v4/ziplead/mxPostalCodeInfoList")
-    fun getAllAddressInfo(@Body body: FormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
+    fun getAllAddressInfo(@Body body: ZipFormReq): Observable<ZipBaseRes<List<AddressInfoBean>>>
 
 
     @POST("api/v4/ziplead/orders")
-    fun getAllOrderList(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderListBean>>
+    fun getAllOrderList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderListBean>>
 
     @GET("api/v4/ziplead/dict/getCreditHistoryDict")
     fun getCreditHistoryDict(
@@ -142,17 +140,17 @@ interface ZipApi {
     fun uploadImg(@Body body: RequestBody): Observable<ZipBaseRes<UploadImgBean>>
 
     @POST("api/v4/ziplead/file/getPath")
-    fun getImgPath(@Body body: FormReq): Observable<ZipBaseRes<HashMap<Any, Any>>>
+    fun getImgPath(@Body body: ZipFormReq): Observable<ZipBaseRes<HashMap<Any, Any>>>
 
     @POST("api/v4/ziplead/bankCard/bankList")
-    fun getBankList(@Body body: FormReq): Observable<ZipBaseRes<ZipBankNameListBean>>
+    fun getBankList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipBankNameListBean>>
 
 
     @POST("api/v4/ziplead/admittanceSubmmit")
-    fun admission(@Body body: FormReq): Observable<ZipBaseRes<ZipOrderAdmissionBean>>
+    fun admission(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderAdmissionBean>>
 
 
     @POST("api/v4/ziplead/creationOrderBefore")
-    fun creationOrderBefore(@Body body: FormReq): Observable<ZipBaseRes<ZipBizBean>>
+    fun creationOrderBefore(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipBizBean>>
 
 }

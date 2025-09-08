@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/set_info_top_progress_ll">
 
 
-            <com.zip.zipandroid.shape.ShapeConstraintLayout
+            <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                 android:id="@+id/band_card_top_hint"
                 android:layout_width="match_parent"
                 android:layout_height="73dp"
@@ -106,7 +106,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+            </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
             <com.zip.zipandroid.view.SetInfoEditView
@@ -153,7 +153,7 @@ bank account."
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeTextView
+        <com.zip.zipandroid.shape.ZipShapeTextView
             android:id="@+id/info_next_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -171,7 +171,7 @@ bank account."
             app:sv_tx_enable="false"
             app:sv_tx_radius="8dp">
 
-        </com.zip.zipandroid.shape.ShapeTextView>
+        </com.zip.zipandroid.shape.ZipShapeTextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

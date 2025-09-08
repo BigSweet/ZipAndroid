@@ -27,14 +27,14 @@
             app:layout_constraintTop_toBottomOf="@+id/common_review_title_cl" />
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="73dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:sv_scl_background="@color/white">
 
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/private_sure_tv"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -47,9 +47,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:sv_tx_background="#FF205EDB"
-                app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+                app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ZipShapeTextView>
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

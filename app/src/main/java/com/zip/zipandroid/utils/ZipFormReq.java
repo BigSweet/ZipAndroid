@@ -4,13 +4,13 @@ import com.blankj.utilcode.util.AppUtils;
 
 import java.util.HashMap;
 
-public class FormReq extends HashMap<String, Object> {
+public class ZipFormReq extends HashMap<String, Object> {
 
-    public FormReq() {
+    public ZipFormReq() {
     }
 
-    public static FormReq create() {
-        FormReq req = new FormReq();
+    public static ZipFormReq create() {
+        ZipFormReq req = new ZipFormReq();
         req.put("fakitinAiki", AppUtils.getAppPackageName());
         req.put("sigarBincike", AppUtils.getAppVersionName());
         req.put("tushen", "ANDROID");
@@ -24,7 +24,7 @@ public class FormReq extends HashMap<String, Object> {
         return req;
     }
 
-    public FormReq addParam(String key, Object value) {
+    public ZipFormReq addParam(String key, Object value) {
         if (key == null) {
             return this;
         }
@@ -36,7 +36,7 @@ public class FormReq extends HashMap<String, Object> {
         return this;
     }
 
-    public FormReq addParamCheckNull(String key, Object value) {
+    public ZipFormReq addParamCheckNull(String key, Object value) {
         if (value != null && key != null) {
             put(key, value);
         }

@@ -11,7 +11,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec
 import javax.crypto.spec.IvParameterSpec
 
-object DesUtil {
+object ZipDesUtil {
     private const val HEX = "0123456789ABCDEF"
     private const val TRANSFORMATION =
         "DES/CBC/PKCS5Padding" //DES是加密方式 CBC是工作模式 PKCS5Padding是填充模式

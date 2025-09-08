@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.zip.zipandroid.ZipApplication;
 
 
-public class PreferencesHelper {
+public class ZipPreferencesHelper {
     /**
      * 字段
      */
@@ -19,13 +19,13 @@ public class PreferencesHelper {
     private static final String TAG = "PreferencesHelper";
 
 
-    public PreferencesHelper(Context c, String tbName) {
+    public ZipPreferencesHelper(Context c, String tbName) {
         context = c;
         mPreferences = context.getSharedPreferences(tbName, 0);
         mEditor = mPreferences.edit();
     }
 
-    public PreferencesHelper(String tbName) {
+    public ZipPreferencesHelper(String tbName) {
         context = ZipApplication.Companion.getInstance();
         mPreferences = context.getSharedPreferences(tbName, 0);
         mEditor = mPreferences.edit();

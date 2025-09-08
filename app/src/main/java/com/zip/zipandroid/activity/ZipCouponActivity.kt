@@ -17,7 +17,7 @@ import com.zip.zipandroid.event.ZipSelectCouponEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.viewmodel.CouponViewModel
 
 class ZipCouponActivity : ZipBaseBindingActivity<CouponViewModel, ActivityZipCouponBinding>() {
@@ -51,7 +51,7 @@ class ZipCouponActivity : ZipBaseBindingActivity<CouponViewModel, ActivityZipCou
             }
             //返回给上个页面加载优惠券信息
             val couponId = couponAdapter.data.get(couponAdapter.selectPosition).id
-            EventBusUtils.post(ZipSelectCouponEvent(couponId.toString()))
+            ZipEventBusUtils.post(ZipSelectCouponEvent(couponId.toString()))
             finish()
         }
 

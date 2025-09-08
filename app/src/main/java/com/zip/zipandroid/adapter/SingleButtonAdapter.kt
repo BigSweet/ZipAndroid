@@ -4,12 +4,12 @@ import android.graphics.Color
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.zip.zipandroid.R
-import com.zip.zipandroid.shape.ShapeTextView
+import com.zip.zipandroid.shape.ZipShapeTextView
 
 class SingleButtonAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_single_button) {
     var selectPosition = -1
     override fun convert(holder: BaseViewHolder, item: String) {
-        val item_single_button_tv = holder.getView<ShapeTextView>(R.id.item_single_button_tv)
+        val item_single_button_tv = holder.getView<ZipShapeTextView>(R.id.item_single_button_tv)
         item_single_button_tv.setText(item)
         if (selectPosition == holder.adapterPosition) {
             item_single_button_tv.setBackground(Color.parseColor("#F1F5FF"))

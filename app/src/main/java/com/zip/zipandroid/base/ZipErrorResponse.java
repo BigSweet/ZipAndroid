@@ -1,6 +1,6 @@
 package com.zip.zipandroid.base;
 
-public class ErrorResponse {
+public class ZipErrorResponse {
 
     /**
      * msg : 手机号格式错误

@@ -10,19 +10,19 @@ import android.widget.RelativeLayout;
 import com.zip.zipandroid.R;
 
 
-public class ShapeRelativeLayout extends RelativeLayout {
+public class ZipShapeRelativeLayout extends RelativeLayout {
     protected int orientation;
 
-    public ShapeRelativeLayout(Context context) {
+    public ZipShapeRelativeLayout(Context context) {
         super(context);
     }
 
-    public ShapeRelativeLayout(Context context, AttributeSet attrs) {
+    public ZipShapeRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(attrs);
     }
 
-    public ShapeRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ZipShapeRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
     }

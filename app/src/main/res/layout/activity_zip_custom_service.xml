@@ -41,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@+id/zip_custom_app_logo_iv" />
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/zip_what_app_sl"
             android:layout_width="match_parent"
             android:layout_height="67dp"
@@ -85,10 +85,10 @@
                 app:layout_constraintLeft_toLeftOf="@+id/what_app_title_tv"
                 app:layout_constraintTop_toBottomOf="@+id/what_app_title_tv" />
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/zip_email_sl"
             android:layout_width="match_parent"
             android:layout_height="67dp"
@@ -132,10 +132,10 @@
                 app:layout_constraintLeft_toLeftOf="@+id/email_title_tv"
                 app:layout_constraintTop_toBottomOf="@+id/email_title_tv" />
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/zip_phone_sl"
             android:layout_width="match_parent"
             android:layout_height="67dp"
@@ -179,7 +179,7 @@
                 app:layout_constraintLeft_toLeftOf="@+id/phone_title_tv"
                 app:layout_constraintTop_toBottomOf="@+id/phone_title_tv" />
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

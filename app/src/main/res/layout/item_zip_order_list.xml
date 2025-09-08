@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
 
-    <com.zip.zipandroid.shape.ShapeConstraintLayout
+    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
         android:id="@+id/zip_order_item_main_cl"
         android:layout_width="match_parent"
         android:layout_height="197dp"
@@ -29,7 +29,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/zip_order_item_inner_cl"
             android:layout_width="match_parent"
             android:layout_height="165dp"
@@ -109,7 +109,7 @@
                 app:layout_constraintLeft_toLeftOf="@+id/zip_item_order_amount_tv" />
 
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/zip_order_item_repay_btn"
                 android:layout_width="150dp"
                 android:layout_height="38dp"
@@ -124,9 +124,9 @@
                 app:sv_tx_background="#FFFF4343"
                 app:sv_tx_radius="8dp">
 
-            </com.zip.zipandroid.shape.ShapeTextView>
+            </com.zip.zipandroid.shape.ZipShapeTextView>
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/zip_item_amount_update"
                 android:layout_width="50dp"
                 android:layout_height="17dp"
@@ -142,7 +142,7 @@
                 app:sv_tx_radius="4dp" />
 
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/zip_item_order_inner_top_tv"
                 android:layout_width="127dp"
                 android:layout_height="31dp"
@@ -157,7 +157,7 @@
                 app:sv_tx_radius_top_right="24dp"
                 tools:text="OVERDUE: 3 DAYS">
 
-            </com.zip.zipandroid.shape.ShapeTextView>
+            </com.zip.zipandroid.shape.ZipShapeTextView>
 
             <TextView
                 android:id="@+id/bottom_status_tv"
@@ -189,8 +189,8 @@
                 app:layout_constraintRight_toRightOf="parent" />
 
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

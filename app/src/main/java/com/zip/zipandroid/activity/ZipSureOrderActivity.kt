@@ -32,7 +32,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.ZipRepaymentPlanPop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
@@ -193,7 +193,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     var allCouponList: List<ZipCouponItemBean>? = null
@@ -202,7 +202,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             //去选择优惠券界面
             ZipCouponActivity.start(this, true)
         }
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
         mViewModel.couponLiveData.observe(this) {
             mViewBind.couponPriceTv.hide()
             mViewBind.orderCouponNameTv.hide()

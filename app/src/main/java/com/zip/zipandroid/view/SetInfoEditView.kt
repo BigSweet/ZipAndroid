@@ -20,7 +20,7 @@ import com.zip.zipandroid.R
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.ktx.visiblein
-import com.zip.zipandroid.shape.ShapeEditTextView
+import com.zip.zipandroid.shape.ZipShapeEditTextView
 import com.zip.zipandroid.utils.EmailValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +44,7 @@ class SetInfoEditView : RelativeLayout {
     }
 
     private var infoArrow: ImageView? = null
-    private var infoEdit: ShapeEditTextView? = null
+    private var infoEdit: ZipShapeEditTextView? = null
     private var infoX: TextView? = null
     private var infoTopName: TextView? = null
     private var infoMaxLength: TextView? = null
@@ -527,7 +527,7 @@ class SetInfoEditView : RelativeLayout {
         return infoEdit?.text.toString().replace(Regex("[^\\d]"), "")
     }
 
-    fun getEditTextView(): ShapeEditTextView? {
+    fun getEditTextView(): ZipShapeEditTextView? {
         return infoEdit
     }
 

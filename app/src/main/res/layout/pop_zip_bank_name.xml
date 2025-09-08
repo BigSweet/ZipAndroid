@@ -6,7 +6,7 @@
 
     </data>
 
-    <com.zip.zipandroid.shape.ShapeConstraintLayout
+    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="88dp"
@@ -67,7 +67,7 @@
         </RelativeLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeTextView
+        <com.zip.zipandroid.shape.ZipShapeTextView
             android:id="@+id/single_sure_tv"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -82,8 +82,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:sv_tx_background="#FF205EDB"
-            app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+            app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ZipShapeTextView>
 
 
-    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 </layout>

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="#F0F2F5">
 
-        <com.zip.zipandroid.shape.ShapeRelativeLayout
+        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="204dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/center_price_sl"
             android:layout_width="match_parent"
             android:layout_height="142dp"
@@ -93,7 +93,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loan_limit_place_tv" />
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="22dp">
 
-                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                     android:id="@+id/center_rv_sl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,10 +164,10 @@
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                     android:id="@+id/center_coupon_inter_sl"
                     android:layout_width="match_parent"
                     android:layout_height="155dp"
@@ -309,7 +309,7 @@
                         app:layout_goneMarginRight="15dp"
                         tools:text="₦ 1,000" />
 
-                    <com.zip.zipandroid.shape.ShapeTextView
+                    <com.zip.zipandroid.shape.ZipShapeTextView
                         android:id="@+id/deal_left_place_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -326,12 +326,12 @@
                         app:sv_tx_background="#29FBBD32"
                         app:sv_tx_radius="4dp">
 
-                    </com.zip.zipandroid.shape.ShapeTextView>
+                    </com.zip.zipandroid.shape.ZipShapeTextView>
 
-                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                     android:id="@+id/plan_main_sl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -342,7 +342,7 @@
                     app:sv_scl_background="#FFFFFF"
                     app:sv_scl_radius="10dp">
 
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                         android:id="@+id/plan_sl"
                         android:layout_width="match_parent"
                         android:layout_height="39dp"
@@ -394,7 +394,7 @@
                             app:layout_constraintTop_toTopOf="@+id/plan_time_tv"
                             tools:text="₦ 6,715.39" />
 
-                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                     <TextView
@@ -423,10 +423,10 @@
                         app:layout_goneMarginRight="15dp"
                         tools:text="₦ 1,000" />
 
-                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-                <com.zip.zipandroid.shape.ShapeConstraintLayout
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                     android:id="@+id/bank_main_sl"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
@@ -437,7 +437,7 @@
                     app:sv_scl_background="#FFFFFF"
                     app:sv_scl_radius="10dp">
 
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                         android:id="@+id/bank_sl"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
@@ -469,7 +469,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="₦ 6,715.39" />
 
-                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                     <TextView
@@ -485,7 +485,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-                </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                 <ImageView
@@ -532,7 +532,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sure_order_top_icon" />
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/order_bottom_sl"
             android:layout_width="match_parent"
             android:layout_height="67dp"
@@ -564,7 +564,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/loan_bottom_price_tv" />
 
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/order_accept_loan"
                 android:layout_width="168dp"
                 android:layout_height="48dp"
@@ -582,8 +582,8 @@
                 app:sv_tx_enable="true"
                 app:sv_tx_radius="8dp">
 
-            </com.zip.zipandroid.shape.ShapeTextView>
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+            </com.zip.zipandroid.shape.ZipShapeTextView>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

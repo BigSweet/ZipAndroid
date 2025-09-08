@@ -9,7 +9,7 @@ import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.Constants.client_id
-import com.zip.zipandroid.utils.FormReq
+import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.UserInfoUtils.getMid
@@ -18,7 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
-open class ZipBaseViewModel : ViewModel(), IRxDisManger {
+open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
 
     private var disposables: CompositeDisposable? = null
     override fun onCleared() {
@@ -39,11 +39,11 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun getZipAppConfig() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getConfig(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipAppConfigBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -63,11 +63,11 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun zipQueryCard() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).zipQueryCard(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipQueryCardBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -87,12 +87,12 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun saveMemberBehavior(type: Int) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("nauIn", type)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).saveMemberBehavior(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<Any>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -111,11 +111,11 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun getUserInfo() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getUserInfo(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipUserInfoBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -135,7 +135,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun zipBandCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("idBanki", bankId)
         api.addParam("sunanBanki", bankName)
         api.addParam("lambarKatin", cardNo)
@@ -148,7 +148,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).zipBandCard(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipBandCardBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -168,7 +168,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String,tiedCardId:String) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("idBanki", bankId)
         api.addParam("sunanBanki", bankName)
         api.addParam("lambarKatin", cardNo)
@@ -184,7 +184,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).changeCard(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<Any>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -204,7 +204,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
 
     fun getPersonInfoDic() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         ZipRetrofitHelper.createApi(ZipApi::class.java).getPersonalInformationDict(AppUtils.getAppPackageName(),
             AppUtils.getAppVersionName(),
@@ -214,7 +214,7 @@ open class ZipBaseViewModel : ViewModel(), IRxDisManger {
             client_id,
             SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
         )
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<PersonalInformationDictBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)

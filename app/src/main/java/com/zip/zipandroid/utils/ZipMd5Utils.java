@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Md5Utils {
+public class ZipMd5Utils {
 
     /**
      * 将字符串转成MD5值

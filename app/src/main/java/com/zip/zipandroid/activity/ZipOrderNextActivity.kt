@@ -8,7 +8,7 @@ import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipOrderNextBinding
 import com.zip.zipandroid.event.ZipRefreshHomeEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -80,7 +80,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
                 mViewBind.orderNextStatusIv.setImageResource(R.drawable.zip_order_next_success_icon)
                 mViewBind.orderNextStatusTv.setText("Your Application Has Been Approved")
                 mViewBind.orderNextStatusDesTv.setText(" We’re pleased to inform you that your application \\n has been approved. Your loan will be disbursed \\n shortly")
-                EventBusUtils.post(ZipRefreshHomeEvent())
+                ZipEventBusUtils.post(ZipRefreshHomeEvent())
                 dismissLoading()
                 disposable?.dispose()
             }
@@ -90,7 +90,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
                 mViewBind.orderNextStatusDesTv.setText("We're sorry to inform you that your application\\n\n" +
                         "            has not been approved . You may reapply after one month.\\ n\n" +
                         "                    Thank you for your continued support.")
-                EventBusUtils.post(ZipRefreshHomeEvent())
+                ZipEventBusUtils.post(ZipRefreshHomeEvent())
                 dismissLoading()
                 disposable?.dispose()
             }
@@ -98,7 +98,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
                 mViewBind.orderNextStatusIv.setImageResource(R.drawable.zip_order_next_progress_icon)
                 mViewBind.orderNextStatusTv.setText("Review in Progress")
                 mViewBind.orderNextStatusDesTv.setText("You'll receive the review outcome in a few minutes.")
-                EventBusUtils.post(ZipRefreshHomeEvent())
+                ZipEventBusUtils.post(ZipRefreshHomeEvent())
                 dismissLoading()
                 disposable?.dispose()
 

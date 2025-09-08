@@ -26,7 +26,7 @@ import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipTimeUtils
 import com.zip.zipandroid.view.toN
@@ -79,7 +79,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     override fun onDestroyView() {
         super.onDestroyView()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
 
@@ -89,7 +89,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
 
     override fun createObserver() {
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
         mViewModel.homeLiveData.observe(this) {
             if (it.userOrderStatus == 0) {
                 //展示首页费率

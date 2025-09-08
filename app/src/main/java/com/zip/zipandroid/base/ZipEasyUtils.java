@@ -11,13 +11,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-/**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/EasyHttp
- *    time   : 2019/11/17
- *    desc   : 请求工具类
- */
-public final class EasyUtils {
+public final class ZipEasyUtils {
 
 
     /**

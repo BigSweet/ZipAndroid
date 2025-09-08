@@ -5,40 +5,41 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.zip.zipandroid.R;
 
 
-public class ShapeLinearLayout extends LinearLayout {
+public class ZipShapeConstraintLayout extends ConstraintLayout {
     protected int orientation;
-    float[] radius;
-    public ShapeLinearLayout(Context context) {
+    float[] r;
+    public ZipShapeConstraintLayout(Context context) {
         super(context);
     }
 
-    public ShapeLinearLayout(Context context, AttributeSet attrs) {
+    public ZipShapeConstraintLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(attrs);
     }
 
-    public ShapeLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ZipShapeConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
     }
 
     private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeLinearLayout);
-            orientation = a.getInt(R.styleable.ShapeLinearLayout_sv_orientation, 0);
-            int color = a.getColor(R.styleable.ShapeLinearLayout_sv_background, Color.TRANSPARENT);
-            int colorS = a.getColor(R.styleable.ShapeLinearLayout_sv_background_start, Color.TRANSPARENT);
-            int colorE = a.getColor(R.styleable.ShapeLinearLayout_sv_background_end, Color.TRANSPARENT);
-            float r0 = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius, 0);
-            float radiusTopLeft = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_top_left, 0);
-            float radiusTopRight = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_top_right, 0);
-            float radiusBottomRight = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_bottom_right, 0);
-            float radiusBottomLeft = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_bottom_left, 0);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeConstraintLayout);
+            orientation = a.getInt(R.styleable.ShapeConstraintLayout_sv_scl_orientation, 1);
+            int color = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background, Color.TRANSPARENT);
+            int colorS = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background_start, Color.TRANSPARENT);
+            int colorE = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background_end, Color.TRANSPARENT);
+            float radius = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius, 0);
+            float radiusTopLeft = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_top_left, 0);
+            float radiusTopRight = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_top_right, 0);
+            float radiusBottomRight = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_bottom_right, 0);
+            float radiusBottomLeft = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_bottom_left, 0);
 
             a.recycle();
             int colorArray[] = color != Color.TRANSPARENT? new int[]{color, color} : new int[]{colorS, colorE};
@@ -48,7 +49,7 @@ public class ShapeLinearLayout extends LinearLayout {
                     || radiusBottomLeft != 0
                     || radiusBottomRight != 0
                     ) {
-                radius = new float[]{
+                r = new float[]{
                         radiusTopLeft
                         , radiusTopLeft
                         , radiusTopRight
@@ -57,30 +58,32 @@ public class ShapeLinearLayout extends LinearLayout {
                         , radiusBottomLeft
                         , radiusBottomRight
                         , radiusBottomRight};
+            }else {
+                r = new float[]{
+                        radius
+                        , radius
+                        , radius
+                        , radius
+                        , radius
+                        , radius
+                        , radius
+                        , radius};
             }
-            if (radius == null) {
-
-                radius = new float[]{
-                  r0
-                  ,r0
-                  ,r0
-                  ,r0
-                  ,r0
-                  ,r0
-                  ,r0
-                  ,r0
-                };
-            }
-            setBackground(colorArray, radius);
+            setBackground(colorArray, r);
+//            if (r != null) {
+//                setBackground(colorArray, r);
+//            } else {
+//
+//                setBackground(colorArray, radius);
+//            }
         }
     }
 
-    public void setBackground(int color) {
-
-        setBackground(new int[] {color, color},  radius);
-    }
     public void setBackground(int color, float radius) {
         setBackground(new int[] {color, color},  radius);
+    }
+    public void setBackground2(int color) {
+        setBackground(new int[] {color, color},  r);
     }
 
     public void setBackground(int[] colors, float radius) {

@@ -6,10 +6,6 @@ import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * <p>可以禁止滑动翻页的ViewPager </p>
- * @name NoScrollViewPager
- */
 public class NoScrollViewPager extends ViewPager {
 
     //是否可以进行滑动

@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content">
 
 
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                         android:id="@+id/zip_home_top_sl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
 
                         </ImageView>
 
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                             android:id="@+id/zip_home_custom_iv"
                             android:layout_width="123dp"
                             android:layout_height="29dp"
@@ -87,10 +87,10 @@
                                 android:textSize="13sp" />
 
 
-                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+                        </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
 
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/load_team_sl"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
@@ -116,10 +116,10 @@
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/load_daily_sl"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp"
@@ -145,9 +145,9 @@
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                             android:id="@+id/zip_home_cre_hint_sl"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
@@ -180,11 +180,11 @@
 Your Special Credit Limit!"
                                 android:textColor="#ff000000"
                                 android:textSize="12sp" />
-                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+                        </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
 
                         <!--            待借款-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_can_loan_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -198,7 +198,7 @@ Your Special Credit Limit!"
                             tools:visibility="gone">
 
 
-                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                 android:id="@+id/can_loan_top_shape"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
@@ -210,14 +210,14 @@ Your Special Credit Limit!"
                                 app:sv_rl_background="#FF73DA77"
                                 app:sv_rl_radius="15dp">
 
-                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_centerInParent="true"
                                     app:sv_rl_background="@color/white"
                                     app:sv_rl_radius="8dp" />
 
-                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+                            </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
                             <TextView
                                 android:id="@+id/can_loan_top_des_tv"
@@ -245,7 +245,7 @@ Your Special Credit Limit!"
                                 tools:text="₦ 20,000" />
 
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/can_loan_now_tv"
                                 android:layout_width="252dp"
                                 android:layout_height="48dp"
@@ -261,12 +261,12 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#FF73DA77"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            逾期-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_delay_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -280,7 +280,7 @@ Your Special Credit Limit!"
                             tools:visibility="gone">
 
 
-                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                 android:id="@+id/delay_top_shape"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
@@ -292,14 +292,14 @@ Your Special Credit Limit!"
                                 app:sv_rl_background="#FFFF4343"
                                 app:sv_rl_radius="15dp">
 
-                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_centerInParent="true"
                                     app:sv_rl_background="@color/white"
                                     app:sv_rl_radius="8dp" />
 
-                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+                            </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
                             <TextView
                                 android:id="@+id/delay_top_des_tv"
@@ -354,7 +354,7 @@ Your Special Credit Limit!"
                                 app:layout_constraintTop_toBottomOf="@+id/delay_top_des_tv" />
 
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/delay_now_tv"
                                 android:layout_width="252dp"
                                 android:layout_height="48dp"
@@ -371,12 +371,12 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#FFFF4343"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            待还款-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_paying_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -390,7 +390,7 @@ Your Special Credit Limit!"
                             tools:visibility="gone">
 
 
-                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                 android:id="@+id/paying_top_shape"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
@@ -402,14 +402,14 @@ Your Special Credit Limit!"
                                 app:sv_rl_background="#FFFBBC32"
                                 app:sv_rl_radius="15dp">
 
-                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_centerInParent="true"
                                     app:sv_rl_background="@color/white"
                                     app:sv_rl_radius="8dp" />
 
-                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+                            </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
 
                             <TextView
                                 android:id="@+id/paying_top_des_tv"
@@ -450,7 +450,7 @@ Your Special Credit Limit!"
                                 tools:text="₦ 20,000" />
 
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/pay_now_tv"
                                 android:layout_width="252dp"
                                 android:layout_height="48dp"
@@ -466,12 +466,12 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#FFFBBC32"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            放款失败-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_bank_fail_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -522,7 +522,7 @@ Your Special Credit Limit!"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/home_bank_fail_tv" />
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/update_bank_tv"
                                 android:layout_width="252dp"
                                 android:layout_height="48dp"
@@ -538,12 +538,12 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#FFFBBC32"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            放款中-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_loaning_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -592,7 +592,7 @@ Your Special Credit Limit!"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/home_loaning_tv" />
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            进件通过-->
@@ -642,7 +642,7 @@ Your Special Credit Limit!"
                         <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                         <!--            进件拒绝-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_submit_refuse_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -690,11 +690,11 @@ Your Special Credit Limit!"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/home_submit_refuse_tv" />
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                         <!--            审核中-->
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_review_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -741,9 +741,9 @@ Your Special Credit Limit!"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/home_review_tv" />
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                             android:id="@+id/home_order_normal_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -795,7 +795,7 @@ Your Special Credit Limit!"
                                 app:layout_constraintTop_toBottomOf="@+id/zip_home_money_tv" />
 
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/zip_home_ver_tv"
                                 android:layout_width="252dp"
                                 android:layout_height="48dp"
@@ -811,15 +811,15 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#FFFBBC32"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
 
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
-
-
-                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+
+
+                    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                         android:id="@+id/zip_home_private_sl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -850,7 +850,7 @@ Your Special Credit Limit!"
                             app:layout_constraintTop_toTopOf="@+id/private_left_place_iv" />
 
 
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:layout_marginHorizontal="15dp"
@@ -872,7 +872,7 @@ Your Special Credit Limit!"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <com.zip.zipandroid.shape.ShapeTextView
+                            <com.zip.zipandroid.shape.ZipShapeTextView
                                 android:id="@+id/view_private_tv"
                                 android:layout_width="62dp"
                                 android:layout_height="29dp"
@@ -887,10 +887,10 @@ Your Special Credit Limit!"
                                 app:sv_tx_background="#3667F0"
                                 app:sv_tx_radius="8dp">
 
-                            </com.zip.zipandroid.shape.ShapeTextView>
+                            </com.zip.zipandroid.shape.ZipShapeTextView>
 
-                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
-                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                        </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
+                    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
                     <include
@@ -936,7 +936,7 @@ Your Special Credit Limit!"
                             app:layout_constraintTop_toBottomOf="@+id/zip_home_happy_iv">
 
 
-                            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                                 android:id="@+id/zip_home_zip_sl"
                                 android:layout_width="0dp"
                                 android:layout_height="162dp"
@@ -980,9 +980,9 @@ Get a Bonus"
 
                                 </ImageView>
 
-                            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
-                            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                                 android:id="@+id/no_ad_show_sl"
                                 android:layout_width="0dp"
                                 android:layout_height="162dp"
@@ -1024,7 +1024,7 @@ Get a Bonus"
 
                                 </ImageView>
 
-                            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
                         </LinearLayout>
 

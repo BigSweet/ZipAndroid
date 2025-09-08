@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/ind_sl"
             android:layout_width="224dp"
             android:layout_height="47dp"
@@ -44,7 +44,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
         <Button

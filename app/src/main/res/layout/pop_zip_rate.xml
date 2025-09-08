@@ -74,7 +74,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/zip_go_rate_tv"
                 app:layout_constraintTop_toBottomOf="@+id/zip_rate_score" />
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/zip_go_rate_tv"
                 android:layout_width="123dp"
                 android:layout_height="36dp"
@@ -89,7 +89,7 @@
                 app:sv_tx_background="#FF3667F0"
                 app:sv_tx_radius="8dp">
 
-            </com.zip.zipandroid.shape.ShapeTextView>
+            </com.zip.zipandroid.shape.ZipShapeTextView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

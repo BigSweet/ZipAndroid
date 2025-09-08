@@ -17,7 +17,7 @@ import com.zip.zipandroid.event.ZipRefreshCardEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipBankNamePop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
@@ -43,12 +43,12 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBusUtils.unregister(this)
+        ZipEventBusUtils.unregister(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBusUtils.register(this)
+        ZipEventBusUtils.register(this)
     }
 
     var fromMine = false
@@ -139,12 +139,12 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 //下一个界面
                 dismissLoading()
                 if (fromMine) {
-                    EventBusUtils.post(ZipRefreshCardEvent())
+                    ZipEventBusUtils.post(ZipRefreshCardEvent())
                     finish()
                 } else {
 //                    ToastUtils.showShort("finish5")
                     //进入额度计算页面
-                    EventBusUtils.post(ZipFinishInfoEvent())
+                    ZipEventBusUtils.post(ZipFinishInfoEvent())
                     //选择放款银行卡
                     finish()
                     ZipOrderReviewActivity.start(this, "")

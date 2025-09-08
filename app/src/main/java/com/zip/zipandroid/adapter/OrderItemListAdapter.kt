@@ -9,8 +9,8 @@ import com.zip.zipandroid.bean.ZipOrderListBeanItem
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
-import com.zip.zipandroid.shape.ShapeConstraintLayout
-import com.zip.zipandroid.shape.ShapeTextView
+import com.zip.zipandroid.shape.ZipShapeConstraintLayout
+import com.zip.zipandroid.shape.ZipShapeTextView
 import com.zip.zipandroid.view.toN
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -48,14 +48,14 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 
     override fun convert(holder: BaseViewHolder, item: ZipOrderListBeanItem) {
         holder.addOnClickListener(R.id.zip_order_item_show_detail_tv, R.id.zip_order_item_repay_btn, R.id.zip_order_item_finish_detail_tv)
-        val zip_order_item_main_cl = holder.getView<ShapeConstraintLayout>(R.id.zip_order_item_main_cl)
-        val zip_order_item_inner_cl = holder.getView<ShapeConstraintLayout>(R.id.zip_order_item_inner_cl)
-        val zip_item_order_inner_top_tv = holder.getView<ShapeTextView>(R.id.zip_item_order_inner_top_tv)
-        val zip_item_amount_update = holder.getView<ShapeTextView>(R.id.zip_item_amount_update)
+        val zip_order_item_main_cl = holder.getView<ZipShapeConstraintLayout>(R.id.zip_order_item_main_cl)
+        val zip_order_item_inner_cl = holder.getView<ZipShapeConstraintLayout>(R.id.zip_order_item_inner_cl)
+        val zip_item_order_inner_top_tv = holder.getView<ZipShapeTextView>(R.id.zip_item_order_inner_top_tv)
+        val zip_item_amount_update = holder.getView<ZipShapeTextView>(R.id.zip_item_amount_update)
         val zip_order_item_show_detail_tv = holder.getView<TextView>(R.id.zip_order_item_show_detail_tv)
         val bottom_status_tv = holder.getView<TextView>(R.id.bottom_status_tv)
         val zip_order_item_finish_detail_tv = holder.getView<TextView>(R.id.zip_order_item_finish_detail_tv)
-        val zip_order_item_repay_btn = holder.getView<ShapeTextView>(R.id.zip_order_item_repay_btn)
+        val zip_order_item_repay_btn = holder.getView<ZipShapeTextView>(R.id.zip_order_item_repay_btn)
         val item_zip_order_time_tv = holder.getView<TextView>(R.id.item_zip_order_time_tv)
         val zip_order_amount_place_tv = holder.getView<TextView>(R.id.zip_order_amount_place_tv)
         val zip_order_item_install_place_tv = holder.getView<TextView>(R.id.zip_order_item_install_place_tv)

@@ -9,7 +9,7 @@ import android.view.animation.AccelerateInterpolator;
 import com.zip.zipandroid.R;
 
 
-public class ScaleClickHelper {
+public class ZipScaleClickHelper {
 
     public static void setScaleClick(View v) {
         v.setOnTouchListener(new View.OnTouchListener() {

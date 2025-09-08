@@ -34,7 +34,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_top_bg" />
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/login_edit_number_sl"
             android:layout_width="match_parent"
             android:layout_height="44dp"
@@ -71,10 +71,10 @@
 
             </com.zip.zipandroid.view.NoSpaceLengthLimitedEditText>
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
 
-        <com.zip.zipandroid.shape.ShapeTextView
+        <com.zip.zipandroid.shape.ZipShapeTextView
             android:id="@+id/zip_login_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -91,7 +91,7 @@
             app:sv_tx_enable="false"
             app:sv_tx_radius="8dp">
 
-        </com.zip.zipandroid.shape.ShapeTextView>
+        </com.zip.zipandroid.shape.ZipShapeTextView>
 
         <ImageView
             android:id="@+id/zip_login_select_iv"
@@ -290,7 +290,7 @@
         <!--            app:layout_constraintTop_toBottomOf="@+id/ma_code_rl">-->
 
 
-        <!--            <com.zip.zipandroid.shape.ShapeTextView-->
+        <!--            <com.zip.zipandroid.shape.ZipShapeTextView-->
         <!--                android:id="@+id/macaw_login_submit_tv"-->
         <!--                android:layout_width="match_parent"-->
         <!--                android:layout_height="48dp"-->

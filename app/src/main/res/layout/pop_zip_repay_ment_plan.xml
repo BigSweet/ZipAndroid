@@ -7,7 +7,7 @@
 
     </data>
 
-    <com.zip.zipandroid.shape.ShapeConstraintLayout
+    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="530dp"
         app:sv_scl_background="@color/white"
@@ -102,7 +102,7 @@
             app:layout_constraintTop_toTopOf="@+id/pop_total_place_tv"
             tools:text="₦ 20,146.16" />
 
-        <com.zip.zipandroid.shape.ShapeConstraintLayout
+        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
             android:id="@+id/plan_bottom_confirm_tv"
             android:layout_width="match_parent"
             android:layout_height="81dp"
@@ -110,7 +110,7 @@
             app:sv_scl_background="@color/white">
 
 
-            <com.zip.zipandroid.shape.ShapeTextView
+            <com.zip.zipandroid.shape.ZipShapeTextView
                 android:id="@+id/private_sure_tv"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -123,9 +123,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:sv_tx_background="#FF205EDB"
-                app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ShapeTextView>
+                app:sv_tx_radius="8dp"></com.zip.zipandroid.shape.ZipShapeTextView>
 
-        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
-    </com.zip.zipandroid.shape.ShapeConstraintLayout>
+    </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 </layout>

@@ -27,8 +27,8 @@ import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.DesUtil
-import com.zip.zipandroid.utils.ProjectUtil.getPhotoLocation
+import com.zip.zipandroid.utils.ZipDesUtil
+import com.zip.zipandroid.utils.ZipProjectUtil.getPhotoLocation
 import com.zip.zipandroid.utils.ZipLoadingUtils
 import com.zip.zipandroid.utils.phonedate.ZipPhoneDateProvider
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
@@ -268,7 +268,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         if (PermissionUtils.isGranted(Manifest.permission.READ_CALENDAR) && PermissionUtils.isGranted(Manifest.permission.WRITE_CALENDAR)) {
             ZipPhoneDateProvider.sharedInstance(ZipApplication.instance).getCalendarInfo(object : ZipCalendarListener {
                 override fun onCalendarFetched(calendar: Array<ZipCalendarInfos>) {
-                    val calendar = DesUtil.Base64Encode(Gson().toJson(calendar))
+                    val calendar = ZipDesUtil.Base64Encode(Gson().toJson(calendar))
                     MMKV.defaultMMKV()?.putString("calendar", calendar)
                 }
 
@@ -283,7 +283,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
             ZipPhoneDateProvider.sharedInstance(ZipApplication.instance)
                 .getSMSMessages(object : ZipSMSMessageListener {
                     override fun onSMSMessagesFetched(zipSmsMessages: Array<ZipSMSMessage?>?) {
-                        val messages = DesUtil.Base64Encode(Gson().toJson(zipSmsMessages))
+                        val messages = ZipDesUtil.Base64Encode(Gson().toJson(zipSmsMessages))
                         MMKV.defaultMMKV()?.putString("smsMessage", messages)
                     }
 
@@ -304,7 +304,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         ZipPhoneDateProvider.sharedInstance(ZipApplication.instance!!)
             .getInstalledApps(object : ZipInstalledAppListener {
                 override fun onInstalledAppsFetched(zipInstalledApps: Array<ZipInstalledApp?>?) {
-                    val apps = DesUtil.Base64Encode(Gson().toJson(zipInstalledApps))
+                    val apps = ZipDesUtil.Base64Encode(Gson().toJson(zipInstalledApps))
                     MMKV.defaultMMKV()?.putString("installedApp", apps)
                 }
             })
@@ -315,7 +315,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
             ZipPhoneDateProvider.sharedInstance(ZipApplication.instance)
                 .getCallLogs(object : ZipCallLogListener {
                     override fun onCallLogsFetched(zipCallLogs: Array<ZipCallLog?>?) {
-                        val logs = DesUtil.Base64Encode(Gson().toJson(zipCallLogs))
+                        val logs = ZipDesUtil.Base64Encode(Gson().toJson(zipCallLogs))
                         MMKV.defaultMMKV()?.putString("callLog", logs)
                     }
 
@@ -329,7 +329,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var installAppDates: Array<ZipInstalledApp?>? = null
             if (!Constants.loadInstall) {
-                val installedApp = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp",""))
+                val installedApp = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp",""))
                 if (!TextUtils.isEmpty(installedApp)) {
                     installAppDates = Gson().fromJson(installedApp, object : TypeToken<Array<ZipInstalledApp?>?>() {}.type)
                 }
@@ -341,7 +341,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var zipCallLogDates: Array<ZipCallLog?>? = null
             if (!Constants.lodaCallInfo) {
-                val callLog = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog",""))
+                val callLog = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog",""))
                 if (!TextUtils.isEmpty(callLog)) {
                     zipCallLogDates = Gson().fromJson(callLog, object : TypeToken<Array<ZipCallLog?>?>() {}.type)
                 }
@@ -353,7 +353,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var zipSmsMessageDates: Array<ZipSMSMessage?>? = null
             if (!Constants.loadSms) {
-                val smsMessage = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("smsMessage",""))
+                val smsMessage = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("smsMessage",""))
                 if (!TextUtils.isEmpty(smsMessage)) {
                     zipSmsMessageDates = Gson().fromJson(smsMessage, object : TypeToken<Array<ZipSMSMessage?>?>() {}.type)
                 }
@@ -365,7 +365,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var calendarData: Array<ZipCalendarInfos?>? = null
             if (!Constants.loadCal) {
-                val calendar = DesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("calendar",""))
+                val calendar = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("calendar",""))
                 if (!TextUtils.isEmpty(calendar)) {
                     calendarData = Gson().fromJson(calendar, object : TypeToken<Array<ZipCalendarInfos?>?>() {}.type)
                 }

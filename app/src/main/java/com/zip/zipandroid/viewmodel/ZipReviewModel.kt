@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.zip.zipandroid.ZipApplication
-import com.zip.zipandroid.base.RxSchedulers
+import com.zip.zipandroid.base.ZipRxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
@@ -21,7 +21,7 @@ import com.zip.zipandroid.bean.ZipOrderStatusBean
 import com.zip.zipandroid.bean.ZipPushData
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipTriaBean
-import com.zip.zipandroid.utils.FormReq
+import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
@@ -43,11 +43,11 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     fun zipHomeData() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getHomeData(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipHomeDataBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -70,13 +70,13 @@ class ZipReviewModel : ZipBaseViewModel() {
     fun getUserOrder(bizId: String) {
 
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api
             .addParam("idKasuwancin", bizId)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCreditxStatus(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipOrderStatusBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -120,7 +120,7 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     fun orderTrial(realAmount: Int, riskGrade: String, did: String, couponId: String) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         if (!couponId.isNullOrEmpty()) {
             api
                 .addParam("idKatinTalla", couponId)
@@ -132,7 +132,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).orderTrial(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipTriaBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -149,13 +149,13 @@ class ZipReviewModel : ZipBaseViewModel() {
     val admissionLiveData = MutableLiveData<ZipOrderAdmissionBean>()
     fun admission() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
             .addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
             .addParam("nauInSamfur", UserInfoUtils.getProductType().productType)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).admission(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipOrderAdmissionBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -172,14 +172,14 @@ class ZipReviewModel : ZipBaseViewModel() {
     fun getRiskLevel(bizId: String) {
 
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api
             .addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
             .addParam("idKasuwancin", bizId)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getRiskLevel(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipRiskLevelBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -195,11 +195,11 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     fun getUploadUserInfo() {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getUploadUserInfo(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<RealUploadUserBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -223,7 +223,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         info: RealUploadUserBean,
     ) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("tasharTushe", "google-play")
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
@@ -254,7 +254,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("bayaninAbokinCiniki", info)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderBefore(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipBizBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -295,7 +295,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         //要不要加上一笔订单的id
         //repayment//paytype
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("tasharTushe", "google-play")
         api.addParam("idKasuwancin", preBizId)
         if (!couponId.isNullOrEmpty()) {
@@ -339,7 +339,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("bayaninAbokinCiniki", info)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderByMx(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipBizBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -361,12 +361,12 @@ class ZipReviewModel : ZipBaseViewModel() {
 
     fun getCouponList(couponStatus: Int) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("couponStatus", couponStatus)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCouponList(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipCouponListBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)

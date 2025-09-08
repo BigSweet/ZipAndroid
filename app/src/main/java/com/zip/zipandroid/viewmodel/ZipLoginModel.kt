@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.BuildConfig
-import com.zip.zipandroid.base.RxSchedulers
+import com.zip.zipandroid.base.ZipRxSchedulers
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipLoginResponse
-import com.zip.zipandroid.utils.FormReq
+import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import io.reactivex.disposables.Disposable
@@ -25,7 +25,7 @@ class ZipLoginModel : ZipBaseViewModel() {
 
     fun zipLogin(phone: String, code: String) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("wayarHannu", phone)
         api.addParam("lambarco", code)
         api.addParam("rijistaDaga", 999)
@@ -36,7 +36,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).zipLogin(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipLoginResponse>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
@@ -58,12 +58,12 @@ class ZipLoginModel : ZipBaseViewModel() {
 
     fun getCode(phone: String) {
         val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
+        val api = ZipFormReq.create()
         api.addParam("wayarHannu", phone)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCode(api)
-            .compose(RxSchedulers.io_main())
+            .compose(ZipRxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipCodeBean>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)

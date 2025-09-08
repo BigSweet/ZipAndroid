@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Author: jack
  * Description:管理所有的栈中的Activity
  */
-public class ActivityCollector {
+public class ZipActivityCollector {
 
     /**
      * 存放activity的列表

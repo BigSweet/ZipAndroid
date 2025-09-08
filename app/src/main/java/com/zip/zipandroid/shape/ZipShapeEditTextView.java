@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import com.zip.zipandroid.R;
 
 
-public class ShapeEditTextView extends AppCompatEditText {
+public class ZipShapeEditTextView extends AppCompatEditText {
     protected int orientation;
     protected float[] radius;
     int[] colors = null;
@@ -22,16 +22,16 @@ public class ShapeEditTextView extends AppCompatEditText {
 
     String disableText;
     String enableText;
-    public ShapeEditTextView(Context context) {
+    public ZipShapeEditTextView(Context context) {
         super(context);
     }
 
-    public ShapeEditTextView(Context context, AttributeSet attrs) {
+    public ZipShapeEditTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(attrs);
     }
 
-    public ShapeEditTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ZipShapeEditTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
     }

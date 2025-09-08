@@ -12,8 +12,8 @@ import com.zip.zipandroid.databinding.FragmentZipMineBinding
 import com.zip.zipandroid.event.ZipSwitchIndexEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipLogoutPop
-import com.zip.zipandroid.utils.ActivityCollector
-import com.zip.zipandroid.utils.EventBusUtils
+import com.zip.zipandroid.utils.ZipActivityCollector
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 
 class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMineBinding>() {
@@ -31,7 +31,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
         mViewModel.getUserInfo()
         mViewBind.mineOrderCl.setOnDelayClickListener {
             //历史订单页面
-            EventBusUtils.post(ZipSwitchIndexEvent(1))
+            ZipEventBusUtils.post(ZipSwitchIndexEvent(1))
         }
 
         mViewBind.mineCopCl.setOnDelayClickListener {
@@ -50,7 +50,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
         mViewBind.zipMineLogoutSl.setOnDelayClickListener {
             val pop = ZipLogoutPop(requireActivity())
             pop.sureLogoutClick = {
-                ActivityCollector.removeAllActivity()
+                ZipActivityCollector.removeAllActivity()
                 startActivity(ZipLoginActivity::class.java)
                 UserInfoUtils.clear()
             }
