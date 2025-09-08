@@ -12,778 +12,899 @@
         android:id="@+id/new_home_swpie"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <com.zip.zipandroid.shape.ShapeConstraintLayout
-                android:id="@+id/zip_home_top_sl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="28dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:sv_scl_background="#FF3667F0"
-                app:sv_scl_radius_bottom_left="52dp"
-                app:sv_scl_radius_bottom_right="52dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="53dp"
-                    android:src="@drawable/zip_home_top_icon"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </ImageView>
-
-                <ImageView
-                    android:id="@+id/zip_home_custom_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="49dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/zip_home_custom_icon"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </ImageView>
-
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:src="@drawable/home_top_place_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv">
-
-                </ImageView>
-
-
-                <!--            待借款-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_can_loan_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="visible">
-
-
-                    <com.zip.zipandroid.shape.ShapeRelativeLayout
-                        android:id="@+id/can_loan_top_shape"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/can_loan_top_des_tv"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/can_loan_top_des_tv"
-                        app:layout_constraintTop_toTopOf="@+id/can_loan_top_des_tv"
-                        app:sv_rl_background="#FF73DA77"
-                        app:sv_rl_radius="15dp">
-
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerInParent="true"
-                            app:sv_rl_background="@color/white"
-                            app:sv_rl_radius="8dp" />
-
-                    </com.zip.zipandroid.shape.ShapeRelativeLayout>
-
-                    <TextView
-                        android:id="@+id/can_loan_top_des_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Pending LoanConfirmation"
-                        android:textColor="#FF73DA77"
-                        android:textSize="15sp"
-                        app:layout_constraintLeft_toRightOf="@+id/can_loan_top_shape"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/can_loan_money_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:textColor="@color/white"
-                        android:textSize="48sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/can_loan_top_des_tv"
-                        tools:text="₦ 20,000" />
-
-
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/can_loan_now_tv"
-                        android:layout_width="252dp"
-                        android:layout_height="48dp"
-
-                        android:layout_marginTop="26dp"
-                        android:gravity="center"
-                        android:text="Repay Now"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/can_loan_money_tv"
-                        app:sv_tx_background="#FF73DA77"
-                        app:sv_tx_radius="8dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            逾期-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_delay_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-
-                    <com.zip.zipandroid.shape.ShapeRelativeLayout
-                        android:id="@+id/delay_top_shape"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/delay_top_des_tv"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/delay_top_des_tv"
-                        app:layout_constraintTop_toTopOf="@+id/delay_top_des_tv"
-                        app:sv_rl_background="#FFFF4343"
-                        app:sv_rl_radius="15dp">
-
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerInParent="true"
-                            app:sv_rl_background="@color/white"
-                            app:sv_rl_radius="8dp" />
-
-                    </com.zip.zipandroid.shape.ShapeRelativeLayout>
-
-                    <TextView
-                        android:id="@+id/delay_top_des_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="20dp"
-                        android:text="OVERDUE"
-                        android:textColor="#FFFF4343"
-                        android:textSize="15sp"
-                        app:layout_constraintLeft_toRightOf="@+id/delay_top_shape"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/delay_date_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/delay_top_des_tv"
-                        tools:text="Due Date: Dec 27,2025" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="Due"
-                        android:textColor="#ffffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/delay_money_tv"
-                        app:layout_constraintRight_toLeftOf="@+id/delay_money_tv" />
-
-                    <TextView
-                        android:id="@+id/delay_money_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#FFFF4343"
-                        android:textSize="48sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/delay_date_tv"
-                        tools:text="₦ 20,000" />
-
-                    <TextView
-                        android:id="@+id/delay_des_bottom_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="Your payment is 2 days past due, please make your repayment as soon as possible."
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/delay_money_tv" />
-
-
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/delay_now_tv"
-                        android:layout_width="252dp"
-                        android:layout_height="48dp"
-
-                        android:layout_marginTop="13dp"
-                        android:gravity="center"
-                        android:text="Repay Now"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/delay_des_bottom_tv"
-                        app:sv_tx_background="#FFFF4343"
-                        app:sv_tx_radius="8dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            待还款-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_paying_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-
-                    <com.zip.zipandroid.shape.ShapeRelativeLayout
-                        android:id="@+id/paying_top_shape"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/paying_top_des_tv"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/paying_top_des_tv"
-                        app:layout_constraintTop_toTopOf="@+id/paying_top_des_tv"
-                        app:sv_rl_background="#FFFBBC32"
-                        app:sv_rl_radius="15dp">
-
-                        <com.zip.zipandroid.shape.ShapeRelativeLayout
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerInParent="true"
-                            app:sv_rl_background="@color/white"
-                            app:sv_rl_radius="8dp" />
-
-                    </com.zip.zipandroid.shape.ShapeRelativeLayout>
-
-                    <TextView
-                        android:id="@+id/paying_top_des_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Repayment Scheduled"
-                        android:textColor="#fffbbc32"
-                        android:textSize="15sp"
-                        app:layout_constraintLeft_toRightOf="@+id/paying_top_shape"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/paying_date_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/paying_top_des_tv"
-                        tools:text="Due Date: Dec 27,2025" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="Due"
-                        android:textColor="#ffffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/paying_money_tv"
-                        app:layout_constraintRight_toLeftOf="@+id/paying_money_tv" />
-
-                    <TextView
-                        android:id="@+id/paying_money_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffffff"
-                        android:textSize="48sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/paying_date_tv"
-                        tools:text="₦ 20,000" />
-
-
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/pay_now_tv"
-                        android:layout_width="252dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="13dp"
-                        android:gravity="center"
-                        android:text="Repay Now"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/paying_money_tv"
-                        app:sv_tx_background="#FFFBBC32"
-                        app:sv_tx_radius="8dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            放款失败-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_bank_fail_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/home_bank_fail_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/home_order_bank_fail_icon"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/home_bank_fail_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Loan Disbursement Unsuccessful"
-                        android:textColor="#fffbbc32"
-                        android:textSize="23sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_bank_fail_iv" />
-
-                    <TextView
-                        android:id="@+id/bank_fail_des_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="19dp"
-                        android:gravity="center"
-                        android:text="Please double-check your bank card information and ensure the card has not reached its monthly receipt limit. If needed, you can update your account details and reapply for the loan."
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_bank_fail_tv" />
-
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/update_bank_tv"
-                        android:layout_width="252dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="13dp"
-                        android:gravity="center"
-                        android:text="Update Bank Account Information"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bank_fail_des_tv"
-                        app:sv_tx_background="#FFFBBC32"
-                        app:sv_tx_radius="8dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            借款中-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_loaning_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/home_loaning_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/home_loaning_icon"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/home_loaning_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Loan Disbursement in Progress"
-                        android:textColor="#fffbbc32"
-                        android:textSize="23sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_loaning_iv" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="19dp"
-                        android:gravity="center"
-                        android:text="Your loan amount will be disbursed to your account shortly. We appreciate your patience."
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_loaning_tv" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            进件通过-->
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/home_submit_success_cl"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="12dp"-->
-<!--                    android:visibility="gone"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"-->
-<!--                    tools:visibility="gone">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/home_submit_success_iv"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/home_submit_success_icon"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                        app:layout_constraintRight_toRightOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/home_submit_success_tv"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:text="Your Application Has Been Approved"-->
-<!--                        android:textColor="#fffbbc32"-->
-<!--                        android:textSize="23sp"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                        app:layout_constraintRight_toRightOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/home_submit_success_iv" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginHorizontal="15dp"-->
-<!--                        android:layout_marginTop="19dp"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="We’re pleased to inform you that your application has beenapproved. Your loan will be disbursed shortly."-->
-<!--                        android:textColor="#adffffff"-->
-<!--                        android:textSize="13sp"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                        app:layout_constraintRight_toRightOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/home_submit_success_tv" />-->
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-                <!--            进件拒绝-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_submit_refuse_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/home_submit_refuse_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/home_refuse_icon"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/home_submit_refuse_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Your Application Has Been Rejected"
-                        android:textColor="#fffbbc32"
-                        android:textSize="23sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_submit_refuse_iv" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="19dp"
-                        android:gravity="center"
-                        android:text="We're sorry to inform you that your application has not beenapproved. You may reapply after 7 days. Thank you for your continued support."
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_submit_refuse_tv" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <!--            审核中-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_review_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/home_review_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/zip_home_review_icon"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/home_review_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Review in Progress"
-                        android:textColor="#fffbbc32"
-                        android:textSize="23sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_review_iv" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="You'll receive the review outcome in a few minutes."
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_review_tv" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/home_order_normal_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
-                    tools:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/zip_home_max_place_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Maximum Loan Amount"
-                        android:textColor="#adffffff"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/zip_home_money_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#ffffffff"
-                        android:textSize="48sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/zip_home_max_place_tv"
-                        tools:text="₦ 600,000" />
-
-                    <com.zip.zipandroid.shape.ShapeTextView
-                        android:id="@+id/zip_home_ver_tv"
-                        android:layout_width="252dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="18dp"
-                        android:gravity="center"
-                        android:text="Verify my loan limit"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/zip_home_money_tv"
-                        app:sv_tx_background="#FFFBBC32"
-                        app:sv_tx_radius="8dp">
-
-                    </com.zip.zipandroid.shape.ShapeTextView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="20dp"
+                android:clipToPadding="false"
+                android:paddingBottom="21dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/zip_home_top_sl">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
-                        android:id="@+id/load_team_sl"
-                        android:layout_width="0dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="15dp"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/load_daily_sl"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:sv_scl_background="@color/white"
-                        app:sv_scl_radius="16dp">
 
-                        <TextView
-                            android:id="@+id/loan_team_tv"
+                    <com.zip.zipandroid.shape.ShapeConstraintLayout
+                        android:id="@+id/zip_home_top_sl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sv_scl_radius_bottom_left="52dp"
+                        app:sv_scl_radius_bottom_right="52dp">
+
+                        <ImageView
+                            android:id="@+id/home_top_zip_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="13dp"
-                            android:text="Loan term"
-                            android:textColor="#ff000000"
-                            android:textSize="12sp"
+                            android:layout_marginTop="53dp"
+                            android:src="@drawable/zip_home_top_icon"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
+                        </ImageView>
+
+                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            android:id="@+id/zip_home_custom_iv"
+                            android:layout_width="123dp"
+                            android:layout_height="29dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/home_top_zip_iv"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/home_top_zip_iv"
+                            app:sv_rl_background="#3667F0"
+                            app:sv_rl_radius="14dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="15dp"
+                                android:src="@drawable/home_help_icon"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </ImageView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="12dp"
+                                android:text="Help Center"
+                                android:textColor="#ffffffff"
+                                android:textSize="13sp" />
+
+
+                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/load_team_sl"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:textColor="#ff000000"
-                            android:textSize="21sp"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toLeftOf="@+id/loan_team_tv"
-                            app:layout_constraintTop_toBottomOf="@+id/loan_team_tv"
-                            android:text="91~180 days" />
-
-                    </com.zip.zipandroid.shape.ShapeConstraintLayout>
-
-
-                    <com.zip.zipandroid.shape.ShapeConstraintLayout
-                        android:id="@+id/load_daily_sl"
-                        android:layout_width="0dp"
-                        android:layout_height="75dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="15dp"
-                        app:layout_constraintLeft_toRightOf="@+id/load_team_sl"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:sv_scl_background="@color/white"
-                        app:sv_scl_radius="16dp">
-
-                        <TextView
-                            android:id="@+id/loan_daily_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="25dp"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginTop="13dp"
-                            android:text="Daily interest rate"
-                            android:textColor="#ff000000"
-                            android:textSize="12sp"
+                            android:layout_marginTop="12dp"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"
+                            app:sv_scl_background="#E0E8FF"
+                            app:sv_scl_radius="13dp">
 
-                        <TextView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="91~180 days"
+                                android:textColor="#ff000000"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/load_daily_sl"
                             android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="8dp"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/load_team_sl"
+                            app:layout_constraintLeft_toRightOf="@+id/load_team_sl"
+                            app:layout_constraintTop_toTopOf="@+id/load_team_sl"
+                            app:sv_scl_background="#E0E8FF"
+                            app:sv_scl_radius="13dp">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="0.05%~0.08%"
+                                android:textColor="#ff000000"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            android:id="@+id/zip_home_cre_hint_sl"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintTop_toBottomOf="@+id/load_daily_sl"
+                            app:sv_rl_background_end="#FFEFD5"
+                            app:sv_rl_background_start="#D9E3FF">
+
+
+                            <ImageView
+                                android:id="@+id/hint_icon_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/top_cre_hint_icon" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="33dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_toRightOf="@+id/hint_icon_iv"
+                                android:gravity="left"
+                                android:text="Keep a Good Credit Record and Quickly Unlock
+Your Special Credit Limit!"
+                                android:textColor="#ff000000"
+                                android:textSize="12sp" />
+                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+
+                        <!--            待借款-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_can_loan_cl"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:textColor="#ff000000"
-                            android:textSize="21sp"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toLeftOf="@+id/loan_daily_tv"
-                            app:layout_constraintTop_toBottomOf="@+id/loan_daily_tv"
-                            android:text="0.05%~0.08%" />
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="31dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+
+                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                android:id="@+id/can_loan_top_shape"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/can_loan_top_des_tv"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@+id/can_loan_top_des_tv"
+                                app:layout_constraintTop_toTopOf="@+id/can_loan_top_des_tv"
+                                app:sv_rl_background="#FF73DA77"
+                                app:sv_rl_radius="15dp">
+
+                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerInParent="true"
+                                    app:sv_rl_background="@color/white"
+                                    app:sv_rl_radius="8dp" />
+
+                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+                            <TextView
+                                android:id="@+id/can_loan_top_des_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="17dp"
+                                android:text="Pending LoanConfirmation"
+                                android:textColor="#FF73DA77"
+                                android:textSize="15sp"
+                                app:layout_constraintLeft_toRightOf="@+id/can_loan_top_shape"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/can_loan_money_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:textColor="#73DA77"
+                                android:textSize="48sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/can_loan_top_des_tv"
+                                tools:text="₦ 20,000" />
+
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/can_loan_now_tv"
+                                android:layout_width="252dp"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="23dp"
+                                android:gravity="center"
+                                android:text="Repay Now"
+                                android:textColor="@color/black"
+                                android:textSize="14dp"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/can_loan_money_tv"
+                                app:sv_tx_background="#FF73DA77"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            逾期-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_delay_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="31dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+
+                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                android:id="@+id/delay_top_shape"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/delay_top_des_tv"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@+id/delay_top_des_tv"
+                                app:layout_constraintTop_toTopOf="@+id/delay_top_des_tv"
+                                app:sv_rl_background="#FFFF4343"
+                                app:sv_rl_radius="15dp">
+
+                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerInParent="true"
+                                    app:sv_rl_background="@color/white"
+                                    app:sv_rl_radius="8dp" />
+
+                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+                            <TextView
+                                android:id="@+id/delay_top_des_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="17dp"
+                                android:text="OVERDUE"
+                                android:textColor="#FFFF4343"
+                                android:textSize="15sp"
+                                app:layout_constraintLeft_toRightOf="@+id/delay_top_shape"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/delay_date_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/delay_money_tv"
+
+                                tools:text="Due Date: Dec 27,2025" />
+
+                            <TextView
+                                android:id="@+id/delay_money_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:textColor="#FFFF4343"
+                                android:textSize="48sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/delay_des_bottom_tv"
+                                tools:text="₦ 20,000" />
+
+                            <TextView
+                                android:id="@+id/delay_des_bottom_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="14dp"
+                                android:gravity="center"
+                                android:text="Your payment is 2 days past due, please make your repayment as soon as possible."
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/delay_top_des_tv" />
+
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/delay_now_tv"
+                                android:layout_width="252dp"
+                                android:layout_height="48dp"
+
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Repay Now"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/delay_date_tv"
+                                app:sv_tx_background="#FFFF4343"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            待还款-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_paying_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="31dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+
+                            <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                android:id="@+id/paying_top_shape"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/paying_top_des_tv"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@+id/paying_top_des_tv"
+                                app:layout_constraintTop_toTopOf="@+id/paying_top_des_tv"
+                                app:sv_rl_background="#FFFBBC32"
+                                app:sv_rl_radius="15dp">
+
+                                <com.zip.zipandroid.shape.ShapeRelativeLayout
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerInParent="true"
+                                    app:sv_rl_background="@color/white"
+                                    app:sv_rl_radius="8dp" />
+
+                            </com.zip.zipandroid.shape.ShapeRelativeLayout>
+
+                            <TextView
+                                android:id="@+id/paying_top_des_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="17dp"
+                                android:text="Repayment Scheduled"
+                                android:textColor="#fffbbc32"
+                                android:textSize="15sp"
+                                app:layout_constraintLeft_toRightOf="@+id/paying_top_shape"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/paying_date_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/paying_money_tv"
+                                tools:text="Due Date: Dec 27,2025" />
+
+
+                            <TextView
+                                android:id="@+id/paying_money_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:textColor="#ffffffff"
+                                android:textSize="48sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/paying_top_des_tv"
+                                tools:text="₦ 20,000" />
+
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/pay_now_tv"
+                                android:layout_width="252dp"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Repay Now"
+                                android:textColor="@color/black"
+                                android:textSize="14dp"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/paying_date_tv"
+                                app:sv_tx_background="#FFFBBC32"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            放款失败-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_bank_fail_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="31dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/home_bank_fail_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:src="@drawable/home_order_bank_fail_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/home_bank_fail_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="17dp"
+                                android:gravity="center"
+                                android:text="Loan Disbursement \n Unsuccessful"
+                                android:textColor="#fffbbc32"
+                                android:textSize="23sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_bank_fail_iv" />
+
+                            <TextView
+                                android:id="@+id/bank_fail_des_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="22dp"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="Please double-check your bank card information and ensure the card has not reached its monthly receipt limit. If needed, you can update your account details and reapply for the loan."
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_bank_fail_tv" />
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/update_bank_tv"
+                                android:layout_width="252dp"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center"
+                                android:text="Update Bank Account Information"
+                                android:textColor="@color/black"
+                                android:textSize="14dp"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/bank_fail_des_tv"
+                                app:sv_tx_background="#FFFBBC32"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            放款中-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_loaning_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="19dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/home_loaning_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:src="@drawable/home_loaning_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/home_loaning_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="17dp"
+                                android:gravity="center"
+                                android:text="Loan Disbursement \n in Progress"
+                                android:textColor="#fffbbc32"
+                                android:textSize="23sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_loaning_iv" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="Your loan amount will be disbursed to your account shortly. We appreciate your patience."
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_loaning_tv" />
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            进件通过-->
+                        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+                        <!--                    android:id="@+id/home_submit_success_cl"-->
+                        <!--                    android:layout_width="match_parent"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:layout_marginTop="12dp"-->
+                        <!--                    android:visibility="gone"-->
+                        <!--                    app:layout_constraintTop_toBottomOf="@+id/zip_home_custom_iv"-->
+                        <!--                    tools:visibility="gone">-->
+
+                        <!--                    <ImageView-->
+                        <!--                        android:id="@+id/home_submit_success_iv"-->
+                        <!--                        android:layout_width="wrap_content"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:src="@drawable/home_submit_success_icon"-->
+                        <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+                        <!--                        app:layout_constraintRight_toRightOf="parent"-->
+                        <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+                        <!--                    <TextView-->
+                        <!--                        android:id="@+id/home_submit_success_tv"-->
+                        <!--                        android:layout_width="wrap_content"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:layout_marginTop="10dp"-->
+                        <!--                        android:text="Your Application Has Been Approved"-->
+                        <!--                        android:textColor="#fffbbc32"-->
+                        <!--                        android:textSize="23sp"-->
+                        <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+                        <!--                        app:layout_constraintRight_toRightOf="parent"-->
+                        <!--                        app:layout_constraintTop_toBottomOf="@+id/home_submit_success_iv" />-->
+
+                        <!--                    <TextView-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:layout_marginHorizontal="15dp"-->
+                        <!--                        android:layout_marginTop="19dp"-->
+                        <!--                        android:gravity="center"-->
+                        <!--                        android:text="We’re pleased to inform you that your application has beenapproved. Your loan will be disbursed shortly."-->
+                        <!--                        android:textColor="#adffffff"-->
+                        <!--                        android:textSize="13sp"-->
+                        <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+                        <!--                        app:layout_constraintRight_toRightOf="parent"-->
+                        <!--                        app:layout_constraintTop_toBottomOf="@+id/home_submit_success_tv" />-->
+                        <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+                        <!--            进件拒绝-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_submit_refuse_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="19dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/home_submit_refuse_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:src="@drawable/home_refuse_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/home_submit_refuse_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="17dp"
+                                android:text="Your Application \n Has Been Rejected"
+                                android:textColor="#fffbbc32"
+                                android:textSize="23sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_submit_refuse_iv" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="We're sorry to inform you that your application has not beenapproved. You may reapply after 7 days. Thank you for your continued support."
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_submit_refuse_tv" />
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+
+                        <!--            审核中-->
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_review_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="19dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/home_review_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:src="@drawable/zip_home_review_icon"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/home_review_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="17dp"
+                                android:text="Review in Progress"
+                                android:textColor="#fffbbc32"
+                                android:textSize="23sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_review_iv" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="You'll receive the review outcome in a \n few minutes."
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_review_tv" />
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                        <com.zip.zipandroid.shape.ShapeConstraintLayout
+                            android:id="@+id/home_order_normal_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="21dp"
+                            android:paddingBottom="31dp"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_cre_hint_sl"
+                            app:sv_scl_background="#3667F0"
+                            app:sv_scl_radius="23dp"
+                            tools:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/zip_home_max_place_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="17dp"
+                                android:text="Maximum Loan Amount"
+                                android:textColor="#adffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/zip_home_money_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="#ffffffff"
+                                android:textSize="48sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_home_max_place_tv"
+                                tools:text="₦ 600,000" />
+
+
+                            <TextView
+                                android:id="@+id/shandian_place_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:drawableLeft="@drawable/home_shandian_icon"
+                                android:drawablePadding="3dp"
+                                android:text="In Just 5 Minutes"
+                                android:textColor="#ffffffff"
+                                android:textSize="13sp"
+                                app:layout_constraintLeft_toLeftOf="@+id/zip_home_money_tv"
+                                app:layout_constraintRight_toRightOf="@+id/zip_home_money_tv"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_home_money_tv" />
+
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/zip_home_ver_tv"
+                                android:layout_width="252dp"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center"
+                                android:text="Verify my loan limit"
+                                android:textColor="@color/black"
+                                android:textSize="14dp"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/shandian_place_tv"
+                                app:sv_tx_background="#FFFBBC32"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+
+                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
 
                     </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
 
                     <com.zip.zipandroid.shape.ShapeConstraintLayout
                         android:id="@+id/zip_home_private_sl"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="12dp"
-                        app:layout_constraintTop_toBottomOf="@+id/load_daily_sl"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/zip_home_top_sl"
                         app:sv_scl_background="@color/white"
                         app:sv_scl_radius="16dp">
+
+                        <ImageView
+                            android:id="@+id/private_left_place_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:src="@drawable/home_left_place_icon"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:text="View the privacy policy of Ziplead"
+                            android:layout_marginLeft="6dp"
+                            android:text="We Respect Your Privacy"
                             android:textColor="#ff000000"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/private_left_place_iv"
+                            app:layout_constraintLeft_toRightOf="@+id/private_left_place_iv"
+                            app:layout_constraintTop_toTopOf="@+id/private_left_place_iv" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/zip_home_search_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.zip.zipandroid.shape.ShapeRelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="13dp"
+                            app:layout_constraintTop_toBottomOf="@+id/private_left_place_iv"
+                            app:sv_rl_background_end="#DED8FD"
+                            app:sv_rl_background_start="#F1EEFF"
+                            app:sv_rl_radius="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:text="Privacy Policy of Ziplead"
+                                android:textColor="#ff000000"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.zip.zipandroid.shape.ShapeTextView
+                                android:id="@+id/view_private_tv"
+                                android:layout_width="62dp"
+                                android:layout_height="29dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="12dp"
+                                android:gravity="center"
+                                android:text="View"
+                                android:textColor="@color/white"
+                                android:textSize="12dp"
+                                android:textStyle="bold"
+                                app:sv_tx_background="#3667F0"
+                                app:sv_tx_radius="8dp">
+
+                            </com.zip.zipandroid.shape.ShapeTextView>
+
+                        </com.zip.zipandroid.shape.ShapeRelativeLayout>
                     </com.zip.zipandroid.shape.ShapeConstraintLayout>
 
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
+                        android:id="@+id/home_diff_include"
+                        layout="@layout/include_home_diff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        app:layout_constraintTop_toBottomOf="@+id/zip_home_private_sl" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/home_ad_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="23dp"
-                        app:layout_constraintTop_toBottomOf="@+id/zip_home_private_sl">
+                        app:layout_constraintTop_toBottomOf="@+id/home_diff_include">
 
                         <ImageView
                             android:id="@+id/zip_home_happy_iv"
@@ -800,80 +921,109 @@
                             android:text="Happening Now"
                             android:textColor="#ff000000"
                             android:textSize="16sp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/zip_home_happy_iv"
                             app:layout_constraintLeft_toRightOf="@+id/zip_home_happy_iv"
                             app:layout_constraintTop_toTopOf="@+id/zip_home_happy_iv" />
 
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
-                            android:id="@+id/zip_home_zip_sl"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:layout_marginTop="11dp"
-                            app:layout_constraintTop_toBottomOf="@+id/zip_home_happy_iv"
-                            app:sv_scl_background="@color/white"
-                            app:sv_scl_radius="16dp">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@+id/zip_home_happy_iv">
 
-                            <TextView
-                                android:id="@+id/home_first_ad_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="17dp"
-                                android:layout_marginTop="18dp"
-                                android:text="Refer a friend，\n
+
+                            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                                android:id="@+id/zip_home_zip_sl"
+                                android:layout_width="0dp"
+                                android:layout_height="162dp"
+                                android:layout_marginTop="11dp"
+                                android:layout_weight="1"
+                                app:sv_scl_background_end="#DED8FD"
+                                app:sv_scl_background_start="#F1EEFF"
+                                app:sv_scl_radius="16dp">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/home_ad_bottom_bg"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/home_first_ad_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="17dp"
+                                    android:layout_marginTop="18dp"
+                                    android:text="Refer a friend，\n
 Get a Bonus"
-                                android:textColor="#ff000000"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                    android:textColor="#ff000000"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:id="@+id/home_first_ad_iv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginRight="12dp"
-                                android:src="@drawable/zip_home_zip_bottom_icon"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                <ImageView
+                                    android:id="@+id/home_first_ad_iv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginRight="12dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:src="@drawable/zip_home_zip_bottom_icon"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent">
 
-                            </ImageView>
+                                </ImageView>
 
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                            </com.zip.zipandroid.shape.ShapeConstraintLayout>
 
-                        <com.zip.zipandroid.shape.ShapeConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:id="@+id/no_ad_show_sl"
-                            android:layout_marginTop="12dp"
-                            app:layout_constraintTop_toBottomOf="@+id/zip_home_zip_sl"
-                            app:sv_scl_background="@color/white"
-                            app:sv_scl_radius="16dp">
+                            <com.zip.zipandroid.shape.ShapeConstraintLayout
+                                android:id="@+id/no_ad_show_sl"
+                                android:layout_width="0dp"
+                                android:layout_height="162dp"
+                                android:layout_marginLeft="14dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_weight="1"
+                                app:layout_constraintTop_toBottomOf="@+id/zip_home_zip_sl"
+                                app:sv_scl_background_end="#DED8FD"
+                                app:sv_scl_background_start="#F1EEFF"
+                                app:sv_scl_radius="16dp">
 
-                            <TextView
-                                android:layout_width="190dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="17dp"
-                                android:layout_marginTop="18dp"
-                                android:text="Maintaining a good credit reputation helps increase your credit limit."
-                                android:textColor="#ff000000"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/home_ad_bottom_bg"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="9dp"
-                                android:src="@drawable/zip_home_bottom_money_icon"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                <TextView
+                                    android:layout_width="190dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="17dp"
+                                    android:layout_marginTop="18dp"
+                                    android:text="Borrow Big, Pay Small – Limited-Time Interest Deal!"
+                                    android:textColor="#ff000000"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                            </ImageView>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginRight="9dp"
+                                    android:src="@drawable/zip_home_bottom_money_icon"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent">
 
-                        </com.zip.zipandroid.shape.ShapeConstraintLayout>
+                                </ImageView>
+
+                            </com.zip.zipandroid.shape.ShapeConstraintLayout>
+
+                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

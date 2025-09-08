@@ -1,11 +1,16 @@
 package com.zip.zipandroid.fragment
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
+import com.zip.zipandroid.activity.ZipCustomServiceActivity
 import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.activity.ZipOrderReviewActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
@@ -47,7 +52,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.newHomeSwpie.setOnRefreshListener {
             getAllData()
         }
-        mViewBind.zipHomePrivateSl.setOnDelayClickListener {
+        mViewBind.zipHomeCustomIv.setOnDelayClickListener {
+            startActivity(ZipCustomServiceActivity::class.java)
+        }
+        mViewBind.viewPrivateTv.setOnDelayClickListener {
             ZipWebActivity.start(requireActivity(), Constants.commonPrivateUrl)
         }
     }
@@ -83,6 +91,15 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     override fun createObserver() {
         EventBusUtils.register(this)
         mViewModel.homeLiveData.observe(this) {
+            if (it.userOrderStatus == 0) {
+                //展示首页费率
+                mViewBind.loadTeamSl.show()
+                mViewBind.loadDailySl.show()
+            } else {
+                mViewBind.loadTeamSl.hide()
+                mViewBind.loadDailySl.hide()
+            }
+
             if (mViewBind.newHomeSwpie.isRefreshing) {
                 mViewBind.newHomeSwpie.isRefreshing = false
             }
@@ -96,6 +113,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             mViewBind.homeSubmitRefuseCl.hide()
             mViewBind.homeBankFailCl.hide()
             mViewBind.homeCanLoanCl.hide()
+            mViewBind.homeLoaningIv.hide()
 
             if (it.creditOrderList?.status == "WAITING") {
                 //直接去下单页面
@@ -129,7 +147,14 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.homeDelayCl.show()
                 mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
                 mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
-                mViewBind.delayDesBottomTv.setText("Your payment is ${it.creditOrderList?.overdueDays} days past due, please make your repayment as soon as possible.")
+                val span = SpannableStringBuilder()
+                span.append("Your payment is ")
+                val start = span.length
+                span.append("${it.creditOrderList?.overdueDays} days")
+                val end = span.length
+                span.setSpan(ForegroundColorSpan(Color.parseColor("#FF6E69")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                span.append("past due, please make your repayment as soon as possible.")
+                mViewBind.delayDesBottomTv.setText(span)
                 val bizId = it.creditOrderList.bizId
                 mViewBind.delayNowTv.setOnDelayClickListener {
                     //去还款
@@ -146,8 +171,11 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             if (it.creditOrderList?.status == "REFUSED") {
                 mViewBind.homeSubmitRefuseCl.show()
             }
-            if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING" || it.creditOrderList?.status == "TRANSACTION") {
+            if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING") {
                 mViewBind.homeReviewCl.show()
+            }
+            if (it.creditOrderList?.status == "TRANSACTION") {
+                mViewBind.homeLoaningIv.show()
             }
         }
         mViewModel.configLiveData.observe(this) {

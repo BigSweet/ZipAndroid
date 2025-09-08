@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/zip_home_diff_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/zip_home_happing_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:text="What Makes Ziplead Different"
+        android:textColor="#ff000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/zip_home_diff_iv"
+        app:layout_constraintLeft_toRightOf="@+id/zip_home_diff_iv"
+        app:layout_constraintTop_toTopOf="@+id/zip_home_diff_iv" />
+
+    <com.zip.zipandroid.shape.ShapeLinearLayout
+        android:id="@+id/top_diff_ll1"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/zip_home_diff_iv">
+
+
+        <com.zip.zipandroid.shape.ShapeLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="106dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:sv_background_end="#F1EEFF"
+            app:sv_background_start="#DED8FD"
+            app:sv_orientation="horizontal"
+            app:sv_radius_top_left="17dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_diff_1icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="No hidden fees or charges"
+                android:textColor="#ff000000"
+                android:textSize="13sp" />
+
+        </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+
+        <com.zip.zipandroid.shape.ShapeLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="106dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:sv_background_end="#F1EEFF"
+            app:sv_background_start="#DED8FD"
+            app:sv_orientation="horizontal"
+            app:sv_radius_top_right="17dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_diff_2icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="Low Interest Rates"
+                android:textColor="#ff000000"
+                android:textSize="13sp" />
+
+        </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+    </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+
+    <com.zip.zipandroid.shape.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/top_diff_ll1">
+
+
+        <com.zip.zipandroid.shape.ShapeLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="106dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:sv_background_end="#DED8FD"
+            app:sv_background_start="#F1EEFF"
+            app:sv_orientation="horizontal"
+            app:sv_radius_bottom_right="17dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_diff_3icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="Credit Limit Increases Quickly"
+                android:textColor="#ff000000"
+                android:textSize="13sp" />
+
+        </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+
+        <com.zip.zipandroid.shape.ShapeLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="106dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:sv_background_end="#DED8FD"
+            app:sv_background_start="#F1EEFF"
+            app:sv_orientation="horizontal"
+            app:sv_radius_bottom_left="17dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_diff_4icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="Easy &amp; Flexible Repayment"
+                android:textColor="#ff000000"
+                android:textSize="13sp" />
+
+        </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+    </com.zip.zipandroid.shape.ShapeLinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
