@@ -13,6 +13,7 @@ import com.zip.zipandroid.bean.ZipQueryCardBeanItem
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.ActivityZipBandCardBinding
 import com.zip.zipandroid.event.ZipFinishInfoEvent
+import com.zip.zipandroid.event.ZipRefreshCardEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipBankNamePop
 import com.zip.zipandroid.utils.Constants
@@ -121,11 +122,12 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //        mViewModel.bankListLiveData.observe(this) {
 //            dismissLoading()
 //        }
-        mViewModel.bandCardLiveData.observe(this) { bandIt->
-            UserInfoUtils.saveBankData(Gson().toJson(currentBandCardBean))
+        mViewModel.bandCardLiveData.observe(this) { bandIt ->
+            zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
+            UserInfoUtils.saveBankData(Gson().toJson(zipQueryCardBeanItem))
             currentBandCardBean?.let {
                 mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
-                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(),bandIt.tiedCardId)
+                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(), bandIt.tiedCardId)
             }
 
         }
@@ -137,6 +139,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 //下一个界面
                 dismissLoading()
                 if (fromMine) {
+                    EventBusUtils.post(ZipRefreshCardEvent())
                     finish()
                 } else {
 //                    ToastUtils.showShort("finish5")
@@ -174,12 +177,15 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     private fun setCurrentBankData(data: ZipQueryCardBeanItem) {
         val currentData = ZipBankNameListBeanItem(data.bankName, "", data.bankId, data.cardType)
         currentBandCardBean = currentData
+        zipQueryCardBeanItem = data
         mViewBind.zipBankName.setContentText(currentData.bankName)
         mViewBind.zipBankName.setTagComplete()
         mViewBind.zipBankAccount.setContentText(data.cardNo.toString())
         mViewBind.zipBankAccount.setTagComplete()
         checkDone()
     }
+
+    var zipQueryCardBeanItem: ZipQueryCardBeanItem? = null
 
     var bankList: ZipBankNameListBean? = null
 

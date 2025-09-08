@@ -24,6 +24,7 @@ import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipProductPeriodItem
 import com.zip.zipandroid.bean.ZipTriaBean
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
+import com.zip.zipandroid.event.ZipRefreshCardEvent
 import com.zip.zipandroid.event.ZipSelectCouponEvent
 import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
@@ -54,6 +55,8 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var amount = ""
     var realAmount = 0
     var riskLevel = ""
+
+
     override fun initView(savedInstanceState: Bundle?) {
         amount = intent.getStringExtra("amount") ?: ""
         riskLevel = intent.getStringExtra("riskLevel") ?: ""
@@ -70,8 +73,13 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             //试算
             orderTrialData()
         }
+        mViewBind.bankSl.setOnDelayClickListener {
+            //修改银行卡
+            ZipBandCardActivity.start(this, true)
+//            startActivity(ZipBandCardActivity::class.java)
+        }
         mViewBind.planSl.setOnDelayClickListener {
-            val pop = ZipRepaymentPlanPop(this,zipTriaBean)
+            val pop = ZipRepaymentPlanPop(this, zipTriaBean)
             XPopup.Builder(this).asCustom(pop).show()
         }
 
@@ -139,8 +147,12 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: ZipSelectCouponEvent) {
+    fun onEvent(event: ZipRefreshCardEvent) {
+        mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipSelectCouponEvent) {
         if (!allCouponList.isNullOrEmpty()) {
             val data = allCouponList?.find {
                 it.id.toString() == event.couponId

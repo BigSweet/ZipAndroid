@@ -5,7 +5,7 @@ class ZipQueryCardBean : ArrayList<ZipQueryCardBeanItem>()
 data class ZipQueryCardBeanItem(
     val bankId: Int,
     val bankName: String,
-    val cardNo: String,
+    var cardNo: String,
     val cardType: Int,
     val cvv2: String,
     val eMail: Any,
