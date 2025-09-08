@@ -45,14 +45,16 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<ZipBaseViewModel, Activity
             mViewBind.detailInstallTv.setText("Installment" + it.period.toString() + "/" + it.stageCount.toString())
             mViewBind.detailInterTv.setText(it.interest.toInt().toN())
             var allFee = 0
-            it.fees.forEach {
+            it.fees?.forEach {
                 allFee = allFee + it
             }
             mViewBind.detailManagerTv.setText(allFee.toInt().toN())
             mViewBind.detailInterReduceTv.setText(it.subtractInterest.toInt().toN())
 
 
-            mViewBind.detailTotalAmountTv.setText(it.allAmountDue.toInt().toN())
+            if(!it.allAmountDue.isNullOrEmpty()){
+                mViewBind.detailTotalAmountTv.setText(it.allAmountDue?.toInt()?.toN())
+            }
             mViewBind.detailTotalTermsTv.setText(it.stageCount)
             mViewBind.detailOrderNoTv.setText(it.bizId)
             mViewBind.detailApplicationTimeTv.setText(it.applyTime.formatTimestampToDate())

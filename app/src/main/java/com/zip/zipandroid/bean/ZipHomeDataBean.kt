@@ -100,6 +100,7 @@ data class ProductList(
     val productType: Int,
     val remark: String,
     val productPeriods: ZipProductPeriod,
+    val productDidInfos: List<ProductDidInfo>,
     val state: Int
 )
 

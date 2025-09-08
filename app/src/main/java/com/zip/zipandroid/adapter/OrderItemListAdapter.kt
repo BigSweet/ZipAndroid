@@ -63,10 +63,13 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         val zip_item_order_amount_tv = holder.getView<TextView>(R.id.zip_item_order_amount_tv)
         val zip_order_item_install_tv = holder.getView<TextView>(R.id.zip_order_item_install_tv)
         zip_item_order_no_tv.setText("Order No. " + item.bizId)
-        zip_item_order_amount_tv.setText(item.amountDue.toInt().toN())
+        if(!item.applyAmount.isNullOrEmpty()){
+            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
+        }
 
 
         zip_order_item_show_detail_tv.hide()
+        zip_order_item_repay_btn.hide()
         bottom_status_tv.hide()
         zip_item_amount_update.hide()
         zip_order_item_finish_detail_tv.hide()
@@ -127,7 +130,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         }
 
         if (item.status == "EXECUTING" || item.status == "WAITING") {
-            item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.periodTime))
+            item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.applyTime))
 //            if (item.status == "WAITING") {
             //自动放款模式下才有的状态，展现倒计时
 //            }
@@ -196,6 +199,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             zip_order_item_install_place_tv.visible = item.stageCount != 1
             //待还款
             zip_order_item_show_detail_tv.show()
+            zip_order_item_repay_btn.show()
             zip_order_item_show_detail_tv.setBackgroundResource(R.drawable.bg_order_repay_detail)
             zip_item_order_inner_top_tv.setBackground(Color.parseColor("#FFC1D2FF"))
             zip_order_item_main_cl.setBackground2(Color.parseColor("#FF3667F0"))
@@ -222,8 +226,8 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             zip_order_item_install_place_tv.visible = item.stageCount != 1
             //逾期
             zip_order_item_repay_btn.setBackground(Color.parseColor("#FFFF4343"))
-
-
+            zip_order_item_show_detail_tv.show()
+            zip_order_item_repay_btn.show()
             zip_order_item_show_detail_tv.setBackgroundResource(R.drawable.bg_order_over_detail)
             zip_order_item_show_detail_tv.setTextColor(Color.parseColor("#FFFF4343"))
 

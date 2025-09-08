@@ -33,12 +33,12 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         mViewBind.itemOrderListRv.adapter = adapter
         adapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as ZipOrderListBeanItem
-            if(view.id==R.id.zip_order_item_finish_detail_tv || view.id==R.id.zip_order_item_show_detail_tv){
+            if (view.id == R.id.zip_order_item_finish_detail_tv || view.id == R.id.zip_order_item_show_detail_tv) {
                 //订单详情页面
-                ZipOrderDetailActivity.start(requireActivity(),item)
+                ZipOrderDetailActivity.start(requireActivity(), item)
             }
-            if(view.id==R.id.zip_order_item_repay_btn){
-                PayOrderDetailActivity.start(requireActivity(),item)
+            if (view.id == R.id.zip_order_item_repay_btn) {
+                PayOrderDetailActivity.start(requireActivity(), item)
             }
         }
 
@@ -58,7 +58,11 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                     val type0List = it.filter {
                         it.status == "NOTREPAID" || it.status == "OVERDUE" || it.status == "PARTIAL" || it.status == "LENDING" || it.status == "PASSED"
                     }
-                    adapter.setNewData(type0List)
+                    if (type0List.isNullOrEmpty()) {
+                        adapter.setEmptyView(getEmptyView(requireActivity()))
+                    } else {
+                        adapter.setNewData(type0List)
+                    }
 
 
                 }
@@ -67,14 +71,24 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                     val type1List = it.filter {
                         it.status == "TRANSACTION" || it.status == "TRANSACTION" || it.status == "EXECUTING"
                     }
-                    adapter.setNewData(type1List)
+
+                    if (type1List.isNullOrEmpty()) {
+                        adapter.setEmptyView(getEmptyView(requireActivity()))
+                    } else {
+                        adapter.setNewData(type1List)
+                    }
                 }
                 if (queryType == 2) {
 //                   拒绝和取消的
                     val type2List = it.filter {
                         it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH"
                     }
-                    adapter.setNewData(type2List)
+                    if (type2List.isNullOrEmpty()) {
+                        adapter.setEmptyView(getEmptyView(requireActivity()))
+                    } else {
+                        adapter.setNewData(type2List)
+
+                    }
                 }
             }
         }

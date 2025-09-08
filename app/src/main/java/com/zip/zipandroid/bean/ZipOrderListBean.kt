@@ -7,7 +7,7 @@ class ZipOrderListBean : ArrayList<ZipOrderListBeanItem>()
 
 @Parcelize
 data class ZipOrderListBeanItem(
-    val allAmountDue: String,
+    val allAmountDue: String?,
     val amountDue: String,
     val applyAmount: String,
     val applyPeriod: String,
@@ -33,7 +33,7 @@ data class ZipOrderListBeanItem(
     val factInterest: String,
     val factOtherTotalFee: String,
     val factOverdueFee: String,
-    val fees: ArrayList<Int>,
+    val fees: ArrayList<Int>?,
     val hairCutAmount: String,
     val ifscCode: String,
     val interest: String,
@@ -55,7 +55,7 @@ data class ZipOrderListBeanItem(
     val productType: String,
     val rate: String,
     val releaseTime: Long,
-    val repaymentResponseList: List<RepaymentResponse>,
+    val repaymentResponseList: List<RepaymentResponse>?,
     val shouldCapital: String,
     val shouldFine: String,
     val shouldInterest: String,
@@ -78,7 +78,7 @@ data class ZipOrderListBeanItem(
 
 @Parcelize
 data class RepaymentResponse(
-    val allAmountDue: Int,
+    val allAmountDue: Int?,
     val amountDue: Double,
     val applyAmount: Double,
     val bizId: String,
@@ -91,7 +91,7 @@ data class RepaymentResponse(
     val factInterest: Double,
     val factOtherTotalFee: Double,
     val factOverdueFee: Double,
-    val fees: ArrayList<Int>,
+    val fees: ArrayList<Int>?,
     val hairCutAmount: Int,
     val interest: Double,
     val isExtends: Int,

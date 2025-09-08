@@ -3,6 +3,7 @@ package com.zip.zipandroid.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -74,6 +75,9 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
         mViewModel.admissionLiveData.observe(this) {
             if (it.admission) {
                 preOrder()
+            }else{
+                ToastUtils.showShort("Entry admission failed")
+                finish()
             }
         }
         mViewModel.uploadUserInfoLiveData.observe(this) {
@@ -99,10 +103,6 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
 //            }
 //        }
 
-        mViewModel.realOrderLiveData.observe(this) {
-            currentBizId = it?.bizId ?: ""
-            interValRange(it?.bizId ?: "")
-        }
 
         mViewModel.riskLevelLiveData.observe(this) {
             levelBean = it
@@ -149,7 +149,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     fun getPidProduct(riskGrade: String) {
 //        mViewModel.getPidProduct()
         ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
-            ?: "")
+            ?: "", preBizId)
         finish()
     }
 
@@ -159,10 +159,6 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
 
     }
 
-    fun realOrder() {
-        mViewModel.realOrder(amount, did, myBankName, myBankId, fullName, levelBean?.riskLevel.toString(), preBizId, callInfo, installAppInfo, smsMessageInfo, calendarInfo)
-
-    }
 
     var currentBizId = ""
 

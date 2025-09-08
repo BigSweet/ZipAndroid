@@ -18,7 +18,7 @@ class RealUploadUserBean(
     val birthDateStr: String,
 
     @SerializedName(value = "sunanKatin", alternate = ["cardName"])
-    val cardName: String,
+    var cardName: String,
 
     @SerializedName(value = "lambarKatin", alternate = ["cardNo"])
     var cardNo: String,
@@ -150,6 +150,7 @@ class RealUploadUserBean(
     val workType: String,
 
     var lambobinGaggawa: List<UploadContractBean>?,
+    var matakinHadariNext: String,
 )
 
 data class RealUploadUserCreditListBeanItem(

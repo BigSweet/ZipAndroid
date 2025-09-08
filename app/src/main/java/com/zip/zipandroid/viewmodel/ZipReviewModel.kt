@@ -10,7 +10,6 @@ import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.bean.OriginUploadContractBean
-import com.zip.zipandroid.bean.ProductDidInfo
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipBizBean
@@ -35,7 +34,7 @@ import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
 class ZipReviewModel : ZipBaseViewModel() {
-//    val productLiveData = MutableLiveData<List<ProductDidInfo>>()
+    //    val productLiveData = MutableLiveData<List<ProductDidInfo>>()
     val orderTrialLiveData = MutableLiveData<ZipTriaBean>()
 
     var userOrderLiveData = MutableLiveData<ZipOrderStatusBean?>()
@@ -76,7 +75,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         api
             .addParam("idKasuwancin", bizId)
         treeMap.putAll(api)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCreditxStatus(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipOrderStatusBean>() {
@@ -266,9 +265,14 @@ class ZipReviewModel : ZipBaseViewModel() {
                 override fun onSuccess(result: ZipBizBean) {
                     preOrderLiveData.postValue(result)
                 }
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
             })
 
     }
+
 
     private fun convertData(datas: List<OriginUploadContractBean>): ArrayList<UploadContractBean> {
         val list = arrayListOf<UploadContractBean>()
@@ -285,49 +289,56 @@ class ZipReviewModel : ZipBaseViewModel() {
 
 
     fun realOrder(
-        applyAmount: String,
-        applyPeriod: String,
-        myBankName: String,
-        myBankId: String,
-        fullName: String,
-        riskLevel: String,
-        bizId: String,
         callInfo: Array<CallLog?>?, installAppInfo: Array<InstalledApp?>?, smsMessageInfo: Array<SMSMessage?>?, calendarInfo: Array<CalendarInfos?>?,
+        info: RealUploadUserBean,
+        realAmount: Int, currentPaidType: String, did: String, couponId: String,applyPeriod:String,preBizId:String,riskGrade:String
     ) {
+        //要不要加上一笔订单的id
+        //repayment//paytype
         val treeMap = TreeMap<String, Any?>()
         val api = FormReq.create()
-        api.addParam("productName", UserInfoUtils.getProductType().productName.toString())
-        api
-            .addParam("userNo", UserInfoUtils.getUserNo())
-            .addParam("applyPeriod", applyPeriod)
-            .addParam("custId", UserInfoUtils.getUserInfo().custId.toString())
-            .addParam("applyAmount", applyAmount)
-            .addParam("deviceId", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)
-            .addParam("productType", UserInfoUtils.getProductType().productType.toString())
-            .addParam("bizId", bizId)
-            .addParam("source", "ANDROID")
-            .addParam("mid", UserInfoUtils.getMid().toString())
-            .addParam("repayment", "0")
+        api.addParam("tasharTushe", "google-play")
+        api.addParam("idKasuwancin", preBizId)
+        if (!couponId.isNullOrEmpty()) {
+            api.addParam("idKatinTalla", couponId)
+        }
+        api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
+        api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
+        api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
+        api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
+        api.addParam("idNaUra", DeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
+//        api.addParam("adadinBashi", realAmount)
+        api.addParam("adadinNema", realAmount)
+        api.addParam("dNaUraid", did)
+        api.addParam("biyanBashi", currentPaidType)
+        api.addParam("lokacinNemadid", did)
         val pushData = ZipPushData()
         pushData.setCallLogs(callInfo)
         pushData.setInstalledApps(installAppInfo)
         pushData.setMessage(smsMessageInfo)
         pushData.setCalendarInfos(calendarInfo)
         pushData.setMediaData()
+        val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
+        pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
-//        bean.cardNo = UserInfoUtils.getSelectBank().cardNo.toString()
-//        bean.riskLevel = riskLevel.toString()
-//        bean.bankName = myBankName
-//        bean.cardName = myBankName
-//        bean.bankId = myBankId
-//        bean.accountName = fullName
-////        bean.taxNumber = UserInfoUtils.getShuiNumber()
-//        bean.emergentContacts = Gson().fromJson(bean.emergencyContactPerson,
-//            object : TypeToken<List<MacawEmergentContactsBean>>() {}.type)
+        info.cardNo = UserInfoUtils.getBankData().cardNo.toString()
+        info.cardName =   UserInfoUtils.getBankData().bankName.toString()
+        info.accountName = UserInfoUtils.getUserInfo().realname
+        info.matakinHadariNext = riskGrade
+//        bean.bankName = bankName
+        info.bankId = UserInfoUtils.getBankData().bankId.toString()
+//        bean.taxNumber = UserInfoUtils.getShuiNumber()
+        val list: List<OriginUploadContractBean> = Gson().fromJson(bean.emergencyContactPerson,
+            object : TypeToken<List<OriginUploadContractBean>>() {}.type)
+
+        val realConList = convertData(list)
+        info.lambobinGaggawa = realConList
+
+
         treeMap.putAll(api)
-        api.addParam("pushData", pushData)
-        api.addParam("customerInfo", bean)
-        api.addParam("sign", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        api.addParam("turaBayanan", pushData)
+        api.addParam("bayaninAbokinCiniki", info)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).creationOrderByMx(api)
             .compose(RxSchedulers.io_main())
             .subscribe(object : ZipResponseSubscriber<ZipBizBean>() {
@@ -338,6 +349,10 @@ class ZipReviewModel : ZipBaseViewModel() {
 
                 override fun onSuccess(result: ZipBizBean) {
                     realOrderLiveData.postValue(result)
+                }
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
                 }
             })
 
@@ -370,30 +385,30 @@ class ZipReviewModel : ZipBaseViewModel() {
             })
     }
 
-    var topCouponLiveData = MutableLiveData<ZipCouponItemBean?>()
-    fun topPriorityCoupon() {
-        val treeMap = TreeMap<String, Any?>()
-        val api = FormReq.create()
-        treeMap.putAll(api)
-        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
-        ZipRetrofitHelper.createApi(ZipApi::class.java).topPriorityCoupon(api)
-            .compose(RxSchedulers.io_main())
-            .subscribe(object : ZipResponseSubscriber<ZipCouponItemBean?>() {
-                override fun onSubscribe(d: Disposable) {
-                    super.onSubscribe(d)
-                    addReqDisposable(d)
-                }
-
-                override fun onSuccess(result: ZipCouponItemBean?) {
-                    topCouponLiveData.postValue(result)
-                }
-
-                override fun onFailure(code: Int, message: String?) {
-                    super.onFailure(code, message)
-                    failLiveData.postValue(message ?: "")
-                }
-            })
-    }
+//    var topCouponLiveData = MutableLiveData<ZipCouponItemBean?>()
+//    fun topPriorityCoupon() {
+//        val treeMap = TreeMap<String, Any?>()
+//        val api = FormReq.create()
+//        treeMap.putAll(api)
+//        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+//        ZipRetrofitHelper.createApi(ZipApi::class.java).topPriorityCoupon(api)
+//            .compose(RxSchedulers.io_main())
+//            .subscribe(object : ZipResponseSubscriber<ZipCouponItemBean?>() {
+//                override fun onSubscribe(d: Disposable) {
+//                    super.onSubscribe(d)
+//                    addReqDisposable(d)
+//                }
+//
+//                override fun onSuccess(result: ZipCouponItemBean?) {
+//                    topCouponLiveData.postValue(result)
+//                }
+//
+//                override fun onFailure(code: Int, message: String?) {
+//                    super.onFailure(code, message)
+//                    failLiveData.postValue(message ?: "")
+//                }
+//            })
+//    }
 
 
     val realOrderLiveData = MutableLiveData<ZipBizBean?>()

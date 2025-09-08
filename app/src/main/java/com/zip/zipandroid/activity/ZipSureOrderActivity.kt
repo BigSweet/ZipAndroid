@@ -21,6 +21,7 @@ import com.zip.zipandroid.adapter.ZipInstallAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.PeriodStage
 import com.zip.zipandroid.bean.ZipCouponItemBean
+import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipProductPeriodItem
 import com.zip.zipandroid.bean.ZipTriaBean
 import com.zip.zipandroid.databinding.ActivityZipSureOrderBinding
@@ -45,8 +46,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     companion object {
         @JvmStatic
-        fun start(context: Context, amount: String, riskLevel: String) {
-            val starter = Intent(context, ZipSureOrderActivity::class.java).putExtra("amount", amount).putExtra("riskLevel", riskLevel)
+        fun start(context: Context, amount: String, riskLevel: String, bizId: String) {
+            val starter = Intent(context, ZipSureOrderActivity::class.java)
+                .putExtra("amount", amount)
+                .putExtra("riskLevel", riskLevel)
+                .putExtra("bizId", bizId)
             context.startActivity(starter)
         }
 
@@ -55,11 +59,14 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var amount = ""
     var realAmount = 0
     var riskLevel = ""
+    var preBizId = ""
+    var realOrderBizId = ""
 
 
     override fun initView(savedInstanceState: Bundle?) {
         amount = intent.getStringExtra("amount") ?: ""
         riskLevel = intent.getStringExtra("riskLevel") ?: ""
+        preBizId = intent.getStringExtra("bizId") ?: ""
         realAmount = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
             //加金额 步长默认2000
@@ -83,6 +90,23 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             XPopup.Builder(this).asCustom(pop).show()
         }
 
+        mViewModel.uploadUserInfoLiveData.observe(this) {
+            mViewModel.realOrder(callInfo, installAppInfo, smsMessageInfo, calendarInfo, it,
+                realAmount, currentPaidType, currentDid.toString(), currentCouponId, currentDid, preBizId, riskLevel)
+        }
+
+        mViewModel.realOrderLiveData.observe(this) {
+            dismissLoading()
+            realOrderBizId = it?.bizId ?: ""
+            //跳转到下一个界面
+            ZipOrderNextActivity.start(this,realOrderBizId)
+            finish()
+        }
+
+        mViewBind.orderAcceptLoan.setOnDelayClickListener {
+            showLoading()
+            mViewModel.getUploadUserInfo()
+        }
         mViewBind.orderSubIv.setOnDelayClickListener {
             //减金额
             //加金额 步长默认2000
@@ -111,6 +135,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             installAdapter.setNewData(item.periodStages)
             if (!item.periodStages.isNullOrEmpty()) {
                 currentDid = item.periodStages.first().did
+                findPaidType()
             }
             orderTrialData()
         }
@@ -119,14 +144,13 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             installAdapter.selectPosition = i
             installAdapter.notifyDataSetChanged()
             currentDid = item.did
+            findPaidType()
             orderTrialData()
         }
 
         mViewBind.sureOrderAmountTv.setText(realAmount.toN())
 
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
-//        mViewModel.getPidProduct()
-//        currentDid = UserInfoUtils.getProductDue()?.did.toString()
 
         mViewModel.zipHomeData()
 
@@ -140,6 +164,8 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var limitMin = 0
     var limitInterval = 0
     var currentDid = ""
+    var currentPaidType = ""
+    var intervalStart = ""
     var currentCouponId = ""
 
     var installAdapter = ZipInstallAdapter()
@@ -203,12 +229,14 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         }
         mViewModel.homeLiveData.observe(this) {
             var realIndex = 0
+            zipHomeDataBean = it
             duraAdapter.selectPosition = realIndex
             duraAdapter.setNewData(it.productList.productPeriods)
             if (!it.productList.productPeriods.isNullOrEmpty()) {
                 installAdapter.setNewData(it.productList.productPeriods.first().periodStages)
                 if (!it.productList.productPeriods.first().periodStages.isNullOrEmpty()) {
                     currentDid = it.productList.productPeriods.first().periodStages.first().did
+                    findPaidType()
                 }
             }
             limitMax = it.productList.limitMax.toDouble().toInt()
@@ -297,6 +325,17 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.zipOrderPrivateTv.setText(span)
 
 
+    }
+
+    var zipHomeDataBean: ZipHomeDataBean? = null
+    private fun findPaidType() {
+        if (!zipHomeDataBean?.productList?.productDidInfos.isNullOrEmpty()) {
+            val data = zipHomeDataBean?.productList?.productDidInfos?.find { it.did.toString() == currentDid }
+            if (data?.paidType != null) {
+                currentPaidType = data?.paidType.toString()
+                intervalStart = data?.intervalStart.toString()
+            }
+        }
     }
 
     var zipTriaBean: ZipTriaBean? = null
