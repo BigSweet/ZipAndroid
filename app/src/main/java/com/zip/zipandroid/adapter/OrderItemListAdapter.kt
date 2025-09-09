@@ -97,6 +97,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             zip_order_item_install_tv.setText("Installment" + item.period.toString() + "/" + item.stageCount.toString())
         }
         if (item.status == "REFUSED") {
+            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
             item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.periodTime))
             //审核拒绝
             zip_item_order_inner_top_tv.setText("Rejected")
@@ -112,6 +113,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 
         }
         if (item.status == "CANCELED" || item.status == "CANCEL") {
+            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
             item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.periodTime))
             bottom_status_tv.show()
             bottom_status_tv.setText("This loan order has been cancelled")

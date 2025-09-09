@@ -56,6 +56,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         mViewModel.orderListLiveData.observe(this) {
 
             if (it.isNullOrEmpty()) {
+                adapter.setNewData(arrayListOf())
                 adapter.setEmptyView(getEmptyView(requireActivity()))
             } else {
                 if (queryType == 0) {
@@ -64,6 +65,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                         it.status == "NOTREPAID" || it.status == "OVERDUE" || it.status == "PARTIAL" || it.status == "LENDING" || it.status == "PASSED"
                     }
                     if (type0List.isNullOrEmpty()) {
+                        adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
                         adapter.setNewData(type0List)
@@ -78,6 +80,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                     }
 
                     if (type1List.isNullOrEmpty()) {
+                        adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
                         adapter.setNewData(type1List)
@@ -89,6 +92,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                         it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH"||it.status == "OVERDUEREPAYMENT"
                     }
                     if (type2List.isNullOrEmpty()) {
+                        adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
                         adapter.setNewData(type2List)
