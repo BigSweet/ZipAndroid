@@ -45,7 +45,7 @@ data class CreditOrderList(
     val lid: Long,
     val loanAmount: Any,
     val loanCancelStatus: Int,
-    val loanRefusedDuration: Any,
+    val loanRefusedDuration: Long?,
     val mid: String,
     val noPayStages: Any,
     val otherFee: Any,

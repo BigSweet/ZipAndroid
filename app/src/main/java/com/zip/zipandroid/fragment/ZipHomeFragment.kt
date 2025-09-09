@@ -18,6 +18,7 @@ import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
+import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.FragmentZipHomeBinding
 import com.zip.zipandroid.event.ZipRefreshHomeEvent
@@ -142,12 +143,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     }
                 }
                 if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT") {
-                    mViewBind.homeOrderNormalCl.show()
-                    mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
-                    mViewBind.zipHomeVerTv.setOnDelayClickListener {
-                        //查到了第几部，在去进件
-                        checkUserInfo()
-                    }
+                    showNormalStatus(it)
+
                 }
                 if (it.creditOrderList?.status == "OVERDUE") {
                     mViewBind.homeDelayCl.show()
@@ -178,19 +175,21 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                             ZipBandCardActivity.start(requireActivity(), false)
                         }
                     } else {
-                        mViewBind.homeOrderNormalCl.show()
-                        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
-                        mViewBind.zipHomeVerTv.setOnDelayClickListener {
-                            //查到了第几部，在去进件
-                            checkUserInfo()
-                        }
+                        showNormalStatus(it)
                     }
 
                 }
                 if (it.creditOrderList?.status == "REFUSED") {
-                    mViewBind.homeSubmitRefuseCl.show()
+                    if(it.creditOrderList.loanRefusedDuration!=null && ((it.creditOrderList.loanRefusedDuration?:0)/24/3600/1000)>7){
+                        mViewBind.homeSubmitRefuseCl.hide()
+                        showNormalStatus(it)
+                    }else{
+                        mViewBind.homeSubmitRefuseCl.show()
+                    }
+
                 }
-                if (it.creditOrderList?.status == "EXECUTING" || it.creditOrderList?.status == "WAITING") {
+                //|| it.creditOrderList?.status == "WAITING"
+                if (it.creditOrderList?.status == "EXECUTING" ) {
                     mViewBind.homeReviewCl.show()
                 }
                 if (it.creditOrderList?.status == "TRANSACTION") {
@@ -242,6 +241,15 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.homeFirstAdTv.setText(it.first().advertContent)
                 Glide.with(requireActivity()).load(it.first().imgUrl).into(mViewBind.homeFirstAdIv)
             }
+        }
+    }
+
+    private fun showNormalStatus(it: ZipHomeDataBean) {
+        mViewBind.homeOrderNormalCl.show()
+        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+        mViewBind.zipHomeVerTv.setOnDelayClickListener {
+            //查到了第几部，在去进件
+            checkUserInfo()
         }
     }
 
