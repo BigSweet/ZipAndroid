@@ -63,8 +63,8 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         val zip_item_order_amount_tv = holder.getView<TextView>(R.id.zip_item_order_amount_tv)
         val zip_order_item_install_tv = holder.getView<TextView>(R.id.zip_order_item_install_tv)
         zip_item_order_no_tv.setText("Order No. " + item.bizId)
-        if(!item.applyAmount.isNullOrEmpty()){
-            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
+        if(!item.amountDue.isNullOrEmpty()){
+            zip_item_order_amount_tv.setText(item.amountDue.toDouble().toN())
         }
 
 

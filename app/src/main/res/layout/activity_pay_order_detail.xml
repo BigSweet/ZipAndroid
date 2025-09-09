@@ -16,261 +16,277 @@
             android:id="@+id/private_include_title"
             layout="@layout/include_title_bar" />
 
-        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
-            android:id="@+id/pay_order_center_sl"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="15dp"
-            android:paddingBottom="25dp"
-            app:layout_constraintTop_toBottomOf="@+id/private_include_title"
-            app:sv_scl_background="@color/white"
-            app:sv_scl_radius="10dp">
-
-
-            <TextView
-                android:id="@+id/Outstanding_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="33dp"
-                android:text="Outstanding Amount"
-                android:textColor="#ffa5b0ce"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.zip.zipandroid.shape.ZipShapeTextView
-                android:id="@+id/amount_update_tv"
-                android:layout_width="50dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="6dp"
-                android:gravity="center"
-                android:text="Updated"
-                android:textColor="#FFFF4343"
-                android:textSize="11dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/Outstanding_place_tv"
-                app:layout_constraintLeft_toRightOf="@+id/Outstanding_place_tv"
-                app:layout_constraintTop_toTopOf="@+id/Outstanding_place_tv"
-                app:sv_tx_background="#FFFFC790"
-                app:sv_tx_radius="4dp" />
-
-            <TextView
-                android:id="@+id/detail_repaid_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:textColor="#ffff4343"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Outstanding_place_tv"
-                tools:text="₦ 600,000" />
-
-
-            <TextView
-                android:id="@+id/detail_install_tv"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                android:layout_marginTop="12dp"
-                android:textColor="#ff000000"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_repaid_tv"
-                tools:text="Installment 2 / 3" />
+            android:layout_height="0dp"
+            android:paddingBottom="12dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/private_include_title">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/order_number_cl"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/detail_install_tv">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
+                    android:id="@+id/pay_order_center_sl"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Order No."
-                    android:textColor="#ff959db2"
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/detail_order_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ff000000"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="25dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="₦ 124" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/pay_detail_line_view"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/dashed_line"
-                app:layout_constraintTop_toBottomOf="@+id/order_number_cl">
-
-            </View>
-
-            <TextView
-                android:id="@+id/pay_account_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:text="Official Payment Account"
-                android:textColor="#ff000000"
-                android:textSize="15sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pay_detail_line_view" />
-
-            <TextView
-                android:id="@+id/bank_name_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="Bank Name"
-                android:textColor="#ff959db2"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@+id/pay_account_place_tv"
-                app:layout_constraintTop_toBottomOf="@+id/pay_account_place_tv" />
-
-            <TextView
-                android:id="@+id/bank_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#ff000000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@+id/bank_name_place_tv"
-                app:layout_constraintTop_toBottomOf="@+id/bank_name_place_tv"
-                tools:text="Palmpay" />
-
-            <ImageView
-                android:id="@+id/pay_order_name_copy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:src="@drawable/order_pay_copy_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/bank_name_tv"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/bank_name_tv" />
-
-            <TextView
-                android:id="@+id/account_number_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="Account Number"
-                android:textColor="#ff959db2"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@+id/bank_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/bank_name_tv" />
-
-            <TextView
-                android:id="@+id/account_number_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#ff000000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@+id/account_number_place_tv"
-                app:layout_constraintTop_toBottomOf="@+id/account_number_place_tv"
-                tools:text="Palmpay" />
-
-            <ImageView
-                android:id="@+id/pay_account_number_copy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:src="@drawable/order_pay_copy_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/account_number_tv"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/account_number_tv" />
+                    app:sv_scl_background="@color/white"
+                    app:sv_scl_radius="10dp">
 
 
-            <TextView
-                android:id="@+id/account_name_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="Account Name"
-                android:textColor="#ff959db2"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@+id/account_number_tv"
-                app:layout_constraintTop_toBottomOf="@+id/account_number_tv" />
+                    <TextView
+                        android:id="@+id/Outstanding_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33dp"
+                        android:text="Outstanding Amount"
+                        android:textColor="#ffa5b0ce"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/account_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#ff000000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@+id/account_name_place_tv"
-                app:layout_constraintTop_toBottomOf="@+id/account_name_place_tv"
-                tools:text="Palmpay" />
-        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+                    <com.zip.zipandroid.shape.ZipShapeTextView
+                        android:id="@+id/amount_update_tv"
+                        android:layout_width="50dp"
+                        android:layout_height="17dp"
+                        android:layout_marginLeft="6dp"
+                        android:gravity="center"
+                        android:text="Updated"
+                        android:textColor="#FFFF4343"
+                        android:textSize="11dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/Outstanding_place_tv"
+                        app:layout_constraintLeft_toRightOf="@+id/Outstanding_place_tv"
+                        app:layout_constraintTop_toTopOf="@+id/Outstanding_place_tv"
+                        app:sv_tx_background="#FFFFC790"
+                        app:sv_tx_radius="4dp" />
+
+                    <TextView
+                        android:id="@+id/detail_repaid_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="#ffff4343"
+                        android:textSize="48sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/Outstanding_place_tv"
+                        tools:text="₦ 600,000" />
 
 
-        <com.zip.zipandroid.shape.ZipShapeConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="192dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@+id/pay_order_center_sl"
-            app:sv_scl_background="#D1E3FF"
-            app:sv_scl_radius="10dp">
+                    <TextView
+                        android:id="@+id/detail_install_tv"
+                        android:layout_width="wrap_content"
 
-            <TextView
-                android:id="@+id/how_place_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="How to Make a Repayment?"
-                android:textColor="#ff3667f0"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_height="wrap_content"
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="131dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:lineSpacingExtra="4dp"
-                android:text="• Copy the account number and complete the transfer using your bank app or an ATM.\n
+                        android:layout_marginTop="12dp"
+                        android:textColor="#ff000000"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_repaid_tv"
+                        tools:text="Installment 2 / 3" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/order_number_cl"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_install_tv">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Order No."
+                            android:textColor="#ff959db2"
+                            android:textSize="12sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/detail_order_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ff000000"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="₦ 124" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/pay_detail_line_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/dashed_line"
+                        app:layout_constraintTop_toBottomOf="@+id/order_number_cl">
+
+                    </View>
+
+                    <TextView
+                        android:id="@+id/pay_account_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Official Payment Account"
+                        android:textColor="#ff000000"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pay_detail_line_view" />
+
+                    <TextView
+                        android:id="@+id/bank_name_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="Bank Name"
+                        android:textColor="#ff959db2"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/pay_account_place_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/pay_account_place_tv" />
+
+                    <TextView
+                        android:id="@+id/bank_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#ff000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="@+id/bank_name_place_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/bank_name_place_tv"
+                        tools:text="Palmpay" />
+
+                    <ImageView
+                        android:id="@+id/pay_order_name_copy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:src="@drawable/order_pay_copy_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/bank_name_tv"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bank_name_tv" />
+
+                    <TextView
+                        android:id="@+id/account_number_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="Account Number"
+                        android:textColor="#ff959db2"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/bank_name_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/bank_name_tv" />
+
+                    <TextView
+                        android:id="@+id/account_number_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#ff000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="@+id/account_number_place_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/account_number_place_tv"
+                        tools:text="Palmpay" />
+
+                    <ImageView
+                        android:id="@+id/pay_account_number_copy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:src="@drawable/order_pay_copy_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/account_number_tv"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/account_number_tv" />
+
+
+                    <TextView
+                        android:id="@+id/account_name_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="Account Name"
+                        android:textColor="#ff959db2"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/account_number_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/account_number_tv" />
+
+                    <TextView
+                        android:id="@+id/account_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#ff000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="@+id/account_name_place_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/account_name_place_tv"
+                        tools:text="Palmpay" />
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+
+
+                <com.zip.zipandroid.shape.ZipShapeConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/pay_order_center_sl"
+                    app:sv_scl_background="#D1E3FF"
+                    app:sv_scl_radius="10dp">
+
+                    <TextView
+                        android:id="@+id/how_place_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="How to Make a Repayment?"
+                        android:textColor="#ff3667f0"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="• Copy the account number and complete the transfer using your bank app or an ATM.\n
 • Save the receipt (screenshot or statement) for verification.\n
 • Repayment accounts may change — always check the latest account number before transferring.\n
 • Wait 3 hours, then refresh the page to confirm if the payment has been applied."
-                android:textColor="#ff3667f0"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@+id/how_place_tv"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/how_place_tv" />
+                        android:textColor="#ff3667f0"
+                        android:textSize="12sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/how_place_tv"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/how_place_tv" />
 
-        </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+                </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

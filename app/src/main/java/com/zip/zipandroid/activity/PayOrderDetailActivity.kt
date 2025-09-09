@@ -66,11 +66,19 @@ class PayOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         }
         mViewModel.channelListLiveData.observe(this) {
             if (!it.isNullOrEmpty()) {
-                mViewModel.generateOfflineRepaymentCode(bizId, lid, amount, it.first().channelId.toString())
+                val data = it.find {
+                    it.tabType == 0
+                }
+                if (data != null) {
+                    mViewModel.generateOfflineRepaymentCode(bizId, lid, amount, data.channelId.toString())
+                }
             }
-//            mViewBind.bankNameTv.setText(data?.bankName.toString())
-//            mViewBind.accountNameTv.setText(data?.bankId.toString())
-//            mViewBind.accountNumberTv.setText(data?.custName.toString())
+        }
+        mViewModel.payCodeLiveData.observe(this) {
+            mViewBind.bankNameTv.setText(it?.repaymentChannelBankName.toString())
+            mViewBind.accountNumberTv.setText(it?.repaymentCodeUrl.toString())
+            mViewBind.accountNameTv.setText("FLAMING HORIZON GLOBAL SERVICES")
+
         }
 
     }
