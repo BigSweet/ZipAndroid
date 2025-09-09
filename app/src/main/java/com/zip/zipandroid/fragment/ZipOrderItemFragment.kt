@@ -74,7 +74,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                 if (queryType == 1) {
 //                    查审核中和放款中的
                     val type1List = it.filter {
-                        it.status == "TRANSACTION" || it.status == "TRANSACTION" || it.status == "EXECUTING"
+                        it.status == "TRANSACTION" || it.status == "EXECUTING"
                     }
 
                     if (type1List.isNullOrEmpty()) {
@@ -86,7 +86,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                 if (queryType == 2) {
 //                   拒绝和取消的
                     val type2List = it.filter {
-                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH"
+                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH"||it.status == "OVERDUEREPAYMENT"
                     }
                     if (type2List.isNullOrEmpty()) {
                         adapter.setEmptyView(getEmptyView(requireActivity()))

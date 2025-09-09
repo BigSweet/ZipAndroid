@@ -143,7 +143,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
                     }
                 }
-                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
+                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH"||it.creditOrderList?.status == "OVERDUEREPAYMENT") {
                     mViewBind.homeOrderNormalCl.show()
                     mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
                     mViewBind.zipHomeVerTv.setOnDelayClickListener {

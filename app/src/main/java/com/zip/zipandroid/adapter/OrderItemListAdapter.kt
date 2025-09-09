@@ -63,7 +63,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         val zip_item_order_amount_tv = holder.getView<TextView>(R.id.zip_item_order_amount_tv)
         val zip_order_item_install_tv = holder.getView<TextView>(R.id.zip_order_item_install_tv)
         zip_item_order_no_tv.setText("Order No. " + item.bizId)
-        if(!item.amountDue.isNullOrEmpty()){
+        if (!item.amountDue.isNullOrEmpty()) {
             zip_item_order_amount_tv.setText(item.amountDue.toDouble().toN())
         }
 
@@ -88,7 +88,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 
         bottom_status_tv.setTextColor(Color.parseColor("#FF8D8D8D"))
 
-        if (item.status == "FINISH") {
+        if (item.status == "FINISH" || item.status == "OVERDUEREPAYMENT") {
             item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.periodTime))
             zip_order_item_finish_detail_tv.show()
             zip_item_order_inner_top_tv.setText("Repaid")
