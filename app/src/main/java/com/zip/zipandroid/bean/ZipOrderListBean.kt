@@ -34,7 +34,7 @@ data class ZipOrderListBeanItem(
     val factOtherTotalFee: String,
     val factOverdueFee: String,
     val fees: ArrayList<Int>?,
-    val hairCutAmount: String,
+    val hairCutAmount: Int,
     val ifscCode: String,
     val interest: String,
     val interestTime: String,

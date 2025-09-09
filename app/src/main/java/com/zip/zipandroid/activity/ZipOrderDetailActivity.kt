@@ -69,7 +69,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
             it.fees?.forEach {
                 allFee = allFee + it
             }
-            mViewBind.detailManagerTv.setText(allFee.toInt().toN())
+            mViewBind.detailManagerTv.setText(it.hairCutAmount.toN())
             mViewBind.detailInterReduceTv.setText(it.subtractInterest.toDouble().toN())
 
 

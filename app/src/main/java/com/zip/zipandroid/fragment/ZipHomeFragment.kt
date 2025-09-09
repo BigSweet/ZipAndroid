@@ -158,7 +158,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     val span = SpannableStringBuilder()
                     span.append("Your payment is ")
                     val start = span.length
-                    span.append("${it.creditOrderList?.overdueDays} days")
+                    span.append("${it.creditOrderList?.overdueDays} days ")
                     val end = span.length
                     span.setSpan(ForegroundColorSpan(Color.parseColor("#FF6E69")), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     span.append("past due, please make your repayment as soon as possible.")
