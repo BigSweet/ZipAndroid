@@ -130,8 +130,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
                 if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
                     mViewBind.homePayingCl.show()
-                    mViewBind.payingDateTv.setText(it.creditOrderList?.applyAmount.toN())
-                    mViewBind.payingMoneyTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.applyTime))
+                    if(!it.creditOrderList?.amountDue.isNullOrEmpty()){
+                        mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
+                    }
+                    mViewBind.payingDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val bizId = it.creditOrderList.bizId
                     mViewBind.payNowTv.setOnDelayClickListener {
                         //去还款
@@ -148,7 +150,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 }
                 if (it.creditOrderList?.status == "OVERDUE") {
                     mViewBind.homeDelayCl.show()
-                    mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toN())
+                    mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
                     mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val span = SpannableStringBuilder()
                     span.append("Your payment is ")

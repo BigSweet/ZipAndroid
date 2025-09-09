@@ -10,7 +10,7 @@ data class ZipHomeDataBean(
 
 data class CreditOrderList(
     val allAmountDue: Any,
-    val amountDue: Double,
+    val amountDue: String,
     val applyAmount: String,
     val applyPeriod: String,
     val applyPeriodNew: String,

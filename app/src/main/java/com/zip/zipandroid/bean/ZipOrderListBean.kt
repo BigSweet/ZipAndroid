@@ -21,7 +21,7 @@ data class ZipOrderListBeanItem(
     val capital: String,
     val cardNo: String,
     val cardType: String,
-    val collectorName: String,
+    val collectorName: String?,
     val count: Int,
     val couponAmount: String,
     val creditNo: String,

@@ -62,49 +62,54 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
         mViewBind.amountUpdateTv.visible = status == "PARTIAL"
         orderData?.let {
-            mViewBind.detailRepaidTv.setText(it?.amountDue?.toInt()?.toN())
+            mViewBind.detailRepaidTv.setText(it?.amountDue?.toDouble()?.toN())
             mViewBind.detailInstallTv.setText("Installment" + it.period.toString() + "/" + it.stageCount.toString())
-            mViewBind.detailInterTv.setText(it.interest.toInt().toN())
+            mViewBind.detailInterTv.setText(it.interest.toDouble().toN())
             var allFee = 0
             it.fees?.forEach {
                 allFee = allFee + it
             }
             mViewBind.detailManagerTv.setText(allFee.toInt().toN())
-            mViewBind.detailInterReduceTv.setText(it.subtractInterest.toInt().toN())
+            mViewBind.detailInterReduceTv.setText(it.subtractInterest.toDouble().toN())
 
 
             if (!it.allAmountDue.isNullOrEmpty()) {
-                mViewBind.detailTotalAmountTv.setText(it.allAmountDue?.toInt()?.toN())
+                mViewBind.detailTotalAmountTv.setText(it.allAmountDue?.toDouble()?.toN())
             }
-            mViewBind.detailTotalTermsTv.setText(it.stageCount)
+            mViewBind.detailTotalTermsTv.setText(it.stageCount.toString())
             mViewBind.detailOrderNoTv.setText(it.bizId)
             mViewBind.detailApplicationTimeTv.setText(it.applyTime.formatTimestampToDate())
             mViewBind.detailLoadDisTimeTv.setText(it.releaseTime.formatTimestampToDate())
-            mViewBind.detailReceAccountTv.setText(it.bankId)
+            mViewBind.detailReceAccountTv.setText(it.cardNo)
 
 
             mViewBind.detailPenInterTv.hide()
             mViewBind.detailPenInterReduceTv.hide()
 
-            if (status == "OVERDUE") {
-                mViewBind.detailPenInterTv.setText(it.penalty.toInt().toN())
-                mViewBind.detailPenInterReduceTv.setText(it.subtractFine.toInt().toN())
-                mViewBind.detailPenInterTv.show()
-                mViewBind.detailPenInterReduceTv.show()
-            }
+//            if (status == "OVERDUE") {
+            mViewBind.detailPenInterTv.setText(it.penalty.toDouble().toN())
+            mViewBind.detailPenInterReduceTv.setText(it.subtractFine.toDouble().toN())
+            mViewBind.detailPenInterTv.show()
+            mViewBind.detailPenInterReduceTv.show()
+//            }
 
         }
         mViewBind.detailSettleNowTv.hide()
         mViewBind.detailSettleNowTv.setOnDelayClickListener {
-            PayOrderDetailActivity.start(this, orderData)
+            PayOrderDetailActivity.start(this, bizId)
         }
 
-        if (true) {
+        if (orderData?.period ?: 0 < orderData?.count ?: 0) {
             //如果有下一期 没下一期就隐藏
-            orderData?.let {
-                it.approveTime
-            }
+            mViewBind.nextInstallLl.show()
+            val nextData = orderData?.repaymentResponseList?.get((orderData?.period ?: 0) - 1)
+
+            mViewBind.detailDueTimeTv.setText(nextData?.periodTime?.formatTimestampToDate())
+            mViewBind.detailOutAmountTv.setText(nextData?.amountDue?.toDouble()?.toN())
+            mViewBind.detailOutInstallTv.setText(orderData?.period.toString() + "/" + orderData?.count.toString())
 //            mViewBind.detailDueTimeTv.setText()
+        } else {
+            mViewBind.nextInstallLl.hide()
         }
         if (status == "OVERDUE") {
             mViewBind.detailSettleNowTv.show()

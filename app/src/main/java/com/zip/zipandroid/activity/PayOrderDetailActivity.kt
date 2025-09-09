@@ -16,17 +16,19 @@ class PayOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
     companion object {
         @JvmStatic
-        fun start(context: Context, data: ZipOrderListBeanItem?) {
+        fun start(context: Context, bizId: String?) {
             val starter = Intent(context, PayOrderDetailActivity::class.java)
-                .putExtra("data", data)
+                .putExtra("bizId", bizId)
             context.startActivity(starter)
         }
 
     }
 
+    var bizId = ""
     var data: ZipOrderListBeanItem? = null
     override fun initView(savedInstanceState: Bundle?) {
         data = intent.getParcelableExtra<ZipOrderListBeanItem>("data")
+        bizId = intent.getStringExtra("bizId") ?: ""
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
