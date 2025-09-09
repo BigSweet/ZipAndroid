@@ -130,6 +130,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         }
 
         if (item.status == "EXECUTING" || item.status == "WAITING") {
+            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
             item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.applyTime))
 //            if (item.status == "WAITING") {
             //自动放款模式下才有的状态，展现倒计时
@@ -160,6 +161,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         }
 
         if (item.status == "TRANSACTION") {
+            zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
             item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.periodTime))
             bottom_status_tv.show()
             bottom_status_tv.setTextColor(Color.parseColor("#FF1E984D"))

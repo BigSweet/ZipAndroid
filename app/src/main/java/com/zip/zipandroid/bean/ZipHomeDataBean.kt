@@ -12,6 +12,7 @@ data class CreditOrderList(
     val allAmountDue: Any,
     val amountDue: String,
     val applyAmount: String,
+    val isNeedChangeBankCard: Boolean?,
     val applyPeriod: String,
     val applyPeriodNew: String,
     val applyTime: Long,

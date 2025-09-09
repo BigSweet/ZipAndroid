@@ -12,11 +12,9 @@ import com.zip.zipandroid.activity.PayOrderDetailActivity
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipCustomServiceActivity
-import com.zip.zipandroid.activity.ZipOrderDetailActivity
 import com.zip.zipandroid.activity.ZipOrderReviewActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipQuestionActivity
-import com.zip.zipandroid.activity.ZipSureOrderActivity
 import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
@@ -119,15 +117,15 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 mViewBind.homeOrderNormalCl.show()
             } else {
                 mViewBind.homeOrderNormalCl.hide()
-                if (it.creditOrderList?.status == "WAITING") {
-                    //直接去下单页面
-                    mViewBind.homeCanLoanCl.show()
-                    //授信后返回的金额？
-                    mViewBind.canLoanMoneyTv.setText(UserInfoUtils.getLevelData().grantAmount)
-                    mViewBind.canLoanNowTv.setOnDelayClickListener {
-                        ZipSureOrderActivity.start(requireActivity(), UserInfoUtils.getLevelData().grantAmount, UserInfoUtils.getLevelData().riskLevel, UserInfoUtils.getPreBizId())
-                    }
-                }
+//                if (it.creditOrderList?.status == "WAITING") {
+//                    //直接去下单页面
+//                    mViewBind.homeCanLoanCl.show()
+//                    //授信后返回的金额？
+//                    mViewBind.canLoanMoneyTv.setText(UserInfoUtils.getLevelData().grantAmount)
+//                    mViewBind.canLoanNowTv.setOnDelayClickListener {
+//                        ZipSureOrderActivity.start(requireActivity(), UserInfoUtils.getLevelData().grantAmount, UserInfoUtils.getLevelData().riskLevel, UserInfoUtils.getPreBizId())
+//                    }
+//                }
 
                 if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
                     mViewBind.homePayingCl.show()
@@ -143,7 +141,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
                     }
                 }
-                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH"||it.creditOrderList?.status == "OVERDUEREPAYMENT") {
+                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT") {
                     mViewBind.homeOrderNormalCl.show()
                     mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
                     mViewBind.zipHomeVerTv.setOnDelayClickListener {
@@ -172,12 +170,22 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 //                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
                     }
                 }
-                if (it.creditOrderList?.status == "FAIL") {
-                    mViewBind.homeBankFailCl.show()
-                    mViewBind.updateBankTv.setOnDelayClickListener {
-                        //跳转过去后继续授信在进件
-                        ZipBandCardActivity.start(requireActivity(), false)
+                if (it.creditOrderList?.status == "CANCEL") {
+                    if (it.creditOrderList.isNeedChangeBankCard == true) {
+                        mViewBind.homeBankFailCl.show()
+                        mViewBind.updateBankTv.setOnDelayClickListener {
+                            //跳转过去后继续授信在进件
+                            ZipBandCardActivity.start(requireActivity(), false)
+                        }
+                    } else {
+                        mViewBind.homeOrderNormalCl.show()
+                        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+                        mViewBind.zipHomeVerTv.setOnDelayClickListener {
+                            //查到了第几部，在去进件
+                            checkUserInfo()
+                        }
                     }
+
                 }
                 if (it.creditOrderList?.status == "REFUSED") {
                     mViewBind.homeSubmitRefuseCl.show()
@@ -197,7 +205,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
             Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
             Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//隐私协议
-            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT ?: "https://www.baidu.com"//隐私协议
+            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
+                ?: "https://www.baidu.com"//隐私协议
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {
                 //获取广告信息
