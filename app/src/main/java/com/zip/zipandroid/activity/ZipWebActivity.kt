@@ -46,6 +46,7 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
         val url = intent.getStringExtra("url") ?: ""
         //设置不支持字体缩放
         mViewBind.webView.settings.setSupportZoom(true)
+        mViewBind.webView.settings.loadWithOverviewMode = (true)
         mViewBind.webView.settings.setDomStorageEnabled(true)
         mViewBind.webView.settings.builtInZoomControls = true
         mViewBind.webView.settings.useWideViewPort = true

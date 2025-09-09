@@ -194,10 +194,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
         mViewModel.configLiveData.observe(this) {
 
-            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "www.baidu.com"//注册协议
-            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "www.baidu.com"//隐私协议
-            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "www.baidu.com"//隐私协议
-            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT ?: "www.baidu.com"//隐私协议
+            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
+            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
+            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//隐私协议
+            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT ?: "https://www.baidu.com"//隐私协议
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {
                 //获取广告信息
