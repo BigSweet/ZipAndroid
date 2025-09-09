@@ -37,7 +37,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Approval")
         interValRange(bizId)
-        showLoading()
+
 
 
     }
@@ -45,7 +45,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
     var disposable: Disposable? = null
 
     fun interValRange(bizId: String) {
-        disposable = Observable.intervalRange(1, 20, 500, 500, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
+        disposable = Observable.intervalRange(1, 12, 500, 5000, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
             .subscribeOn(Schedulers.io()) // 让观察者执行在主线程
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<Long> {
@@ -61,6 +61,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
 
 
     fun getOrderData(bizId: String) {
+        showLoading()
         mViewModel.getUserOrder(bizId)
     }
 

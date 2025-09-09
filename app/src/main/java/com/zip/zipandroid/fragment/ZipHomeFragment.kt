@@ -245,7 +245,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
         if (it.doubleLoan == 1) {
             //复贷用户直接跳计算
-            ZipOrderReviewActivity.start(requireActivity(), "")
+            mViewModel.zipQueryCard()
+//            ZipOrderReviewActivity.start(requireActivity(), "")
             return
         }
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipBandCardActivity
+import com.zip.zipandroid.activity.ZipOrderNextActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -61,7 +62,8 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         ZipEventBusUtils.register(this)
         checkAllPer()
         mViewBind.testBtn.setOnDelayClickListener {
-            startActivity(ZipBandCardActivity::class.java)
+            ZipOrderNextActivity.start(this,"5610000000026401")
+//            startActivity(ZipBandCardActivity::class.java)
         }
     }
 
