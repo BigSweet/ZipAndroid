@@ -96,7 +96,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         }
         mViewBind.detailSettleNowTv.hide()
         mViewBind.detailSettleNowTv.setOnDelayClickListener {
-            PayOrderDetailActivity.start(this, bizId)
+            PayOrderDetailActivity.start(this, bizId, orderData?.lid.toString(), orderData?.amountDue.toString())
         }
 
         if (orderData?.period ?: 0 < orderData?.count ?: 0) {

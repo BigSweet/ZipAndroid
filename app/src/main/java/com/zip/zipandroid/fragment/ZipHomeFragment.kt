@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.zip.zipandroid.activity.PayOrderDetailActivity
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipCustomServiceActivity
@@ -26,8 +27,8 @@ import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTimeUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
@@ -116,7 +117,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             mViewBind.homeLoaningIv.hide()
             if (it.creditOrderList == null) {
                 mViewBind.homeOrderNormalCl.show()
-            }else{
+            } else {
                 mViewBind.homeOrderNormalCl.hide()
                 if (it.creditOrderList?.status == "WAITING") {
                     //直接去下单页面
@@ -130,14 +131,16 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
                 if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
                     mViewBind.homePayingCl.show()
-                    if(!it.creditOrderList?.amountDue.isNullOrEmpty()){
+                    if (!it.creditOrderList?.amountDue.isNullOrEmpty()) {
                         mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
                     }
                     mViewBind.payingDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val bizId = it.creditOrderList.bizId
+                    val lid = it.creditOrderList.lid
+                    val amount = it.creditOrderList.amountDue
                     mViewBind.payNowTv.setOnDelayClickListener {
                         //去还款
-                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
+                        PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
                     }
                 }
                 if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH") {
@@ -161,9 +164,12 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     span.append("past due, please make your repayment as soon as possible.")
                     mViewBind.delayDesBottomTv.setText(span)
                     val bizId = it.creditOrderList.bizId
+                    val lid = it.creditOrderList.lid
+                    val amount = it.creditOrderList.amountDue
                     mViewBind.delayNowTv.setOnDelayClickListener {
                         //去还款
-                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
+                        PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
+//                        ZipOrderDetailActivity.start(requireActivity(), bizId, 0)
                     }
                 }
                 if (it.creditOrderList?.status == "FAIL") {

@@ -5,4 +5,4 @@ class ZipChannelUtmInfo(val advertiserId:String,val ambushThirdKeyinfo:List<Ambu
 }
 
 
-data class AmbushThirdKeyinfo(val nauInKwaito:String,val makullinSirri:String,val idNaUraTaUku:String,val appId:String)
+data class AmbushThirdKeyinfo(val nauInKwaito:String,val makullinSirri:String,val idNaUraTaUku:String,val idAiki:String)

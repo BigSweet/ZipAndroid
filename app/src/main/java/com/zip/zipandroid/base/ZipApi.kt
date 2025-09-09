@@ -20,6 +20,8 @@ import com.zip.zipandroid.bean.ZipLoginResponse
 import com.zip.zipandroid.bean.ZipOrderAdmissionBean
 import com.zip.zipandroid.bean.ZipOrderListBean
 import com.zip.zipandroid.bean.ZipOrderStatusBean
+import com.zip.zipandroid.bean.ZipPayChannelListBean
+import com.zip.zipandroid.bean.ZipPayCodeBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipRiskLevelBean
@@ -113,6 +115,12 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/orders")
     fun getAllOrderList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderListBean>>
+
+    @POST("api/v4/ziplead/generateOfflineRepaymentCode")
+    fun generateOfflineRepaymentCode(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipPayCodeBean>>
+
+    @POST("api/v4/ziplead/getRepaymentRoute")
+    fun getRepaymentRoute(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipPayChannelListBean>>
 
     @GET("api/v4/ziplead/dict/getCreditHistoryDict")
     fun getCreditHistoryDict(

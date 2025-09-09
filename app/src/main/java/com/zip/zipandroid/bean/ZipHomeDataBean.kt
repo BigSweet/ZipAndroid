@@ -41,7 +41,7 @@ data class CreditOrderList(
     val interest: Any,
     val interestTime: Any,
     val isLoan: String,
-    val lid: Any,
+    val lid: Long,
     val loanAmount: Any,
     val loanCancelStatus: Int,
     val loanRefusedDuration: Any,

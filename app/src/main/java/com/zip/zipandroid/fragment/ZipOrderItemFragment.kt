@@ -38,7 +38,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                 ZipOrderDetailActivity.start(requireActivity(), item.bizId,queryType)
             }
             if (view.id == R.id.zip_order_item_repay_btn) {
-                PayOrderDetailActivity.start(requireActivity(), bizId = item.bizId)
+                PayOrderDetailActivity.start(requireActivity(), item.bizId, item?.lid.toString(), item?.amountDue.toString())
             }
         }
 
