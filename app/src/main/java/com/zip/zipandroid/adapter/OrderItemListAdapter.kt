@@ -164,10 +164,10 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 
         if (item.status == "TRANSACTION") {
             zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
-            item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.periodTime))
+            item_zip_order_time_tv.setText(formatTimestampToDate("Approval Date:", item.applyTime))
             bottom_status_tv.show()
             bottom_status_tv.setTextColor(Color.parseColor("#FF1E984D"))
-            bottom_status_tv.setText("Your loan amount will be disbursed to your\n account shortly")
+            bottom_status_tv.setText("Your loan amount will be disbursed to your account shortly")
             //放款中
             zip_order_item_main_cl.setBackground2(Color.parseColor("#FF32C069"))
             zip_order_item_inner_cl.setBackground2(Color.parseColor("#FFD9EDE1"))

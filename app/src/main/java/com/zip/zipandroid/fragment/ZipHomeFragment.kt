@@ -113,7 +113,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             mViewBind.homeSubmitRefuseCl.hide()
             mViewBind.homeBankFailCl.hide()
             mViewBind.homeCanLoanCl.hide()
-            mViewBind.homeLoaningIv.hide()
+            mViewBind.homeLoaningCl.hide()
             if (it.creditOrderList == null) {
                 mViewBind.homeOrderNormalCl.show()
             } else {
@@ -193,7 +193,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     mViewBind.homeReviewCl.show()
                 }
                 if (it.creditOrderList?.status == "TRANSACTION") {
-                    mViewBind.homeLoaningIv.show()
+                    mViewBind.homeLoaningCl.show()
                 }
             }
 
