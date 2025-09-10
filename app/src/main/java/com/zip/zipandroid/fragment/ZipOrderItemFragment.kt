@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView
 import com.zip.zipandroid.R
 import com.zip.zipandroid.activity.PayOrderDetailActivity
 import com.zip.zipandroid.activity.ZipOrderDetailActivity
@@ -29,13 +30,18 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
     override fun initView(savedInstanceState: Bundle?) {
         queryType = arguments?.getInt("queryType", 0) ?: 0
 
+//        mViewBind.orderListRefresh.setOnRefreshListener {
+//            index = 0
+//            mViewModel.getOrderListInfo(queryType)
+//        }
         mViewBind.itemOrderListRv.layoutManager = LinearLayoutManager(requireActivity())
-        mViewBind.itemOrderListRv.adapter = adapter
+//        mViewBind.itemOrderListRv.adapter = adapter
+        adapter.bindToRecyclerView(mViewBind.itemOrderListRv)
         adapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as ZipOrderListBeanItem
             if (view.id == R.id.zip_order_item_finish_detail_tv || view.id == R.id.zip_order_item_show_detail_tv) {
                 //订单详情页面
-                ZipOrderDetailActivity.start(requireActivity(), item.bizId,queryType)
+                ZipOrderDetailActivity.start(requireActivity(), item.bizId, queryType)
             }
             if (view.id == R.id.zip_order_item_repay_btn) {
                 PayOrderDetailActivity.start(requireActivity(), item.bizId, item?.lid.toString(), item?.amountDue.toString())
@@ -47,14 +53,31 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
 
     override fun onResume() {
         super.onResume()
+        index = 0
         mViewModel.getOrderListInfo(queryType)
     }
 
     val adapter = OrderItemListAdapter()
 
     override fun createObserver() {
+        adapter.setEnableLoadMore(true)
+        adapter.disableLoadMoreIfNotFullPage(mViewBind.itemOrderListRv)
+        adapter.setPreLoadNumber(2)
+        adapter.setLoadMoreView(SimpleLoadMoreView())
+        adapter.setOnLoadMoreListener({
+            index++
+            if (index >= (allList?.size ?: 0)) {
+                adapter.loadMoreEnd()
+                return@setOnLoadMoreListener
+            }
+            adapter.addData(allList?.get(index))
+            adapter.loadMoreComplete()
+        }, mViewBind.itemOrderListRv)
         mViewModel.orderListLiveData.observe(this) {
 
+//            if (mViewBind.orderListRefresh.isRefreshing) {
+//                mViewBind.orderListRefresh.isRefreshing = false
+//            }
             if (it.isNullOrEmpty()) {
                 adapter.setNewData(arrayListOf())
                 adapter.setEmptyView(getEmptyView(requireActivity()))
@@ -68,7 +91,8 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                         adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
-                        adapter.setNewData(type0List)
+                        allList = splitList(type0List)
+                        adapter.setNewData(allList?.get(index))
                     }
 
 
@@ -83,24 +107,53 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                         adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
-                        adapter.setNewData(type1List)
+                        allList = splitList(type1List)
+                        adapter.setNewData(allList?.get(index))
                     }
                 }
                 if (queryType == 2) {
 //                   拒绝和取消的
                     val type2List = it.filter {
-                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH"||it.status == "OVERDUEREPAYMENT"
+                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH" || it.status == "OVERDUEREPAYMENT"
                     }
                     if (type2List.isNullOrEmpty()) {
                         adapter.setNewData(arrayListOf())
                         adapter.setEmptyView(getEmptyView(requireActivity()))
                     } else {
-                        adapter.setNewData(type2List)
+//                        val testList = arrayListOf<ZipOrderListBeanItem>()
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        testList.addAll(type2List)
+//                        allList = splitList(testList)
+                        allList = splitList(type2List)
+                        adapter.setNewData(allList?.get(index))
 
                     }
                 }
             }
         }
+    }
+
+    var index = 0
+
+    var allList: List<List<ZipOrderListBeanItem>> = arrayListOf()
+
+    fun splitList(list: List<ZipOrderListBeanItem>): List<List<ZipOrderListBeanItem>> {
+        val list = list.chunked(10)
+        return list
     }
 
     fun getEmptyView(context: Context): View {

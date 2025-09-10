@@ -174,7 +174,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: ZipRefreshCardEvent) {
-        mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
+        mViewBind.bankCardTv.setText(UserInfoUtils.getBankData()?.cardNo)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -264,7 +264,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             zipTriaBean = it
             mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())
             mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
-            mViewBind.bankCardTv.setText(UserInfoUtils.getBankData().cardNo)
+            mViewBind.bankCardTv.setText(UserInfoUtils.getBankData()?.cardNo)
             mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
             mViewBind.totalAmountTv.setText(it.totalAmount.toDouble().toN())
             if (!it.repaymentList.isNullOrEmpty()) {
