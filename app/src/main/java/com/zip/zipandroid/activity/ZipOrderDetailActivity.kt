@@ -102,11 +102,11 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         if (orderData?.period ?: 0 < orderData?.count ?: 0) {
             //如果有下一期 没下一期就隐藏
             mViewBind.nextInstallLl.show()
-            val nextData = orderData?.repaymentResponseList?.get((orderData?.period ?: 0) - 1)
+            val nextData = orderData?.repaymentResponseList?.get((orderData?.period ?: 0))
 
             mViewBind.detailDueTimeTv.setText(nextData?.periodTime?.formatTimestampToDate())
             mViewBind.detailOutAmountTv.setText(nextData?.amountDue?.toDouble()?.toN())
-            mViewBind.detailOutInstallTv.setText(orderData?.period.toString() + "/" + orderData?.count.toString())
+            mViewBind.detailOutInstallTv.setText(nextData?.period.toString() + "/" + orderData?.count.toString())
 //            mViewBind.detailDueTimeTv.setText()
         } else {
             mViewBind.nextInstallLl.hide()

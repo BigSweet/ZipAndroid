@@ -65,11 +65,11 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         adapter.setPreLoadNumber(2)
         adapter.setLoadMoreView(SimpleLoadMoreView())
         adapter.setOnLoadMoreListener({
-            index++
-            if (index >= (allList?.size ?: 0)) {
+            if (index + 1 >= (allList?.size ?: 0)) {
                 adapter.loadMoreEnd()
                 return@setOnLoadMoreListener
             }
+            index++
             adapter.addData(allList?.get(index))
             adapter.loadMoreComplete()
         }, mViewBind.itemOrderListRv)
