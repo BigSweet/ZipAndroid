@@ -135,7 +135,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                     currentBandCardBean = currentData
                     zipQueryCardBeanItem = data
                     zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
-                    UserInfoUtils.saveBankData(Gson().toJson(currentBandCardBean))
+                    UserInfoUtils.saveBankData(Gson().toJson(zipQueryCardBeanItem))
                     currentBandCardBean?.let {
                         mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
                             userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(), bandIt?.tiedCardId.toString())
@@ -146,6 +146,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.bandCardLiveData.observe(this) { bandIt ->
             this.bandIt = bandIt
             if (zipQueryCardBeanItem == null) {
+                //后面进件要拿银行卡的信息啥的，直接在这里存一下到本地
                 mViewModel.zipSaveCard()
             } else {
                 zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
