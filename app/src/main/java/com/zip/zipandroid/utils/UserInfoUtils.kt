@@ -180,10 +180,10 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.putString("bankData", bankData)
     }
 
-    fun getBankData(): ZipQueryCardBeanItem {
+    fun getBankData(): ZipQueryCardBeanItem? {
         val infoStr = MMKV.defaultMMKV()?.getString("bankData", "")
         mBankData = Gson().fromJson(infoStr, ZipQueryCardBeanItem::class.java)
-        return mBankData!!
+        return mBankData
     }
 
     var mMacawProductDue: ProductDidInfo? = null

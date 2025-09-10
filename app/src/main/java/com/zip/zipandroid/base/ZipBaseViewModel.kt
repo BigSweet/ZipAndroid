@@ -31,6 +31,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
 
     var configLiveData = MutableLiveData<ZipAppConfigBean?>()
     var cardListLiveData = MutableLiveData<ZipQueryCardBean?>()
+    var saveCardListLiveData = MutableLiveData<ZipQueryCardBean?>()
     var saveMemberInfoLiveData = MutableLiveData<Int>()
     var userInfoLiveData = MutableLiveData<ZipUserInfoBean>()
     var bandCardLiveData = MutableLiveData<ZipBandCardBean>()
@@ -60,6 +61,31 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
                 }
             })
     }
+
+    fun zipSaveCard() {
+        val treeMap = TreeMap<String, Any?>()
+        val api = ZipFormReq.create()
+        treeMap.putAll(api)
+        api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+        ZipRetrofitHelper.createApi(ZipApi::class.java).zipQueryCard(api)
+            .compose(ZipRxSchedulers.io_main())
+            .subscribe(object : ZipResponseSubscriber<ZipQueryCardBean>() {
+                override fun onSubscribe(d: Disposable) {
+                    super.onSubscribe(d)
+                    addReqDisposable(d)
+                }
+
+                override fun onSuccess(result: ZipQueryCardBean) {
+                    saveCardListLiveData.postValue(result)
+                }
+
+                override fun onFailure(code: Int, message: String?) {
+                    super.onFailure(code, message)
+                    failLiveData.postValue(message ?: "")
+                }
+            })
+    }
+
 
     fun zipQueryCard() {
         val treeMap = TreeMap<String, Any?>()

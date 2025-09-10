@@ -239,10 +239,10 @@ class ZipReviewModel : ZipBaseViewModel() {
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
-        info.cardNo = UserInfoUtils.getBankData().cardNo.toString()
+        info.cardNo = UserInfoUtils.getBankData()?.cardNo.toString()
         info.accountName = UserInfoUtils.getUserInfo().realname
 //        bean.bankName = bankName
-        info.bankId = UserInfoUtils.getBankData().bankId.toString()
+        info.bankId = UserInfoUtils.getBankData()?.bankId.toString()
 //        bean.taxNumber = UserInfoUtils.getShuiNumber()
         val list: List<OriginUploadContractBean> = Gson().fromJson(bean.emergencyContactPerson,
             object : TypeToken<List<OriginUploadContractBean>>() {}.type)
@@ -320,12 +320,12 @@ class ZipReviewModel : ZipBaseViewModel() {
         val imgBean = Gson().fromJson<ZipIndImgBean>(UserInfoUtils.getUserInfo().identityImg, ZipIndImgBean::class.java)
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
-        info.cardNo = UserInfoUtils.getBankData().cardNo.toString()
-        info.cardName =   UserInfoUtils.getBankData().bankName.toString()
+        info.cardNo = UserInfoUtils.getBankData()?.cardNo.toString()
+        info.cardName =   UserInfoUtils.getBankData()?.bankName.toString()
         info.accountName = UserInfoUtils.getUserInfo().realname
         info.matakinHadariNext = riskGrade
 //        bean.bankName = bankName
-        info.bankId = UserInfoUtils.getBankData().bankId.toString()
+        info.bankId = UserInfoUtils.getBankData()?.bankId.toString()
 //        bean.taxNumber = UserInfoUtils.getShuiNumber()
         val list: List<OriginUploadContractBean> = Gson().fromJson(bean.emergencyContactPerson,
             object : TypeToken<List<OriginUploadContractBean>>() {}.type)

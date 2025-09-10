@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.base.ZipBaseBindingActivity
+import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipBankNameListBean
 import com.zip.zipandroid.bean.ZipBankNameListBeanItem
 import com.zip.zipandroid.bean.ZipQueryCardBeanItem
@@ -17,8 +18,8 @@ import com.zip.zipandroid.event.ZipRefreshCardEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipBankNamePop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -118,17 +119,43 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //        "payType": 0
 //    }
 //
+
+    var bandIt: ZipBandCardBean? = null
     override fun createObserver() {
 //        mViewModel.bankListLiveData.observe(this) {
 //            dismissLoading()
 //        }
-        mViewModel.bandCardLiveData.observe(this) { bandIt ->
-            zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
-            UserInfoUtils.saveBankData(Gson().toJson(zipQueryCardBeanItem))
-            currentBandCardBean?.let {
-                mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
-                    userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(), bandIt.tiedCardId)
+        mViewModel.saveCardListLiveData.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                val data = it.find {
+                    it.status == 1
+                }
+                if (data != null) {
+                    val currentData = ZipBankNameListBeanItem(data.bankName, "", data.bankId, data.cardType)
+                    currentBandCardBean = currentData
+                    zipQueryCardBeanItem = data
+                    zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
+                    UserInfoUtils.saveBankData(Gson().toJson(currentBandCardBean))
+                    currentBandCardBean?.let {
+                        mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
+                            userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(), bandIt?.tiedCardId.toString())
+                    }
+                }
             }
+        }
+        mViewModel.bandCardLiveData.observe(this) { bandIt ->
+            this.bandIt = bandIt
+            if (zipQueryCardBeanItem == null) {
+                mViewModel.zipSaveCard()
+            } else {
+                zipQueryCardBeanItem?.cardNo = mViewBind.zipBankAccount.getEditText()
+                UserInfoUtils.saveBankData(Gson().toJson(zipQueryCardBeanItem))
+                currentBandCardBean?.let {
+                    mViewModel.zipChangeCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),
+                        userInfoBean?.firstName.toString(), userInfoBean?.realname.toString(), userInfoBean?.identity.toString(), userInfoBean?.lastName.toString(), UserInfoUtils.getUserPhone(), bandIt.tiedCardId)
+                }
+            }
+
 
         }
         mViewModel.changeCardLiveData.observe(this) {
