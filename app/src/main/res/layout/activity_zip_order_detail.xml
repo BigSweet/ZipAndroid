@@ -235,64 +235,64 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="15dp"
-                            android:visibility="gone"
-                            android:layout_marginTop="15dp">
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="15dp"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:layout_marginTop="15dp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Interest Amount Reduced This Period"
-                                android:textColor="#ff959db2"
-                                android:textSize="12sp"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Interest Amount Reduced This Period"-->
+<!--                                android:textColor="#ff959db2"-->
+<!--                                android:textSize="12sp"-->
+<!--                                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                            <TextView
-                                android:id="@+id/detail_inter_reduce_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ff000000"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="₦ 124" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/detail_inter_reduce_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textColor="#ff000000"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                app:layout_constraintRight_toRightOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                tools:text="₦ 124" />-->
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:layout_marginHorizontal="15dp"
-                            android:layout_marginTop="15dp">
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:layout_marginHorizontal="15dp"-->
+<!--                            android:layout_marginTop="15dp">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Penalty Interest Amount Reduced This Period"
-                                android:textColor="#ff959db2"
-                                android:textSize="12sp"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Penalty Interest Amount Reduced This Period"-->
+<!--                                android:textColor="#ff959db2"-->
+<!--                                android:textSize="12sp"-->
+<!--                                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                            <TextView
-                                android:id="@+id/detail_pen_inter_reduce_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ff000000"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="₦ 124" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/detail_pen_inter_reduce_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textColor="#ff000000"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                app:layout_constraintRight_toRightOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                tools:text="₦ 124" />-->
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
                         <View

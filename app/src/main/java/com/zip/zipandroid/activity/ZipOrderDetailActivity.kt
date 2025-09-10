@@ -59,7 +59,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         val status = orderData?.status ?: ""
 
         mViewBind.detailTopOverTv.hide()
-
+        mViewBind.penInterUpdateTv.hide()
         mViewBind.amountUpdateTv.visible = status == "PARTIAL"
         orderData?.let {
             mViewBind.detailRepaidTv.setText(it?.amountDue?.toDouble()?.toN())
@@ -70,7 +70,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 //                allFee = allFee + it
 //            }
             mViewBind.detailManagerTv.setText(it.hairCutAmount.toN())
-            mViewBind.detailInterReduceTv.setText(it.subtractInterest.toDouble().toN())
+//            mViewBind.detailInterReduceTv.setText(it.subtractInterest.toDouble().toN())
 
 
             if (!it.applyAmount.isNullOrEmpty()) {
@@ -88,9 +88,9 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
 //            if (status == "OVERDUE") {
             mViewBind.detailPenInterTv.setText(it.penalty.toDouble().toN())
-            mViewBind.detailPenInterReduceTv.setText(it.subtractFine.toDouble().toN())
-            mViewBind.detailPenInterTv.show()
-            mViewBind.detailPenInterReduceTv.show()
+//            mViewBind.detailPenInterReduceTv.setText(it.subtractFine.toDouble().toN())
+//            mViewBind.detailPenInterTv.show()
+//            mViewBind.detailPenInterReduceTv.show()
 //            }
 
         }
@@ -112,6 +112,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
             mViewBind.nextInstallLl.hide()
         }
         if (status == "OVERDUE") {
+            mViewBind.penInterUpdateTv.show()
             mViewBind.detailSettleNowTv.show()
             mViewBind.detailSettleNowTv.setBackground(Color.parseColor("#FFFF4343"))
             mViewBind.detailRepaidTv.setTextColor(Color.parseColor("#FFFF4343"))
@@ -132,7 +133,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
         if (status == "FINISH" || status== "OVERDUEREPAYMENT") {
             mViewBind.detailCompleteTimeTv.show()
-            mViewBind.penInterUpdateTv.hide()
+
             mViewBind.detailRepaidTv.setText("Repaid")
 //            mViewBind.detailCompleteTimeTv.setText()
             orderData?.let {
