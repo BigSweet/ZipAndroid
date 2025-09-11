@@ -89,9 +89,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation 'com.kunminx.arch:unpeek-livedata:7.8.0'
 
@@ -140,5 +137,5 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:latest.release'
 //    implementation project(path: ':liveness')
 //    api 'com.contrarywind:Android-PickerView:4.1.9'
-    implementation project(':pickerview')
+    api project(':pickerview')
 }

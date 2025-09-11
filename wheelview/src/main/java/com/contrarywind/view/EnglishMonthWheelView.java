@@ -1,4 +1,4 @@
-package com.zip.zipandroid.view;
+package com.contrarywind.view;
 
 import android.content.Context;
 import android.text.TextUtils;

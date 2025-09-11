@@ -36,6 +36,32 @@
 
 -verbose
 
+
+
+# 保留自定义控件(继承自View) 并且 get、set方法 不被混淆
+-keepclassmembers public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    *** *(...); # 保护所有方法（名称和参数）
+}
+# 1. 保持所有自定义View的类名本身不被混淆
+-keep public class * extends android.view.View
+
+-keepclassmembers class * extends android.view.View {
+    protected void onDraw(android.graphics.Canvas);
+    protected void onMeasure(int, int);
+    protected void onLayout(boolean, int, int, int, int);
+    public boolean onTouchEvent(android.view.MotionEvent);
+}
+
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+
 #google推荐算法
 -optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
 

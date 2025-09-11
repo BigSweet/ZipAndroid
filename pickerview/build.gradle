@@ -43,7 +43,8 @@ android {
 
 dependencies {
 //    compile fileTree(include: ['*.jar'], dir: 'libs')
-    api project(path: ':wheelview')
+//    api project(path: ':wheelview')
+    api project(':wheelview')
 //    api 'com.contrarywind:wheelview:4.1.0'
     implementation 'com.android.support:support-annotations:28.0.0'
 }

@@ -27,7 +27,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         }
     }
 
-    var failLiveData = MutableLiveData<String>()
+    var failLiveData = MutableLiveData<String?>()
 
     var configLiveData = MutableLiveData<ZipAppConfigBean?>()
     var cardListLiveData = MutableLiveData<ZipQueryCardBean?>()
