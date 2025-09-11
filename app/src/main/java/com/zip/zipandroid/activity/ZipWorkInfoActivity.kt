@@ -211,9 +211,9 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     fun checkUmeDone() {
         val done = mViewBind.umeIncomeView.getEditIsComplete() &&
-                mViewBind.timeWorkInfoView.getEditIsComplete() &&
                 mViewBind.lengthOfUmView.getEditIsComplete() &&
                 ontherIncome != -1 &&
+                mViewBind.occInfoInfoView.getEditIsComplete() &&
                 mViewBind.empStatusInfoView.getEditIsComplete()
         mViewBind.infoNextBtn.setEnabledPlus(done)
     }
