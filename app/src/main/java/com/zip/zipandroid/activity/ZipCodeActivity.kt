@@ -49,6 +49,9 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
         }
 
         KeyboardUtils.showSoftInput(mViewBind.zipCodeEdit)
+        if (!code.isNullOrEmpty()) {
+            mViewBind.zipCodeEdit.setText(code)
+        }
     }
 
     fun maskDigits(input: String): String {

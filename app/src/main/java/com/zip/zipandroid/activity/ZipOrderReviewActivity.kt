@@ -64,10 +64,19 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
         //直接轮训
 //        interValRange(bizId)
 //        mViewModel.or
-        orderAdmission()
+        showLoading()
+        mViewModel.getUserInfo()
+
     }
 
     override fun createObserver() {
+        mViewModel.userInfoLiveData.observe(this){
+            UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
+            orderAdmission()
+        }
+        mViewModel.failLiveData.observe(this){
+            dismissLoading()
+        }
         mViewModel.preOrderLiveData.observe(this) {
             it ?: return@observe
             preBizId = it.bizId ?: ""
@@ -125,6 +134,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
 
     fun getPidProduct(riskGrade: String) {
 //        mViewModel.getPidProduct()
+        dismissLoading()
         ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
             ?: "", preBizId)
         finish()

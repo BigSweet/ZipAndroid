@@ -134,7 +134,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
         mViewBind.umeRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         mViewBind.umeRv.adapter = singleButtonAdapter
-        singleButtonAdapter.setOnItemChildClickListener { baseQuickAdapter, view, i ->
+        singleButtonAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
             singleButtonAdapter.selectPosition = i
             ontherIncome = i
             singleButtonAdapter.notifyDataSetChanged()
@@ -375,7 +375,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 if (currentType == type_student) {
                     mViewBind.schoolNameInfoView.setContentText(it.companyName)
                     mViewBind.schoolNameInfoView.setTagComplete()
-                }else{
+                } else {
                     mViewBind.companyNameInfoView.setContentText(it.companyName)
                     mViewBind.companyNameInfoView.setTagComplete()
                 }
@@ -391,7 +391,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 if (currentType == type_student) {
                     mViewBind.schoolAddressInfoView.setContentText(tx)
                     mViewBind.schoolAddressInfoView.setTagComplete()
-                }else{
+                } else {
                     mViewBind.companyAddressInfoView.setContentText(tx)
                     mViewBind.companyAddressInfoView.setTagComplete()
                 }
@@ -400,7 +400,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 if (currentType == type_student) {
                     mViewBind.schoolDetailNameInfoView.setContentText(it.companyDistrict)
                     mViewBind.schoolDetailNameInfoView.setTagComplete()
-                }else{
+                } else {
                     mViewBind.detailWorkInfoView.setContentText(it.companyDistrict)
                     mViewBind.detailWorkInfoView.setTagComplete()
                 }
@@ -428,7 +428,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 if (currentType == type_student) {
                     mViewBind.schoolTimeWorkInfoView.setContentText(brithDayStr)
                     mViewBind.schoolTimeWorkInfoView.setTagComplete()
-                }else{
+                } else {
                     mViewBind.timeWorkInfoView.setContentText(brithDayStr)
                     mViewBind.timeWorkInfoView.setTagComplete()
                 }

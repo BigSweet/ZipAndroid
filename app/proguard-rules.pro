@@ -124,6 +124,27 @@
 -keep class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
 }
+# 保持 Kotlin 的元数据，这对反射和序列化很重要
+-keepclassmembers class ** {
+    @kotlin.Metadata *;
+}
+
+
+# 保留 Gson 的泛型类型信息
+-keep class com.google.gson.** { *; }
+-keep class com.google.gson.TypeToken { *; }
+-keep class * extends com.google.gson.TypeToken
+# 保留所有被 @SerializedName 注解的字段
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+# 保留所有被 @Expose 注解的字段
+-keepclassmembers class * {
+    @com.google.gson.annotations.Expose <fields>;
+}
+# 如果你的模型类在特定包中，可以更精确地保留
+# -keep class com.yourpackage.model.** { *; }
+
 
 #assume no side effects:删除android.util.Log输出的日志
 -assumenosideeffects class android.util.Log {
