@@ -241,6 +241,9 @@ class SetInfoEditView : RelativeLayout {
                         else -> Color.parseColor("#F7F7F7")
                     }
                 )
+                if (inputInfoType == TYPE_EMAIL && hasFocus) {
+                    scrollListener?.invoke()
+                }
             }
             it.addTextChangedListener(object : TextWatcher {
                 private var isFormatting = false
@@ -474,6 +477,7 @@ class SetInfoEditView : RelativeLayout {
     private val decimalFormat = DecimalFormat("#,###")
 
     var completeListener: (() -> Unit)? = null
+    var scrollListener: (() -> Unit)? = null
 
     private fun handleInputComplete() {
         completeListener?.invoke()
@@ -510,8 +514,32 @@ class SetInfoEditView : RelativeLayout {
         return infoEdit?.text.toString()
     }
 
+    var preEmail = ""
     fun appendText(text: String) {
-        infoEdit?.append(text)
+        val originText = infoEdit?.text?.toString() ?: ""
+        val atIndex = originText.indexOf("@")
+        if (atIndex > -1) {
+            val newStr = originText.substring(0, atIndex)
+            infoEdit?.setText(newStr)
+            infoEdit?.append(text)
+        } else {
+            infoEdit?.append(text)
+        }
+        infoEdit?.text?.length?.let { infoEdit?.setSelection(it) }
+        scrollListener?.invoke()
+//        if (!preEmail.isNullOrEmpty()) {
+//            if (infoEdit?.text?.contains(preEmail) == true) {
+//                val newStr = infoEdit?.text?.toString()?.replace(preEmail, text)
+//                infoEdit?.setText(newStr)
+//            } else {
+//                infoEdit?.append(text)
+//                preEmail = text
+//            }
+//        } else {
+//            infoEdit?.append(text)
+//            preEmail = text
+//        }
+
     }
 
     fun warSetX(show: Boolean) {

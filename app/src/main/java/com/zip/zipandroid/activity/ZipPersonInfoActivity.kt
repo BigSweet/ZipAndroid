@@ -150,7 +150,13 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         focusChangeCheck(mViewBind.bvnInfoView)
         focusChangeCheck(mViewBind.emailInfoView)
         focusChangeCheck(mViewBind.detailAddressInfoView)
-
+        mViewBind.emailInfoView.scrollListener = {
+            // 平滑滚动到底部
+            mViewBind.perInfoScroll.postDelayed({
+                // 计算Y轴要滚动的目标位置：内容总高度 - ScrollView的可见高度
+                mViewBind.perInfoScroll.smoothScrollBy(0, 150)
+            }, 200)
+        }
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             mViewModel.checkBvn(mViewBind.bvnInfoView.getEditText())

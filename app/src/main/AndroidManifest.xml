@@ -25,8 +25,8 @@
         <activity
             android:name=".ZipMainActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
 
