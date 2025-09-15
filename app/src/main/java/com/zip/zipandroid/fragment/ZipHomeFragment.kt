@@ -105,7 +105,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             }
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
-            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toN())
             mViewBind.homeReviewCl.hide()
 
             mViewBind.homeDelayCl.hide()
