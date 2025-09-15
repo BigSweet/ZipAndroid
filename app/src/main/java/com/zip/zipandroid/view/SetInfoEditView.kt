@@ -276,7 +276,7 @@ class SetInfoEditView : RelativeLayout {
                         if (input.isEmpty()) {
                             it.tag = "error"
                             ToastUtils.showShort("Minimum input length of one digits")
-                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
                             it.setBackgroundColor(

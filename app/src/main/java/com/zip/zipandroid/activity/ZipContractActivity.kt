@@ -250,6 +250,10 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
                     }
                     adapter.setNewData(initList)
+                }else{
+                    initList.add(ZipContractBean(1, "Family member", true))
+                    initList.add(ZipContractBean(2, "Colleague/Friend", true))
+                    adapter.setNewData(initList)
                 }
             } else {
                 initList.add(ZipContractBean(1, "Family member", true))
