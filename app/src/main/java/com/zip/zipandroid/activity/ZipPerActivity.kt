@@ -23,6 +23,7 @@ class ZipPerActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipPriva
 
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
+        mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Privacy Policy")
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
         }

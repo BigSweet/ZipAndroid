@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
-import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipOrderNextActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -20,11 +19,12 @@ import com.zip.zipandroid.fragment.ZipMineFragment
 import com.zip.zipandroid.fragment.ZipOrderListFragment
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.ZipAllPerPop
+import com.zip.zipandroid.pop.ZipDefPerPop
 import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
-import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -62,11 +62,22 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         ZipEventBusUtils.register(this)
         checkAllPer()
         mViewBind.testBtn.setOnDelayClickListener {
-            ZipOrderNextActivity.start(this,"5610000000026401")
+            ZipOrderNextActivity.start(this, "5610000000026401")
 //            startActivity(ZipBandCardActivity::class.java)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
+
+        } else {
+            noPerPop?.dismiss()
+            getAllPerData()
+        }
+    }
+
+    var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
         if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
@@ -83,13 +94,27 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
                     .callback(object : PermissionUtils.FullCallback {
                         override fun onGranted(permissionsGranted: List<String>) {
                             //拿数据吗
-                            getAllPerData()
+                            if (permissionsGranted.size == list.size) {
+                                getAllPerData()
+                            }
                         }
 
                         override fun onDenied(
                             permissionsDeniedForever: List<String>,
                             permissionsDenied: List<String>,
                         ) {
+                            if (!permissionsDeniedForever.isNullOrEmpty()) {
+                                noPerPop = ZipDefPerPop(this@ZipMainActivity, permissionsDeniedForever)
+                                XPopup.Builder(getContext())
+                                    .dismissOnBackPressed(false)
+                                    .dismissOnTouchOutside(false)
+                                    .asCustom(noPerPop).show()
+                            } else {
+                                if (!permissionsDenied.isNullOrEmpty()) {
+                                    UserInfoUtils.clear()
+                                    finish()
+                                }
+                            }
 
                         }
                     })
@@ -97,7 +122,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             }
             XPopup.Builder(getContext()).asCustom(pop).show()
 
-        }else{
+        } else {
             getAllPerData()
         }
     }

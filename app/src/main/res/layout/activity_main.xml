@@ -48,6 +48,7 @@
 
 
         <Button
+            android:visibility="gone"
             android:text="测试按钮"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

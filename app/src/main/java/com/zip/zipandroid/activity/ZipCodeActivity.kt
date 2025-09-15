@@ -126,12 +126,14 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
             UserInfoUtils.setSignKey(it?.staticKey ?: "")
             UserInfoUtils.setMid(it?.mid ?: 0)
             UserInfoUtils.setUserNo(it?.userNo ?: "")
-            startActivity(ZipMainActivity::class.java)
             if (it.isRegister == 1) {
                 mViewModel.saveMemberBehavior(Constants.TYPE_REGISTER)
             } else {
                 mViewModel.saveMemberBehavior(Constants.TYPE_LOGIN)
             }
+            val intent = Intent(this, ZipMainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
             finish()
         }
         mViewModel.failLiveData.observe(this) {
