@@ -70,11 +70,11 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
     }
 
     override fun createObserver() {
-        mViewModel.userInfoLiveData.observe(this){
+        mViewModel.userInfoLiveData.observe(this) {
             UserInfoUtils.saveUserInfo(Gson().toJson(it).toString())
             orderAdmission()
         }
-        mViewModel.failLiveData.observe(this){
+        mViewModel.failLiveData.observe(this) {
             dismissLoading()
         }
         mViewModel.preOrderLiveData.observe(this) {
@@ -86,7 +86,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
         mViewModel.admissionLiveData.observe(this) {
             if (it.admission) {
                 preOrder()
-            }else{
+            } else {
                 ToastUtils.showShort("Entry admission failed")
                 finish()
             }
@@ -136,7 +136,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
 //        mViewModel.getPidProduct()
         dismissLoading()
         ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
-            ?: "", preBizId)
+            ?: "", levelBean?.productDay?:0, preBizId)
         finish()
     }
 

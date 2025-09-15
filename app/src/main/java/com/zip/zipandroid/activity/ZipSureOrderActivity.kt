@@ -32,8 +32,8 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.ZipRepaymentPlanPop
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import org.greenrobot.eventbus.Subscribe
@@ -46,11 +46,12 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     companion object {
         @JvmStatic
-        fun start(context: Context, amount: String, riskLevel: String, bizId: String) {
+        fun start(context: Context, amount: String, riskLevel: String, productDay: Int, bizId: String) {
             val starter = Intent(context, ZipSureOrderActivity::class.java)
                 .putExtra("amount", amount)
                 .putExtra("riskLevel", riskLevel)
                 .putExtra("bizId", bizId)
+                .putExtra("productDay", productDay)
             context.startActivity(starter)
         }
 
@@ -58,6 +59,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     var amount = ""
     var realAmount = 0
+    var productDay = 0
     var riskLevel = ""
     var preBizId = ""
     var realOrderBizId = ""
@@ -67,7 +69,9 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         amount = intent.getStringExtra("amount") ?: ""
         riskLevel = intent.getStringExtra("riskLevel") ?: ""
         preBizId = intent.getStringExtra("bizId") ?: ""
+        productDay = intent.getIntExtra("productDay", 0)
         realAmount = amount.toInt()
+        limitMax = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
             //加金额 步长默认2000
             if (realAmount + limitInterval > limitMax) {
@@ -99,7 +103,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             dismissLoading()
             realOrderBizId = it?.bizId ?: ""
             //跳转到下一个界面
-            ZipOrderNextActivity.start(this,realOrderBizId)
+            ZipOrderNextActivity.start(this, realOrderBizId)
             finish()
         }
 
@@ -233,13 +237,18 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             duraAdapter.selectPosition = realIndex
             duraAdapter.setNewData(it.productList.productPeriods)
             if (!it.productList.productPeriods.isNullOrEmpty()) {
-                installAdapter.setNewData(it.productList.productPeriods.first().periodStages)
+                val allStages = it.productList.productPeriods.first().periodStages
+                val realStage = productDay / it.productList.productPeriods.first().period
+                val realList = allStages.filter {
+                    it.stage <= realStage
+                }
+                installAdapter.setNewData(realList)
                 if (!it.productList.productPeriods.first().periodStages.isNullOrEmpty()) {
                     currentDid = it.productList.productPeriods.first().periodStages.first().did
                     findPaidType()
                 }
             }
-            limitMax = it.productList.limitMax.toDouble().toInt()
+//            limitMax = it.productList.limitMax.toDouble().toInt()
             limitMin = it.productList.limitMin.toDouble().toInt()
             limitInterval = it.productList.limitInterval
             mViewModel.getCouponList(1)
