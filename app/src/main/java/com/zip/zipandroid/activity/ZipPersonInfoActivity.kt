@@ -53,6 +53,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         super.onBackPressed()
         ZipTrackUtils.track("OutPersonalInfo")
     }
+
     override fun onDestroy() {
         super.onDestroy()
         ZipEventBusUtils.unregister(this)
@@ -240,8 +241,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 //去换成图片地址
                 mViewModel.getPhotoUrlByBase(it?.photo ?: "")
             } else {
-                dismissLoading()
-                ToastUtils.showShort("bvn error")
+                mViewModel.realName(mViewBind.bvnInfoView.getEditText(), brithDay, brithDayStr, mViewBind.firstNameInfoView.getEditText(), mViewBind.middleNameInfoView.getEditText(), mViewBind.lastNameInfoView.getEditText(), sex)
             }
         }
         mViewModel.failLiveData.observe(this) {
