@@ -3,11 +3,13 @@ package com.zip.zipandroid.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.AppUtils
+import com.zip.zipandroid.BuildConfig
 import com.zip.zipandroid.bean.PersonalInformationDictBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.Constants.client_id
 import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
@@ -229,6 +231,13 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
     }
 
     fun getPersonInfoDic() {
+        var clientId = Constants.client_id
+        if (BuildConfig.DEBUG && Constants.useDebug) {
+            clientId = Constants.client_id
+        } else {
+            clientId = Constants.release_client_id
+        }
+
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
         treeMap.putAll(api)
@@ -237,7 +246,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
             "ANDROID",
             getMid().toString(),
             getUserNo(),
-            client_id,
+            clientId,
             SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
         )
             .compose(ZipRxSchedulers.io_main())

@@ -3,11 +3,12 @@ package com.zip.zipandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.AppUtils
 import com.google.gson.Gson
-import com.zip.zipandroid.base.ZipRxSchedulers
+import com.zip.zipandroid.BuildConfig
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
+import com.zip.zipandroid.base.ZipRxSchedulers
 import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.bean.AddressUploadBean
 import com.zip.zipandroid.bean.BvnInfoBean
@@ -19,9 +20,9 @@ import com.zip.zipandroid.bean.ZipIndImgBean
 import com.zip.zipandroid.bean.ZipRealNameBean
 import com.zip.zipandroid.bean.ZipUploadQuestionBean
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipFormReq
 import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -223,7 +224,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     fun getBankList() {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
-        api.addParam("nauInTsarawa",3)
+        api.addParam("nauInTsarawa", 3)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getBankList(api)
@@ -249,12 +250,18 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
         treeMap.putAll(api)
+        var clientId = Constants.client_id
+        if (BuildConfig.DEBUG && Constants.useDebug) {
+            clientId = Constants.client_id
+        } else {
+            clientId = Constants.release_client_id
+        }
         ZipRetrofitHelper.createApi(ZipApi::class.java).getCreditHistoryDict(AppUtils.getAppPackageName(),
             AppUtils.getAppVersionName(),
             "ANDROID",
             UserInfoUtils.getMid().toString(),
             UserInfoUtils.getUserNo(),
-            Constants.client_id,
+            clientId,
             SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
         )
             .compose(ZipRxSchedulers.io_main())
