@@ -1,6 +1,7 @@
 package com.zip.zipandroid.base;
 
 
+import com.zip.zipandroid.BuildConfig;
 import com.zip.zipandroid.utils.Constants;
 
 import java.io.IOException;
@@ -17,9 +18,17 @@ class ZipSecurityInterceptor implements Interceptor {
 
         Request.Builder requestBuilder = original.newBuilder()
                 .method(original.method(), original.body());
+        String clientId = Constants.INSTANCE.getClient_id();
+        if (BuildConfig.DEBUG) {
+            clientId = Constants.INSTANCE.getClient_id();
+//            clientId = Constants.INSTANCE.getRelease_client_id();
+        } else {
+            clientId = Constants.INSTANCE.getRelease_client_id();
+        }
+
         Request request = requestBuilder
                 .header("language", "es_MX")
-                .header("clientId", Constants.INSTANCE.getClient_id())
+                .header("clientId", clientId)
                 .build();
         return chain.proceed(request);
     }

@@ -40,10 +40,10 @@ public class ZipRetrofitHelper {
         String baseUrl;
         if (BuildConfig.DEBUG) {
 //            baseUrl = "https://loansapp.solyacredito.com/";
-//            baseUrl = "http://mxtest-loansapp.suonaduola.com/";
-            baseUrl = "https://lonasapp.flaminghorizon.com/";
+            baseUrl = "http://mxtest-loansapp.suonaduola.com/";
+//            baseUrl = "https://loansapp.flaminghorizon.com/";
         } else {
-            baseUrl = "https://lonasapp.flaminghorizon.com/";
+            baseUrl = "https://loansapp.flaminghorizon.com/";
         }
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
