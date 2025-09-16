@@ -181,6 +181,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
         mViewBind.infoNextBtn.setOnDelayClickListener {
             ZipTrackUtils.track("SubmitWorkInfo")
+            showLoading()
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
                 addressUploadBean.detail = mViewBind.detailWorkInfoView.getEditText()

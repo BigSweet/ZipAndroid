@@ -134,7 +134,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     fun checkBvn(bvn: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
-        api.put("BVN", bvn)
+        api.put("bzvlnd", bvn)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).checkBvnInfo(api)
