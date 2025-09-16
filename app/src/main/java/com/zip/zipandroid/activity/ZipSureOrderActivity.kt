@@ -34,6 +34,7 @@ import com.zip.zipandroid.pop.ZipRepaymentPlanPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import org.greenrobot.eventbus.Subscribe
@@ -65,11 +66,21 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var realOrderBizId = ""
 
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutLoanConfirm")
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
+
+
         amount = intent.getStringExtra("amount") ?: ""
         riskLevel = intent.getStringExtra("riskLevel") ?: ""
         preBizId = intent.getStringExtra("bizId") ?: ""
         productDay = intent.getIntExtra("productDay", 0)
+
+        ZipTrackUtils.track("InLoanConfirm", preBizId)
+
         realAmount = amount.toInt()
         limitMax = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
@@ -104,11 +115,13 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             realOrderBizId = it?.bizId ?: ""
             //跳转到下一个界面
             ZipOrderNextActivity.start(this, realOrderBizId)
+            ZipTrackUtils.track("SuccessConfirm", realOrderBizId)
             finish()
         }
 
         mViewBind.orderAcceptLoan.setOnDelayClickListener {
             showLoading()
+            ZipTrackUtils.track("ClicktoConfirm")
             mViewModel.getUploadUserInfo()
         }
         mViewBind.orderSubIv.setOnDelayClickListener {
@@ -126,6 +139,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         }
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutLoanConfirm")
             finish()
         }
         mViewBind.zipSureInstallRv.layoutManager = LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)

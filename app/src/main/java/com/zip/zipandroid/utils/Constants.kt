@@ -12,6 +12,7 @@ object Constants {
     val loadSms =false
     val loadCal =false
     var client_id = "c3e09a50-8a34-4ae6-92f4-d9f6559bb876"
+    var currentPid = ""
 
     val TYPE_LOGIN = 11
     val TYPE_REGISTER = 10

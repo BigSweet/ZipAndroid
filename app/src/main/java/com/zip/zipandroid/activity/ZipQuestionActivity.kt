@@ -16,6 +16,7 @@ import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipEventBusUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -44,12 +45,19 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ZipTrackUtils.track("InQuestionnairePage")
         ZipEventBusUtils.register(this)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutQuestionnairePage")
+
+    }
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutQuestionnairePage")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Questionnaire")
@@ -58,6 +66,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.getCreditHistoryDict()
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
+            ZipTrackUtils.track("SubmitQuestionnairePage")
             mViewModel.saveQuestionList(convertQuestion())
         }
         mViewBind.zipQuestionRv.layoutManager = LinearLayoutManager(this)

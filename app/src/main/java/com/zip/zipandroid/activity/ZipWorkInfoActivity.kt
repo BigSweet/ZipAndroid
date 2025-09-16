@@ -22,6 +22,7 @@ import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -42,8 +43,13 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         finish()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutWorkInfo")
+    }
     override fun onDestroy() {
         super.onDestroy()
+
         ZipEventBusUtils.unregister(this)
     }
 
@@ -65,6 +71,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutWorkInfo")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Work Info")
@@ -173,6 +180,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
 
         mViewBind.infoNextBtn.setOnDelayClickListener {
+            ZipTrackUtils.track("SubmitWorkInfo")
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
                 addressUploadBean.detail = mViewBind.detailWorkInfoView.getEditText()
@@ -318,6 +326,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     var dicInfoBean: PersonalInformationDictBean? = null
     var addressPrepare = false
     override fun createObserver() {
+        ZipTrackUtils.track("InWorkInfo")
         mViewModel.allAddressInfo.observe(this) {
             processDataAsync(it) { result ->
                 when (result) {

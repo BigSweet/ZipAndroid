@@ -81,6 +81,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
             it ?: return@observe
             preBizId = it.bizId ?: ""
             UserInfoUtils.savePreBizId(preBizId)
+
             getRiskLevel(it.bizId ?: "")
         }
         mViewModel.admissionLiveData.observe(this) {

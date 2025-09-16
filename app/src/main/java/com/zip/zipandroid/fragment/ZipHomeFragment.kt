@@ -29,6 +29,7 @@ import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTimeUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -45,9 +46,12 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        ZipTrackUtils.track("FirstPageOpen")
+
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             checkUserInfo()
+            ZipTrackUtils.track("ApplyNow")
         }
         mViewBind.newHomeSwpie.setOnRefreshListener {
             getAllData()
@@ -105,6 +109,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             }
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
+            Constants.currentPid = it.productList.pid
             mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toN())
             mViewBind.homeReviewCl.hide()
 
@@ -180,16 +185,18 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
                 }
                 if (it.creditOrderList?.status == "REFUSED") {
-                    if(it.creditOrderList.loanRefusedDuration!=null && ((it.creditOrderList.loanRefusedDuration?:0)/24/3600/1000)>7){
+                    if (it.creditOrderList.loanRefusedDuration != null && ((it.creditOrderList.loanRefusedDuration
+                            ?: 0) / 24 / 3600 / 1000) > 7
+                    ) {
                         mViewBind.homeSubmitRefuseCl.hide()
                         showNormalStatus(it)
-                    }else{
+                    } else {
                         mViewBind.homeSubmitRefuseCl.show()
                     }
 
                 }
                 //|| it.creditOrderList?.status == "WAITING"
-                if (it.creditOrderList?.status == "EXECUTING" ) {
+                if (it.creditOrderList?.status == "EXECUTING") {
                     mViewBind.homeReviewCl.show()
                 }
                 if (it.creditOrderList?.status == "TRANSACTION") {
@@ -249,6 +256,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
+            ZipTrackUtils.track("ApplyNow")
             checkUserInfo()
         }
     }

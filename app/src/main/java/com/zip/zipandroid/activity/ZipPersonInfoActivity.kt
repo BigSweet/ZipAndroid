@@ -27,6 +27,7 @@ import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -48,21 +49,29 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         finish()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutPersonalInfo")
+    }
     override fun onDestroy() {
         super.onDestroy()
         ZipEventBusUtils.unregister(this)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ZipEventBusUtils.register(this)
+        ZipTrackUtils.track("InPersonalInfo")
     }
+
 
     var singleButtonAdapter = SingleButtonAdapter()
     var addressUploadBean = AddressUploadBean("", "", "", "")
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutPersonalInfo")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Personal Info")
@@ -160,6 +169,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             mViewModel.checkBvn(mViewBind.bvnInfoView.getEditText())
+            ZipTrackUtils.track("SubmitPersonalInfo")
         }
     }
 

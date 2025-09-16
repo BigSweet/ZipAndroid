@@ -22,6 +22,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.NoSpaceInputFilter
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.viewmodel.ZipLoginModel
 
 
@@ -32,6 +33,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
 
     override fun initView(savedInstanceState: Bundle?) {
+        ZipTrackUtils.track("InLogin")
         val span = SpannableStringBuilder()
         span.append("I agree to the ")
         val start = span.length
@@ -119,6 +121,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                 ToastUtils.showShort("Please check the agreement")
                 return@setOnDelayClickListener
             }
+            ZipTrackUtils.track("ClickLogin")
             getZipCode()
         }
         mViewModel.getZipAppConfig()
@@ -158,6 +161,16 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         dismissLoading()
         mViewBind.loginEditNumberSl.setBackground2(Color.parseColor("#FFFFECEC"))
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutLogin")
     }
 
     override fun getData() {

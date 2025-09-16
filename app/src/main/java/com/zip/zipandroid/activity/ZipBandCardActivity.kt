@@ -20,6 +20,7 @@ import com.zip.zipandroid.pop.ZipBankNamePop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -44,12 +45,19 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onDestroy() {
         super.onDestroy()
+
         ZipEventBusUtils.unregister(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ZipTrackUtils.track("InBankInfo")
         ZipEventBusUtils.register(this)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutBankInfo")
     }
 
     var fromMine = false
@@ -57,6 +65,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         fromMine = intent.getBooleanExtra("fromMine", false)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutBankInfo")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Bank Info")

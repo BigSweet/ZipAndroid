@@ -68,6 +68,9 @@ interface ZipApi {
     @POST("api/v4/ziplead/product/origin")
     fun getHomeData(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipHomeDataBean>>
 
+    @POST("api/v4/ziplead/trackEvent")
+    fun trackEvent(@Body body: ZipFormReq): Observable<ZipBaseRes<Any>>
+
     @POST("api/v4/ziplead/selectAdvertList")
     fun selectAdvertList(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipAdBean>>
 

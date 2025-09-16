@@ -23,6 +23,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipEventBusUtils
+import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -62,16 +63,23 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     override fun onDestroy() {
         super.onDestroy()
         ZipEventBusUtils.unregister(this)
+
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipTrackUtils.track("OutContactInfo")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ZipTrackUtils.track("InContactInfo")
         ZipEventBusUtils.register(this)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipTrackUtils.track("OutContactInfo")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Contact Info")
@@ -115,6 +123,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             showLoading()
             val list = convertData()
             mViewModel.saveContractInfo(list)
+            ZipTrackUtils.track("SubmitContactInfo")
         }
         mViewModel.saveInfoLiveData.observe(this) {
             //保存进件到第几部了
