@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -78,7 +79,7 @@
                 android:id="@+id/zip_what_app_tv"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="898980980"
+                tools:text="898980980"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:textStyle="bold"
@@ -124,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="898980980"
+                tools:text="898980980"
                 android:textColor="@color/black"
                 android:id="@+id/zip_email_Tv"
                 android:textSize="15dp"
@@ -171,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="898980980"
+                tools:text="898980980"
                 android:id="@+id/zip_phone_tv"
                 android:textColor="@color/black"
                 android:textSize="15dp"

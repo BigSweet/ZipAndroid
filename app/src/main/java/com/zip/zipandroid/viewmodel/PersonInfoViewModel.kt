@@ -278,7 +278,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
     fun getAllAddressInfo() {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
-        api.put("CP", "NG")
+        api.put("czlp", "NG")
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).getAllAddressInfo(api)
