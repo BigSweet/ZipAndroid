@@ -16,15 +16,15 @@ object ZipTrackUtils {
     fun track(eventName: String,bizId: String? = null) {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
-        treeMap.putAll(api)
         api.put("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)
-        api.put("darajarLamari", eventName)
+        api.put("sunanLamari", eventName)
         if (!Constants.currentPid.isNullOrEmpty()) {
             api.put("idprd", Constants.currentPid)
         }
         if (!bizId.isNullOrEmpty()) {
             api.put("idKasuwancin", bizId)
         }
+        treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).trackEvent(api)
             .compose(ZipRxSchedulers.io_main())

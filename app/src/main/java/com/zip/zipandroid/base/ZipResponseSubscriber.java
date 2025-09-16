@@ -86,7 +86,7 @@ public class ZipResponseSubscriber<T> implements Observer<ZipBaseRes<T>> {
                 }
             } else {
                 try {
-                    if (t.getResultCode() == 1001) {
+                    if (t.getResultCode() == 10006) {
                         ZipEventBusUtils.post(new ZipLoginOutEvent());
                     } else {
                         onFailure(t.getResultCode(), t.getMsg());
