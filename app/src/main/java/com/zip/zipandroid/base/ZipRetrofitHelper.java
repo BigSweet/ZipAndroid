@@ -44,7 +44,7 @@ public class ZipRetrofitHelper {
             baseUrl = "http://mxtest-loansapp.suonaduola.com/";
 //            baseUrl = "https://loansapp.flaminghorizon.com/";
         } else {
-            baseUrl = "https://loansapp.flaminghorizon.com/";
+            baseUrl = "http://loansapp.flaminghorizon.com/";
         }
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
