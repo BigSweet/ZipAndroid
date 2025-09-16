@@ -19,7 +19,7 @@ class ZipSecurityInterceptor implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .method(original.method(), original.body());
         String clientId = Constants.INSTANCE.getClient_id();
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG && Constants.useDebug) {
             clientId = Constants.INSTANCE.getClient_id();
 //            clientId = Constants.INSTANCE.getRelease_client_id();
         } else {

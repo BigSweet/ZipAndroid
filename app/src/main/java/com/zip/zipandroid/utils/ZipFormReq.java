@@ -21,7 +21,7 @@ public class ZipFormReq extends HashMap<String, Object> {
         }
 
 //        req.put("idAbokinCiniki", "3a2d3b5b-ad80-4f98-a3ff-08900913b146");
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG && Constants.useDebug) {
 //            req.put("idAbokinCiniki", Constants.INSTANCE.getRelease_client_id());
             req.put("idAbokinCiniki", Constants.INSTANCE.getClient_id());
         } else {

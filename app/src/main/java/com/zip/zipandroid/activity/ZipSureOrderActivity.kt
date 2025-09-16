@@ -218,6 +218,10 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     override fun createObserver() {
         mViewBind.couponCenterCl.setOnDelayClickListener {
             //去选择优惠券界面
+            if (allCouponList.isNullOrEmpty()) {
+//                ToastUtils.showShort("empty coupon")
+                return@setOnDelayClickListener
+            }
             ZipCouponActivity.start(this, true)
         }
         ZipEventBusUtils.register(this)
@@ -229,7 +233,6 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                 //空的
                 orderTrialData()
                 mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_empty_coupon_icon)
-
                 //空
             } else {
                 if (it.couponList.size == 1) {
@@ -238,7 +241,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                     setCouponData(it.couponList.first())
                 } else {
                     //空
-                    mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_empty_coupon_icon)
+                    mViewBind.couponCenterCl.setBackgroundResource(R.drawable.zip_select_coupon_icon)
 
                     orderTrialData()
                 }

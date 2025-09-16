@@ -2,6 +2,7 @@ package com.zip.zipandroid.base;
 
 import com.google.gson.GsonBuilder;
 import com.zip.zipandroid.BuildConfig;
+import com.zip.zipandroid.utils.Constants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +39,7 @@ public class ZipRetrofitHelper {
 
         OkHttpClient client = builder.build();
         String baseUrl;
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG && Constants.useDebug) {
 //            baseUrl = "https://loansapp.solyacredito.com/";
             baseUrl = "http://mxtest-loansapp.suonaduola.com/";
 //            baseUrl = "https://loansapp.flaminghorizon.com/";

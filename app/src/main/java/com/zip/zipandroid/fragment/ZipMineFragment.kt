@@ -1,6 +1,7 @@
 package com.zip.zipandroid.fragment
 
 import android.os.Bundle
+import com.blankj.utilcode.util.ToastUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipAboutUsActivity
 import com.zip.zipandroid.activity.ZipBandCardActivity
@@ -8,6 +9,7 @@ import com.zip.zipandroid.activity.ZipCouponActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.base.ZipBaseViewModel
+import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.FragmentZipMineBinding
 import com.zip.zipandroid.event.ZipSwitchIndexEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
@@ -41,7 +43,13 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
 
         mViewBind.zipMineBankSl.setOnDelayClickListener {
             //银行卡页面
-            startActivity(ZipBandCardActivity::class.java)
+            if(userInfo?.questions.isNullOrEmpty()){
+                ToastUtils.showShort("You haven't linked a bank account yet.")
+                return@setOnDelayClickListener
+
+            }
+            ZipBandCardActivity.start(requireActivity(),true)
+//            startActivity(ZipBandCardActivity::class.java)
         }
         mViewBind.zipMineAboutSl.setOnDelayClickListener {
             //关于我们的
@@ -59,8 +67,12 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
         }
     }
 
+
+
+    var userInfo :ZipUserInfoBean?=null
     override fun createObserver() {
         mViewModel.userInfoLiveData.observe(this) {
+            userInfo = it
             if (it.firstName.isNullOrEmpty()) {
                 val name = getLastFourDigits(UserInfoUtils.getUserPhone())
                 mViewBind.zipMineNameTv.setText("H,User${name}")

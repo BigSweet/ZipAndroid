@@ -7,10 +7,13 @@ object Constants {
     var APP_LOAN_CONTRACT = "https://www.baidu.com"
     var APP_REPAYMENT_AGREEMENT = "https://www.baidu.com"
     var commonServiceUrl = "https://www.baidu.com"
-    val loadInstall =false
-    val lodaCallInfo =false
-    val loadSms =false
-    val loadCal =false
+    val loadInstall = false
+    val lodaCallInfo = false
+    val loadSms = false
+
+    @JvmField
+    val useDebug = false
+    val loadCal = false
     var client_id = "c3e09a50-8a34-4ae6-92f4-d9f6559bb876"
     var release_client_id = "3a2d3b5b-ad80-4f98-a3ff-08900913b146"
     var currentPid = ""

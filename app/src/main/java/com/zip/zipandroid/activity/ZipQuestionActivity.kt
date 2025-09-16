@@ -173,7 +173,8 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it == Constants.TYPE_QA) {
                 dismissLoading()
 //                ToastUtils.showShort("finish4")
-                startActivity(ZipBandCardActivity::class.java)
+                ZipBandCardActivity.start(this,false)
+//                startActivity(ZipBandCardActivity::class.java)
             }
         }
     }

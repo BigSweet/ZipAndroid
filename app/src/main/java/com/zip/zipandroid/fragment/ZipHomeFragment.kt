@@ -177,7 +177,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         mViewBind.homeBankFailCl.show()
                         mViewBind.updateBankTv.setOnDelayClickListener {
                             //跳转过去后继续授信在进件
-                            ZipBandCardActivity.start(requireActivity(), false)
+                            ZipBandCardActivity.start(requireActivity(), true)
                         }
                     } else {
                         showNormalStatus(it)
@@ -226,7 +226,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
         mViewModel.cardListLiveData.observe(this) {
             if (it.isNullOrEmpty()) {
-                startActivity(ZipBandCardActivity::class.java)
+                ZipBandCardActivity.start(requireActivity(),false)
+//                startActivity(ZipBandCardActivity::class.java)
             } else {
                 //去额度计算页面
                 UserInfoUtils.saveBankData(Gson().toJson(it.first()))
