@@ -196,7 +196,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             val imgBean = ZipIndImgBean(PhotoPathBean(currentIdeImg), PhotoPathBean(servicePath))
             addressUploadBean.detail = mViewBind.detailAddressInfoView.getEditText()
             mViewModel.saveUserInfo(age, brithDay, brithDayStr, mViewBind.eduInfoView.getEditText(), degree, mViewBind.bvnInfoView.getEditText(),
-                imgBean, mViewBind.emailInfoView.getEditText(), UserInfoUtils.getUserPhone(), "1", mViewBind.detailAddressInfoView.getEditText(), addressUploadBean, sex, marry, childrens, language, it.custId,
+                imgBean, mViewBind.emailInfoView.getSmallEditText(), UserInfoUtils.getUserPhone(), "1", mViewBind.detailAddressInfoView.getEditText(), addressUploadBean, sex, marry, childrens, language, it.custId,
                 mViewBind.firstNameInfoView.getEditText(), mViewBind.middleNameInfoView.getEditText(), mViewBind.lastNameInfoView.getEditText())
         }
         mViewModel.saveInfoLiveData.observe(this) {

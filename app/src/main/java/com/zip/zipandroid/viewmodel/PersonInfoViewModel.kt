@@ -73,7 +73,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
         api.put("yara", childrens)
         api.put("imelTabbaci", "1")
         api.put("yankin", "NG")
-//        api.put("harshe", language)
+        api.put("harshe", language)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
         ZipRetrofitHelper.createApi(ZipApi::class.java).saveUserInfo(api)

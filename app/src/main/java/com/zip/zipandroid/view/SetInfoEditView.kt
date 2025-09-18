@@ -17,10 +17,13 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
+import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.ktx.visiblein
 import com.zip.zipandroid.shape.ZipShapeEditTextView
+import com.zip.zipandroid.shape.ZipShapeTextView
 import com.zip.zipandroid.utils.EmailValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +48,7 @@ class SetInfoEditView : RelativeLayout {
 
     private var infoArrow: ImageView? = null
     private var infoEdit: ZipShapeEditTextView? = null
+    private var infoPlaceTv: ZipShapeTextView? = null
     private var infoX: TextView? = null
     private var infoTopName: TextView? = null
     private var infoMaxLength: TextView? = null
@@ -68,13 +72,14 @@ class SetInfoEditView : RelativeLayout {
         context ?: return
         var view = LayoutInflater.from(context).inflate(R.layout.view_set_info_edit, this, true)
         infoEdit = view.findViewById(R.id.set_info_edit)
+        infoPlaceTv = view.findViewById(R.id.set_info_place_tv)
         val infoViewCl = view.findViewById<View>(R.id.info_view_cl)
         infoX = view.findViewById(R.id.set_info_xx)
         infoArrow = view.findViewById(R.id.set_info_arrow)
         infoTopName = view.findViewById(R.id.set_info_top_name)
         infoMaxLength = view.findViewById(R.id.set_info_max_length)
         set_info_left_number = view.findViewById(R.id.set_info_left_number)
-
+//        infoEdit?.movementMethod = LinkMovementMethod.getInstance()
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.setInfoStyle)
 
@@ -111,6 +116,8 @@ class SetInfoEditView : RelativeLayout {
             infoViewCl.setOnDelayClickListener {
                 infoViewClick?.invoke()
             }
+            infoEdit?.hide(false)
+            infoPlaceTv?.show()
         }
         if (inputInfoType == TYPE_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
@@ -233,6 +240,41 @@ class SetInfoEditView : RelativeLayout {
             it.setBackgroundColor(Color.parseColor("#F7F7F7"))
 
             it.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    if (inputInfoType == TYPE_NAME) {
+                        if ((it.text?.length ?: 0) < 2) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Please enter a valid name")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        return@setOnFocusChangeListener
+                    }
+                    if (inputInfoType == TYPE_ADDRESS) {
+                        if ((it.text?.length ?: 0) < 2) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Minimum input length of two digits")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        return@setOnFocusChangeListener
+                    }
+                    if (inputInfoType == TYPE_BVN) {
+                        if ((it.text?.length ?: 0) < 11) {
+                            it.tag = "error"
+                            ToastUtils.showShort("The BVN format is invalid, please check")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        }else{
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                    }
+                }
+
                 it.setBackgroundColor(
                     when {
                         it.tag == "error" -> Color.parseColor("#FFF1F1")
@@ -327,6 +369,8 @@ class SetInfoEditView : RelativeLayout {
                                 Color.parseColor("#F1F5FF")
                             )
                         } else {
+                            ToastUtils.showShort("Please enter a valid email address")
+                            it.tag = "error"
                             it.setBackgroundColor(
                                 Color.parseColor("#FFF1F1")
                             )
@@ -496,6 +540,8 @@ class SetInfoEditView : RelativeLayout {
 
     fun setContentText(text: String) {
         infoEdit?.setText(text)
+        infoPlaceTv?.setText(text)
+        infoPlaceTv?.isSelected = true
     }
 
     fun setTopName(topName: String) {
@@ -512,6 +558,11 @@ class SetInfoEditView : RelativeLayout {
 
     fun getEditText(): String {
         return infoEdit?.text.toString()
+    }
+
+    fun getSmallEditText():String{
+        return infoEdit?.text.toString().lowercase()
+
     }
 
     var preEmail = ""

@@ -16,6 +16,7 @@
         android:imeOptions="actionNext"
         android:paddingLeft="15dp"
         android:paddingBottom="10dp"
+        android:scrollHorizontally="true"
         android:singleLine="true"
         android:textColor="@color/black"
         android:textColorHint="#FFD4D4D4"
@@ -24,6 +25,28 @@
         app:setv_radius="13dp">
 
     </com.zip.zipandroid.shape.ZipShapeEditTextView>
+
+    <com.zip.zipandroid.shape.ZipShapeTextView
+        android:id="@+id/set_info_place_tv"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="69dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@null"
+        android:ellipsize="marquee"
+        android:gravity="bottom"
+        android:hint="Please choose"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#FFD4D4D4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_tx_background="#FFF7F7F7"
+        app:sv_tx_radius="13dp">
+
+    </com.zip.zipandroid.shape.ZipShapeTextView>
+
 
     <TextView
         android:id="@+id/set_info_left_number"
