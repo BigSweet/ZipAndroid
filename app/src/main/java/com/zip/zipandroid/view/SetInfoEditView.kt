@@ -213,6 +213,18 @@ class SetInfoEditView : RelativeLayout {
                         it.clearFocus()
                         false
                     }
+                    if (inputInfoType == TYPE_BANK) {
+                        if ((it.text?.length ?: 0) < 10) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Bank account error. Please check")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        it.clearFocus()
+                        false
+                    }
                     if (inputInfoType == TYPE_PHONE) {
                         if ((it.text?.length ?: 0) !in 10..11) {
                             ToastUtils.showShort("Please enter 10 or 11 digits")
@@ -267,6 +279,18 @@ class SetInfoEditView : RelativeLayout {
                         }
                         return@setOnFocusChangeListener
                     }
+                    if (inputInfoType == TYPE_BANK) {
+                        if ((it.text?.length ?: 0) < 10) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Bank account error. Please check")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        return@setOnFocusChangeListener
+                    }
+
                     if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
@@ -385,6 +409,11 @@ class SetInfoEditView : RelativeLayout {
                             it.tag = "completed"
                             it.setBackgroundColor(
                                 Color.parseColor("#F1F5FF")
+                            )
+                        }else{
+                            it.tag = "error"
+                            it.setBackgroundColor(
+                                Color.parseColor("#FFF1F1")
                             )
                         }
                     }

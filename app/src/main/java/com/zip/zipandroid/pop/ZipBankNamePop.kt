@@ -24,6 +24,9 @@ class ZipBankNamePop(context: Context, val list: ZipBankNameListBean?) : ZipBase
             zipBankAdapter.selectPosition = i
             zipBankAdapter.notifyDataSetChanged()
         }
+        mBinding.bankNameCloseTv.setOnDelayClickListener {
+            dismiss()
+        }
         mBinding.sideBar.setOnStrSelectCallBack { index, selectStr ->
             for (i in 0 until zipBankAdapter.getData().size) {
                 if (selectStr.equals(zipBankAdapter.getData().get(i).firstLetter, true)) {

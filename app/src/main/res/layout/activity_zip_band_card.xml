@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
-                    android:text="      Your account information will be protected with encryptionlevel security, so please feel at ease when providing the relevant details."
+                    android:text="      Your account information will be protected with encryption level security, so please feel at ease when providing the relevant details."
                     android:textColor="#ff23c948"
 
                     android:textSize="12sp"
