@@ -407,7 +407,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Further optimize the network usage of the application. By obtaining Wi-Fi information, we can better evaluate the security and reliability of the current network environment. \n Permission information and data will be encrypted and uploaded to the server: http//www.flaminghorizonglobalservices.com/"
+                                android:text="Encrypt data transmitted over the Internet to ensure the security of user data during transmission. \n Permission information and data will be encrypted and uploaded to the server: http//www.flaminghorizonglobalservices.com/"
                                 android:textColor="#ff000000"
                                 android:textSize="12sp"
                                 app:layout_constraintTop_toBottomOf="@+id/zip_per_inter_icon" />
@@ -424,6 +424,7 @@
             <com.zip.zipandroid.shape.ZipShapeConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="19dp"
                 android:paddingVertical="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:sv_scl_background="@color/white">
@@ -446,10 +447,12 @@
 
                 <com.zip.zipandroid.shape.ZipShapeTextView
                     android:id="@+id/private_sure_tv"
-                    android:layout_width="163dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:gravity="center"
-                    android:text="Confirm"
+                    android:paddingHorizontal="8dp"
+                    android:text="I acknowledge and accept the requested permissions"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     android:textStyle="bold"
