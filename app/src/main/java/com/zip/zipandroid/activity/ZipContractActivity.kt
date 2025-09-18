@@ -22,6 +22,7 @@ import com.zip.zipandroid.event.ZipFinishInfoEvent
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.SetInfoEditView
@@ -70,6 +71,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         super.onBackPressed()
         ZipTrackUtils.track("OutContactInfo")
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ZipTrackUtils.track("InContactInfo")
@@ -88,11 +90,20 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 //        mViewBind.contractRv.adapter = adapter
         adapter.bindToRecyclerView(mViewBind.contractRv)
 
-        adapter.popClick = {
-            val setInfoView = adapter.getViewByPosition(it, (R.id.item_contract_relation_tv)) as SetInfoEditView?
-            if (setInfoView != null) {
-                showSelectPop(adapter.data.get(it).title, dicInfoBean?.relation, SingleCommonSelectPop.relation_type, adapter.data.get(it).relation
-                    ?: 0, setInfoView, it)
+        adapter.popClick = object : ((Int, Int) -> Unit) {
+
+
+            override fun invoke(position: Int, id: Int) {
+                val setInfoView = adapter.getViewByPosition(position, (R.id.item_contract_relation_tv)) as SetInfoEditView?
+                if (setInfoView != null) {
+                    if (id == 1) {
+                        showSelectPop(adapter.data.get(position).title, dicInfoBean?.familyRelation, SingleCommonSelectPop.relation_type, adapter.data.get(position).relation
+                            ?: 0, setInfoView, position)
+                    } else {
+                        showSelectPop(adapter.data.get(position).title, dicInfoBean?.relation, SingleCommonSelectPop.relation_type, adapter.data.get(position).relation
+                            ?: 0, setInfoView, position)
+                    }
+                }
             }
         }
         adapter.checkCompleteListener = {
@@ -118,7 +129,6 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
         mViewModel.getPersonInfoDic()
         mViewModel.getUserInfo()
-
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             val list = convertData()
@@ -142,11 +152,11 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         val list = arrayListOf<UploadContractBean>()
         adapter.data.forEachIndexed { index, zipContractBean ->
             if ((zipContractBean.relation ?: -1) > -1) {
-                val nameValue = adapter.getViewByPosition(index, R.id.item_contract_name_tv) as SetInfoEditView
-                val numberValue = adapter.getViewByPosition(index, R.id.item_contract_number_tv) as SetInfoEditView
-                val relationValue = adapter.getViewByPosition(index, R.id.item_contract_relation_tv) as SetInfoEditView
-                val bean = UploadContractBean(nameValue.getEditText(), numberValue.getRealPhone(), zipContractBean.relation
-                    ?: -1, relationValue.getEditText())
+                val nameValue = zipContractBean.contactName
+                val numberValue = zipContractBean.contactPhone
+                val relationValue = zipContractBean.relationValue
+                val bean = UploadContractBean(nameValue, numberValue, zipContractBean.relation
+                    ?: -1, relationValue)
                 list.add(bean)
             }
         }
@@ -169,27 +179,31 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         var secondPhone = ""
         twoList.forEachIndexed { index, zipContractBean ->
 
-            val nameValue = adapter.getViewByPosition(index, R.id.item_contract_name_tv) as SetInfoEditView
-            val numberValue = adapter.getViewByPosition(index, R.id.item_contract_number_tv) as SetInfoEditView
-            val relationValue = adapter.getViewByPosition(index, R.id.item_contract_relation_tv) as SetInfoEditView
+            val nameValue = zipContractBean.contactName
+            val numberValue = zipContractBean.contactPhone
+            val relationValue = zipContractBean.relationValue
 
-            if (index == 0 && !numberValue.getEditText().isNullOrEmpty()) {
-                firstPhone = numberValue.getEditText()
+            if (index == 0 && !numberValue.isNullOrEmpty()) {
+                firstPhone = numberValue
             }
 
-            if (!nameValue.getEditText().isNullOrEmpty() && !numberValue.getEditText().isNullOrEmpty() && !relationValue.getEditText().isNullOrEmpty()) {
+            if (!nameValue.isNullOrEmpty() && !numberValue.isNullOrEmpty() && !relationValue.isNullOrEmpty()) {
                 twoDone++
             }
-            if (index == 1 && !numberValue.getEditText().isNullOrEmpty()) {
-                secondPhone = numberValue.getEditText()
+            if (index == 1 && !numberValue.isNullOrEmpty()) {
+                secondPhone = numberValue
             }
         }
         if (!secondPhone.isNullOrEmpty() && !firstPhone.isNullOrEmpty() && secondPhone == firstPhone) {
-            ToastUtils.showShort("Do not enter the same number")
+            ToastUtils.showShort("This phone number has already been used. Please enter a different one")
         }
         if (twoDone == 2 && secondPhone != firstPhone) {
             //俩个都填好了而且电话不一样
             done = true
+        }
+        if (firstPhone == UserInfoUtils.getUserPhone() || secondPhone == UserInfoUtils.getUserPhone()) {
+            ToastUtils.showShort("The contact’s mobile number matches your own. Please enter a different number")
+            done = false
         }
         if (done) {
             footAddIcon?.setImageResource(R.drawable.done_foot_add_icon)
@@ -210,7 +224,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             override fun invoke(tv: String, position: Int, type: Int) {
                 val item = adapter.data.get(adapterPosition)
                 item.relation = position
-//                item.relationValue = tv
+                item.relationValue = tv
                 infoView.setContentText(tv)
 //                adapter.notifyItemChanged(adapterPosition)
                 checkAdapterPreTwoDone()
@@ -259,7 +273,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
                     }
                     adapter.setNewData(initList)
-                }else{
+                } else {
                     initList.add(ZipContractBean(1, "Family member", true))
                     initList.add(ZipContractBean(2, "Colleague/Friend", true))
                     adapter.setNewData(initList)

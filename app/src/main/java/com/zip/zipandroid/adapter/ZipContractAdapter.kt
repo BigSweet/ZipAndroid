@@ -10,7 +10,7 @@ import com.zip.zipandroid.view.SetInfoEditView
 
 class ZipContractAdapter : BaseQuickAdapter<ZipContractBean, BaseViewHolder>(R.layout.item_zip_contract) {
 
-    var popClick: ((Int) -> Unit)? = null
+    var popClick: ((Int, Int) -> Unit)? = null
     var checkCompleteListener: (() -> Unit)? = null
     override fun convert(holder: BaseViewHolder, item: ZipContractBean) {
         val item_contract_main_title_xx = holder.getView<TextView>(R.id.item_contract_main_title_xx)
@@ -21,7 +21,7 @@ class ZipContractAdapter : BaseQuickAdapter<ZipContractBean, BaseViewHolder>(R.l
         }
         val item_contract_relation_tv = holder.getView<SetInfoEditView>(R.id.item_contract_relation_tv)
         item_contract_relation_tv.infoViewClick = {
-            popClick?.invoke(holder.adapterPosition)
+            popClick?.invoke(holder.adapterPosition, item.id)
         }
 
         if (!item.relationValue.isNullOrEmpty()) {
@@ -31,16 +31,25 @@ class ZipContractAdapter : BaseQuickAdapter<ZipContractBean, BaseViewHolder>(R.l
         if (!item.contactName.isNullOrEmpty()) {
             item_contract_name_tv.setContentText(item.contactName.toString())
         }
+        item_contract_name_tv.textChangeListener = {
+            item.contactName = item_contract_name_tv.getEditText()
+        }
         item_contract_name_tv.completeListener = {
-//            item.contactName = item_contract_name_tv.getEditText()
             checkCompleteListener?.invoke()
         }
         val item_contract_number_tv = holder.getView<SetInfoEditView>(R.id.item_contract_number_tv)
         if (!item.contactPhone.isNullOrEmpty()) {
             item_contract_number_tv.setContentText(item.contactPhone.toString())
         }
+        item_contract_number_tv.textChangeListener = {
+            var realPhone = item_contract_number_tv.getEditText().toString()
+            if (item_contract_number_tv.getEditText()?.length == 11) {
+                realPhone = item_contract_number_tv.getEditText()?.substring(1, (item_contract_number_tv.getEditText()?.length
+                    ?: 1)).toString()
+            }
+            item.contactPhone = realPhone
+        }
         item_contract_number_tv.completeListener = {
-//            item.contactPhone = item_contract_number_tv.getEditText()
             checkCompleteListener?.invoke()
         }
 

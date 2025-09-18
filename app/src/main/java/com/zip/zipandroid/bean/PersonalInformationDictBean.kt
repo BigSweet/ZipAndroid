@@ -15,5 +15,6 @@ data class PersonalInformationDictBean(
     val childrens: List<String>,
     val loanPurpose: List<String>,
     val relation: List<String>,
+    val familyRelation: List<String>,
     val workType: List<String>
 )

@@ -315,6 +315,7 @@ class SetInfoEditView : RelativeLayout {
             }
             it.addTextChangedListener(object : TextWatcher {
                 private var isFormatting = false
+                private var lastValidText = ""
                 private val forbiddenRegex = """[0-9\p{P}\p{S}]""".toRegex()
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -464,7 +465,6 @@ class SetInfoEditView : RelativeLayout {
 
                         // 1. 移除所有空格 + 过滤非法字符
                         val filtered = s.toString()
-                            .replace("\\s+".toRegex(), "")
                             .replace(forbiddenRegex, "")
 
                         // 2. 自动截断超长内容（避免粘贴绕过）
@@ -484,24 +484,93 @@ class SetInfoEditView : RelativeLayout {
                             Color.parseColor("#F1F5FF")
                         )
                         isFormatting = false
+                        textChangeListener?.invoke(s.toString())
                     }
                     if (inputInfoType == TYPE_PHONE) {
                         val input = s?.toString() ?: ""
 
                         // 实时显示错误提示（校验通过时清除错误）
-                        it.error = when {
-                            !input.matches(Regex("\\d+")) -> "Only numbers can be entered"
-                            else -> validatePhoneFormat(input) // 具体格式校验
+//                        it.error = when {
+//                            !input.matches(Regex("\\d+")) -> "Only numbers can be entered"
+//                            else -> validatePhoneFormat(input) // 具体格式校验
+//                        }
+//                        if (!it.error.isNullOrEmpty()) {
+//                            ToastUtils.showShort(it.error)
+//                            it.setBackgroundColor(Color.parseColor("#FFF1F1"))
+//                        } else {
+//                            it.tag = "completed"
+//                            it.setBackgroundColor(
+//                                Color.parseColor("#F1F5FF")
+//                            )
+//                        }
+
+                        if (isFormatting || s==null) {
+                            return
                         }
-                        if (!it.error.isNullOrEmpty()) {
-                            ToastUtils.showShort(it.error)
+                        isFormatting = true
+                        val currentText = s.toString().replace(" ", "") // 移除所有空格进行纯数字处理
+                        val length = currentText.length
+                        // 规则1：如果当前文本为空，清空lastValidText并直接返回
+                        if (currentText.isEmpty()) {
+                            lastValidText = ""
+                            isFormatting = false
+                            return
+                        }
+                        // 规则2：检查首位，决定应用哪套规则
+                        val firstChar = currentText[0]
+                        // --- 10位模式 (首位为1-9) ---
+                        if (firstChar in '1'..'9') {
+                            // 子规则2a：检查是否所有数字都相同（低效但清晰的写法，适用于10位）
+                            val allDigitsSame = currentText.length == 10 && currentText.all { it == firstChar }
+                            if (allDigitsSame) {
+                                // 违反了“不能全部相同”的规则，回退到上一个有效文本
+                                s.replace(0, s.length, lastValidText)
+                                it.error = "The number cannot have all the same digits"
+                                isFormatting = false
+                                it.setBackgroundColor(Color.parseColor("#FFF1F1"))
+                                return
+                            }
+                            // 子规则2b：长度不能超过10
+                            if (length > 10) {
+                                s.replace(0, s.length, lastValidText)
+                                it.error = "enter a maximum of 10 digits."
+                                isFormatting = false
+                                return
+                            }
+
+
+                            val formattedText = currentText
+                            // 清除错误提示（如果之前有）
+                            it.error = null
+                            lastValidText = formattedText
+
+                        } else if (firstChar == '0') {
+                            // 子规则3a：检查第二位不能是0
+                            if (length >= 2 && currentText[1] == '0') {
+                                s.replace(0, s.length, lastValidText)
+                                it.error = "The second digit cannot be 0"
+                                it.setBackgroundColor(Color.parseColor("#FFF1F1"))
+                                isFormatting = false
+                                return
+                            }
+                            val formattedText = currentText
+                            if (s.toString() != formattedText) {
+                                s.replace(0, s.length, formattedText)
+                                it.setSelection(s.length)
+                            }
+                            it.error = null
+                            lastValidText = formattedText
+
+                        }
+                        // --- 无效模式 (首位既不是1-9也不是0，理论上被InputFilter阻止，此为安全备份) ---
+                        else {
+                            s.clear()
+                            it.error = "The first digit must be 1-9 or 0"
                             it.setBackgroundColor(Color.parseColor("#FFF1F1"))
-                        } else {
-                            it.tag = "completed"
-                            it.setBackgroundColor(
-                                Color.parseColor("#F1F5FF")
-                            )
+                            lastValidText = ""
                         }
+                        isFormatting = false
+                        textChangeListener?.invoke(s.toString())
 
                     }
                     if (inputInfoType == TYPE_INCOME) {
@@ -576,6 +645,7 @@ class SetInfoEditView : RelativeLayout {
 
     var completeListener: (() -> Unit)? = null
     var scrollListener: (() -> Unit)? = null
+    var textChangeListener: ((String) -> Unit)? = null
 
     private fun handleInputComplete() {
         completeListener?.invoke()

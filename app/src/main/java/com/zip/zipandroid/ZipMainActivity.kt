@@ -1,6 +1,5 @@
 package com.zip.zipandroid
 
-import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -8,8 +7,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
-import com.zip.zipandroid.activity.ZipOrderNextActivity
-import com.zip.zipandroid.activity.ZipWorkInfoActivity
+import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -19,6 +17,7 @@ import com.zip.zipandroid.fragment.ZipHomeFragment
 import com.zip.zipandroid.fragment.ZipMineFragment
 import com.zip.zipandroid.fragment.ZipOrderListFragment
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.pop.ZipAllPerPop
 import com.zip.zipandroid.pop.ZipDefPerPop
 import com.zip.zipandroid.utils.AllPerUtils
@@ -62,9 +61,10 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.vpMain.setOffscreenPageLimit(mFragments.size)
         ZipEventBusUtils.register(this)
         checkAllPer()
+        mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
-            ZipWorkInfoActivity.start(this)
-//            startActivity(ZipBandCardActivity::class.java)
+//            ZipContractActivity.start(this)
+            startActivity(ZipContractActivity::class.java)
         }
     }
 
@@ -127,7 +127,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             getAllPerData()
         }
     }
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
