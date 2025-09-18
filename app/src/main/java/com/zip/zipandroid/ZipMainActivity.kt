@@ -70,7 +70,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     override fun onResume() {
         super.onResume()
-        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 
         } else {
             noPerPop?.dismiss()
@@ -80,7 +80,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
-        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus, AllPerUtils.smsStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())
@@ -128,11 +128,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         }
     }
 
-    fun getTestPerList(): ArrayList<String> {
-        val list = arrayListOf<String>()
-        list.add(Manifest.permission.READ_SMS)
-        return list
-    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)

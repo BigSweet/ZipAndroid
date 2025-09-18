@@ -69,12 +69,6 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         ZipLoadingUtils.dismiss()
     }
 
-    fun getPerList(): ArrayList<String> {
-        val list = arrayListOf<String>()
-        list.add(Manifest.permission.READ_SMS)
-        list.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        return list
-    }
 
 
     /**
@@ -257,7 +251,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 
     fun getAllPerData() {
         getCalendar()
-        getSms()
+//        getSms()
 //        getPhotoData("VIDEO")
 //        getPhotoData("IMAGE")
 //        getCallLogs()
