@@ -138,7 +138,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     if (!it.creditOrderList?.amountDue.isNullOrEmpty()) {
                         mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
                     }
-                    mViewBind.payingDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                    mViewBind.payingDateTv.setText("Due Date: "+ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val bizId = it.creditOrderList.bizId
                     val lid = it.creditOrderList.lid
                     val amount = it.creditOrderList.amountDue
@@ -154,7 +154,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 if (it.creditOrderList?.status == "OVERDUE") {
                     mViewBind.homeDelayCl.show()
                     mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
-                    mViewBind.delayDateTv.setText(ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                    mViewBind.delayDateTv.setText("Due Date: "+ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val span = SpannableStringBuilder()
                     span.append("Your payment is ")
                     val start = span.length

@@ -450,7 +450,9 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
+                            android:id="@+id/order_complete_cl"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="15dp">
 
