@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zip.zipandroid.shape.ZipShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.zip.zipandroid.shape.ZipShapeConstraintLayout
+        android:id="@+id/set_email_place_bg"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_scl_background="#F7F7F7"
+        app:sv_scl_radius="13dp"></com.zip.zipandroid.shape.ZipShapeConstraintLayout>
+
+    <com.zip.zipandroid.shape.ZipShapeEditTextView
+        android:id="@+id/set_info_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="Please choose"
+        android:imeOptions="actionNext"
+        android:paddingLeft="15dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="41dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#FFD4D4D4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="123">
+
+    </com.zip.zipandroid.shape.ZipShapeEditTextView>
+
+    <com.zip.zipandroid.shape.ZipShapeTextView
+        android:id="@+id/set_info_place_tv"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@null"
+        android:ellipsize="marquee"
+        android:gravity="bottom"
+        android:hint="Please choose"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#FFD4D4D4"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_tx_background="#FFF7F7F7"
+        app:sv_tx_radius="13dp">
+
+    </com.zip.zipandroid.shape.ZipShapeTextView>
+
+
+    <TextView
+        android:id="@+id/set_info_left_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="+234"
+        android:textColor="#ff000000"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
+        app:layout_constraintLeft_toLeftOf="@+id/set_info_edit"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/set_info_xx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="*"
+        android:textColor="#fff54b4b"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="@+id/set_info_edit"
+        app:layout_constraintTop_toTopOf="@+id/set_info_edit" />
+
+    <ImageView
+        android:id="@+id/set_info_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="13dp"
+        android:src="@drawable/zip_select_arrow_icon"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
+        app:layout_constraintRight_toRightOf="@+id/set_info_edit">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/set_info_top_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marital Status"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/set_info_xx"
+        app:layout_constraintLeft_toRightOf="@+id/set_info_xx"
+        app:layout_constraintTop_toTopOf="@+id/set_info_xx" />
+
+    <TextView
+        android:id="@+id/set_info_max_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="11dp"
+        android:text="0/11"
+        android:textColor="#ffd4d4d4"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/set_info_edit"
+        app:layout_constraintRight_toRightOf="@+id/set_info_edit" />
+
+
+    <View
+        android:id="@+id/info_view_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </View>
+
+
+</com.zip.zipandroid.shape.ZipShapeConstraintLayout>

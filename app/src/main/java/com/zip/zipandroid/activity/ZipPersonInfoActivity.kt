@@ -28,6 +28,7 @@ import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
+import com.zip.zipandroid.view.SetEmailInfoEditView
 import com.zip.zipandroid.view.SetInfoEditView
 import com.zip.zipandroid.viewmodel.PersonInfoViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -162,16 +163,24 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         focusChangeCheck(mViewBind.detailAddressInfoView)
         mViewBind.emailInfoView.scrollListener = {
             // 平滑滚动到底部
-            mViewBind.perInfoScroll.postDelayed({
-                // 计算Y轴要滚动的目标位置：内容总高度 - ScrollView的可见高度
-                mViewBind.perInfoScroll.smoothScrollBy(0, 150)
-            }, 200)
+            scroolToBottom()
+        }
+        mViewBind.emailInfoView.textChangeListener = {
+//            scroolToBottom()
+//            mViewBind.perInfoScroll.smoothScrollBy(0, 150)
         }
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             mViewModel.checkBvn(mViewBind.bvnInfoView.getEditText())
             ZipTrackUtils.track("SubmitPersonalInfo")
         }
+    }
+
+    private fun scroolToBottom() {
+        mViewBind.perInfoScroll.postDelayed({
+            // 计算Y轴要滚动的目标位置：内容总高度 - ScrollView的可见高度
+            mViewBind.perInfoScroll.smoothScrollBy(0, 150)
+        }, 200)
     }
 
     val emailAdapter = ZipPersonInfoEmailAdapter()
@@ -270,6 +279,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.sex.isNullOrEmpty()) {
                 //0 女 1 男
                 singleButtonAdapter.selectPosition = it.sex.toInt()
+                sex = it.sex.toInt()
                 singleButtonAdapter.notifyDataSetChanged()
             }
             if (it.birthDate > 0) {
@@ -345,6 +355,13 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             age--  // 如果今年还没过生日，年龄减1
         }
         return age
+    }
+
+    fun focusChangeCheck(infoView: SetEmailInfoEditView) {
+        infoView.completeListener = {
+            checkAllDone()
+        }
+
     }
 
 
