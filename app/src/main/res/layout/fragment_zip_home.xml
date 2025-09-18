@@ -107,7 +107,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
-                                android:text="91~180 days"
+                                android:text="90~180 days"
                                 android:textColor="#ff000000"
                                 android:textSize="11dp"
                                 android:textStyle="bold"
@@ -940,8 +940,8 @@ Your Special Credit Limit!"
                                 android:id="@+id/zip_home_zip_sl"
                                 android:layout_width="0dp"
                                 android:layout_height="162dp"
-                                android:layout_marginRight="14dp"
                                 android:layout_marginTop="11dp"
+                                android:layout_marginRight="14dp"
                                 android:layout_weight="1"
                                 app:sv_scl_background_end="#DED8FD"
                                 app:sv_scl_background_start="#F1EEFF"
@@ -1002,7 +1002,7 @@ Get a Bonus"
                                     app:layout_constraintRight_toRightOf="parent" />
 
                                 <TextView
-                                    android:layout_width="190dp"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="17dp"
                                     android:layout_marginTop="18dp"
@@ -1011,6 +1011,7 @@ Get a Bonus"
                                     android:textSize="15sp"
                                     android:textStyle="bold"
                                     app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView

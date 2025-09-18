@@ -138,7 +138,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                     if (!it.creditOrderList?.amountDue.isNullOrEmpty()) {
                         mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
                     }
-                    mViewBind.payingDateTv.setText("Due Date: "+ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                    mViewBind.payingDateTv.setText("Due Date: " + ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val bizId = it.creditOrderList.bizId
                     val lid = it.creditOrderList.lid
                     val amount = it.creditOrderList.amountDue
@@ -154,7 +154,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 if (it.creditOrderList?.status == "OVERDUE") {
                     mViewBind.homeDelayCl.show()
                     mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
-                    mViewBind.delayDateTv.setText("Due Date: "+ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
+                    mViewBind.delayDateTv.setText("Due Date: " + ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val span = SpannableStringBuilder()
                     span.append("Your payment is ")
                     val start = span.length
@@ -226,7 +226,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
         mViewModel.cardListLiveData.observe(this) {
             if (it.isNullOrEmpty()) {
-                ZipBandCardActivity.start(requireActivity(),false)
+                ZipBandCardActivity.start(requireActivity(), false)
 //                startActivity(ZipBandCardActivity::class.java)
             } else {
                 //去额度计算页面
@@ -243,12 +243,15 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             } else {
                 mViewBind.noAdShowSl.hide()
                 mViewBind.zipHomeZipSl.show()
-                mViewBind.zipHomeZipSl.setOnDelayClickListener {
-                    ToastUtils.showShort("Preparations for the event are underway. Please look forward to it!")
-                }
                 mViewBind.homeFirstAdTv.setText(it.first().advertContent)
                 Glide.with(requireActivity()).load(it.first().imgUrl).into(mViewBind.homeFirstAdIv)
             }
+        }
+        mViewBind.zipHomeZipSl.setOnDelayClickListener {
+            ToastUtils.showShort("Preparations for the event are underway. Please look forward to it!")
+        }
+        mViewBind.noAdShowSl.setOnDelayClickListener {
+            ToastUtils.showShort("Preparations for the event are underway. Please look forward to it!")
         }
     }
 
