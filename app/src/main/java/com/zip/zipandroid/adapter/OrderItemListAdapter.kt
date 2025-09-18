@@ -66,6 +66,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         if (!item.amountDue.isNullOrEmpty()) {
             zip_item_order_amount_tv.setText(item.amountDue.toDouble().toN())
         }
+        zip_order_item_repay_btn.setText("Settle Now")
 
 
         zip_order_item_show_detail_tv.hide()
@@ -204,6 +205,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             //待还款
             zip_order_item_show_detail_tv.show()
             zip_order_item_repay_btn.show()
+            zip_order_item_repay_btn.setText("Repay Now")
             zip_order_item_show_detail_tv.setBackgroundResource(R.drawable.bg_order_repay_detail)
             zip_item_order_inner_top_tv.setBackground(Color.parseColor("#FFC1D2FF"))
             zip_order_item_main_cl.setBackground2(Color.parseColor("#FF3667F0"))

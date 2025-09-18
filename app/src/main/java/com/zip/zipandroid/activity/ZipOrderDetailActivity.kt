@@ -34,6 +34,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         bizId = intent.getStringExtra("bizId") ?: ""
         queryType = intent.getIntExtra("queryType", 0)
         mViewModel.getOrderListInfo(queryType)
+        showLoading()
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
             finish()
@@ -46,6 +47,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
     var orderData: ZipOrderListBeanItem? = null
     override fun createObserver() {
         mViewModel.orderListLiveData.observe(this) {
+            dismissLoading()
             orderData = it.find {
                 it.bizId == bizId
             }
@@ -60,6 +62,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
         mViewBind.detailTopOverTv.hide()
         mViewBind.penInterUpdateTv.hide()
+        mViewBind.delayInterCl.hide()
         mViewBind.amountUpdateTv.visible = status == "PARTIAL"
         orderData?.let {
             mViewBind.detailRepaidTv.setText(it?.amountDue?.toDouble()?.toN())
@@ -95,6 +98,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
         }
         mViewBind.detailSettleNowTv.hide()
+        mViewBind.detailSettleNowTv.setText("Settle Now")
         mViewBind.detailSettleNowTv.setOnDelayClickListener {
             PayOrderDetailActivity.start(this, bizId, orderData?.lid.toString(), orderData?.amountDue.toString())
         }
@@ -113,6 +117,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         }
         if (status == "OVERDUE") {
             mViewBind.penInterUpdateTv.show()
+            mViewBind.delayInterCl.show()
             mViewBind.detailSettleNowTv.show()
             mViewBind.detailSettleNowTv.setBackground(Color.parseColor("#FFFF4343"))
             mViewBind.detailRepaidTv.setTextColor(Color.parseColor("#FFFF4343"))
@@ -125,6 +130,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         if (status == "NOTREPAID" || status == "PARTIAL" || status == "LENDING" || status == "PASSED") {
             mViewBind.detailRepaidTv.setTextColor(Color.parseColor("#FF3667F0"))
             mViewBind.detailSettleNowTv.show()
+            mViewBind.detailSettleNowTv.setText("Repay Now")
             mViewBind.detailSettleNowTv.setBackground(Color.parseColor("#FF3667F0"))
 
         }

@@ -9,6 +9,7 @@ import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.ZipOrderListBeanItem
 import com.zip.zipandroid.databinding.ActivityPayOrderDetailBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.ktx.visible
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.OrderItemViewModel
 
@@ -41,6 +42,7 @@ class PayOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Repayment")
 
 
+        showLoading()
         mViewModel.getRepayChannelList(bizId)
         mViewBind.payAccountNumberCopy.setOnDelayClickListener {
             ClipboardUtils.copyText(mViewBind.accountNumberTv.text.toString())
@@ -57,6 +59,7 @@ class PayOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
     override fun createObserver() {
         mViewModel.orderListLiveData.observe(this) {
+            dismissLoading()
             orderData = it.find {
                 it.bizId == bizId
             }
@@ -88,6 +91,7 @@ class PayOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         mViewBind.detailOrderTv.setText(data?.bizId.toString())
         mViewBind.detailRepaidTv.setText(data?.amountDue?.toDouble()?.toN())
         mViewBind.detailInstallTv.setText("Installment" + data?.period.toString() + "/" + data?.stageCount.toString())
+        mViewBind.detailInstallTv.visible = (data?.stageCount ?: 1) > 1
 
 
     }

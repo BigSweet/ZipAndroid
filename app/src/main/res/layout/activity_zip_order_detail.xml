@@ -193,6 +193,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
+                            android:id="@+id/delay_inter_cl"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="15dp">
