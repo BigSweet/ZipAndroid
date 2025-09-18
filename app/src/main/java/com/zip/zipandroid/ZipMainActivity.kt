@@ -87,7 +87,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             val pop = ZipAllPerPop(getContext())
             pop.allPerFail = {
                 //退出登录，关闭界面
-                UserInfoUtils.clear()
+//                UserInfoUtils.clear()
                 finish()
             }
             pop.allPerSuccess = {
@@ -113,7 +113,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
                                     .asCustom(noPerPop).show()
                             } else {
                                 if (!permissionsDenied.isNullOrEmpty()) {
-                                    UserInfoUtils.clear()
+//                                    UserInfoUtils.clear()
                                     finish()
                                 }
                             }

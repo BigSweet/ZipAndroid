@@ -116,8 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    tools:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view">
+                    app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
+                    tools:visibility="gone">
 
                     <com.zip.zipandroid.view.SetInfoEditView
                         android:id="@+id/school_name_info_view"
@@ -171,10 +171,10 @@
                         android:layout_marginTop="15dp"
                         app:infoHintName="e.g. 10000"
                         app:infoTopName="Monthly Income"
+                        app:inputInfoType="6"
                         app:layout_constraintTop_toBottomOf="@+id/school_detail_name_info_view"
                         app:showBottomNumber="false"
                         app:showInfoArrow="false"
-                        app:inputInfoType="6"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -238,8 +238,8 @@
                         app:layout_constraintTop_toBottomOf="@+id/add_place_xx">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
                             android:id="@+id/ume_rv"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                         </androidx.recyclerview.widget.RecyclerView>
@@ -254,10 +254,10 @@
                         android:layout_marginTop="15dp"
                         app:infoHintName="In months, e.g. 10"
                         app:infoTopName="Length of unemployment"
+                        app:inputInfoType="7"
                         app:layout_constraintTop_toBottomOf="@+id/add_icome_ll"
                         app:showBottomNumber="false"
                         app:showInfoArrow="false"
-                        app:inputInfoType="7"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -270,10 +270,10 @@
                         android:layout_marginTop="15dp"
                         app:infoHintName="e.g. 10000"
                         app:infoTopName="Monthly Income"
+                        app:inputInfoType="6"
                         app:layout_constraintTop_toBottomOf="@+id/length_of_um_view"
                         app:showBottomNumber="false"
                         app:showInfoArrow="false"
-                        app:inputInfoType="6"
                         app:showX="true">
 
                     </com.zip.zipandroid.view.SetInfoEditView>
@@ -389,25 +389,37 @@
         </androidx.core.widget.NestedScrollView>
 
 
-        <com.zip.zipandroid.shape.ZipShapeTextView
-            android:id="@+id/info_next_btn"
+        <com.zip.zipandroid.shape.ZipShapeRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="33dp"
-            android:layout_marginBottom="34dp"
-            android:gravity="center"
-            android:text="Next"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:textStyle="bold"
+            android:layout_height="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:sv_tx_background="#FF3667F0"
-            app:sv_tx_disable_background="#FFAAC0FB"
-            app:sv_tx_disable_color="@color/white"
-            app:sv_tx_enable="false"
-            app:sv_tx_radius="8dp">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:sv_rl_background="@color/white">
 
-        </com.zip.zipandroid.shape.ZipShapeTextView>
+            <com.zip.zipandroid.shape.ZipShapeTextView
+                android:id="@+id/info_next_btn"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="33dp"
+                android:layout_marginBottom="34dp"
+                android:gravity="center"
+                android:text="Next"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:sv_tx_background="#FF3667F0"
+                app:sv_tx_disable_background="#FFAAC0FB"
+                app:sv_tx_disable_color="@color/white"
+                app:sv_tx_enable="false"
+                app:sv_tx_radius="8dp">
+
+            </com.zip.zipandroid.shape.ZipShapeTextView>
+
+        </com.zip.zipandroid.shape.ZipShapeRelativeLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
