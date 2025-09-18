@@ -614,6 +614,12 @@ class SetInfoEditView : RelativeLayout {
         return infoEdit?.text.toString()
     }
 
+    fun clearText() {
+        infoEdit?.setText("")
+        infoPlaceTv?.setText("")
+        infoEdit?.setBackgroundColor(Color.parseColor("#f7f7f7"))
+    }
+
     fun getSmallEditText(): String {
         return infoEdit?.text.toString().lowercase()
 

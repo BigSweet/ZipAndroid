@@ -47,6 +47,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         super.onBackPressed()
         ZipTrackUtils.track("OutWorkInfo")
     }
+
     override fun onDestroy() {
         super.onDestroy()
 
@@ -164,7 +165,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             }
         }
         mViewBind.schoolTimeWorkInfoView.infoViewClick = {
-            showBirthDayPickView("The time school begins") {
+            showBirthDayPickView("Enrollment Date") {
                 val calendar = it
                 val day = calendar[Calendar.DATE]
                 val realDay = ZipStringUtils.addZero(day)
@@ -208,7 +209,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     var addressUploadBean = AddressUploadBean("", "", "", "")
     var industry = 0//职业下标
     var industryName = ""//职业名字
-    var emp_status = 0//就业状态
+    var emp_status = -1//就业状态
 
     fun checkFreeDone() {
         val done = mViewBind.incomeInfoView.getEditIsComplete() &&
@@ -263,9 +264,15 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             override fun invoke(tv: String, position: Int, type: Int) {
                 if (type == SingleCommonSelectPop.emp_status_type) {
 
-                    emp_status = position
-                    //检测显示哪些
-                    checkEmpStatus(position)
+                    if (position != emp_status) {
+                        emp_status = position  //检测显示哪些
+                        checkEmpStatus(position)
+                        if (position in 0..3) {
+                            //清空数据？
+                            clearCompanyData()
+                        }
+                    }
+
 
                 }
                 if (type == SingleCommonSelectPop.occ_type) {
@@ -275,6 +282,15 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 checkDoneByType()
             }
         })
+    }
+
+    private fun clearCompanyData() {
+        mViewBind.companyNameInfoView.clearText()
+        mViewBind.companyAddressInfoView.clearText()
+        mViewBind.detailWorkInfoView.clearText()
+        mViewBind.payDayView.clearText()
+        mViewBind.incomeInfoView.clearText()
+        mViewBind.timeWorkInfoView.clearText()
     }
 
     private fun checkEmpStatus(position: Int) {
