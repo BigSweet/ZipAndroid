@@ -209,15 +209,20 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
     private var lastValidText = ""
 
     private fun getZipCode() {
+        var realPhone = getRealPhone()
+        mViewModel.getCode("234" + realPhone)
+        UserInfoUtils.setUserPhone("234" + realPhone)
+        KeyboardUtils.hideSoftInput(this)
+        showLoading()
+    }
+
+    private fun getRealPhone(): String {
         var realPhone = mViewBind.zipLoginEdit.text.toString()
         if (mViewBind.zipLoginEdit.text?.length == 11) {
             realPhone = mViewBind.zipLoginEdit.text?.substring(1, (mViewBind.zipLoginEdit.text?.length
                 ?: 1)).toString()
         }
-        mViewModel.getCode("234" + realPhone)
-        UserInfoUtils.setUserPhone("234" + realPhone)
-        KeyboardUtils.hideSoftInput(this)
-        showLoading()
+        return realPhone
     }
 
     override fun onStop() {
@@ -234,7 +239,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                 ?: "https://www.baidu.com"//隐私协议
         }
         mViewModel.codeLiveData.observe(this) {
-            ZipCodeActivity.start(this, "234" + mViewBind.zipLoginEdit.text.toString(), it?.code
+            ZipCodeActivity.start(this, "234" + getRealPhone(), it?.code
                 ?: "")
             dismissLoading()
         }
