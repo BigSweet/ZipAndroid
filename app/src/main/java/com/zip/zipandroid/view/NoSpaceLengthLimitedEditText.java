@@ -25,7 +25,7 @@ public class NoSpaceLengthLimitedEditText extends androidx.appcompat.widget.AppC
 
     private void init() {
         // 默认最大长度
-        this.maxLength = 10;
+        this.maxLength = 11;
 
         // 监听文本变化
         this.addTextChangedListener(new TextWatcher() {

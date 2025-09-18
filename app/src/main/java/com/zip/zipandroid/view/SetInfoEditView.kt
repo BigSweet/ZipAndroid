@@ -170,10 +170,10 @@ class SetInfoEditView : RelativeLayout {
                         if ((it.text?.length ?: 0) < 1) {
                             it.tag = "error"
                             ToastUtils.showShort("Please enter a valid day")
-                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
-                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                         }
                         it.clearFocus()
                         false
@@ -183,10 +183,10 @@ class SetInfoEditView : RelativeLayout {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
                             ToastUtils.showShort("Please enter a valid name")
-                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
-                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                         }
                         it.clearFocus()
                         false
@@ -195,15 +195,15 @@ class SetInfoEditView : RelativeLayout {
                         if ((it.text?.length ?: 0) !in 10..11) {
                             ToastUtils.showShort("Please enter 10 or 11 digits")
                             it.tag = "error"
-                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             if ((it.text?.length ?: 0) == 10 && (it.text?.get(0) ?: "") == "0") {
                                 ToastUtils.showShort("The first digit cannot be 0")
                                 it.tag = "error"
-                                it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                                it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                             } else {
                                 it.tag = "completed"
-                                it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                                it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                             }
 
 
@@ -215,10 +215,10 @@ class SetInfoEditView : RelativeLayout {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
                             ToastUtils.showShort("Minimum input length of two digits")
-                            it.background.setTint(Color.parseColor("#FFF1F1")) // 错误状态
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
-                            it.background.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                         }
                         false
                     }
@@ -397,7 +397,7 @@ class SetInfoEditView : RelativeLayout {
                         }
                         if (!it.error.isNullOrEmpty()) {
                             ToastUtils.showShort(it.error)
-                            it.background.setTint(Color.parseColor("#FFF1F1"))
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                         } else {
                             it.tag = "completed"
                             it.setBackgroundColor(
@@ -548,7 +548,7 @@ class SetInfoEditView : RelativeLayout {
 
     fun setTagComplete() {
         infoEdit?.tag = "completed"
-        infoEdit?.background?.setTint(Color.parseColor("#F1F5FF")) // 完成状态
+        infoEdit?.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
     }
 
     fun getRawNumericValue(): String {

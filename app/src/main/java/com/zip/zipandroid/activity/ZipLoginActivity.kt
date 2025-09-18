@@ -29,7 +29,7 @@ import com.zip.zipandroid.viewmodel.ZipLoginModel
 class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginBinding>() {
 
 
-    var loginSrc1Select = false
+    var loginSrc1Select = true
 
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -104,12 +104,87 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-            override fun afterTextChanged(s: Editable) {
-                if (s.length > 10 && loginSrc1Select) {
-                    mViewBind.zipLoginBtn.setEnabledPlus(true)
-                } else {
-                    mViewBind.zipLoginBtn.setEnabledPlus(false)
+            override fun afterTextChanged(editable: Editable) {
+                if (isFormatting) {
+                    return
                 }
+                isFormatting = true
+                val currentText = editable.toString().replace(" ", "") // 移除所有空格进行纯数字处理
+                val length = currentText.length
+                // 规则1：如果当前文本为空，清空lastValidText并直接返回
+                if (currentText.isEmpty()) {
+                    lastValidText = ""
+                    isFormatting = false
+                    return
+                }
+                // 规则2：检查首位，决定应用哪套规则
+                val firstChar = currentText[0]
+                // --- 10位模式 (首位为1-9) ---
+                if (firstChar in '1'..'9') {
+                    // 子规则2a：检查是否所有数字都相同（低效但清晰的写法，适用于10位）
+                    val allDigitsSame = currentText.length == 10 && currentText.all { it == firstChar }
+                    if (allDigitsSame) {
+                        // 违反了“不能全部相同”的规则，回退到上一个有效文本
+                        editable.replace(0, editable.length, lastValidText)
+                        mViewBind.zipLoginEdit.error = "The number cannot have all the same digits"
+                        isFormatting = false
+                        mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
+                        return
+                    }
+                    // 子规则2b：长度不能超过10
+                    if (length > 10) {
+                        editable.replace(0, editable.length, lastValidText)
+                        mViewBind.zipLoginEdit?.error = "enter a maximum of 10 digits."
+                        isFormatting = false
+                        return
+                    }
+
+                    if (editable.length > 9 && loginSrc1Select) {
+                        mViewBind.zipLoginBtn.setEnabledPlus(true)
+                        mViewBind.zipLoginEdit?.tag = "completed"
+                        mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#F1F5FF"))
+                    } else {
+                        mViewBind.zipLoginBtn.setEnabledPlus(false)
+                    }
+                    val formattedText = currentText
+                    // 清除错误提示（如果之前有）
+                    mViewBind.zipLoginEdit?.error = null
+                    lastValidText = formattedText
+
+                } else if (firstChar == '0') {
+                    // 子规则3a：检查第二位不能是0
+                    if (length >= 2 && currentText[1] == '0') {
+                        editable.replace(0, editable.length, lastValidText)
+                        mViewBind.zipLoginEdit.error = "The second digit cannot be 0"
+                        mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
+                        isFormatting = false
+                        return
+                    }
+                    val formattedText = currentText
+                    if (editable.toString() != formattedText) {
+                        editable.replace(0, editable.length, formattedText)
+                        mViewBind.zipLoginEdit.setSelection(editable.length)
+                    }
+                    mViewBind.zipLoginEdit.error = null
+                    lastValidText = formattedText
+
+                    if (editable.length > 10 && loginSrc1Select) {
+                        mViewBind.zipLoginBtn.setEnabledPlus(true)
+                        mViewBind.zipLoginEdit?.tag = "completed"
+                        mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#F1F5FF"))
+                    } else {
+                        mViewBind.zipLoginBtn.setEnabledPlus(false)
+                    }
+                }
+                // --- 无效模式 (首位既不是1-9也不是0，理论上被InputFilter阻止，此为安全备份) ---
+                else {
+                    editable.clear()
+                    mViewBind.zipLoginEdit.error = "The first digit must be 1-9 or 0"
+                    mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
+                    lastValidText = ""
+                }
+                isFormatting = false
+
 
             }
 
@@ -128,10 +203,19 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 //        show = Calendar.getInstance()
     }
 
+    private var isFormatting = false
+
+    // 记录上一次有效的文本，用于在输入错误时回退
+    private var lastValidText = ""
 
     private fun getZipCode() {
-        mViewModel.getCode("234" + mViewBind.zipLoginEdit.text.toString())
-        UserInfoUtils.setUserPhone("234" + mViewBind.zipLoginEdit.text.toString())
+        var realPhone = mViewBind.zipLoginEdit.text.toString()
+        if (mViewBind.zipLoginEdit.text?.length == 11) {
+            realPhone = mViewBind.zipLoginEdit.text?.substring(1, (mViewBind.zipLoginEdit.text?.length
+                ?: 1)).toString()
+        }
+        mViewModel.getCode("234" + realPhone)
+        UserInfoUtils.setUserPhone("234" + realPhone)
         KeyboardUtils.hideSoftInput(this)
         showLoading()
     }
@@ -146,7 +230,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
             Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
             Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
             Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//隐私协议
-            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT ?: "https://www.baidu.com"//隐私协议
+            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
+                ?: "https://www.baidu.com"//隐私协议
         }
         mViewModel.codeLiveData.observe(this) {
             ZipCodeActivity.start(this, "234" + mViewBind.zipLoginEdit.text.toString(), it?.code

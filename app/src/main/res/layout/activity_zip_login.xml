@@ -44,17 +44,6 @@
             app:sv_scl_background="#FFF1F5FF"
             app:sv_scl_radius="13dp">
 
-            <TextView
-                android:id="@+id/zip_234_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="+234"
-                android:textColor="#ffafb8d0"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
 
             <com.zip.zipandroid.view.NoSpaceLengthLimitedEditText
                 android:id="@+id/zip_login_edit"
@@ -70,6 +59,18 @@
                 android:textSize="14dp">
 
             </com.zip.zipandroid.view.NoSpaceLengthLimitedEditText>
+
+
+            <TextView
+                android:id="@+id/zip_234_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:text="+234"
+                android:textColor="#ffafb8d0"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </com.zip.zipandroid.shape.ZipShapeConstraintLayout>
 
@@ -98,7 +99,7 @@
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_marginTop="12dp"
-            android:src="@drawable/zip_login_normal_icon"
+            android:src="@drawable/zip_login_select_icon"
             app:layout_constraintLeft_toLeftOf="@+id/zip_login_btn"
             app:layout_constraintTop_toBottomOf="@+id/zip_login_btn" />
 
