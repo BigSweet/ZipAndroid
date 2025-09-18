@@ -28,8 +28,8 @@ import com.zip.zipandroid.bean.AddressInfoBean
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipDesUtil
-import com.zip.zipandroid.utils.ZipProjectUtil.getPhotoLocation
 import com.zip.zipandroid.utils.ZipLoadingUtils
+import com.zip.zipandroid.utils.ZipProjectUtil.getPhotoLocation
 import com.zip.zipandroid.utils.phonedate.ZipPhoneDateProvider
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledAppListener
@@ -68,7 +68,6 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     fun dismissLoading() {
         ZipLoadingUtils.dismiss()
     }
-
 
 
     /**
@@ -115,7 +114,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 
     }
 
-    fun showAddressPickerView(selectListener: ((String,String,String) -> Unit)?) { // 弹出选择器
+    fun showAddressPickerView(selectListener: ((String, String, String) -> Unit)?) { // 弹出选择器
         KeyboardUtils.hideSoftInput(this)
         val pvOptions = OptionsPickerBuilder(this, object : OnOptionsSelectListener {
             override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
@@ -124,8 +123,10 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
                     && options2Items[options1].isNotEmpty()
                 ) options2Items[options1][options2].name else ""
                 val opt3tx: String = if (options2Items.size > 0 && options3Items[options1].isNotEmpty() && options3Items[options1][options2].isNotEmpty()) options3Items[options1][options2][options3].name else ""
-
-                selectListener?.invoke(opt1tx,opt2tx,opt3tx)
+                selectOptions1 = options1
+                selectOptions2 = options2
+                selectOptions3 = options3
+                selectListener?.invoke(opt1tx, opt2tx, opt3tx)
             }
 
         })
@@ -134,6 +135,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         pvOptions.setDividerColor(Color.TRANSPARENT)
         pvOptions.setOutSideCancelable(true)
         pvOptions.setItemVisibleCount(12)
+        pvOptions.setSelectOptions(selectOptions1, selectOptions2, selectOptions3)
         pvOptions.setDividerType(WheelView.DividerType.FILL)
 //        pvOptions.setBgColor(Color.parseColor("#FFE8EEFF"))
         pvOptions.setTextColorCenter(Color.BLACK) //设置选中项文字颜色
@@ -146,6 +148,9 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         realView.show()
     }
 
+    var selectOptions1 = 0
+    var selectOptions2 = 0
+    var selectOptions3 = 0
     var show: Calendar? = null
 
 
@@ -226,15 +231,15 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
 
-    fun showSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int,infoView: SetInfoEditView,selectListener:((String,Int,Int)->Unit)?=null) {
+    fun showSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int, infoView: SetInfoEditView, selectListener: ((String, Int, Int) -> Unit)? = null) {
         //选择完成后检测
         KeyboardUtils.hideSoftInput(this)
         data ?: return
-        val pop = SingleCommonSelectPop(this, title, data, type,selectPosition)
+        val pop = SingleCommonSelectPop(this, title, data, type, selectPosition)
         pop.sureClick = object : ((String, Int, Int) -> Unit) {
             override fun invoke(tv: String, position: Int, type: Int) {
                 infoView.setContentText(tv)
-                selectListener?.invoke(tv,position,type)
+                selectListener?.invoke(tv, position, type)
             }
 
         }
@@ -323,7 +328,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var installAppDates: Array<ZipInstalledApp?>? = null
             if (!Constants.loadInstall) {
-                val installedApp = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp",""))
+                val installedApp = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp", ""))
                 if (!TextUtils.isEmpty(installedApp)) {
                     installAppDates = Gson().fromJson(installedApp, object : TypeToken<Array<ZipInstalledApp?>?>() {}.type)
                 }
@@ -335,7 +340,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var zipCallLogDates: Array<ZipCallLog?>? = null
             if (!Constants.lodaCallInfo) {
-                val callLog = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog",""))
+                val callLog = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog", ""))
                 if (!TextUtils.isEmpty(callLog)) {
                     zipCallLogDates = Gson().fromJson(callLog, object : TypeToken<Array<ZipCallLog?>?>() {}.type)
                 }
@@ -347,7 +352,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var zipSmsMessageDates: Array<ZipSMSMessage?>? = null
             if (!Constants.loadSms) {
-                val smsMessage = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("smsMessage",""))
+                val smsMessage = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("smsMessage", ""))
                 if (!TextUtils.isEmpty(smsMessage)) {
                     zipSmsMessageDates = Gson().fromJson(smsMessage, object : TypeToken<Array<ZipSMSMessage?>?>() {}.type)
                 }
@@ -359,7 +364,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         get() {
             var calendarData: Array<ZipCalendarInfos?>? = null
             if (!Constants.loadCal) {
-                val calendar = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("calendar",""))
+                val calendar = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("calendar", ""))
                 if (!TextUtils.isEmpty(calendar)) {
                     calendarData = Gson().fromJson(calendar, object : TypeToken<Array<ZipCalendarInfos?>?>() {}.type)
                 }

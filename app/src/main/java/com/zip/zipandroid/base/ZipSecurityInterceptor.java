@@ -27,7 +27,7 @@ class ZipSecurityInterceptor implements Interceptor {
         }
 
         Request request = requestBuilder
-                .header("language", "es_MX")
+                .header("language", "es_US")
                 .header("clientId", clientId)
                 .build();
         return chain.proceed(request);

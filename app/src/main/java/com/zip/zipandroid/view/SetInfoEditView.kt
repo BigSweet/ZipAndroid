@@ -56,6 +56,7 @@ class SetInfoEditView : RelativeLayout {
 
     companion object {
         const val TYPE_NAME = 1
+        const val TYPE_COMPANY_OR_SCHOOLD_NAME = 10
         const val TYPE_BVN = 2
         const val TYPE_EMAIL = 3
         const val TYPE_ADDRESS = 4
@@ -120,6 +121,8 @@ class SetInfoEditView : RelativeLayout {
             infoPlaceTv?.show()
         }
         if (inputInfoType == TYPE_NAME) {
+            infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
+        } else if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
         } else if (inputInfoType == TYPE_UME_LENGTH) {
             infoEdit?.inputType = InputType.TYPE_CLASS_NUMBER
@@ -198,6 +201,18 @@ class SetInfoEditView : RelativeLayout {
                         it.clearFocus()
                         false
                     }
+                    if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
+                        if ((it.text?.length ?: 0) < 2) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Please enter a valid company name")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        it.clearFocus()
+                        false
+                    }
                     if (inputInfoType == TYPE_PHONE) {
                         if ((it.text?.length ?: 0) !in 10..11) {
                             ToastUtils.showShort("Please enter 10 or 11 digits")
@@ -221,7 +236,7 @@ class SetInfoEditView : RelativeLayout {
                     if (inputInfoType == TYPE_ADDRESS) {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Minimum input length of two digits")
+                            ToastUtils.showShort("Please enter a valid address,Minimum input length of two digits")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -252,10 +267,21 @@ class SetInfoEditView : RelativeLayout {
                         }
                         return@setOnFocusChangeListener
                     }
+                    if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
+                        if ((it.text?.length ?: 0) < 2) {
+                            it.tag = "error"
+                            ToastUtils.showShort("Please enter a valid company name")
+                            it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
+                        } else {
+                            it.tag = "completed"
+                            it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
+                        }
+                        return@setOnFocusChangeListener
+                    }
                     if (inputInfoType == TYPE_ADDRESS) {
                         if ((it.text?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Minimum input length of two digits")
+                            ToastUtils.showShort("Please enter a valid address,Minimum input length of two digits")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -268,7 +294,7 @@ class SetInfoEditView : RelativeLayout {
                             it.tag = "error"
                             ToastUtils.showShort("The BVN format is invalid, please check")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
-                        }else{
+                        } else {
                             it.tag = "completed"
                             it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                         }
@@ -387,7 +413,6 @@ class SetInfoEditView : RelativeLayout {
                         // 1. 移除所有空格 + 过滤非法字符
                         isFormatting = true
                         val filtered = s.toString()
-                            .replace("\\s+".toRegex(), "")
                             .replace(forbiddenRegex, "")
 
                         // 2. 自动截断超长内容（避免粘贴绕过）
@@ -402,6 +427,35 @@ class SetInfoEditView : RelativeLayout {
                         )
                         isFormatting = false
                     }
+                    if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
+                        //
+                        if (isFormatting || s.isNullOrEmpty()) return
+
+                        isFormatting = true
+
+                        // 1. 移除所有空格 + 过滤非法字符
+                        val filtered = s.toString()
+                            .replace(forbiddenRegex, "")
+
+                        // 2. 自动截断超长内容（避免粘贴绕过）
+                        val truncated = if (filtered.length > 50) filtered.substring(0, 50) else filtered
+
+                        // 3. 首字母大写（保留其他字母原样）
+                        val formatted = truncated.replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                        }
+
+                        // 4. 回写处理后的文本
+                        if (s.toString() != formatted) {
+                            s.replace(0, s.length, formatted)
+                        }
+                        it.tag = "completed"
+                        it.setBackgroundColor(
+                            Color.parseColor("#F1F5FF")
+                        )
+                        isFormatting = false
+                    }
+
                     if (inputInfoType == TYPE_NAME) {
                         //
                         if (isFormatting || s.isNullOrEmpty()) return
@@ -560,7 +614,7 @@ class SetInfoEditView : RelativeLayout {
         return infoEdit?.text.toString()
     }
 
-    fun getSmallEditText():String{
+    fun getSmallEditText(): String {
         return infoEdit?.text.toString().lowercase()
 
     }
