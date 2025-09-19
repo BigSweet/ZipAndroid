@@ -32,6 +32,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         initView(pickerOptions.context);
     }
 
+    TextView address_hint_tv;
+
     private void initView(Context context) {
         setDialogOutSideCancelable();
         initViews();
@@ -74,6 +76,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
+        address_hint_tv = (TextView) findViewById(R.id.address_hint_tv);
 //        optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         wheelOptions = new WheelOptions<>(optionsPicker, mPickerOptions.isRestoreItem);
@@ -155,6 +158,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
         reSetCurrentItems();
+    }
+
+    public TextView getHintView() {
+        return address_hint_tv;
     }
 
 

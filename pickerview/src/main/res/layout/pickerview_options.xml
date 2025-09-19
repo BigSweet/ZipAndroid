@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -40,6 +41,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/address_hint_tv"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="#000000"
+            tools:text="提示问题提示问题提示问题提示问题提示问题提示问题提示问题提示问题提示问题提示问题提示问题"
+            android:layout_height="wrap_content">
+
+        </TextView>
 
         <View
             android:layout_width="match_parent"

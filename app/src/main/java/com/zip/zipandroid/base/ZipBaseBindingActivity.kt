@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.viewbinding.ViewBinding
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
@@ -127,11 +128,22 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
                 selectOptions2 = options2
                 selectOptions3 = options3
                 selectListener?.invoke(opt1tx, opt2tx, opt3tx)
+
             }
 
         })
         pvOptions.setTitleText("Home Address")
         pvOptions.setSubmitColor(Color.WHITE)
+        pvOptions.setOptionsSelectChangeListener { options1, options2, options3 ->
+            val opt1tx = if (options1Items.size > 0) options1Items[options1].pickerViewText else ""
+            val opt2tx: String = if (options2Items.size > 0
+                && options2Items[options1].isNotEmpty()
+            ) options2Items[options1][options2].name else ""
+            val opt3tx: String = if (options2Items.size > 0 && options3Items[options1].isNotEmpty() && options3Items[options1][options2].isNotEmpty()) options3Items[options1][options2][options3].name else ""
+            val tx = "$opt1tx $opt2tx $opt3tx"
+
+            hintView?.setText(tx)
+        }
         pvOptions.setDividerColor(Color.TRANSPARENT)
         pvOptions.setOutSideCancelable(true)
         pvOptions.setItemVisibleCount(12)
@@ -141,12 +153,14 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         pvOptions.setTextColorCenter(Color.BLACK) //设置选中项文字颜色
         pvOptions.setContentTextSize(14)
         val realView = pvOptions.build<AddressInfoBean>()
-
+        hintView = realView.hintView
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         realView.setPicker(options1Items, options2Items, options3Items) //三级选择器
         realView.show()
     }
+
+    var hintView: TextView? = null
 
     var selectOptions1 = 0
     var selectOptions2 = 0

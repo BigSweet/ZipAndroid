@@ -67,7 +67,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
 //            ZipContractActivity.start(this)
-            startActivity(ZipContractActivity::class.java)
+            startActivity(ZipPersonInfoActivity::class.java)
         }
     }
 
