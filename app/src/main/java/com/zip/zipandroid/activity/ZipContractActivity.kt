@@ -196,12 +196,13 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
         if (!secondPhone.isNullOrEmpty() && !firstPhone.isNullOrEmpty() && secondPhone == firstPhone) {
             ToastUtils.showShort("This phone number has already been used. Please enter a different one")
+            done = false
         }
         if (twoDone == 2 && secondPhone != firstPhone) {
             //俩个都填好了而且电话不一样
             done = true
         }
-        if (firstPhone == UserInfoUtils.getUserPhone() || secondPhone == UserInfoUtils.getUserPhone()) {
+        if (("234" + firstPhone) == UserInfoUtils.getUserPhone() || ("234" + secondPhone) == UserInfoUtils.getUserPhone()) {
             ToastUtils.showShort("The contact’s mobile number matches your own. Please enter a different number")
             done = false
         }
