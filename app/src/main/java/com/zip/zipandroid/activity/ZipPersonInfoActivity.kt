@@ -167,7 +167,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
         }
 
-        mViewModel.getUserInfo()
+
         mViewModel.getPersonInfoDic()
         mViewModel.getAllAddressInfo()
 
@@ -276,6 +276,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (!it.gender.isNullOrEmpty()) {
                 singleButtonAdapter.setNewData(it.gender)
             }
+            mViewModel.getUserInfo()
         }
         mViewModel.bvnInfoLiveData.observe(this) {
             if (!it?.photo.isNullOrEmpty()) {
