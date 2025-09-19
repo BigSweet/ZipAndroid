@@ -39,21 +39,21 @@ public class ZipResponseSubscriber<T> implements Observer<ZipBaseRes<T>> {
         try {
             e.printStackTrace();
             if (!NetworkUtils.isConnected() || e instanceof UnknownHostException) {
-                onFailure(NET_OR_SERVER_ERROR, "La conexión de red falló, verifique la conexión de red");
+                onFailure(NET_OR_SERVER_ERROR, "The network connection failed, please check the network connection");
             } else if (e instanceof HttpException) {
                 HttpException exception = (HttpException) e;
                 if (exception.code() == 404) {
-                    onFailure(404, "La solicitud no existe(404)");
+                    onFailure(404, "The request does not exist(404)");
                 } else if (exception.code() == 504) {
-                    onFailure(NET_OR_SERVER_ERROR, "La conexión de red falló, verifique la conexión de red");
+                    onFailure(NET_OR_SERVER_ERROR, "The network connection failed, please check the network connection");
                 } else {
-                    onFailure(NET_OR_SERVER_ERROR, "Solicitud fallida，Por favor inténtalo de nuevo(" + exception.code() + ")");
+                    onFailure(NET_OR_SERVER_ERROR, "Request failed, please try again(" + exception.code() + ")");
                 }
 
             } else if (e instanceof SocketTimeoutException) {
-                onFailure(NET_TIME_OUT, "Solicitar tiempo de espera(SocketTimeOut)");
+                onFailure(NET_TIME_OUT, "Request timeout (SocketTimeOut)");
             } else {
-                onFailure(NET_OR_SERVER_ERROR, "Solicitud fallida\n" + e.toString());
+                onFailure(NET_OR_SERVER_ERROR, "Request failed\n" + e.toString());
             }
         } catch (Exception e1) {
             e1.printStackTrace();

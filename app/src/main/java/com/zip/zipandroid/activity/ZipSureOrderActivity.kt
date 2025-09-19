@@ -72,7 +72,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
+        showLoading()
 
         amount = intent.getStringExtra("amount") ?: ""
         riskLevel = intent.getStringExtra("riskLevel") ?: ""
@@ -286,6 +286,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
 
         mViewModel.orderTrialLiveData.observe(this) {
+            dismissLoading()
             mViewBind.couponInterTv.setText(it.couponAmount)
             zipTriaBean = it
             mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())

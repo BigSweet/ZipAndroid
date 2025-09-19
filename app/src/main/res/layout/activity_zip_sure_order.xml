@@ -196,8 +196,8 @@
                         android:layout_height="42dp"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="6dp"
-                        android:background="@drawable/zip_bg_coupon"
-                        app:layout_constraintTop_toBottomOf="@+id/zip_order_coupon_place_tv">
+                        app:layout_constraintTop_toBottomOf="@+id/zip_order_coupon_place_tv"
+                        tools:background="@drawable/zip_bg_coupon">
 
                         <TextView
                             android:id="@+id/coupon_price_tv"
@@ -221,12 +221,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="42dp"
-                            android:text="Interest Discount coupon"
                             android:textColor="#ffcd8f06"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Interest Discount coupon" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -511,12 +511,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    tools:text="I confirm that I have reviewed and accepted the Loan Agreement and Repayment Contract."
                     android:textColor="#ff000000"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toRightOf="@+id/zip_order_select_iv"
                     app:layout_constraintRight_toRightOf="@+id/bank_main_sl"
-                    app:layout_constraintTop_toTopOf="@+id/zip_order_select_iv" />
+                    app:layout_constraintTop_toTopOf="@+id/zip_order_select_iv"
+                    tools:text="I confirm that I have reviewed and accepted the Loan Agreement and Repayment Contract." />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
