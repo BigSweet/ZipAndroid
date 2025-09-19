@@ -85,6 +85,7 @@ class SetInfoEditView : RelativeLayout {
         val a = context.obtainStyledAttributes(attrs, R.styleable.setInfoStyle)
 
         var topName = a.getString(R.styleable.setInfoStyle_infoTopName)
+        toastHintName = a.getString(R.styleable.setInfoStyle_toastHintName) ?: ""
         var inputInfoType = a.getInt(R.styleable.setInfoStyle_inputInfoType, 0)
         infoTopName?.setText(topName)
         var hintName = a.getString(R.styleable.setInfoStyle_infoHintName)
@@ -190,9 +191,10 @@ class SetInfoEditView : RelativeLayout {
                     }
 
                     if (inputInfoType == TYPE_NAME) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Please enter a valid name")
+                            ToastUtils.showShort(toastHintName)
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -246,9 +248,10 @@ class SetInfoEditView : RelativeLayout {
                         false
                     }
                     if (inputInfoType == TYPE_ADDRESS) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Please enter a valid address,Minimum input length of two digits")
+                            ToastUtils.showShort(toastHintName)
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -269,9 +272,10 @@ class SetInfoEditView : RelativeLayout {
             it.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
                     if (inputInfoType == TYPE_NAME) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Please enter a valid name")
+                            ToastUtils.showShort(toastHintName)
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -303,9 +307,10 @@ class SetInfoEditView : RelativeLayout {
                         return@setOnFocusChangeListener
                     }
                     if (inputInfoType == TYPE_ADDRESS) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
-                            ToastUtils.showShort("Please enter a valid address,Minimum input length of two digits")
+                            ToastUtils.showShort(toastHintName)
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             it.tag = "completed"
@@ -340,7 +345,7 @@ class SetInfoEditView : RelativeLayout {
             it.addTextChangedListener(object : TextWatcher {
                 private var isFormatting = false
                 private var lastValidText = ""
-                private val forbiddenRegex = """[0-9\p{P}\p{S}]""".toRegex()
+                private val forbiddenRegex = """[\p{P}\p{S}]""".toRegex()
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
                 }
@@ -410,7 +415,7 @@ class SetInfoEditView : RelativeLayout {
                             it.setBackgroundColor(
                                 Color.parseColor("#F1F5FF")
                             )
-                        }else{
+                        } else {
                             it.tag = "error"
                             it.setBackgroundColor(
                                 Color.parseColor("#FFF1F1")
@@ -533,7 +538,7 @@ class SetInfoEditView : RelativeLayout {
 //                            )
 //                        }
 
-                        if (isFormatting || s==null) {
+                        if (isFormatting || s == null) {
                             return
                         }
                         isFormatting = true
@@ -752,6 +757,7 @@ class SetInfoEditView : RelativeLayout {
 
     }
 
+    var toastHintName = ""
     fun warSetX(show: Boolean) {
         infoX?.visiblein = show
     }

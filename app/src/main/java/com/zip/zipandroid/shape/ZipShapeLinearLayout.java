@@ -29,16 +29,16 @@ public class ZipShapeLinearLayout extends LinearLayout {
 
     private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeLinearLayout);
-            orientation = a.getInt(R.styleable.ShapeLinearLayout_sv_orientation, 0);
-            int color = a.getColor(R.styleable.ShapeLinearLayout_sv_background, Color.TRANSPARENT);
-            int colorS = a.getColor(R.styleable.ShapeLinearLayout_sv_background_start, Color.TRANSPARENT);
-            int colorE = a.getColor(R.styleable.ShapeLinearLayout_sv_background_end, Color.TRANSPARENT);
-            float r0 = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius, 0);
-            float radiusTopLeft = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_top_left, 0);
-            float radiusTopRight = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_top_right, 0);
-            float radiusBottomRight = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_bottom_right, 0);
-            float radiusBottomLeft = a.getDimension(R.styleable.ShapeLinearLayout_sv_radius_bottom_left, 0);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ZipShapeLinearLayout);
+            orientation = a.getInt(R.styleable.ZipShapeLinearLayout_sv_orientation, 0);
+            int color = a.getColor(R.styleable.ZipShapeLinearLayout_sv_background, Color.TRANSPARENT);
+            int colorS = a.getColor(R.styleable.ZipShapeLinearLayout_sv_background_start, Color.TRANSPARENT);
+            int colorE = a.getColor(R.styleable.ZipShapeLinearLayout_sv_background_end, Color.TRANSPARENT);
+            float r0 = a.getDimension(R.styleable.ZipShapeLinearLayout_sv_radius, 0);
+            float radiusTopLeft = a.getDimension(R.styleable.ZipShapeLinearLayout_sv_radius_top_left, 0);
+            float radiusTopRight = a.getDimension(R.styleable.ZipShapeLinearLayout_sv_radius_top_right, 0);
+            float radiusBottomRight = a.getDimension(R.styleable.ZipShapeLinearLayout_sv_radius_bottom_right, 0);
+            float radiusBottomLeft = a.getDimension(R.styleable.ZipShapeLinearLayout_sv_radius_bottom_left, 0);
 
             a.recycle();
             int colorArray[] = color != Color.TRANSPARENT? new int[]{color, color} : new int[]{colorS, colorE};

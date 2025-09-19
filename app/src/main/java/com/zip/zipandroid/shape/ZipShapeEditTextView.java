@@ -22,6 +22,7 @@ public class ZipShapeEditTextView extends AppCompatEditText {
 
     String disableText;
     String enableText;
+
     public ZipShapeEditTextView(Context context) {
         super(context);
     }
@@ -38,22 +39,22 @@ public class ZipShapeEditTextView extends AppCompatEditText {
 
     private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeEditTextView);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ZipShapeEditTextView);
 
-            orientation = a.getInt(R.styleable.ShapeEditTextView_setv_orientation, 0);
-            int color = a.getColor(R.styleable.ShapeEditTextView_setv_background, Color.TRANSPARENT);
-            int colorS = a.getColor(R.styleable.ShapeEditTextView_setv_background_start, Color.TRANSPARENT);
-            int colorE = a.getColor(R.styleable.ShapeEditTextView_setv_background_end, Color.TRANSPARENT);
-            float r  = a.getDimension(R.styleable.ShapeEditTextView_setv_radius, 0);
-            int colorD = a.getColor(R.styleable.ShapeEditTextView_setv_disable_background, Color.TRANSPARENT);
-            int colorDS = a.getColor(R.styleable.ShapeEditTextView_setv_disable_background_start, Color.TRANSPARENT);
-            int colorDE = a.getColor(R.styleable.ShapeEditTextView_setv_disable_background_end, Color.TRANSPARENT);
+            orientation = a.getInt(R.styleable.ZipShapeEditTextView_setv_orientation, 0);
+            int color = a.getColor(R.styleable.ZipShapeEditTextView_setv_background, Color.TRANSPARENT);
+            int colorS = a.getColor(R.styleable.ZipShapeEditTextView_setv_background_start, Color.TRANSPARENT);
+            int colorE = a.getColor(R.styleable.ZipShapeEditTextView_setv_background_end, Color.TRANSPARENT);
+            float r = a.getDimension(R.styleable.ZipShapeEditTextView_setv_radius, 0);
+            int colorD = a.getColor(R.styleable.ZipShapeEditTextView_setv_disable_background, Color.TRANSPARENT);
+            int colorDS = a.getColor(R.styleable.ZipShapeEditTextView_setv_disable_background_start, Color.TRANSPARENT);
+            int colorDE = a.getColor(R.styleable.ZipShapeEditTextView_setv_disable_background_end, Color.TRANSPARENT);
 
 
-            float radiusTopLeft = a.getDimension(R.styleable.ShapeEditTextView_setv_radius_top_left, 0);
-            float radiusTopRight = a.getDimension(R.styleable.ShapeEditTextView_setv_radius_top_right, 0);
-            float radiusBottomRight = a.getDimension(R.styleable.ShapeEditTextView_setv_radius_bottom_right, 0);
-            float radiusBottomLeft = a.getDimension(R.styleable.ShapeEditTextView_setv_radius_bottom_left, 0);
+            float radiusTopLeft = a.getDimension(R.styleable.ZipShapeEditTextView_setv_radius_top_left, 0);
+            float radiusTopRight = a.getDimension(R.styleable.ZipShapeEditTextView_setv_radius_top_right, 0);
+            float radiusBottomRight = a.getDimension(R.styleable.ZipShapeEditTextView_setv_radius_bottom_right, 0);
+            float radiusBottomLeft = a.getDimension(R.styleable.ZipShapeEditTextView_setv_radius_bottom_left, 0);
 
             a.recycle();
 
@@ -93,7 +94,7 @@ public class ZipShapeEditTextView extends AppCompatEditText {
                 disableColors = new int[]{colorDS, colorDE};
             }
             if (colors != null || radius != null) {
-                setBackground(orientation,radius, isEnablePlus ? colors : disableColors);
+                setBackground(orientation, radius, isEnablePlus ? colors : disableColors);
             }
 
             if (isEnablePlus) {
@@ -109,15 +110,17 @@ public class ZipShapeEditTextView extends AppCompatEditText {
 
         }
     }
-    public void setBackground(int ...color) {
-        setBackground(orientation,radius, color);
+
+    public void setBackground(int... color) {
+        setBackground(orientation, radius, color);
     }
+
     public void setBackground(int orientation, float[] radius, int... colors) {
         GradientDrawable gradientDrawable = new GradientDrawable();
         if (colors != null && colors.length > 1) {
-            if(orientation == 1){
+            if (orientation == 1) {
                 gradientDrawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
-            }else{
+            } else {
                 gradientDrawable.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
             }
 
@@ -132,7 +135,7 @@ public class ZipShapeEditTextView extends AppCompatEditText {
     }
 
     public void changeBackground(int... colors) {
-        setBackground( orientation,radius, colors);
+        setBackground(orientation, radius, colors);
     }
 
     public void setBackground(int color, float[] radius) {
@@ -144,7 +147,6 @@ public class ZipShapeEditTextView extends AppCompatEditText {
     }
 
 
-
     public void setShapeBackground(int... colors) {
         this.colors = colors;
 
@@ -152,6 +154,7 @@ public class ZipShapeEditTextView extends AppCompatEditText {
             setBackground(orientation, radius, colors);
         }
     }
+
     public void setEnableBackground(int... colors) {
         this.colors = colors;
     }
@@ -190,7 +193,7 @@ public class ZipShapeEditTextView extends AppCompatEditText {
             if (colors != null || radius != null) {
                 setBackground(orientation, radius, colors);
             }
-            if (textColor != 0){
+            if (textColor != 0) {
                 setTextColor(textColor);
             }
         } else {

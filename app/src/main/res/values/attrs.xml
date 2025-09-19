@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ZipShapeLinearLayout">
+        <attr name="sv_orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="sv_background" format="color|reference" />
+        <attr name="sv_radius" format="dimension" />
+        <attr name="sv_radius_top_left" format="dimension" />
+        <attr name="sv_radius_bottom_right" format="dimension" />
+        <attr name="sv_radius_bottom_left" format="dimension" />
+        <attr name="sv_radius_top_right" format="dimension" />
+        <attr name="sv_background_start" format="color|reference" />
+        <attr name="sv_background_end" format="color|reference" />
+
+    </declare-styleable>
+</resources>

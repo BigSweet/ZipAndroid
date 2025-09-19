@@ -126,7 +126,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                     if (allDigitsSame) {
                         // 违反了“不能全部相同”的规则，回退到上一个有效文本
                         editable.replace(0, editable.length, lastValidText)
-                        mViewBind.zipLoginEdit.error = "The number cannot have all the same digits"
+//                        mViewBind.zipLoginEdit.error = "The number cannot have all the same digits"
+                        showPhoneFail()
                         isFormatting = false
                         mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
                         return
@@ -134,7 +135,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                     // 子规则2b：长度不能超过10
                     if (length > 10) {
                         editable.replace(0, editable.length, lastValidText)
-                        mViewBind.zipLoginEdit?.error = "enter a maximum of 10 digits."
+                        showPhoneFail()
+//                        mViewBind.zipLoginEdit?.error = "enter a maximum of 10 digits."
                         isFormatting = false
                         return
                     }
@@ -155,7 +157,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                     // 子规则3a：检查第二位不能是0
                     if (length >= 2 && currentText[1] == '0') {
                         editable.replace(0, editable.length, lastValidText)
-                        mViewBind.zipLoginEdit.error = "The second digit cannot be 0"
+//                        mViewBind.zipLoginEdit.error = "The second digit cannot be 0"
+                        showPhoneFail()
                         mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
                         isFormatting = false
                         return
@@ -179,7 +182,8 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                 // --- 无效模式 (首位既不是1-9也不是0，理论上被InputFilter阻止，此为安全备份) ---
                 else {
                     editable.clear()
-                    mViewBind.zipLoginEdit.error = "The first digit must be 1-9 or 0"
+//                    mViewBind.zipLoginEdit.error = "The first digit must be 1-9 or 0"
+                    showPhoneFail()
                     mViewBind.zipLoginEdit.setBackgroundColor(Color.parseColor("#FFF1F1"))
                     lastValidText = ""
                 }
@@ -201,6 +205,10 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         }
         mViewModel.getZipAppConfig()
 //        show = Calendar.getInstance()
+    }
+
+    private fun showPhoneFail() {
+        ToastUtils.showShort("Please enter a valid phone number")
     }
 
     private var isFormatting = false

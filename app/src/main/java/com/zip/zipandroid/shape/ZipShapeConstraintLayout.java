@@ -30,16 +30,16 @@ public class ZipShapeConstraintLayout extends ConstraintLayout {
 
     private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeConstraintLayout);
-            orientation = a.getInt(R.styleable.ShapeConstraintLayout_sv_scl_orientation, 1);
-            int color = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background, Color.TRANSPARENT);
-            int colorS = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background_start, Color.TRANSPARENT);
-            int colorE = a.getColor(R.styleable.ShapeConstraintLayout_sv_scl_background_end, Color.TRANSPARENT);
-            float radius = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius, 0);
-            float radiusTopLeft = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_top_left, 0);
-            float radiusTopRight = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_top_right, 0);
-            float radiusBottomRight = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_bottom_right, 0);
-            float radiusBottomLeft = a.getDimension(R.styleable.ShapeConstraintLayout_sv_scl_radius_bottom_left, 0);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ZipShapeConstraintLayout);
+            orientation = a.getInt(R.styleable.ZipShapeConstraintLayout_sv_scl_orientation, 1);
+            int color = a.getColor(R.styleable.ZipShapeConstraintLayout_sv_scl_background, Color.TRANSPARENT);
+            int colorS = a.getColor(R.styleable.ZipShapeConstraintLayout_sv_scl_background_start, Color.TRANSPARENT);
+            int colorE = a.getColor(R.styleable.ZipShapeConstraintLayout_sv_scl_background_end, Color.TRANSPARENT);
+            float radius = a.getDimension(R.styleable.ZipShapeConstraintLayout_sv_scl_radius, 0);
+            float radiusTopLeft = a.getDimension(R.styleable.ZipShapeConstraintLayout_sv_scl_radius_top_left, 0);
+            float radiusTopRight = a.getDimension(R.styleable.ZipShapeConstraintLayout_sv_scl_radius_top_right, 0);
+            float radiusBottomRight = a.getDimension(R.styleable.ZipShapeConstraintLayout_sv_scl_radius_bottom_right, 0);
+            float radiusBottomLeft = a.getDimension(R.styleable.ZipShapeConstraintLayout_sv_scl_radius_bottom_left, 0);
 
             a.recycle();
             int colorArray[] = color != Color.TRANSPARENT? new int[]{color, color} : new int[]{colorS, colorE};

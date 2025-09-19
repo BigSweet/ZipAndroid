@@ -42,28 +42,28 @@ public class ZipShapeTextView extends AppCompatTextView {
 
     private void initAttrs(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ShapeTextView);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ZipShapeTextView);
 
-            orientation = a.getInt(R.styleable.ShapeTextView_orientation, 1);
-            int color = a.getColor(R.styleable.ShapeTextView_sv_tx_background, Color.TRANSPARENT);
-            int colorS = a.getColor(R.styleable.ShapeTextView_sv_tx_background_start, Color.TRANSPARENT);
-            int colorE = a.getColor(R.styleable.ShapeTextView_sv_tx_background_end, Color.TRANSPARENT);
-            float r = a.getDimension(R.styleable.ShapeTextView_sv_tx_radius, 0);
-            int colorD = a.getColor(R.styleable.ShapeTextView_sv_tx_disable_background, Color.TRANSPARENT);
-            int colorDS = a.getColor(R.styleable.ShapeTextView_sv_tx_disable_background_start, Color.TRANSPARENT);
-            int colorDE = a.getColor(R.styleable.ShapeTextView_sv_tx_disable_background_end, Color.TRANSPARENT);
-            textColor = a.getColor(R.styleable.ShapeTextView_sv_tx_color, Color.TRANSPARENT);
-            textDisableColor = a.getColor(R.styleable.ShapeTextView_sv_tx_disable_color, Color.TRANSPARENT);
-            isEnablePlus = a.getBoolean(R.styleable.ShapeTextView_sv_tx_enable, true);
-            needScale = a.getBoolean(R.styleable.ShapeTextView_sv_tx_need_scale, true);
-            disableText = a.getString(R.styleable.ShapeTextView_sv_tx_disable_text);
-            enableText = a.getString(R.styleable.ShapeTextView_sv_tx_enable_text);
+            orientation = a.getInt(R.styleable.ZipShapeTextView_orientation, 1);
+            int color = a.getColor(R.styleable.ZipShapeTextView_sv_tx_background, Color.TRANSPARENT);
+            int colorS = a.getColor(R.styleable.ZipShapeTextView_sv_tx_background_start, Color.TRANSPARENT);
+            int colorE = a.getColor(R.styleable.ZipShapeTextView_sv_tx_background_end, Color.TRANSPARENT);
+            float r = a.getDimension(R.styleable.ZipShapeTextView_sv_tx_radius, 0);
+            int colorD = a.getColor(R.styleable.ZipShapeTextView_sv_tx_disable_background, Color.TRANSPARENT);
+            int colorDS = a.getColor(R.styleable.ZipShapeTextView_sv_tx_disable_background_start, Color.TRANSPARENT);
+            int colorDE = a.getColor(R.styleable.ZipShapeTextView_sv_tx_disable_background_end, Color.TRANSPARENT);
+            textColor = a.getColor(R.styleable.ZipShapeTextView_sv_tx_color, Color.TRANSPARENT);
+            textDisableColor = a.getColor(R.styleable.ZipShapeTextView_sv_tx_disable_color, Color.TRANSPARENT);
+            isEnablePlus = a.getBoolean(R.styleable.ZipShapeTextView_sv_tx_enable, true);
+            needScale = a.getBoolean(R.styleable.ZipShapeTextView_sv_tx_need_scale, true);
+            disableText = a.getString(R.styleable.ZipShapeTextView_sv_tx_disable_text);
+            enableText = a.getString(R.styleable.ZipShapeTextView_sv_tx_enable_text);
 
 
-            float radiusTopLeft = a.getDimension(R.styleable.ShapeTextView_sv_tx_radius_top_left, 0);
-            float radiusTopRight = a.getDimension(R.styleable.ShapeTextView_sv_tx_radius_top_right, 0);
-            float radiusBottomRight = a.getDimension(R.styleable.ShapeTextView_sv_tx_radius_bottom_right, 0);
-            float radiusBottomLeft = a.getDimension(R.styleable.ShapeTextView_sv_tx_radius_bottom_left, 0);
+            float radiusTopLeft = a.getDimension(R.styleable.ZipShapeTextView_sv_tx_radius_top_left, 0);
+            float radiusTopRight = a.getDimension(R.styleable.ZipShapeTextView_sv_tx_radius_top_right, 0);
+            float radiusBottomRight = a.getDimension(R.styleable.ZipShapeTextView_sv_tx_radius_bottom_right, 0);
+            float radiusBottomLeft = a.getDimension(R.styleable.ZipShapeTextView_sv_tx_radius_bottom_left, 0);
 
             a.recycle();
 
