@@ -44,7 +44,7 @@ class PersonInfoViewModel : ZipBaseViewModel() {
 
     fun saveUserInfo(
         age: Int, birthDate: Long, birthDateStr: String, education: String, degree: Int, identity: String, identityImg: ZipIndImgBean,
-        mbEmail: String, mbPhone: String, mbStatus: String, nowAddress: String, postalInfo: AddressUploadBean, sex: Int, marry: Int, childrens: Int, language: String,
+        mbEmail: String, mbPhone: String, mbStatus: String, nowAddress: String, postalInfo: AddressUploadBean, sex: Int, marry: Int, childrens: Int, language: Int,
         custId: Long, firstName: String, midName: String, lastName: String,
     ) {
         val treeMap = TreeMap<String, Any?>()

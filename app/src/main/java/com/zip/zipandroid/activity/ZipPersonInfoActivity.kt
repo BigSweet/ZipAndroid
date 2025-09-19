@@ -96,7 +96,22 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             checkAllDone()
         }
         val systemLocale = Locale.getDefault()
-        language = systemLocale.language
+        var originLa = systemLocale.language
+        if (originLa == "fr") {
+            language = "French"
+        } else if (originLa == "en") {
+            language = "English"
+        } else if (originLa == "yo") {
+            language = "Yoruba"
+        } else if (originLa == "ha") {
+            language = "Hausa"
+        } else if (originLa == "pcm") {
+            language = "Pidgin"
+        } else if (originLa == "ig") {
+            language = "Igbo"
+        }else{
+            language = "Others"
+        }
         if (!language?.isNullOrEmpty()) {
             mViewBind.langInfoView.hide()
         } else {
@@ -202,10 +217,27 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         }
         mViewModel.realNameInfoLiveData.observe(this) {
             //更新用户信息
+            var LanguageIndex = -1
+            var realLanguageIndex = -1
+            var otherIndex = -1
+            dicInfoBean?.language?.forEachIndexed { index, s ->
+                if (s == language) {
+                    LanguageIndex = index
+                }
+                if ("Others" == s) {
+                    otherIndex = index
+                }
+            }
+            if (LanguageIndex != -1) {
+                realLanguageIndex = languageIndex
+            } else {
+                realLanguageIndex = otherIndex
+            }
+
             val imgBean = ZipIndImgBean(PhotoPathBean(currentIdeImg), PhotoPathBean(servicePath))
             addressUploadBean.detail = mViewBind.detailAddressInfoView.getEditText()
             mViewModel.saveUserInfo(age, brithDay, brithDayStr, mViewBind.eduInfoView.getEditText(), degree, mViewBind.bvnInfoView.getEditText(),
-                imgBean, mViewBind.emailInfoView.getSmallEditText(), UserInfoUtils.getUserPhone(), "1", mViewBind.detailAddressInfoView.getEditText(), addressUploadBean, sex, marry, childrens, language, it.custId,
+                imgBean, mViewBind.emailInfoView.getSmallEditText(), UserInfoUtils.getUserPhone(), "1", mViewBind.detailAddressInfoView.getEditText(), addressUploadBean, sex, marry, childrens, realLanguageIndex, it.custId,
                 mViewBind.firstNameInfoView.getEditText(), mViewBind.middleNameInfoView.getEditText(), mViewBind.lastNameInfoView.getEditText())
         }
         mViewModel.saveInfoLiveData.observe(this) {
@@ -327,7 +359,12 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if ((it.language ?: -1) >= 0) {
                 languageIndex = (it.language ?: -1)
                 dicInfoBean?.language?.get((it.language
-                    ?: -1))?.let { it1 -> mViewBind.langInfoView.setContentText(it1) }
+                    ?: -1))?.let { it1 ->
+                    {
+                        mViewBind.langInfoView.setContentText(it1)
+                        language = it1
+                    }
+                }
             }
 
             if (!it.mbPhone.isNullOrEmpty()) {
