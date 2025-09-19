@@ -37,8 +37,9 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Approval")
         interValRange(bizId)
-
-
+        mViewBind.nextReturnHomeTv.setOnDelayClickListener {
+            finish()
+        }
 
     }
 
