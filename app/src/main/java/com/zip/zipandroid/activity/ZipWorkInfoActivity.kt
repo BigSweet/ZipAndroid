@@ -267,10 +267,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                     if (position != emp_status) {
                         emp_status = position  //检测显示哪些
                         checkEmpStatus(position)
-                        if (position in 0..3) {
-                            //清空数据？
-                            clearCompanyData()
-                        }
+                        //清空数据？
+                        clearCompanyData()
                     }
 
 
@@ -285,12 +283,28 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     }
 
     private fun clearCompanyData() {
+        //0..3
         mViewBind.companyNameInfoView.clearText()
         mViewBind.companyAddressInfoView.clearText()
         mViewBind.detailWorkInfoView.clearText()
         mViewBind.payDayView.clearText()
         mViewBind.incomeInfoView.clearText()
         mViewBind.timeWorkInfoView.clearText()
+
+        //4
+        mViewBind.schoolNameInfoView.clearText()
+        mViewBind.schoolAddressInfoView.clearText()
+        mViewBind.schoolDetailNameInfoView.clearText()
+        mViewBind.schoolIncomeInfoView.clearText()
+        mViewBind.schoolTimeWorkInfoView.clearText()
+        //5
+
+        singleButtonAdapter.selectPosition = -1
+        ontherIncome = -1
+        singleButtonAdapter.notifyDataSetChanged()
+        mViewBind.lengthOfUmView.clearText()
+        mViewBind.umeIncomeView.clearText()
+
     }
 
     private fun checkEmpStatus(position: Int) {

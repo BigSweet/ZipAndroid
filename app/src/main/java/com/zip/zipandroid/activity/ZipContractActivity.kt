@@ -119,7 +119,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (done) {
 //                initList.add(ZipContractBean(idx++, "Colleague/Friend", false))
 //                adapter.setNewData(initList)
-                adapter.addData(ZipContractBean(idx++, "Colleague/Friend", false))
+                adapter.addData(ZipContractBean(idx++, "Relationship", false))
 
                 mViewBind.contractRv.post {
                     mViewBind.contractRv.scrollToPosition(adapter.data.size - 1)
@@ -153,7 +153,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         adapter.data.forEachIndexed { index, zipContractBean ->
             if ((zipContractBean.relation ?: -1) > -1) {
                 val nameValue = zipContractBean.contactName
-                val numberValue = zipContractBean.contactPhone
+                val numberValue = "234" + zipContractBean.contactPhone
                 val relationValue = zipContractBean.relationValue
                 val bean = UploadContractBean(nameValue, numberValue, zipContractBean.relation
                     ?: -1, relationValue)
@@ -245,26 +245,34 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.userInfoLiveData.observe(this) {
             if (!it.emergencyContactPerson.isNullOrEmpty()) {
                 initList.clear()
+                val prefixToRemove = "234"
                 val list = GsonUtils.fromJson<List<OriginUploadContractBean>>(it.emergencyContactPerson, object : TypeToken<List<OriginUploadContractBean>>() {}.type)
                 if (!list.isNullOrEmpty()) {
                     list.forEachIndexed { index, originUploadContractBean ->
+                        // 检查并移除前缀
+                        val realPhone = if (originUploadContractBean.contactPhone.startsWith(prefixToRemove)) {
+                            originUploadContractBean.contactPhone.substring(prefixToRemove.length)
+                        } else {
+                            originUploadContractBean.contactPhone // 如果不是234开头，则保持原样或做其他处理
+                        }
+
                         if (index == 0) {
-                            val firstBean = ZipContractBean(1, "Family member", true)
-                            firstBean.contactPhone = originUploadContractBean.contactPhone
+                            val firstBean = ZipContractBean(1, "Relationship", true)
+                            firstBean.contactPhone = realPhone
                             firstBean.contactName = originUploadContractBean.contactName
                             firstBean.relation = originUploadContractBean.relation
                             firstBean.relationValue = originUploadContractBean.relationValue
                             initList.add(firstBean)
                         } else if (index == 1) {
-                            val firstBean = ZipContractBean(2, "Colleague/Friend", true)
-                            firstBean.contactPhone = originUploadContractBean.contactPhone
+                            val firstBean = ZipContractBean(2, "Relationship", true)
+                            firstBean.contactPhone = realPhone
                             firstBean.contactName = originUploadContractBean.contactName
                             firstBean.relation = originUploadContractBean.relation
                             firstBean.relationValue = originUploadContractBean.relationValue
                             initList.add(firstBean)
                         } else {
-                            val otherContract = ZipContractBean(idx++, "Colleague/Friend", false)
-                            otherContract.contactPhone = originUploadContractBean.contactPhone
+                            val otherContract = ZipContractBean(idx++, "Relationship", false)
+                            otherContract.contactPhone = realPhone
                             otherContract.contactName = originUploadContractBean.contactName
                             otherContract.relation = originUploadContractBean.relation
                             otherContract.relationValue = originUploadContractBean.relationValue
@@ -274,13 +282,13 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                     }
                     adapter.setNewData(initList)
                 } else {
-                    initList.add(ZipContractBean(1, "Family member", true))
-                    initList.add(ZipContractBean(2, "Colleague/Friend", true))
+                    initList.add(ZipContractBean(1, "Relationship", true))
+                    initList.add(ZipContractBean(2, "Relationship", true))
                     adapter.setNewData(initList)
                 }
             } else {
-                initList.add(ZipContractBean(1, "Family member", true))
-                initList.add(ZipContractBean(2, "Colleague/Friend", true))
+                initList.add(ZipContractBean(1, "Relationship", true))
+                initList.add(ZipContractBean(2, "Relationship", true))
                 adapter.setNewData(initList)
             }
         }

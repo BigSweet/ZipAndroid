@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
-                    tools:visibility="gone">
+                    tools:visibility="visible">
 
                     <com.zip.zipandroid.view.SetInfoEditView
                         android:id="@+id/school_name_info_view"
@@ -142,7 +142,7 @@
                         app:infoHintName="Please choose"
                         app:infoTopName="School Address"
                         app:inputInfoType="4"
-                        app:toastHintName="Please provide a complete and valid address"
+                        app:toastHintName="Please enter a valid school address"
                         app:layout_constraintTop_toBottomOf="@+id/school_name_info_view"
                         app:showBottomNumber="false"
                         app:showInfoArrow="true"
@@ -288,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/emp_status_info_view"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
 
                     <com.zip.zipandroid.view.SetInfoEditView
@@ -329,7 +329,7 @@
                         app:infoHintName="Please enter"
                         app:infoTopName="Detail Work Address"
                         app:inputInfoType="4"
-                        app:toastHintName="Please provide a complete and valid address"
+                        app:toastHintName="Please enter a valid work address"
                         app:layout_constraintTop_toBottomOf="@+id/company_address_info_view"
                         app:showBottomNumber="false"
                         app:showInfoArrow="false"
