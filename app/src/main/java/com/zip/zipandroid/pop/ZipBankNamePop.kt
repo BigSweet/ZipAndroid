@@ -30,7 +30,7 @@ class ZipBankNamePop(context: Context, val list: ZipBankNameListBean?) : ZipBase
         mBinding.sideBar.setOnStrSelectCallBack { index, selectStr ->
             for (i in 0 until zipBankAdapter.getData().size) {
                 if (selectStr.equals(zipBankAdapter.getData().get(i).firstLetter, true)) {
-                    mBinding.recyclerView.smoothScrollToPosition(i)
+                    mBinding.recyclerView.scrollToPosition(i)
                     return@setOnStrSelectCallBack
                 }
             }

@@ -54,6 +54,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
     override fun onResume() {
         super.onResume()
         index = 0
+        showLoading()
         mViewModel.getOrderListInfo(queryType)
     }
 
@@ -75,6 +76,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
         }, mViewBind.itemOrderListRv)
         mViewModel.orderListLiveData.observe(this) {
 
+            dismissLoading()
 //            if (mViewBind.orderListRefresh.isRefreshing) {
 //                mViewBind.orderListRefresh.isRefreshing = false
 //            }

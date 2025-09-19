@@ -69,7 +69,13 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         getAllData()
     }
 
+    var firstLoading = true
     fun getAllData() {
+        if (firstLoading) {
+            firstLoading = false
+            showLoading()
+        }
+
         mViewModel.zipHomeData()
         mViewModel.getZipAppConfig()
         mViewModel.getUserInfo()
@@ -95,6 +101,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     override fun createObserver() {
         ZipEventBusUtils.register(this)
         mViewModel.homeLiveData.observe(this) {
+            dismissLoading()
             if (it.userOrderStatus == 0) {
                 //展示首页费率
                 mViewBind.loadTeamSl.show()

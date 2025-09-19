@@ -26,7 +26,15 @@ class ZipCustomServiceActivity : ZipBaseBindingActivity<ZipHomeViewModel, Activi
         }
         mViewBind.zipWhatAppSl.setOnDelayClickListener {
             val phoneNumber = mViewBind.zipWhatAppTv.text.toString()
-            gotoNumber(phoneNumber)
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + phoneNumber))
+                intent.setPackage("com.whatsapp")
+                startActivity(intent);
+            } catch (e: Exception) {
+                //  没有安装WhatsApp
+                ClipboardUtils.copyText(mViewBind.zipWhatAppTv.text.toString())
+                ToastUtils.showShort("copy success")
+            }
         }
         mViewBind.zipPhoneTv.setOnDelayClickListener {
             val phoneNumber = mViewBind.zipPhoneTv.text.toString()

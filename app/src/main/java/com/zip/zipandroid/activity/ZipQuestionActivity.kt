@@ -54,6 +54,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         ZipTrackUtils.track("OutQuestionnairePage")
 
     }
+
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
@@ -62,7 +63,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Questionnaire")
         mViewModel.getPersonInfoDic()
-
+        showLoading()
         mViewModel.getCreditHistoryDict()
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
@@ -146,6 +147,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             dismissLoading()
         }
         mViewModel.userInfoLiveData.observe(this) {
+            dismissLoading()
             if (it.questions.isNullOrEmpty()) {
                 checkPopDone()
             } else {
@@ -173,7 +175,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it == Constants.TYPE_QA) {
                 dismissLoading()
 //                ToastUtils.showShort("finish4")
-                ZipBandCardActivity.start(this,false)
+                ZipBandCardActivity.start(this, false)
 //                startActivity(ZipBandCardActivity::class.java)
             }
         }
