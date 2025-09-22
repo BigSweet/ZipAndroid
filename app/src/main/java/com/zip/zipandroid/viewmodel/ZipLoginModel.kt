@@ -88,44 +88,6 @@ class ZipLoginModel : ZipBaseViewModel() {
 
     }
 
-    fun getProtocolBeforeLoan(agreementName: String, appName: String) {
-
-        var clientId = Constants.client_id
-        if (BuildConfig.DEBUG && Constants.useDebug) {
-            clientId = Constants.client_id
-        } else {
-            clientId = Constants.release_client_id
-        }
-        val treeMap = TreeMap<String, Any?>()
-        val api = ZipFormReq.create()
-        api.addParam("sunanAiki", appName)
-        api.addParam("sunanYarjejeniya", agreementName)
-        treeMap.putAll(api)
-        ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
-            AppUtils.getAppPackageName(),
-            AppUtils.getAppVersionName(),
-            "ANDROID",
-            UserInfoUtils.getMid().toString(),
-            UserInfoUtils.getUserNo(),
-            clientId,
-            appName, agreementName, SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
-            .compose(ZipRxSchedulers.io_main())
-            .subscribe(object : ZipResponseSubscriber<Any>() {
-                override fun onSubscribe(d: Disposable) {
-                    super.onSubscribe(d)
-                    addReqDisposable(d)
-                }
-
-                override fun onSuccess(result: Any) {
-
-                }
-
-                override fun onFailure(code: Int, message: String?) {
-                    super.onFailure(code, message)
-                    failLiveData.postValue(message)
-                }
-            })
-    }
 
 
     var APP_REGISTER_AGREEMENT: String = ""//服务条款

@@ -4,9 +4,11 @@ object Constants {
 
 
     var commonPrivateUrl = "https://www.baidu.com"
+
+    var commonServiceUrl = "https://www.baidu.com"
+
     var APP_LOAN_CONTRACT = "https://www.baidu.com"
     var APP_REPAYMENT_AGREEMENT = "https://www.baidu.com"
-    var commonServiceUrl = "https://www.baidu.com"
     val loadInstall = false
     val lodaCallInfo = false
     val loadSms = false

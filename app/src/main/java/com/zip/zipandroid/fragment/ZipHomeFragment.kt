@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -154,7 +155,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
                     }
                 }
-                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT" || it.creditOrderList?.status=="NORMAL") {
+                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT" || it.creditOrderList?.status == "NORMAL") {
                     showNormalStatus(it)
 
                 }
@@ -215,11 +216,20 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
         mViewModel.configLiveData.observe(this) {
 
-            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
-            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
-            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//隐私协议
-            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
-                ?: "https://www.baidu.com"//隐私协议
+//            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
+//            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
+
+//            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//借款协议
+//            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
+//                ?: "https://www.baidu.com"//服务协议
+            if (!(it?.APP_REPAYMENT_AGREEMENT
+                    ?: "").isNullOrEmpty()
+            ) {
+                mViewModel.getProtocolBeforeLoan(it?.APP_REPAYMENT_AGREEMENT
+                    ?: "", AppUtils.getAppName())
+//                mViewModel.getProtocolBeforeLoan(it?.APP_LOAN_CONTRACT
+//                    ?: "", AppUtils.getAppName())
+            }
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {
                 //获取广告信息
