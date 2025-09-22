@@ -73,7 +73,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     override fun onResume() {
         super.onResume()
-        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted( AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 
         } else {
             noPerPop?.dismiss()
@@ -83,7 +83,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
-        if (!PermissionUtils.isGranted(AllPerUtils.phoneStatusPer, AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted( AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())

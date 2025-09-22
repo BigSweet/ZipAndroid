@@ -15,25 +15,7 @@ import java.util.*
 class ZipCallLogsProvider(private val context: Context) {
     private var listeners: ArrayList<ZipCallLogListener>
     private var isFetching = false
-    @SuppressLint("WrongConstant")
-    fun fetchCallLogs(list: Array<ZipCallLogListener>) {
-        synchronized(this) {
-            for (listener in list) {
-                if (!listeners.contains(listener)) {
-                    listeners.add(listener)
-                }
-            }
-            if (isFetching) {
-                return
-            }
-            isFetching = true
-        }
-        if (PermissionChecker.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
-            doFetchData()
-        } else {
-            onFinishedWithFailure("permission denied")
-        }
-    }
+
 
     private fun doFetchData() {
         Thread(Runnable {

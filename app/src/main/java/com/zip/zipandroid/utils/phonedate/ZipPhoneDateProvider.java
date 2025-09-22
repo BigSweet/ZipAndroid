@@ -117,22 +117,22 @@ public class ZipPhoneDateProvider {
         this.zipSmsMessagesProvider.fetchSMSMessages(new ZipSMSMessageListener[]{listener});
     }
 
-    /**
-     * 获取通话记录
-     *
-     * @param listener
-     */
-    public void getCallLogs(ZipCallLogListener listener) {
-        if (this.zipCallLogsProvider == null) {
-            synchronized (this) {
-                if (this.zipCallLogsProvider == null) {
-                    this.zipCallLogsProvider =
-                            new ZipCallLogsProvider(this.context);
-                }
-            }
-        }
-        this.zipCallLogsProvider.fetchCallLogs(new ZipCallLogListener[]{listener});
-    }
+//    /**
+//     * 获取通话记录
+//     *
+//     * @param listener
+//     */
+//    public void getCallLogs(ZipCallLogListener listener) {
+//        if (this.zipCallLogsProvider == null) {
+//            synchronized (this) {
+//                if (this.zipCallLogsProvider == null) {
+//                    this.zipCallLogsProvider =
+//                            new ZipCallLogsProvider(this.context);
+//                }
+//            }
+//        }
+//        this.zipCallLogsProvider.fetchCallLogs(new ZipCallLogListener[]{listener});
+//    }
 
     /**
      * 获取手机日历数据
