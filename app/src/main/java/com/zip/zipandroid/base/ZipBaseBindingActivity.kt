@@ -322,20 +322,20 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
                 }
             })
     }
-
-    fun getCallLogs() {
-        if (ActivityCompat.checkSelfPermission(ZipApplication.instance!!, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
-            ZipPhoneDateProvider.sharedInstance(ZipApplication.instance)
-                .getCallLogs(object : ZipCallLogListener {
-                    override fun onCallLogsFetched(zipCallLogs: Array<ZipCallLog?>?) {
-                        val logs = ZipDesUtil.Base64Encode(Gson().toJson(zipCallLogs))
-                        MMKV.defaultMMKV()?.putString("callLog", logs)
-                    }
-
-                    override fun onError(s: String?) {}
-                })
-        }
-    }
+//
+//    fun getCallLogs() {
+//        if (ActivityCompat.checkSelfPermission(ZipApplication.instance!!, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+//            ZipPhoneDateProvider.sharedInstance(ZipApplication.instance)
+//                .getCallLogs(object : ZipCallLogListener {
+//                    override fun onCallLogsFetched(zipCallLogs: Array<ZipCallLog?>?) {
+//                        val logs = ZipDesUtil.Base64Encode(Gson().toJson(zipCallLogs))
+//                        MMKV.defaultMMKV()?.putString("callLog", logs)
+//                    }
+//
+//                    override fun onError(s: String?) {}
+//                })
+//        }
+//    }
 
 
     val installAppInfo: Array<ZipInstalledApp?>?

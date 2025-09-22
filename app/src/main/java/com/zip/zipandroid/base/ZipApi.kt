@@ -41,6 +41,20 @@ interface ZipApi {
     @POST("api/v4/ziplead/customer/sendSmsCode")
     fun getCode(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipCodeBean>>
 
+    @GET("api/v4/ziplead/getProtocolBeforeLoan")
+    fun getProtocolBeforeLoan(
+        @Query("fakitinAiki") fakitinAiki: String,
+        @Query("sigarBincike") sigarBincike: String,
+        @Query("tushen") tushen: String,
+        @Query("matsakaici") matsakaici: String,
+        @Query("lambarMutum") lambarMutum: String,
+        @Query("idAbokinCiniki") idAbokinCiniki: String,
+
+        @Query("sunanAiki") sunanAiki: String,
+        @Query("sunanYarjejeniya") sunanYarjejeniya: String,
+        @Query("sanyaHannu") sanyaHannu: String
+        ): Observable<ZipBaseRes<Any>>
+
     @POST("api/v4/ziplead/getCreditxStatus")
     fun getCreditxStatus(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderStatusBean>>
 
@@ -50,9 +64,6 @@ interface ZipApi {
 
     @POST("api/v4/ziplead/creationOrderByMx")
     fun creationOrderByMx(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipBizBean>>
-
-
-
 
 
     @POST("api/v4/ziplead/product/findProductByPid")

@@ -13,6 +13,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.annotation.NonNull
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.R
@@ -242,10 +243,18 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         mViewModel.configLiveData.observe(this) {
             Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
             Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
-            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//隐私协议
+            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//接口协议
             Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
-                ?: "https://www.baidu.com"//隐私协议
+                ?: "https://www.baidu.com"//服务协议
+            if (!(it?.APP_REPAYMENT_AGREEMENT
+                    ?: "").isNullOrEmpty()
+            ) {
+                mViewModel.getProtocolBeforeLoan(it?.APP_REPAYMENT_AGREEMENT
+                    ?: "", AppUtils.getAppName())
+            }
+
         }
+
         mViewModel.codeLiveData.observe(this) {
             ZipCodeActivity.start(this, "234" + getRealPhone(), it?.code
                 ?: "")

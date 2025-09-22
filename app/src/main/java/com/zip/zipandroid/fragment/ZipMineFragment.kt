@@ -43,7 +43,7 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
 
         mViewBind.zipMineBankSl.setOnDelayClickListener {
             //银行卡页面
-            if(userInfo?.questions.isNullOrEmpty()){
+            if(userInfo?.bankId.isNullOrEmpty()){
                 ToastUtils.showShort("You haven't linked a bank account yet.")
                 return@setOnDelayClickListener
 

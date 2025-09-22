@@ -89,7 +89,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
 
         bottom_status_tv.setTextColor(Color.parseColor("#FF8D8D8D"))
 
-        if (item.status == "FINISH" || item.status == "OVERDUEREPAYMENT") {
+        if (item.status == "FINISH" || item.status == "OVERDUEREPAYMENT" || item?.status == "NORMAL") {
             item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.periodTime))
             zip_order_item_finish_detail_tv.show()
             zip_item_order_inner_top_tv.setText("Repaid")

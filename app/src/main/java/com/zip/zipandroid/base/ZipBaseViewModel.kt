@@ -172,6 +172,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         api.addParam("cikakkenSunan", fullName)
         api.addParam("lambarKatinAinihin", identityCardNo)
         api.addParam("wayar", phone)
+        api.addParam("tilasDauraKatin", true)
         api.addParam("sunanKarshe", lastName)
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

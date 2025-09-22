@@ -137,9 +137,8 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
 
         mViewBind.orderCompleteCl.hide()
 
-        if (status == "FINISH" || status == "OVERDUEREPAYMENT") {
+        if (status == "FINISH" || status == "OVERDUEREPAYMENT" || status == "NORMAL") {
             mViewBind.orderCompleteCl.show()
-
             mViewBind.detailRepaidTv.setText("Repaid")
 //            mViewBind.detailCompleteTimeTv.setText()
             orderData?.let {

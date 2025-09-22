@@ -9,7 +9,7 @@
 
     <com.zip.zipandroid.shape.ZipShapeConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="530dp"
+        android:layout_height="wrap_content"
         app:sv_scl_background="@color/white"
         app:sv_scl_radius="19dp">
 
@@ -41,7 +41,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/pop_repayment_plan_rv"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/pop_total_place_tv"

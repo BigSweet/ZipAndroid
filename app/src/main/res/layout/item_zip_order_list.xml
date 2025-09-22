@@ -166,10 +166,12 @@
                 android:layout_marginHorizontal="40dp"
                 android:layout_marginBottom="20dp"
                 android:textColor="#ffdc9f19"
+                android:gravity="center"
                 android:textSize="13sp"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="You'll receive the review outcome in a
+                tools:text="You'll receive the review outcome in a\n
  few minutes" />
 
 

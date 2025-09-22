@@ -154,7 +154,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         PayOrderDetailActivity.start(requireActivity(), bizId, lid.toString(), amount.toString())
                     }
                 }
-                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT") {
+                if (it.creditOrderList?.status == "CANCELED" || it.creditOrderList?.status == "FINISH" || it.creditOrderList?.status == "OVERDUEREPAYMENT" || it.creditOrderList?.status=="NORMAL") {
                     showNormalStatus(it)
 
                 }
@@ -184,7 +184,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                         mViewBind.homeBankFailCl.show()
                         mViewBind.updateBankTv.setOnDelayClickListener {
                             //跳转过去后继续授信在进件
-                            ZipBandCardActivity.start(requireActivity(), true)
+                            ZipBandCardActivity.start(requireActivity(), false)
                         }
                     } else {
                         showNormalStatus(it)
