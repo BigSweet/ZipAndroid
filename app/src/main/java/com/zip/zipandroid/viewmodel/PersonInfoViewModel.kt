@@ -434,9 +434,11 @@ class PersonInfoViewModel : ZipBaseViewModel() {
             })
     }
 
-    fun saveQuestionList(list: List<ZipUploadQuestionBean>) {
+    fun saveQuestionList(list: List<ZipUploadQuestionBean>,purpose:Int,amountRange:Int) {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
+        api.addParam("manufa",purpose)
+        api.addParam("kewayonAdadin",amountRange)
         treeMap.putAll(api)
         api.put("tambayoyi", list)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

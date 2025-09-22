@@ -64,11 +64,11 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Questionnaire")
         mViewModel.getPersonInfoDic()
         showLoading()
-        mViewModel.getCreditHistoryDict()
+
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             ZipTrackUtils.track("SubmitQuestionnairePage")
-            mViewModel.saveQuestionList(convertQuestion())
+            mViewModel.saveQuestionList(convertQuestion(), purpose, amountRange)
         }
         mViewBind.zipQuestionRv.layoutManager = LinearLayoutManager(this)
         questionAdapter.bindToRecyclerView(mViewBind.zipQuestionRv)
@@ -91,6 +91,8 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     }
 
+    var purpose = -1//贷款用途
+    var amountRange = -1//借款金额
     fun showCurrentSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int, infoView: SetInfoEditView?, bean: CreditListBeanItem) {
         //选择完成后检测
         KeyboardUtils.hideSoftInput(this)
@@ -102,6 +104,14 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 infoView.setTagComplete()
                 checkPopDone()
                 checkAllDone()
+                if (type == -1) {
+                    //借款用途
+                    purpose = position
+                }
+                if (type == -2) {
+                    //借款金额
+                    amountRange = position
+                }
             }
         })
     }
@@ -117,7 +127,10 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     fun convertQuestion(): List<ZipUploadQuestionBean> {
         val questionList = arrayListOf<ZipUploadQuestionBean>()
-        questionAdapter.data.forEach {
+        val filterList = questionAdapter.data.filter {
+            it.questionIndex != "-1" && it.questionIndex != "-2"
+        }
+        filterList.forEach {
             val bean = ZipUploadQuestionBean(it.questionAnswer
                 ?: "", it.questionIndex.toInt(), it.questionValue)
             questionList.add(bean)
@@ -138,10 +151,47 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     var questionAdapter = ZipQuestionAdapter()
 
+
+//
+//    "loanPurpose": [
+//    "Business",
+//    "Rent",
+//    "Pharmacy",
+//    "Education",
+//    "Agric",
+//    "Auto",
+//    "Personal",
+//    "Others"
+//    ]
+//    "loanAmountRange": [
+//    "Less than ₦10,000",
+//    "₦10,001 - ₦30,000",
+//    "₦30,001 - ₦50,000",
+//    "More than ₦50,000 "
+//    ],
+//    Desired range of the loan amount
+
+    var loanPurpose = listOf<String>()
+    var loanAmountRange = listOf<String>()
+
+    //    取/api/v4/ziplead/dict/getPersonalInformationDict的"loanAmountRange"、"loanPurpose"
     override fun createObserver() {
         mViewModel.creditLiveData.observe(this) {
-            questionAdapter.setNewData(it)
+//            loanAmountRange
+//            loanPurpose
+            val realList = arrayListOf<CreditListBeanItem>()
+            //接口用途
+            val loanPurpose = CreditListBeanItem(loanPurpose, "-1", "Purpose of the loan", "")
+            //期望接口金额
+            val loanAmountRange = CreditListBeanItem(loanAmountRange, "-2", "Desired range of the loan amount", "")
+            realList.add(loanPurpose)
+            realList.add(loanAmountRange)
+            realList.addAll(it)
+            questionAdapter.setNewData(realList)
+
             mViewModel.getUserInfo()
+
+
         }
         mViewModel.failLiveData.observe(this) {
             dismissLoading()
@@ -151,13 +201,37 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (it.questions.isNullOrEmpty()) {
                 checkPopDone()
             } else {
-                questionAdapter.data.forEach { adaterData ->
+                if (it.purpose > -1) {
+                    purpose = it.purpose
+                    val data = questionAdapter.data.find {
+                        it.questionIndex == "-1"
+                    }
+                    if (data != null) {
+                        data.questionAnswer = loanPurpose.get(it.purpose)
+                    }
+                }
+                if (it.amountRange > -1) {
+                    amountRange = it.amountRange
+                    val data = questionAdapter.data.find {
+                        it.questionIndex == "-2"
+                    }
+                    if (data != null) {
+                        data.questionAnswer = loanAmountRange.get(it.amountRange)
+                    }
+                }
+
+                val filterList = questionAdapter.data.filter {
+                    it.questionIndex != "-1" && it.questionIndex != "-2"
+                }
+
+                filterList.forEach { adaterData ->
                     val questionItem = it.questions.find {
                         it.questionIndex == adaterData.questionIndex
                     }
                     //同步adapter的信息
                     adaterData.questionAnswer = questionItem?.answer
                 }
+
                 questionAdapter.notifyDataSetChanged()
                 ThreadUtils.runOnUiThreadDelayed({
                     checkPopDone()
@@ -166,6 +240,11 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
             }
 
+        }
+        mViewModel.personDicLiveData.observe(this) {
+            loanPurpose = it.loanPurpose
+            loanAmountRange = it.loanAmountRange
+            mViewModel.getCreditHistoryDict()
         }
         mViewModel.saveInfoLiveData.observe(this) {
             //保存进件到第几部了
