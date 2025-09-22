@@ -7,10 +7,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
-import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
-import com.zip.zipandroid.activity.ZipQuestionActivity
-import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -26,7 +23,6 @@ import com.zip.zipandroid.pop.ZipDefPerPop
 import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
-import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -73,7 +69,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     override fun onResume() {
         super.onResume()
-        if (!PermissionUtils.isGranted( AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 
         } else {
             noPerPop?.dismiss()
@@ -83,7 +79,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
-        if (!PermissionUtils.isGranted( AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())

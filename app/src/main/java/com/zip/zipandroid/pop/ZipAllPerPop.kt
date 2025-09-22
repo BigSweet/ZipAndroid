@@ -26,6 +26,11 @@ class ZipAllPerPop(context: Context, val fromAbout: Boolean? = false) : ZipBaseF
             dismiss()
 
         }
+        mBinding.fromAboutTv.setOnDelayClickListener {
+            allPerSuccess?.invoke()
+            dismiss()
+
+        }
         mBinding.privateCancelTv.setOnDelayClickListener {
             allPerFail?.invoke()
             dismiss()
