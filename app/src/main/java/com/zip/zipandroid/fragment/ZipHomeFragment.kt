@@ -225,8 +225,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             if (!(it?.APP_REPAYMENT_AGREEMENT
                     ?: "").isNullOrEmpty()
             ) {
-                mViewModel.getProtocolBeforeLoan(it?.APP_REPAYMENT_AGREEMENT
-                    ?: "", AppUtils.getAppName())
+//                mViewModel.getProtocolBeforeLoan(it?.APP_REPAYMENT_AGREEMENT
+//                    ?: "", AppUtils.getAppName())
 //                mViewModel.getProtocolBeforeLoan(it?.APP_LOAN_CONTRACT
 //                    ?: "", AppUtils.getAppName())
             }
