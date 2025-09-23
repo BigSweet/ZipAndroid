@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
 import com.lxj.xpopup.XPopup
-import com.zip.zipandroid.activity.ZipPersonInfoActivity
+import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -60,7 +60,13 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         ViewPagerHelper.bind(mViewBind.magicIndicator, mViewBind.vpMain)
         mViewBind.vpMain.setOffscreenPageLimit(mFragments.size)
         ZipEventBusUtils.register(this)
-        checkAllPer()
+        if (MMKV.defaultMMKV().getBoolean("showPer", false)) {
+            realGetAllPer()
+        } else {
+            checkAllPer()
+            MMKV.defaultMMKV().putBoolean("showPer", true)
+        }
+
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
 //            ZipContractActivity.start(this)
@@ -90,42 +96,46 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
                 finish()
             }
             pop.allPerSuccess = {
-                val list = AllPerUtils.getAllPer()
-                PermissionUtils.permission(*list.toTypedArray())
-                    .callback(object : PermissionUtils.FullCallback {
-                        override fun onGranted(permissionsGranted: List<String>) {
-                            //拿数据吗
-                            if (permissionsGranted.size == list.size) {
-                                getAllPerData()
-                            }
-                        }
-
-                        override fun onDenied(
-                            permissionsDeniedForever: List<String>,
-                            permissionsDenied: List<String>,
-                        ) {
-                            if (!permissionsDeniedForever.isNullOrEmpty()) {
-                                noPerPop = ZipDefPerPop(this@ZipMainActivity, permissionsDeniedForever)
-                                XPopup.Builder(getContext())
-                                    .dismissOnBackPressed(false)
-                                    .dismissOnTouchOutside(false)
-                                    .asCustom(noPerPop).show()
-                            } else {
-                                if (!permissionsDenied.isNullOrEmpty()) {
-//                                    UserInfoUtils.clear()
-                                    finish()
-                                }
-                            }
-
-                        }
-                    })
-                    .request()
+                realGetAllPer()
             }
             XPopup.Builder(getContext()).asCustom(pop).show()
 
         } else {
             getAllPerData()
         }
+    }
+
+    private fun realGetAllPer() {
+        val list = AllPerUtils.getAllPer()
+        PermissionUtils.permission(*list.toTypedArray())
+            .callback(object : PermissionUtils.FullCallback {
+                override fun onGranted(permissionsGranted: List<String>) {
+                    //拿数据吗
+                    if (permissionsGranted.size == list.size) {
+                        getAllPerData()
+                    }
+                }
+
+                override fun onDenied(
+                    permissionsDeniedForever: List<String>,
+                    permissionsDenied: List<String>,
+                ) {
+                    if (!permissionsDeniedForever.isNullOrEmpty()) {
+                        noPerPop = ZipDefPerPop(this@ZipMainActivity, permissionsDeniedForever)
+                        XPopup.Builder(getContext())
+                            .dismissOnBackPressed(false)
+                            .dismissOnTouchOutside(false)
+                            .asCustom(noPerPop).show()
+                    } else {
+                        if (!permissionsDenied.isNullOrEmpty()) {
+                            //                                    UserInfoUtils.clear()
+                            finish()
+                        }
+                    }
+
+                }
+            })
+            .request()
     }
 
 
