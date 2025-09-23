@@ -13,6 +13,7 @@ data class ZipOrderListBeanItem(
     val applyPeriod: String,
     val applyPeriodNew: String,
     val applyTime: Long,
+    val finishTime: Long,
     val approveOpinion: String,
     val approveTime: Long,
     val bankId: String,

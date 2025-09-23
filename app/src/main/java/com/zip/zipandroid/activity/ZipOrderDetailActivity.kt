@@ -140,7 +140,7 @@ class ZipOrderDetailActivity : ZipBaseBindingActivity<OrderItemViewModel, Activi
         if (status == "FINISH" || status == "OVERDUEREPAYMENT" || status == "NORMAL") {
             mViewBind.orderCompleteCl.show()
             mViewBind.detailRepaidTv.setText("Repaid")
-//            mViewBind.detailCompleteTimeTv.setText()
+            mViewBind.detailCompleteTimeTv.setText(orderData?.finishTime?.formatTimestampToDate())
             orderData?.let {
                 mViewBind.detailPenInterTv.setText(it.factFine.toDouble().toN())
                 mViewBind.detailInterTv.setText(it.factInterest.toDouble().toN())
