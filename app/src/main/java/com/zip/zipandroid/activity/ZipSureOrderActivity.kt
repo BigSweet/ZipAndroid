@@ -150,11 +150,19 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             val item = baseQuickAdapter.getItem(i) as ZipProductPeriodItem
             duraAdapter.selectPosition = i
             duraAdapter.notifyDataSetChanged()
-            installAdapter.setNewData(item.periodStages)
-            if (!item.periodStages.isNullOrEmpty()) {
-                currentDid = item.periodStages.first().did
-                findPaidType()
-            }
+            resetAmount()
+            filterAndReserList(item)
+//            val allStages = item.periodStages
+//            val realStage = productDay / item.period
+//            val realList = allStages.filter {
+//                it.stage <= realStage
+//            }
+//            val reversedList = realList.reversed()
+//            installAdapter.setNewData(reversedList)
+//            if (!reversedList.isNullOrEmpty()) {
+//                currentDid = reversedList.first().did
+//                findPaidType()
+//            }
             orderTrialData()
         }
         installAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
@@ -162,6 +170,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             installAdapter.selectPosition = i
             installAdapter.notifyDataSetChanged()
             currentDid = item.did
+            resetAmount()
             findPaidType()
             orderTrialData()
         }
@@ -172,6 +181,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         mViewModel.zipHomeData()
 
+    }
+
+    private fun resetAmount() {
+        realAmount = amount.toInt()
+        mViewBind.sureOrderAmountTv.setText(realAmount.toN())
     }
 
     private fun orderTrialData() {
@@ -253,18 +267,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             var realIndex = it.productList.productPeriods.size - 1
             zipHomeDataBean = it
             duraAdapter.selectPosition = realIndex
+            //productPeriods目前就只有一个
             duraAdapter.setNewData(it.productList.productPeriods)
             if (!it.productList.productPeriods.isNullOrEmpty()) {
-                val allStages = it.productList.productPeriods.last().periodStages
-                val realStage = productDay / it.productList.productPeriods.last().period
-                val realList = allStages.filter {
-                    it.stage <= realStage
-                }
-                installAdapter.setNewData(realList)
-                if (!it.productList.productPeriods.last().periodStages.isNullOrEmpty()) {
-                    currentDid = it.productList.productPeriods.last().periodStages.first().did
-                    findPaidType()
-                }
+                val item = it.productList.productPeriods.last()
+                filterAndReserList(item)
             }
 //            limitMax = it.productList.limitMax.toDouble().toInt()
             limitMin = it.productList.limitMin.toDouble().toInt()
@@ -290,7 +297,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             dismissLoading()
             mViewBind.couponInterTv.setText(it.couponAmount)
             zipTriaBean = it
-            mViewBind.realInterTv.setText(it.totalInsterst.toDouble().toN())
+            mViewBind.realInterTv.setText(it.totalInterestExcludeTaxFee.toDouble().toN())
             mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
             mViewBind.bankCardTv.setText(UserInfoUtils.getBankData()?.cardNo)
             mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
@@ -352,6 +359,21 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.zipOrderPrivateTv.highlightColor = Color.TRANSPARENT
         mViewBind.zipOrderPrivateTv.setText(span)
 
+
+    }
+
+    private fun filterAndReserList(item: ZipProductPeriodItem) {
+        val allStages = item.periodStages
+        val realStage = productDay / item.period
+        val realList = allStages.filter {
+            it.stage <= realStage
+        }
+        val reversedList = realList.reversed()
+        installAdapter.setNewData(reversedList)
+        if (!reversedList.isNullOrEmpty()) {
+            currentDid = reversedList.first().did
+            findPaidType()
+        }
 
     }
 

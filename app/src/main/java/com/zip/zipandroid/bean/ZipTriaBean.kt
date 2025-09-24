@@ -15,6 +15,7 @@ class ZipTriaBean(
     val count: Int,
     val totalFee: String,
     val totalInsterst: String,
+    val totalInterestExcludeTaxFee: String,
 ) {
 }
 
