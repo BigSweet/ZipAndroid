@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -79,7 +78,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
 
         mViewModel.zipHomeData()
-        mViewModel.getZipAppConfig()
+
         mViewModel.getUserInfo()
     }
 
@@ -227,7 +226,9 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//借款协议
             Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
                 ?: "https://www.baidu.com"//服务协议
-
+            if (it?.APP_HIDE_WORK_PROOF_PHOTO == userInfo?.mid.toString()) {
+                Constants.isDemoAccount = true
+            }
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {
                 //获取广告信息
@@ -237,6 +238,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
         mViewModel.userInfoLiveData.observe(this) {
             userInfo = it
+            mViewModel.getZipAppConfig()
 
         }
         mViewModel.cardListLiveData.observe(this) {

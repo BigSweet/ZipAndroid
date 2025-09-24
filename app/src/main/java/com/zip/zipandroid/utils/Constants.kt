@@ -12,6 +12,7 @@ object Constants {
     val loadInstall = false
     val lodaCallInfo = false
     val loadSms = false
+    var isDemoAccount = false
 
     @JvmField
     val useDebug = false
