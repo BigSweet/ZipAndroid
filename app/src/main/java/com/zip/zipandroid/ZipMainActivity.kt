@@ -12,6 +12,8 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
+import com.zip.zipandroid.activity.ZipBandCardActivity
+import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
@@ -82,7 +84,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
 //            ZipContractActivity.start(this)
-            startActivity(ZipPersonInfoActivity::class.java)
+            startActivity(ZipContractActivity::class.java)
         }
 
         lifecycleScope.launch {

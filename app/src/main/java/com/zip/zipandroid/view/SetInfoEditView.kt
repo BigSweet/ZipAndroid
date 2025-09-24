@@ -495,7 +495,7 @@ class SetInfoEditView : RelativeLayout {
 
                     if (inputInfoType == TYPE_NAME) {
                         //
-                        if (isFormatting || s.isNullOrEmpty()) return
+                        if (isFormatting) return
 
                         isFormatting = true
 
@@ -513,7 +513,7 @@ class SetInfoEditView : RelativeLayout {
 
                         // 4. 回写处理后的文本
                         if (s.toString() != formatted) {
-                            s.replace(0, s.length, formatted)
+                            s?.replace(0, s.length, formatted)
                         }
                         it.tag = "completed"
                         it.setBackgroundColor(
@@ -561,7 +561,8 @@ class SetInfoEditView : RelativeLayout {
                             if (allDigitsSame) {
                                 // 违反了“不能全部相同”的规则，回退到上一个有效文本
                                 s.replace(0, s.length, lastValidText)
-                                it.error = "The number cannot have all the same digits"
+//                                it.error = "The number cannot have all the same digits"
+                                ToastUtils.showShort("Please enter a valid mobile phone number")
                                 isFormatting = false
                                 it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                                 return
@@ -569,7 +570,9 @@ class SetInfoEditView : RelativeLayout {
                             // 子规则2b：长度不能超过10
                             if (length > 10) {
                                 s.replace(0, s.length, lastValidText)
-                                it.error = "enter a maximum of 10 digits."
+//                                it.error = "enter a maximum of 10 digits."
+                                ToastUtils.showShort("Please enter a valid mobile phone number")
+                                it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                                 isFormatting = false
                                 return
                             }
@@ -584,7 +587,8 @@ class SetInfoEditView : RelativeLayout {
                             // 子规则3a：检查第二位不能是0
                             if (length >= 2 && currentText[1] == '0') {
                                 s.replace(0, s.length, lastValidText)
-                                it.error = "The second digit cannot be 0"
+//                                it.error = "The second digit cannot be 0"
+                                ToastUtils.showShort("Please enter a valid mobile phone number")
                                 it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                                 isFormatting = false
                                 return
@@ -601,7 +605,8 @@ class SetInfoEditView : RelativeLayout {
                         // --- 无效模式 (首位既不是1-9也不是0，理论上被InputFilter阻止，此为安全备份) ---
                         else {
                             s.clear()
-                            it.error = "The first digit must be 1-9 or 0"
+//                            it.error = "The first digit must be 1-9 or 0"
+                            ToastUtils.showShort("Please enter a valid mobile phone number")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                             lastValidText = ""
                         }

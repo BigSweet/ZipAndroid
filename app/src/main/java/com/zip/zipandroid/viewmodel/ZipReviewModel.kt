@@ -229,7 +229,6 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("tasharTushe", "google-play")
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
-        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
         api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
         val pushData = ZipPushData()
@@ -252,6 +251,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         val realConList = convertData(list)
         info.lambobinGaggawa = realConList
         treeMap.putAll(api)
+        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("turaBayanan", pushData)
         api.addParam("bayaninAbokinCiniki", info)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

@@ -2,11 +2,13 @@ package com.zip.zipandroid.fragment
 
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.activity.ZipAboutUsActivity
 import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipCouponActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
+import com.zip.zipandroid.activity.ZipOrderReviewActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.bean.ZipUserInfoBean
@@ -42,15 +44,16 @@ class ZipMineFragment : ZipBaseBindingFragment<ZipBaseViewModel, FragmentZipMine
         }
 
         mViewBind.zipMineBankSl.setOnDelayClickListener {
-            //银行卡页面
-            if(userInfo?.bankId.isNullOrEmpty()){
-                ToastUtils.showShort("You haven't linked a bank account yet.")
-                return@setOnDelayClickListener
-
-            }
-            ZipBandCardActivity.start(requireActivity(),true)
-//            startActivity(ZipBandCardActivity::class.java)
+            mViewModel.zipQueryCard()
         }
+        mViewModel.cardListLiveData.observe(this) {
+            if (it.isNullOrEmpty()) {
+                ToastUtils.showShort("You haven't linked a bank account yet.")
+            } else {
+                ZipBandCardActivity.start(requireActivity(),true)
+            }
+        }
+
         mViewBind.zipMineAboutSl.setOnDelayClickListener {
             //关于我们的
             startActivity(ZipAboutUsActivity::class.java)
