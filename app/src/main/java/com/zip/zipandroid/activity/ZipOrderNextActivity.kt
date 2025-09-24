@@ -70,7 +70,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
         mViewModel.userOrderLiveData.observe(this) {
 //
 //            订单状态（300 等待 同WAITING 挂起状态，跳转到订单确认页面，等待用户确认，用户确认或取消后跳转到首页。
-//            1 执行中 同EXECUTING 跳转到审核中页面
+//            1 执行中 审核中页面
 //                    372 已通过 同PASSED
 //            425 已拒绝 同REFUSED,审核失败页面
 //            421 已取消 同CANCELED/CANCEL）

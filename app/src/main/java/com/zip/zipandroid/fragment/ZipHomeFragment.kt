@@ -122,7 +122,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
             Constants.currentPid = it.productList.pid
-            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toN())
+            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toN())
             mViewBind.homeReviewCl.hide()
 
             mViewBind.homeDelayCl.hide()
@@ -148,7 +148,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 if (it.creditOrderList?.status == "NOTREPAID" || it.creditOrderList?.status == "PARTIAL" || it.creditOrderList?.status == "LENDING" || it.creditOrderList?.status == "PASSED") {
                     mViewBind.homePayingCl.show()
                     if (!it.creditOrderList?.amountDue.isNullOrEmpty()) {
-                        mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
+                        mViewBind.payingMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toInt().toN())
                     }
                     mViewBind.payingDateTv.setText("Due Date: " + ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val bizId = it.creditOrderList.bizId
@@ -165,7 +165,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 }
                 if (it.creditOrderList?.status == "OVERDUE") {
                     mViewBind.homeDelayCl.show()
-                    mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toN())
+                    mViewBind.delayMoneyTv.setText(it.creditOrderList?.amountDue.toDouble().toInt().toN())
                     mViewBind.delayDateTv.setText("Due Date: " + ZipTimeUtils.formatTimestampToDate(it.creditOrderList?.periodTime))
                     val span = SpannableStringBuilder()
                     span.append("Your payment is ")

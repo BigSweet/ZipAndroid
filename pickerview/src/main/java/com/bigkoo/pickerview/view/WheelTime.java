@@ -378,6 +378,7 @@ public class WheelTime {
         wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
+                startMonth = 1;
                 int year_num = index + startYear;
                 currentYear = year_num;
                 int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
@@ -533,7 +534,7 @@ public class WheelTime {
 
 
     private void setReDay(int year_num, int monthNum, int startD, int endD, List<String> list_big, List<String> list_little) {
-        int currentItem = wv_day.getCurrentItem();
+        int currentItem = 0;
 
 //        int maxItem;
         if (list_big.contains(String.valueOf(monthNum))) {
@@ -565,10 +566,11 @@ public class WheelTime {
             }
         }
 
-        if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
-            currentItem = wv_day.getAdapter().getItemsCount() - 1;
-            wv_day.setCurrentItem(currentItem);
-        }
+//        if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
+//            currentItem = wv_day.getAdapter().getItemsCount() - 1;
+//            wv_day.setCurrentItem(currentItem);
+//        }
+        wv_day.setCurrentItem(currentItem);
     }
 
 

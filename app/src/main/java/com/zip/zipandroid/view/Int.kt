@@ -6,7 +6,7 @@ import java.util.Date
 import java.util.Locale
 
 
-private val decimalFormat = DecimalFormat("#,###,#")
+private val decimalFormat = DecimalFormat("##,###")
 
 val dateFormat = SimpleDateFormat("MMM dd, yyyy hh:mm:ss", Locale.US) // 英文月份格式
 
