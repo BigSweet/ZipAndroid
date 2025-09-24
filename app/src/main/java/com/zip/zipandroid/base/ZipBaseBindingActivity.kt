@@ -130,6 +130,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         })
         pvOptions.setTitleText("Home Address")
         pvOptions.setSubmitColor(Color.WHITE)
+        pvOptions.isRestoreItem(true)
         pvOptions.setOptionsSelectChangeListener { options1, options2, options3 ->
             val opt1tx = if (options1Items.size > 0) options1Items[options1].pickerViewText else ""
             val opt2tx: String = if (options2Items.size > 0
