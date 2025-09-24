@@ -17,6 +17,8 @@ import com.zip.zipandroid.utils.UserInfoUtils.getUserNo
 import com.zip.zipandroid.utils.ZipFormReq
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import okhttp3.ResponseBody
 import java.util.TreeMap
 
 open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
@@ -29,7 +31,9 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
     }
 
 
-    fun getProtocolBeforeLoan(agreementName: String, appName: String):String {
+    var agreementNameLive = MutableLiveData<ResponseBody?>()
+
+    fun getProtocolBeforeLoan(agreementName: String, appName: String) {
 
         var clientId = Constants.client_id
         if (BuildConfig.DEBUG && Constants.useDebug) {
@@ -43,31 +47,22 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         api.addParam("sunanYarjejeniya", agreementName)
         treeMap.putAll(api)
         val sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
-        return "http://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan?fakitinAiki=${AppUtils.getAppPackageName()}&sigarBincike=${AppUtils.getAppVersionName()}&tushen=${"ANDROID"}&matsakaici=${UserInfoUtils.getMid().toString()}&lambarMutum=${UserInfoUtils.getUserNo().toString()}&idAbokinCiniki=${clientId}&sunanAiki=${appName}&sunanYarjejeniya=${agreementName}&sanyaHannu=${sign}"
-//        ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
-//            AppUtils.getAppPackageName(),
-//            AppUtils.getAppVersionName(),
-//            "ANDROID",
-//            UserInfoUtils.getMid().toString(),
-//            UserInfoUtils.getUserNo(),
-//            clientId,
-//            appName, agreementName, SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
-//            .compose(ZipRxSchedulers.io_main())
-//            .subscribe(object : ZipResponseSubscriber<Any>() {
-//                override fun onSubscribe(d: Disposable) {
-//                    super.onSubscribe(d)
-//                    addReqDisposable(d)
-//                }
-//
-//                override fun onSuccess(result: Any) {
-//
-//                }
-//
-//                override fun onFailure(code: Int, message: String?) {
-//                    super.onFailure(code, message)
-//                    failLiveData.postValue(message)
-//                }
-//            })
+//        return "http://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan?fakitinAiki=${AppUtils.getAppPackageName()}&sigarBincike=${AppUtils.getAppVersionName()}&tushen=${"ANDROID"}&matsakaici=${UserInfoUtils.getMid().toString()}&lambarMutum=${UserInfoUtils.getUserNo().toString()}&idAbokinCiniki=${clientId}&sunanAiki=${appName}&sunanYarjejeniya=${agreementName}&sanyaHannu=${sign}"
+        ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
+            AppUtils.getAppPackageName(),
+            AppUtils.getAppVersionName(),
+            "ANDROID",
+            UserInfoUtils.getMid().toString(),
+            UserInfoUtils.getUserNo(),
+            clientId,
+            appName, agreementName, SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+            .compose(ZipRxSchedulers.io_main())
+            .subscribe(object : Consumer<ResponseBody> {
+
+                override fun accept(t: ResponseBody?) {
+                    agreementNameLive.postValue(t)
+                }
+            })
     }
 
     var failLiveData = MutableLiveData<String?>()

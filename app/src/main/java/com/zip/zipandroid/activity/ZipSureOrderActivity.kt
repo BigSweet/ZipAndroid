@@ -14,7 +14,6 @@ import android.view.View
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.AppUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipDurationAdapter
@@ -318,7 +317,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         val end = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipSureOrderActivity, mViewModel.getProtocolBeforeLoan(Constants.APP_LOAN_CONTRACT, AppUtils.getAppName()))
+                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_LOAN_CONTRACT)
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {
@@ -336,7 +335,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         val end1 = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipSureOrderActivity, mViewModel.getProtocolBeforeLoan(Constants.APP_REPAYMENT_AGREEMENT, AppUtils.getAppName()))
+                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_REPAYMENT_AGREEMENT)
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {

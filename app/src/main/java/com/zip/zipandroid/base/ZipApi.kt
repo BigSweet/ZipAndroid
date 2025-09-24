@@ -30,6 +30,7 @@ import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.ZipFormReq
 import io.reactivex.Observable
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -53,7 +54,7 @@ interface ZipApi {
         @Query("sunanAiki") sunanAiki: String,
         @Query("sunanYarjejeniya") sunanYarjejeniya: String,
         @Query("sanyaHannu") sanyaHannu: String
-        ): Observable<ZipBaseRes<Any>>
+        ): Observable<ResponseBody>
 
     @POST("api/v4/ziplead/getCreditxStatus")
     fun getCreditxStatus(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipOrderStatusBean>>

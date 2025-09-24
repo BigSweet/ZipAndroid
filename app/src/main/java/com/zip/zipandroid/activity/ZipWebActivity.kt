@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.webkit.WebChromeClient
 import android.widget.TextView
+import com.blankj.utilcode.util.AppUtils
 import com.zip.zipandroid.R
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityZipAndroidWebBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
+import com.zip.zipandroid.utils.Constants
 
 class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndroidWebBinding>() {
 
@@ -70,6 +72,25 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
                 }
             }
         }
-        mViewBind.webView.loadUrl(url)
+        if (url == Constants.APP_LOAN_CONTRACT || url == Constants.APP_REPAYMENT_AGREEMENT) {
+            showLoading()
+            mViewModel.getProtocolBeforeLoan(url, AppUtils.getAppName())
+            if(url == Constants.APP_LOAN_CONTRACT){
+                tvCenter.setText("Loan Agreement")
+            }else{
+                tvCenter.setText("Advance Payment Agreement")
+            }
+
+        } else {
+            mViewBind.webView.loadUrl(url)
+        }
+        mViewModel.agreementNameLive.observe(this) {
+//            it.string()
+            dismissLoading()
+            mViewBind.webView.loadDataWithBaseURL("https://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan", it?.string()
+                ?: "", "text/html",
+                "UTF-8",
+                null)
+        }
     }
 }
