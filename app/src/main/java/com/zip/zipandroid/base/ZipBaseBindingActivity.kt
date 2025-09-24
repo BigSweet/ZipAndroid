@@ -3,13 +3,11 @@ package com.zip.zipandroid.base
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import androidx.viewbinding.ViewBinding
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -30,14 +28,12 @@ import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipDesUtil
 import com.zip.zipandroid.utils.ZipLoadingUtils
-import com.zip.zipandroid.utils.ZipProjectUtil.getPhotoLocation
 import com.zip.zipandroid.utils.phonedate.ZipPhoneDateProvider
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledApp
 import com.zip.zipandroid.utils.phonedate.applist.ZipInstalledAppListener
 import com.zip.zipandroid.utils.phonedate.calendar.ZipCalendarInfos
 import com.zip.zipandroid.utils.phonedate.calendar.ZipCalendarListener
 import com.zip.zipandroid.utils.phonedate.calllog.ZipCallLog
-import com.zip.zipandroid.utils.phonedate.calllog.ZipCallLogListener
 import com.zip.zipandroid.utils.phonedate.sms.ZipSMSMessage
 import com.zip.zipandroid.utils.phonedate.sms.ZipSMSMessageListener
 import com.zip.zipandroid.view.SetInfoEditView
@@ -139,7 +135,12 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
             val opt2tx: String = if (options2Items.size > 0
                 && options2Items[options1].isNotEmpty()
             ) options2Items[options1][options2].name else ""
-            val opt3tx: String = if (options2Items.size > 0 && options3Items[options1].isNotEmpty() && options3Items[options1][options2].isNotEmpty()) options3Items[options1][options2][options3].name else ""
+            var opt3tx: String = ""
+            if (options2Items.size > 0  && options3Items[options1].isNotEmpty() && options3Items[options1][options2].isNotEmpty()) {
+                opt3tx = options3Items[options1][options2][options3].name
+            } else {
+                opt3tx = ""
+            }
             val tx = "$opt1tx $opt2tx $opt3tx"
 
             hintView?.setText(tx)
@@ -308,8 +309,6 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
 
-
-
     fun getInstallApp() {
         ZipPhoneDateProvider.sharedInstance(ZipApplication.instance!!)
             .getInstalledApps(object : ZipInstalledAppListener {
@@ -319,7 +318,6 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
                 }
             })
     }
-
 
 
     val installAppInfo: Array<ZipInstalledApp?>?

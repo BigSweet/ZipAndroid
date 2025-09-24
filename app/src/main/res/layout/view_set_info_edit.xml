@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="69dp">
+    android:layout_height="wrap_content">
 
     <com.zip.zipandroid.shape.ZipShapeEditTextView
         android:id="@+id/set_info_edit"
@@ -22,34 +22,36 @@
         android:textColorHint="#FFD4D4D4"
         app:layout_constraintTop_toTopOf="parent"
         app:setv_background="#FFF7F7F7"
-        app:setv_radius="13dp">
+        app:setv_radius="13dp"
+        tools:text="这是提示的信息这是提示的信息这是提示的信息这是提示的信息">
 
     </com.zip.zipandroid.shape.ZipShapeEditTextView>
+
 
     <com.zip.zipandroid.shape.ZipShapeTextView
         android:id="@+id/set_info_place_tv"
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:background="@null"
-        android:ellipsize="marquee"
         android:gravity="bottom"
         android:hint="Please choose"
+        android:includeFontPadding="false"
+        android:minHeight="69dp"
+        android:paddingTop="27dp"
         android:paddingLeft="15dp"
         android:paddingRight="40dp"
         android:paddingBottom="10dp"
-        android:singleLine="true"
         android:textColor="@color/black"
         android:textColorHint="#FFD4D4D4"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:sv_tx_background="#FFF7F7F7"
         app:sv_tx_radius="13dp"
-        tools:text="这是提示的信息这是提示的信息这是提示的信息这是提示的信息"
+        tools:text=""
         tools:visibility="visible">
 
     </com.zip.zipandroid.shape.ZipShapeTextView>
-
 
     <TextView
         android:id="@+id/set_info_left_number"

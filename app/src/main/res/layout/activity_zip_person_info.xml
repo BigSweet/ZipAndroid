@@ -87,12 +87,12 @@
                     android:layout_marginTop="21dp"
                     app:infoHintName="Please enter"
                     app:infoTopName="First Name"
-                    app:toastHintName="Please enter a valid first name"
                     app:inputInfoType="1"
                     app:layout_constraintTop_toTopOf="parent"
                     app:showBottomNumber="false"
                     app:showInfoArrow="false"
-                    app:showX="true">
+                    app:showX="true"
+                    app:toastHintName="Please enter a valid first name">
 
                 </com.zip.zipandroid.view.SetInfoEditView>
 
@@ -102,13 +102,13 @@
                     android:layout_height="69dp"
                     android:layout_marginTop="15dp"
                     app:infoHintName="Please enter"
-                    app:toastHintName="Please enter a valid middle name"
                     app:infoTopName="Middle Name"
                     app:inputInfoType="1"
                     app:layout_constraintTop_toBottomOf="@+id/first_name_info_view"
                     app:showBottomNumber="false"
                     app:showInfoArrow="false"
-                    app:showX="false">
+                    app:showX="false"
+                    app:toastHintName="Please enter a valid middle name">
 
                 </com.zip.zipandroid.view.SetInfoEditView>
 
@@ -120,11 +120,11 @@
                     app:infoHintName="Please enter"
                     app:infoTopName="Last Name"
                     app:inputInfoType="1"
-                    app:toastHintName="Please enter a valid last name"
                     app:layout_constraintTop_toBottomOf="@+id/middle_name_info_view"
                     app:showBottomNumber="false"
                     app:showInfoArrow="false"
-                    app:showX="true">
+                    app:showX="true"
+                    app:toastHintName="Please enter a valid last name">
 
                 </com.zip.zipandroid.view.SetInfoEditView>
 
@@ -273,7 +273,7 @@
                 <com.zip.zipandroid.view.SetInfoEditView
                     android:id="@+id/address_info_view"
                     android:layout_width="match_parent"
-                    android:layout_height="69dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     app:infoHintName="Please choose"
                     app:infoTopName="Home Address"
@@ -293,11 +293,11 @@
                     app:infoHintName="Please choose"
                     app:infoTopName="Detail Home Address"
                     app:inputInfoType="4"
-                    app:toastHintName="Please provide a complete and valid address"
                     app:layout_constraintTop_toBottomOf="@+id/address_info_view"
                     app:showBottomNumber="false"
                     app:showInfoArrow="false"
-                    app:showX="true">
+                    app:showX="true"
+                    app:toastHintName="Please provide a complete and valid address">
 
                 </com.zip.zipandroid.view.SetInfoEditView>
 

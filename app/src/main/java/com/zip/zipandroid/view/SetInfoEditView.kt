@@ -115,11 +115,11 @@ class SetInfoEditView : RelativeLayout {
                 it.isLongClickable = false
                 it.background = null
             }
-            infoViewCl.setOnDelayClickListener {
+            infoPlaceTv?.show()
+            infoPlaceTv?.setOnDelayClickListener {
                 infoViewClick?.invoke()
             }
             infoEdit?.hide(false)
-            infoPlaceTv?.show()
         }
         if (inputInfoType == TYPE_NAME) {
             infoEdit?.inputType = InputType.TYPE_CLASS_TEXT
@@ -699,7 +699,7 @@ class SetInfoEditView : RelativeLayout {
     fun setContentText(text: String) {
         infoEdit?.setText(text)
         infoPlaceTv?.setText(text)
-        infoPlaceTv?.isSelected = true
+//        infoPlaceTv?.isSelected = true
     }
 
     fun setTopName(topName: String) {

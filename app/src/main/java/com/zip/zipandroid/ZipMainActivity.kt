@@ -64,7 +64,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             realGetAllPer()
         } else {
             checkAllPer()
-            MMKV.defaultMMKV().putBoolean("showPer", true)
+
         }
 
         mViewBind.testBtn.visible = BuildConfig.DEBUG
@@ -96,6 +96,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
                 finish()
             }
             pop.allPerSuccess = {
+                MMKV.defaultMMKV().putBoolean("showPer", true)
                 realGetAllPer()
             }
             XPopup.Builder(getContext()).asCustom(pop).show()
