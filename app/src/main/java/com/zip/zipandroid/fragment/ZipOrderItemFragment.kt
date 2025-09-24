@@ -116,8 +116,7 @@ class ZipOrderItemFragment : ZipBaseBindingFragment<OrderItemViewModel, Fragment
                 if (queryType == 2) {
 //                   拒绝和取消的
                     val type2List = it.filter {
-                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH" || it.status == "OVERDUEREPAYMENT"
-                        it?.status=="NORMAL"
+                        it.status == "REFUSED" || it.status == "CANCELED" || it.status == "CANCEL" || it.status == "FINISH" || it.status == "OVERDUEREPAYMENT" || it?.status == "NORMAL"
                     }
                     if (type2List.isNullOrEmpty()) {
                         adapter.setNewData(arrayListOf())
