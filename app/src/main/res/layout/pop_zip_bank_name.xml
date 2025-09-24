@@ -53,9 +53,9 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="80dp" />
 
-            <com.zip.zipandroid.view.SideBar
+            <com.zip.zipandroid.view.ZipSlideBar
                 android:id="@+id/side_bar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"

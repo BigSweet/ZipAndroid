@@ -15,7 +15,8 @@ class ZipBankNamePop(context: Context, val list: ZipBankNameListBean?) : ZipBase
     var selectBank: ((ZipBankNameListBeanItem) -> Unit)? = null
     override fun onCreate() {
         super.onCreate()
-        mBinding.recyclerView.layoutManager = LinearLayoutManager(context)
+        val manager = LinearLayoutManager(context)
+        mBinding.recyclerView.layoutManager = manager
         val zipBankAdapter = ZipBankAdapter()
         mBinding.recyclerView.adapter = zipBankAdapter
         zipBankAdapter.setNewData(list)
@@ -27,11 +28,11 @@ class ZipBankNamePop(context: Context, val list: ZipBankNameListBean?) : ZipBase
         mBinding.bankNameCloseTv.setOnDelayClickListener {
             dismiss()
         }
-        mBinding.sideBar.setOnStrSelectCallBack { index, selectStr ->
+        mBinding.sideBar.setOnTouchLetterChangeListenner { isTouch, letter ->
             for (i in 0 until zipBankAdapter.getData().size) {
-                if (selectStr.equals(zipBankAdapter.getData().get(i).firstLetter, true)) {
-                    mBinding.recyclerView.scrollToPosition(i)
-                    return@setOnStrSelectCallBack
+                if (letter.equals(zipBankAdapter.getData().get(i).firstLetter, true)) {
+                    manager.scrollToPositionWithOffset(i, 0)
+                    return@setOnTouchLetterChangeListenner
                 }
             }
         }

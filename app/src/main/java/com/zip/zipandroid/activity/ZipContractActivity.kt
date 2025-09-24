@@ -19,6 +19,7 @@ import com.zip.zipandroid.bean.UploadContractBean
 import com.zip.zipandroid.bean.ZipContractBean
 import com.zip.zipandroid.databinding.ActivityZipContractBinding
 import com.zip.zipandroid.event.ZipFinishInfoEvent
+import com.zip.zipandroid.ktx.hide
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
@@ -115,15 +116,15 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         adapter.addFooterView(foot)
         foot.setOnDelayClickListener {
             //增加数据
-            KeyboardUtils.hideSoftInput(this)
-            if (done) {
+            if (canAddOther) {
+                KeyboardUtils.hideSoftInput(this)
 //                initList.add(ZipContractBean(idx++, "Colleague/Friend", false))
 //                adapter.setNewData(initList)
                 adapter.addData(ZipContractBean(idx++, "Relationship", false))
-
                 mViewBind.contractRv.post {
                     mViewBind.contractRv.scrollToPosition(adapter.data.size - 1)
                 }
+                foot.hide()
 
             }
         }
@@ -175,38 +176,54 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             it.id == 1 || it.id == 2
         }
         var twoDone = 0
-        var firstPhone = ""
-        var secondPhone = ""
         twoList.forEachIndexed { index, zipContractBean ->
 
             val nameValue = zipContractBean.contactName
             val numberValue = zipContractBean.contactPhone
             val relationValue = zipContractBean.relationValue
-
-            if (index == 0 && !numberValue.isNullOrEmpty()) {
-                firstPhone = numberValue
-            }
-
             if (!nameValue.isNullOrEmpty() && !numberValue.isNullOrEmpty() && !relationValue.isNullOrEmpty()) {
                 twoDone++
             }
-            if (index == 1 && !numberValue.isNullOrEmpty()) {
-                secondPhone = numberValue
+        }
+
+        if (twoDone == twoList.size) {
+            canAddOther = true
+        }
+        if (canAddOther) {
+            var samePhone = false
+            var sameSelfPhone = false //是否有和本人相同的手机号
+            //必填项都填了
+            val hasPhoneList = adapter.data.filter {
+                !it.contactPhone.isNullOrEmpty()
+            }
+            val duplicates = hasPhoneList
+                .groupingBy { it.contactPhone } // 按电话号码分组
+                .eachCount() // 计算每组的数量
+                .filter { it.value > 1 } // 过滤出出现次数大于1的
+            if (duplicates.isNotEmpty()) {
+                samePhone = true
+                ToastUtils.showShort("This phone number has already been used. Please enter a different one")
+            } else {
+                samePhone = false
+            }
+            val targetPhoneNumber = UserInfoUtils.getUserPhone()
+            val exists = hasPhoneList.any { "234" + it.contactPhone == targetPhoneNumber }
+            if (exists) {
+                sameSelfPhone = true
+                ToastUtils.showShort("The contact’s mobile number matches your own. Please enter a different number")
+            } else {
+                sameSelfPhone = false
+            }
+            if (twoDone == twoList.size && !samePhone && !sameSelfPhone) {
+                //俩个都填好了而且电话不一样
+                done = true
+            }else{
+                done = false
             }
         }
-        if (!secondPhone.isNullOrEmpty() && !firstPhone.isNullOrEmpty() && secondPhone == firstPhone) {
-            ToastUtils.showShort("This phone number has already been used. Please enter a different one")
-            done = false
-        }
-        if (twoDone == 2 && secondPhone != firstPhone) {
-            //俩个都填好了而且电话不一样
-            done = true
-        }
-        if (("234" + firstPhone) == UserInfoUtils.getUserPhone() || ("234" + secondPhone) == UserInfoUtils.getUserPhone()) {
-            ToastUtils.showShort("The contact’s mobile number matches your own. Please enter a different number")
-            done = false
-        }
-        if (done) {
+
+
+        if (canAddOther) {
             footAddIcon?.setImageResource(R.drawable.done_foot_add_icon)
             footDesTv?.setTextColor(Color.parseColor("#FF3667F0"))
         } else {
@@ -216,6 +233,8 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewBind.infoNextBtn.setEnabledPlus(done)
 
     }
+
+    var canAddOther = false
 
     fun showSelectPop(title: String, data: List<String>?, type: Int, selectPosition: Int, infoView: SetInfoEditView, adapterPosition: Int) {
         //选择完成后检测
