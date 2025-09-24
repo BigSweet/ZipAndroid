@@ -175,6 +175,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     }
 
     private fun orderTrialData() {
+        showLoading()
         mViewModel.orderTrial(realAmount, riskLevel, currentDid.toString(), currentCouponId)
     }
 
@@ -249,19 +250,19 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         }
         mViewModel.homeLiveData.observe(this) {
-            var realIndex = 0
+            var realIndex = it.productList.productPeriods.size - 1
             zipHomeDataBean = it
             duraAdapter.selectPosition = realIndex
             duraAdapter.setNewData(it.productList.productPeriods)
             if (!it.productList.productPeriods.isNullOrEmpty()) {
-                val allStages = it.productList.productPeriods.first().periodStages
-                val realStage = productDay / it.productList.productPeriods.first().period
+                val allStages = it.productList.productPeriods.last().periodStages
+                val realStage = productDay / it.productList.productPeriods.last().period
                 val realList = allStages.filter {
                     it.stage <= realStage
                 }
                 installAdapter.setNewData(realList)
-                if (!it.productList.productPeriods.first().periodStages.isNullOrEmpty()) {
-                    currentDid = it.productList.productPeriods.first().periodStages.first().did
+                if (!it.productList.productPeriods.last().periodStages.isNullOrEmpty()) {
+                    currentDid = it.productList.productPeriods.last().periodStages.first().did
                     findPaidType()
                 }
             }

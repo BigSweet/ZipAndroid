@@ -2,7 +2,6 @@ package com.zip.zipandroid
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -12,14 +11,13 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
-import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
-import com.zip.zipandroid.activity.ZipPersonInfoActivity
-import com.zip.zipandroid.activity.ZipQuestionActivity
+import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityMainBinding
+import com.zip.zipandroid.event.ZipLoginOutEvent
 import com.zip.zipandroid.event.ZipSwitchIndexEvent
 import com.zip.zipandroid.fragment.ZipHomeFragment
 import com.zip.zipandroid.fragment.ZipMineFragment
@@ -32,6 +30,8 @@ import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
+import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipActivityCollector
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -94,8 +94,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         }
 
     }
-
-
 
 
     suspend fun getAdvertisingId(context: Context): String? {
@@ -178,6 +176,19 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: ZipSwitchIndexEvent) {
         mViewBind.vpMain.setCurrentItem(event.index)
+    }
+
+    var logout = false
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipLoginOutEvent) {
+        if (logout) {
+            return
+        }
+        logout = true
+        ZipActivityCollector.removeAllActivity()
+        startActivity(ZipLoginActivity::class.java)
+        UserInfoUtils.clear()
     }
 
     override fun onDestroy() {
