@@ -1,6 +1,6 @@
 package com.zip.zipandroid.bean
 
-class ZipChannelUtmInfo(val advertiserId:String,val ambushThirdKeyinfo:List<AmbushThirdKeyinfo>) {
+class ZipChannelUtmInfo(val idMaiTalla:String,val bayaninMakulliNaUkunext:List<AmbushThirdKeyinfo>) {
 }
 
 

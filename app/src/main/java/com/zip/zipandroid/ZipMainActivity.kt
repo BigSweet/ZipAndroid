@@ -2,12 +2,17 @@ package com.zip.zipandroid
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.PermissionUtils
+import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
+import com.zip.zipandroid.activity.ZipPersonInfoActivity
 import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
@@ -23,8 +28,12 @@ import com.zip.zipandroid.pop.ZipAllPerPop
 import com.zip.zipandroid.pop.ZipDefPerPop
 import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
 import com.zip.zipandroid.utils.ZipEventBusUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -67,10 +76,34 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
         }
 
+//        Log.d("广告id", AppsFlyerLib.getInstance().getAppsFlyerUID(this).toString())
+
+
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
 //            ZipContractActivity.start(this)
-            startActivity(ZipQuestionActivity::class.java)
+            startActivity(ZipPersonInfoActivity::class.java)
+        }
+
+        lifecycleScope.launch {
+            val gaid = getAdvertisingId(this@ZipMainActivity)
+            Constants.adId = gaid ?: ""
+            Constants.thirdDevId = AppsFlyerLib.getInstance().getAppsFlyerUID(this@ZipMainActivity).toString()
+        }
+
+    }
+
+
+
+
+    suspend fun getAdvertisingId(context: Context): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context)
+                adInfo?.id // 返回GAID
+            } catch (e: Exception) {
+                null
+            }
         }
     }
 

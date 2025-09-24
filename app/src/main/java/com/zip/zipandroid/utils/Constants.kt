@@ -20,6 +20,7 @@ object Constants {
     var release_client_id = "3a2d3b5b-ad80-4f98-a3ff-08900913b146"
     var currentPid = ""
     var adId = ""
+    var thirdDevId = ""
 
     val TYPE_LOGIN = 11
     val TYPE_REGISTER = 10

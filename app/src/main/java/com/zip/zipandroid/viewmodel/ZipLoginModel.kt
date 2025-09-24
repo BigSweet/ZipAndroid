@@ -37,7 +37,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("rijistaDaga", 999)
         api.addParam("IMEI", DeviceUtils.getAndroidID())
         api.addParam("nauIn", 0)
-        api.addParam("bayaninUTMTashoshi", ZipChannelUtmInfo(Constants.adId, arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId))))
+        api.addParam("bayaninUTMTashoshi", ZipChannelUtmInfo(Constants.adId, arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))))
         api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

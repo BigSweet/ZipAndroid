@@ -204,7 +204,8 @@ class SetInfoEditView : RelativeLayout {
                         false
                     }
                     if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
                             ToastUtils.showShort("Please enter a valid company name")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
@@ -296,7 +297,8 @@ class SetInfoEditView : RelativeLayout {
                     }
 
                     if (inputInfoType == TYPE_COMPANY_OR_SCHOOLD_NAME) {
-                        if ((it.text?.length ?: 0) < 2) {
+                        val newText = it.text?.trim()
+                        if ((newText?.length ?: 0) < 2) {
                             it.tag = "error"
                             ToastUtils.showShort("Please enter a valid company name")
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态

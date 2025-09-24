@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.lifecycle.lifecycleScope
+import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
@@ -214,7 +215,9 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         lifecycleScope.launch {
             val gaid = getAdvertisingId(this@ZipLoginActivity)
             Constants.adId = gaid ?: ""
+            Constants.thirdDevId = AppsFlyerLib.getInstance().getAppsFlyerUID(this@ZipLoginActivity).toString()
         }
+
 
     }
 

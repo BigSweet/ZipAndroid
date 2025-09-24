@@ -9,6 +9,7 @@ import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
+import com.zip.zipandroid.bean.AmbushThirdKeyinfo
 import com.zip.zipandroid.bean.OriginUploadContractBean
 import com.zip.zipandroid.bean.RealUploadUserBean
 import com.zip.zipandroid.bean.UploadContractBean
@@ -21,6 +22,7 @@ import com.zip.zipandroid.bean.ZipOrderStatusBean
 import com.zip.zipandroid.bean.ZipPushData
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.bean.ZipTriaBean
+import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
@@ -227,7 +229,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         api.addParam("tasharTushe", "google-play")
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
-        api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
+        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
         api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
         val pushData = ZipPushData()
@@ -303,7 +305,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         }
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
-        api.addParam("bayaninMakulliNaUku", "") //ambushThirdKeyInfo
+        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
         api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
 //        api.addParam("adadinBashi", realAmount)

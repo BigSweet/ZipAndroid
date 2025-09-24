@@ -40,18 +40,19 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
         mViewBind.nextReturnHomeTv.setOnDelayClickListener {
             finish()
         }
+        ZipEventBusUtils.post(ZipRefreshHomeEvent())
 
     }
 
     var disposable: Disposable? = null
 
     fun interValRange(bizId: String) {
-        disposable = Observable.intervalRange(1, 12, 500, 5000, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
+        disposable = Observable.intervalRange(1, 6, 500, 5000, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
             .subscribeOn(Schedulers.io()) // 让观察者执行在主线程
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<Long> {
                 override fun accept(aLong: Long?) {
-                    if (aLong == 20L) {
+                    if (aLong == 6L) {
                         dismissLoading()
                     }
                     getOrderData(bizId = bizId)
@@ -100,9 +101,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
                 mViewBind.orderNextStatusIv.setImageResource(R.drawable.zip_order_next_progress_icon)
                 mViewBind.orderNextStatusTv.setText("Review in Progress")
                 mViewBind.orderNextStatusDesTv.setText("You'll receive the review outcome in a few minutes.")
-                ZipEventBusUtils.post(ZipRefreshHomeEvent())
-                dismissLoading()
-                disposable?.dispose()
+
 
             }
         }
