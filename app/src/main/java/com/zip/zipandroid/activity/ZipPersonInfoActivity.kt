@@ -369,7 +369,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         var realLanguageIndex = -1
         var otherIndex = -1
         dicInfoBean?.language?.forEachIndexed { index, s ->
-            if (s == language) {
+            if (s.equals(language, true)) {
                 LanguageIndex = index
             }
             if ("Others" == s) {
