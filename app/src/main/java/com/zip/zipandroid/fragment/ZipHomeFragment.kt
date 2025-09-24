@@ -51,6 +51,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
+            showLoading()
             checkUserInfo()
             ZipTrackUtils.track("ApplyNow")
         }
@@ -239,6 +240,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         }
         mViewModel.cardListLiveData.observe(this) {
+            dismissLoading()
             if (it.isNullOrEmpty()) {
                 ZipBandCardActivity.start(requireActivity(), false)
 //                startActivity(ZipBandCardActivity::class.java)
@@ -294,16 +296,19 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
 
         if (it.firstName.isNullOrEmpty()) {
+            dismissLoading()
             startActivity(ZipPersonInfoActivity::class.java)
         } else if (it.industryName.isNullOrEmpty()) {
+            dismissLoading()
             startActivity(ZipWorkInfoActivity::class.java)
         } else if (it.emergencyContactPerson.isNullOrEmpty()) {
+            dismissLoading()
             startActivity(ZipContractActivity::class.java)
         } else if (it.questions.isNullOrEmpty()) {
+            dismissLoading()
             startActivity(ZipQuestionActivity::class.java)
         } else if (it.bankId.isNullOrEmpty()) {
             mViewModel.zipQueryCard()
-
         }
     }
 

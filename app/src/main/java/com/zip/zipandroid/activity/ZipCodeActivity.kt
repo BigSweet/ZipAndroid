@@ -41,6 +41,7 @@ class ZipCodeActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipCodeBin
         mViewBind.zipCodeEdit.setOnVerificationCodeChangedListener(onVerificationCodeChangedListener)
         startTimer()
         mViewBind.codeSendTv.setOnDelayClickListener {
+            mViewModel.getCode(phone)
             startTimer()
         }
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
