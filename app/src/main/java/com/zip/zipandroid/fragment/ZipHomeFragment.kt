@@ -101,6 +101,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     override fun createObserver() {
         ZipEventBusUtils.register(this)
+
+        mViewModel.failLiveData.observe(this) {
+            dismissLoading()
+        }
         mViewModel.homeLiveData.observe(this) {
             dismissLoading()
             if (it.userOrderStatus == 0) {
@@ -219,17 +223,10 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 //            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
 //            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
 
-//            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//借款协议
-//            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
-//                ?: "https://www.baidu.com"//服务协议
-            if (!(it?.APP_REPAYMENT_AGREEMENT
-                    ?: "").isNullOrEmpty()
-            ) {
-//                mViewModel.getProtocolBeforeLoan(it?.APP_REPAYMENT_AGREEMENT
-//                    ?: "", AppUtils.getAppName())
-//                mViewModel.getProtocolBeforeLoan(it?.APP_LOAN_CONTRACT
-//                    ?: "", AppUtils.getAppName())
-            }
+            Constants.APP_LOAN_CONTRACT = it?.APP_LOAN_CONTRACT ?: "https://www.baidu.com"//借款协议
+            Constants.APP_REPAYMENT_AGREEMENT = it?.APP_REPAYMENT_AGREEMENT
+                ?: "https://www.baidu.com"//服务协议
+
 
             if (!it?.APP_QA_ADV.isNullOrEmpty()) {
                 //获取广告信息

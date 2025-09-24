@@ -294,17 +294,17 @@ public class ZipDeviceInfoUtil {
         return String.valueOf(percentBattery);
     }
 
-    public String getImei() {
-        String deviceId = "";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            deviceId = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        } else {
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-            deviceId = telephonyManager.getDeviceId();
-        }
-        Log.e("imei ==== ", deviceId);
-        return deviceId;
-    }
+//    public String getImei() {
+//        String deviceId = "";
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            deviceId = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        } else {
+//            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+//            deviceId = telephonyManager.getDeviceId();
+//        }
+//        Log.e("imei ==== ", deviceId);
+//        return deviceId;
+//    }
 
     public String getLocalMacAddress() {
         WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);

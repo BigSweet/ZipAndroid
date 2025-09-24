@@ -84,7 +84,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         mViewBind.recommendEmailRv.adapter = emailAdapter
         emailAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
             val item = baseQuickAdapter.getItem(i) as String
-            mViewBind.emailInfoView.appendText("@" + item)
+            mViewBind.emailInfoView.appendText(item)
         }
 
         mViewBind.sexRv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)

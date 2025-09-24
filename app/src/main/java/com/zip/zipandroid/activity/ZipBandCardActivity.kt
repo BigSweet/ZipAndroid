@@ -81,7 +81,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.getUserInfo()
         focusChangeCheck(mViewBind.zipBankAccount)
         mViewBind.infoNextBtn.setOnDelayClickListener {
-
+            ZipTrackUtils.track("SubmitBankInfo")
             showLoading()
             currentBandCardBean?.let {
                 mViewModel.zipBandCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),

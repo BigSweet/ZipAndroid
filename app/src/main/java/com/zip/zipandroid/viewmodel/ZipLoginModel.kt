@@ -5,17 +5,21 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zip.zipandroid.BuildConfig
+import com.zip.zipandroid.ZipApplication
 import com.zip.zipandroid.base.ZipApi
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.base.ZipResponseSubscriber
 import com.zip.zipandroid.base.ZipRetrofitHelper
 import com.zip.zipandroid.base.ZipRxSchedulers
+import com.zip.zipandroid.bean.AmbushThirdKeyinfo
+import com.zip.zipandroid.bean.ZipChannelUtmInfo
 import com.zip.zipandroid.bean.ZipCodeBean
 import com.zip.zipandroid.bean.ZipLoginResponse
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipFormReq
+import com.zip.zipandroid.utils.phonedate.location.device.ZipDeviceInfoUtil
 import io.reactivex.disposables.Disposable
 import java.util.TreeMap
 
@@ -33,7 +37,7 @@ class ZipLoginModel : ZipBaseViewModel() {
         api.addParam("rijistaDaga", 999)
         api.addParam("IMEI", DeviceUtils.getAndroidID())
         api.addParam("nauIn", 0)
-//        api.addParam("channelUtmInfo", ZipChannelUtmInfo())
+        api.addParam("bayaninUTMTashoshi", ZipChannelUtmInfo(Constants.adId, arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId))))
         api.addParam("tashoshi", "google-play")
         treeMap.putAll(api)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

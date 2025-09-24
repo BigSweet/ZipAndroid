@@ -10,12 +10,11 @@ import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.utils.Constants
-import com.zip.zipandroid.utils.Constants.client_id
-import com.zip.zipandroid.utils.ZipFormReq
 import com.zip.zipandroid.utils.SignUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.UserInfoUtils.getMid
 import com.zip.zipandroid.utils.UserInfoUtils.getUserNo
+import com.zip.zipandroid.utils.ZipFormReq
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.TreeMap
@@ -30,7 +29,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
     }
 
 
-    fun getProtocolBeforeLoan(agreementName: String, appName: String) {
+    fun getProtocolBeforeLoan(agreementName: String, appName: String):String {
 
         var clientId = Constants.client_id
         if (BuildConfig.DEBUG && Constants.useDebug) {
@@ -43,30 +42,32 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         api.addParam("sunanAiki", appName)
         api.addParam("sunanYarjejeniya", agreementName)
         treeMap.putAll(api)
-        ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
-            AppUtils.getAppPackageName(),
-            AppUtils.getAppVersionName(),
-            "ANDROID",
-            UserInfoUtils.getMid().toString(),
-            UserInfoUtils.getUserNo(),
-            clientId,
-            appName, agreementName, SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
-            .compose(ZipRxSchedulers.io_main())
-            .subscribe(object : ZipResponseSubscriber<Any>() {
-                override fun onSubscribe(d: Disposable) {
-                    super.onSubscribe(d)
-                    addReqDisposable(d)
-                }
-
-                override fun onSuccess(result: Any) {
-
-                }
-
-                override fun onFailure(code: Int, message: String?) {
-                    super.onFailure(code, message)
-                    failLiveData.postValue(message)
-                }
-            })
+        val sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
+        return "http://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan?fakitinAiki=${AppUtils.getAppPackageName()}&sigarBincike=${AppUtils.getAppVersionName()}&tushen=${"ANDROID"}&matsakaici=${UserInfoUtils.getMid().toString()}&lambarMutum=${UserInfoUtils.getUserNo().toString()}&idAbokinCiniki=${clientId}&sunanAiki=${appName}&sunanYarjejeniya=${agreementName}&sanyaHannu=${sign}"
+//        ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
+//            AppUtils.getAppPackageName(),
+//            AppUtils.getAppVersionName(),
+//            "ANDROID",
+//            UserInfoUtils.getMid().toString(),
+//            UserInfoUtils.getUserNo(),
+//            clientId,
+//            appName, agreementName, SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))
+//            .compose(ZipRxSchedulers.io_main())
+//            .subscribe(object : ZipResponseSubscriber<Any>() {
+//                override fun onSubscribe(d: Disposable) {
+//                    super.onSubscribe(d)
+//                    addReqDisposable(d)
+//                }
+//
+//                override fun onSuccess(result: Any) {
+//
+//                }
+//
+//                override fun onFailure(code: Int, message: String?) {
+//                    super.onFailure(code, message)
+//                    failLiveData.postValue(message)
+//                }
+//            })
     }
 
     var failLiveData = MutableLiveData<String?>()
@@ -235,7 +236,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
             })
     }
 
-    fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String,tiedCardId:String) {
+    fun zipChangeCard(bankId: String, bankName: String, cardNo: String, cardType: String, firstName: String, fullName: String, identityCardNo: String, lastName: String, phone: String, tiedCardId: String) {
         val treeMap = TreeMap<String, Any?>()
         val api = ZipFormReq.create()
         api.addParam("idBanki", bankId)

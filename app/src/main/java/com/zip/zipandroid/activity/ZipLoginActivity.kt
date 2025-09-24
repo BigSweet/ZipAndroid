@@ -1,5 +1,6 @@
 package com.zip.zipandroid.activity
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -13,9 +14,10 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.annotation.NonNull
-import com.blankj.utilcode.util.AppUtils
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.zip.zipandroid.R
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.databinding.ActivityZipLoginBinding
@@ -25,6 +27,9 @@ import com.zip.zipandroid.utils.NoSpaceInputFilter
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.viewmodel.ZipLoginModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginBinding>() {
@@ -206,6 +211,23 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
         }
         mViewModel.getZipAppConfig()
 //        show = Calendar.getInstance()
+        lifecycleScope.launch {
+            val gaid = getAdvertisingId(this@ZipLoginActivity)
+            Constants.adId = gaid ?: ""
+        }
+
+    }
+
+
+    suspend fun getAdvertisingId(context: Context): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context)
+                adInfo?.id // 返回GAID
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 
     private fun showPhoneFail() {

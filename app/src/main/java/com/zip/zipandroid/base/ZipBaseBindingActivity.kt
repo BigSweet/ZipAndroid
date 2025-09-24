@@ -157,6 +157,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         realView.setPicker(options1Items, options2Items, options3Items) //三级选择器
+//        realView.setNPicker(options1Items, options2Items, options3Items) //三级选择器
         realView.show()
     }
 
