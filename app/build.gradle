@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply from: 'aab_proguard.gradle'
 apply plugin: 'kotlin-parcelize'
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.flaming.horizon.ziplead"
+        applicationId "com.ziplead.nigeria"
         minSdk 21
         targetSdk 34
         versionCode 1
@@ -54,10 +54,10 @@ android {
     }
     productFlavors {
         normal {
-            applicationId "com.flaming.horizon.ziplead"
+            applicationId "com.ziplead.nigeria"
             versionCode 1
             versionName '1.0.0'
-            manifestPlaceholders = [authorities: "com.flaming.horizon.ziplead"]
+            manifestPlaceholders = [authorities: "com.ziplead.nigeria"]
         }
     }
 
@@ -141,4 +141,8 @@ dependencies {
     api project(':pickerview')
     implementation 'com.appsflyer:af-android-sdk:6.9.4'
     implementation 'com.appsflyer:oaid:6.9.0'
+    implementation 'com.google.firebase:firebase-common-ktx:20.2.0'
+    implementation platform("com.google.firebase:firebase-bom:31.1.1")
+    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation("com.google.firebase:firebase-crashlytics")
 }

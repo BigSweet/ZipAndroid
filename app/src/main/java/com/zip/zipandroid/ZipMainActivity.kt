@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipOrderNextActivity
@@ -82,7 +83,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             ZipOrderNextActivity.start(this, "1610000000042541")
 //            startActivity(ZipContractActivity::class.java)
         }
-
+//        FirebaseAnalytics.getInstance()
         lifecycleScope.launch {
             val gaid = getAdvertisingId(this@ZipMainActivity)
             Constants.adId = gaid ?: ""

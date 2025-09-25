@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631918129324",
+    "project_id": "ziplead-e851e",
+    "storage_bucket": "ziplead-e851e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631918129324:android:a6abeb72a688d64eda6f09",
+        "android_client_info": {
+          "package_name": "com.ziplead.nigeria"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgHKo2qs9rhZPr-Dus3xDF2v0tdRi565Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
