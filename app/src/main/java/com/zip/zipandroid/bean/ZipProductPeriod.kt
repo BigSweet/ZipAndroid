@@ -4,7 +4,7 @@ class ZipProductPeriod : ArrayList<ZipProductPeriodItem>()
 
 data class ZipProductPeriodItem(
     val period: Int,
-    val periodStages: List<PeriodStage>
+    val periodStages: List<PeriodStage>?
 )
 
 data class PeriodStage(

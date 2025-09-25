@@ -107,7 +107,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         mViewModel.uploadUserInfoLiveData.observe(this) {
             mViewModel.realOrder(callInfo, installAppInfo, zipSmsMessageInfos, calendarInfo, it,
-                realAmount, currentPaidType, currentDid.toString(), currentCouponId, currentDid, preBizId, riskLevel)
+                realAmount, currentPaidType, currentDid.toString(), currentCouponId, preBizId, riskLevel)
         }
 
         mViewModel.realOrderLiveData.observe(this) {
@@ -198,7 +198,6 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     var limitInterval = 0
     var currentDid = ""
     var currentPaidType = ""
-    var intervalStart = ""
     var currentCouponId = ""
 
     var installAdapter = ZipInstallAdapter()
@@ -264,15 +263,27 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         }
         mViewModel.homeLiveData.observe(this) {
-            var realIndex = it.productList.productPeriods.size - 1
-            zipHomeDataBean = it
-            duraAdapter.selectPosition = realIndex
-            //productPeriods目前就只有一个
-            duraAdapter.setNewData(it.productList.productPeriods)
-            if (!it.productList.productPeriods.isNullOrEmpty()) {
-                val item = it.productList.productPeriods.last()
-                filterAndReserList(item)
+            if (Constants.isDemoAccount) {
+                val demoData = it.productList.productDidInfos.find {
+                    it.intervalStart >= 90
+                }
+                if (demoData != null) {
+                    duraAdapter.setNewData(arrayListOf(ZipProductPeriodItem(demoData?.intervalStart / demoData?.stageCount, null)))
+                    installAdapter.setNewData(arrayListOf(PeriodStage(demoData.did.toString(), demoData?.stageCount)))
+                    currentDid = demoData.did.toString()
+                    currentPaidType = demoData.paidType.toString()
+                }
+            } else {
+                var realIndex = it.productList.productPeriods.size - 1
+                duraAdapter.selectPosition = realIndex
+                //productPeriods目前就只有一个
+                duraAdapter.setNewData(it.productList.productPeriods)
+                if (!it.productList.productPeriods.isNullOrEmpty()) {
+                    val item = it.productList.productPeriods.last()
+                    filterAndReserList(item)
+                }
             }
+            zipHomeDataBean = it
 //            limitMax = it.productList.limitMax.toDouble().toInt()
             limitMin = it.productList.limitMin.toDouble().toInt()
             limitInterval = it.productList.limitInterval
@@ -363,7 +374,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     }
 
     private fun filterAndReserList(item: ZipProductPeriodItem) {
-        val allStages = item.periodStages
+        val allStages = item.periodStages ?: return
         val realStage = productDay / item.period
         val realList = allStages.filter {
             it.stage <= realStage
@@ -383,7 +394,6 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             val data = zipHomeDataBean?.productList?.productDidInfos?.find { it.did.toString() == currentDid }
             if (data?.paidType != null) {
                 currentPaidType = data?.paidType.toString()
-                intervalStart = data?.intervalStart.toString()
             }
         }
     }

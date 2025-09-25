@@ -292,7 +292,7 @@ class ZipReviewModel : ZipBaseViewModel() {
     fun realOrder(
         callInfo: Array<ZipCallLog?>?, installAppInfo: Array<ZipInstalledApp?>?, zipSmsMessageInfo: Array<ZipSMSMessage?>?, calendarInfo: Array<ZipCalendarInfos?>?,
         info: RealUploadUserBean,
-        realAmount: Int, currentPaidType: String, did: String, couponId: String, applyPeriod:String, preBizId:String, riskGrade:String
+        realAmount: Int, currentPaidType: String, did: String, couponId: String,preBizId:String, riskGrade:String
     ) {
         //要不要加上一笔订单的id
         //repayment//paytype
@@ -305,7 +305,6 @@ class ZipReviewModel : ZipBaseViewModel() {
         }
         api.addParam("nauInSamfur", UserInfoUtils.getProductType().productType)//productType
         api.addParam("sunanSamfur", UserInfoUtils.getProductType().productName)//productName
-        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("idCustomer", UserInfoUtils.getUserInfo().custId.toString())
         api.addParam("idNaUra", ZipDeviceInfoUtil(ZipApplication.instance).genaralDeviceId)//deviceid
 //        api.addParam("adadinBashi", realAmount)
@@ -337,6 +336,7 @@ class ZipReviewModel : ZipBaseViewModel() {
 
 
         treeMap.putAll(api)
+        api.addParam("bayaninMakulliNaUku", arrayListOf(AmbushThirdKeyinfo("af","venLk3RdaHchR6eShXMeTi", Constants.thirdDevId))) //ambushThirdKeyInfo
         api.addParam("turaBayanan", pushData)
         api.addParam("bayaninAbokinCiniki", info)
         api.addParam("sanyaHannu", SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey()))

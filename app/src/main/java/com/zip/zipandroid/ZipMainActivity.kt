@@ -180,16 +180,16 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var logout = false
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: ZipLoginOutEvent) {
-        if (logout) {
-            return
-        }
-        logout = true
-        ZipActivityCollector.removeAllActivity()
-        startActivity(ZipLoginActivity::class.java)
-        UserInfoUtils.clear()
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun onEvent(event: ZipLoginOutEvent) {
+//        if (logout) {
+//            return
+//        }
+//        logout = true
+//        ZipActivityCollector.removeAllActivity()
+//        startActivity(ZipLoginActivity::class.java)
+//        UserInfoUtils.clear()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

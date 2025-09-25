@@ -5,6 +5,7 @@ data class ZipHomeDataBean(
     val creditOrderList: CreditOrderList?,//最近一笔订单数据
     val mid: Long,
     val productDidInfo: ProductDidInfo,
+    val allProductList: List<ProductList>,
     val productList: ProductList,
     var userOrderStatus: Int = 0, )
 
@@ -89,6 +90,8 @@ data class ProductDidInfo(
     val paidType: Int,
     val productDueFeeList: List<ProductDueFee>,
     val state: Int,
+    val stageCount: Int,
+
 )
 
 data class ProductList(
