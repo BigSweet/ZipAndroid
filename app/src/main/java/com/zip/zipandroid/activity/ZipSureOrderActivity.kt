@@ -211,7 +211,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     var limitMax = 0
     var limitMin = 0
-    var limitInterval = 0
+    var limitInterval = 2000
     var currentDid = ""
     var currentPaidType = ""
     var currentCouponId = ""
@@ -302,7 +302,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             zipHomeDataBean = it
 //            limitMax = it.productList.limitMax.toDouble().toInt()
             limitMin = it.productList.limitMin.toDouble().toInt()
-            limitInterval = it.productList.limitInterval
+//            limitInterval = it.productList.limitInterval
             mViewModel.getCouponList(1)
         }
 

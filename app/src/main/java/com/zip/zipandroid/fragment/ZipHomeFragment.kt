@@ -278,6 +278,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
+            showLoading()
             ZipTrackUtils.track("ApplyNow")
             checkUserInfo()
         }
