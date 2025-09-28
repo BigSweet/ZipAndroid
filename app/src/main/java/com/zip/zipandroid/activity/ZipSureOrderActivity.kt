@@ -352,7 +352,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             if(it.totalFee!="0"){
                 mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
             }else{
-                mViewBind.realManagerTv.setText("0")
+                mViewBind.realManagerTv.setText("₦0")
             }
             mViewBind.bankCardTv.setText(UserInfoUtils.getBankData()?.cardNo)
             mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
