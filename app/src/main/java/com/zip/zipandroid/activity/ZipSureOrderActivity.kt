@@ -80,6 +80,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         preBizId = intent.getStringExtra("bizId") ?: ""
         productDay = intent.getIntExtra("productDay", 0)
 
+
         ZipTrackUtils.track("InLoanConfirm", preBizId)
 
         realAmount = amount.toInt()
@@ -279,7 +280,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         }
         mViewModel.homeLiveData.observe(this) {
+            if (UserInfoUtils.getUserInfo().doubleLoan == 1 || Constants.isDemoAccount) {
+                mViewBind.dealLeftPlaceTv.hide()
+            }
             if (Constants.isDemoAccount) {
+
                 val demoData = it.productList.productDidInfos.find {
                     it.intervalStart >= 90
                 }

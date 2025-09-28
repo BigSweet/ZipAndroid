@@ -13,7 +13,7 @@ class ZipDurationAdapter : BaseQuickAdapter<ZipProductPeriodItem, BaseViewHolder
     override fun convert(holder: BaseViewHolder, item: ZipProductPeriodItem) {
         val item_install_tv = holder.getView<TextView>(R.id.item_install_tv)
         val item_install_rl = holder.getView<RelativeLayout>(R.id.item_install_rl)
-        item_install_tv.setText(item.period.toString() + "Days")
+        item_install_tv.setText(item.period.toString() + " Days")
         if (selectPosition == holder.adapterPosition) {
             item_install_rl.setBackgroundResource(R.drawable.item_install_select_bg)
             item_install_tv.setTextColor(Color.parseColor("#3667F0"))
