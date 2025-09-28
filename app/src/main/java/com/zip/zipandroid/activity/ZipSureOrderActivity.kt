@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.KeyboardUtils
 import com.lxj.xpopup.XPopup
 import com.zip.zipandroid.R
 import com.zip.zipandroid.adapter.ZipDurationAdapter
@@ -38,6 +39,7 @@ import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
 import com.zip.zipandroid.view.toHomeN
+import com.zip.zipandroid.view.toHomeNotN
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import org.greenrobot.eventbus.Subscribe
@@ -194,8 +196,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                 } else {
                     realAmount = cleanString.toInt()
                 }
+                KeyboardUtils.hideSoftInput(mViewBind.sureOrderAmountTv)
+                mViewBind.sureOrderAmountTv.clearFocus()
                 amountToHomeN()
                 orderTrialData()
+
                 true
             }
             false
@@ -214,7 +219,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     }
     fun amountToHomeN(){
-        mViewBind.sureOrderAmountTv.setText(realAmount.toHomeN())
+        mViewBind.sureOrderAmountTv.setText(realAmount.toHomeNotN())
     }
 
     private fun orderTrialData() {

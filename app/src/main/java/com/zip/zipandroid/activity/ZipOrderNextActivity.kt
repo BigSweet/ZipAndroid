@@ -92,7 +92,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
             if (it?.creditxStatus == "372") {
                 mViewBind.orderNextStatusIv.setImageResource(R.drawable.zip_order_next_success_icon)
                 mViewBind.orderNextStatusTv.setText("Your Application Has Been Approved")
-                mViewBind.orderNextStatusDesTv.setText(" We’re pleased to inform you that your application \\n has been approved. Your loan will be disbursed \\n shortly")
+                mViewBind.orderNextStatusDesTv.setText(" We’re pleased to inform you that your application \n has been approved. Your loan will be disbursed \n shortly")
                 ZipEventBusUtils.post(ZipRefreshHomeEvent())
                 dismissLoading()
                 disposable?.dispose()
@@ -100,8 +100,8 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
             if (it?.creditxStatus == "425") {
                 mViewBind.orderNextStatusIv.setImageResource(R.drawable.zip_order_next_fail_icon)
                 mViewBind.orderNextStatusTv.setText("Your Application Has Been Rejected")
-                mViewBind.orderNextStatusDesTv.setText("We're sorry to inform you that your application\\n\n" +
-                        "            has not been approved . You may reapply after one month.\\ n\n" +
+                mViewBind.orderNextStatusDesTv.setText("We're sorry to inform you that your application \n" +
+                        "            has not been approved . You may reapply after one month. \n" +
                         "                    Thank you for your continued support.")
                 ZipEventBusUtils.post(ZipRefreshHomeEvent())
                 dismissLoading()

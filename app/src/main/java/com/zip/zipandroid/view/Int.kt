@@ -20,6 +20,10 @@ fun Int.toHomeN(): String {
     val formatted = "₦${homeDecimalFormat.format(this)}"
     return formatted
 }
+fun Int.toHomeNotN(): String {
+    val formatted = "${homeDecimalFormat.format(this)}"
+    return formatted
+}
 
 fun Int.toN(): String {
     val formatted = "₦${decimalFormat.format(this)}"
