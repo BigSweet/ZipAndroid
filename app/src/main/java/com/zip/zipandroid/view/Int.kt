@@ -6,13 +6,19 @@ import java.util.Date
 import java.util.Locale
 
 
-private val decimalFormat = DecimalFormat("##,###.##")
+private val decimalFormat = DecimalFormat("##,###.00")
+private val homeDecimalFormat = DecimalFormat("##,###.##")
 
 val dateFormat = SimpleDateFormat("MMM dd, yyyy hh:mm:ss", Locale.US) // 英文月份格式
 
 fun Long.formatTimestampToDate(): String {
     val date = Date(this)
     return "${dateFormat.format(date)}"
+}
+
+fun Int.toHomeN(): String {
+    val formatted = "₦${homeDecimalFormat.format(this)}"
+    return formatted
 }
 
 fun Int.toN(): String {

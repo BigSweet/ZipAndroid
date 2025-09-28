@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.zip.zipandroid.R
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
+import com.zip.zipandroid.bean.WebLoanBean
 import com.zip.zipandroid.databinding.ActivityZipAndroidWebBinding
 import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.utils.Constants
@@ -23,6 +24,14 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
                 .putExtra("url", url)
             context.startActivity(starter)
         }
+
+        @JvmStatic
+        fun startByData(context: Context, url: String, data: WebLoanBean) {
+            val starter = Intent(context, ZipWebActivity::class.java)
+                .putExtra("url", url)
+                .putExtra("data", data)
+            context.startActivity(starter)
+        }
     }
 
 
@@ -32,8 +41,10 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
     override fun getData() {
     }
 
+    var data: WebLoanBean? = null
 
     override fun initView(savedInstanceState: Bundle?) {
+        data = intent.getParcelableExtra<WebLoanBean>("data")
         mViewBind.privateSureTv.setOnDelayClickListener {
             finish()
         }
@@ -83,7 +94,7 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
         }
         if (url == Constants.APP_LOAN_CONTRACT || url == Constants.APP_REPAYMENT_AGREEMENT) {
 
-            mViewModel.getProtocolBeforeLoan(url, AppUtils.getAppName())
+            data?.let { mViewModel.getProtocolBeforeLoan(url, AppUtils.getAppName(), it) }
             if (url == Constants.APP_LOAN_CONTRACT) {
                 tvCenter.setText("Loan Agreement")
             } else {

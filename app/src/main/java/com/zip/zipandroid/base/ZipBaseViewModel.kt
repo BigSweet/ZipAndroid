@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.AppUtils
 import com.zip.zipandroid.BuildConfig
 import com.zip.zipandroid.bean.PersonalInformationDictBean
+import com.zip.zipandroid.bean.WebLoanBean
 import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipBandCardBean
 import com.zip.zipandroid.bean.ZipQueryCardBean
@@ -33,7 +34,7 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
 
     var agreementNameLive = MutableLiveData<ResponseBody?>()
 
-    fun getProtocolBeforeLoan(agreementName: String, appName: String) {
+    fun getProtocolBeforeLoan(agreementName: String, appName: String,data: WebLoanBean) {
 
         var clientId = Constants.client_id
         if (BuildConfig.DEBUG && Constants.useDebug) {
@@ -45,10 +46,34 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         val api = ZipFormReq.create()
         api.addParam("sunanAiki", appName)
         api.addParam("sunanYarjejeniya", agreementName)
+
+        api.addParam("adadinNema", data.applyAmount)
+        api.addParam("lokacinNema", System.currentTimeMillis())
+        api.addParam("sunanBanki", data.bankName)
+        api.addParam("idKasuwancin", data.bizId)
+        api.addParam("lambarKatin", data.cardNo)
+        api.addParam("lambarWaya", data.phoneNum)
+        api.addParam("matakinHadariNext", data.riskLevel)
+        api.addParam("nauInSamfur", data.productType)
+        api.addParam("dNaUraid", System.currentTimeMillis())
+
         treeMap.putAll(api)
-        val sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
+//        val sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
 //        return "http://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan?fakitinAiki=${AppUtils.getAppPackageName()}&sigarBincike=${AppUtils.getAppVersionName()}&tushen=${"ANDROID"}&matsakaici=${UserInfoUtils.getMid().toString()}&lambarMutum=${UserInfoUtils.getUserNo().toString()}&idAbokinCiniki=${clientId}&sunanAiki=${appName}&sunanYarjejeniya=${agreementName}&sanyaHannu=${sign}"
         ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
+            data.applyAmount.toString(),
+            data.riskLevel.toString(),
+            data.productType.toString(),
+            data.phoneNum.toString(),
+            data.did.toString(),
+            data.cardNo.toString(),
+            data.bizId.toString(),
+            data.bankName.toString(),
+            data.applyTime.toString(),
+
+
+
+
             AppUtils.getAppPackageName(),
             AppUtils.getAppVersionName(),
             "ANDROID",

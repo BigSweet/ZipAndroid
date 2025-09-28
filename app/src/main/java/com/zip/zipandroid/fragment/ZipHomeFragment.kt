@@ -30,6 +30,7 @@ import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTimeUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
+import com.zip.zipandroid.view.toHomeN
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipHomeViewModel
 import org.greenrobot.eventbus.Subscribe
@@ -122,7 +123,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             UserInfoUtils.setProductType(Gson().toJson(it.productList))
             UserInfoUtils.saveProductDue(Gson().toJson(it.productDidInfo))
             Constants.currentPid = it.productList.pid
-            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toN())
+            mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toHomeN())
             mViewBind.homeReviewCl.hide()
 
             mViewBind.homeDelayCl.hide()
@@ -275,7 +276,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     private fun showNormalStatus(it: ZipHomeDataBean) {
         mViewBind.homeOrderNormalCl.show()
-        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toN())
+        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toHomeN())
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             showLoading()

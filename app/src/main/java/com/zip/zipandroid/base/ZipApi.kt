@@ -42,8 +42,19 @@ interface ZipApi {
     @POST("api/v4/ziplead/customer/sendSmsCode")
     fun getCode(@Body body: ZipFormReq): Observable<ZipBaseRes<ZipCodeBean>>
 
+
     @GET("api/v4/ziplead/getProtocolBeforeLoan")
     fun getProtocolBeforeLoan(
+        @Query("adadinNema") applyAmount: String,
+        @Query("matakinHadariNext") riskLevel: String,
+        @Query("nauInSamfur") productType: String,
+        @Query("lambarWaya") phoneNum: String,
+        @Query("dNaUraid") did: String,
+        @Query("lambarKatin") cardNo: String,
+        @Query("idKasuwancin") bizId: String,
+        @Query("sunanBanki") bankName: String,
+        @Query("lokacinNema") applyTime: String,
+
         @Query("fakitinAiki") fakitinAiki: String,
         @Query("sigarBincike") sigarBincike: String,
         @Query("tushen") tushen: String,

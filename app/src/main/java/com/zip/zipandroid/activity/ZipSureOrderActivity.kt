@@ -21,6 +21,7 @@ import com.zip.zipandroid.adapter.ZipDurationAdapter
 import com.zip.zipandroid.adapter.ZipInstallAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.PeriodStage
+import com.zip.zipandroid.bean.WebLoanBean
 import com.zip.zipandroid.bean.ZipCouponItemBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipProductPeriodItem
@@ -36,6 +37,7 @@ import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
+import com.zip.zipandroid.view.toHomeN
 import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import org.greenrobot.eventbus.Subscribe
@@ -87,13 +89,16 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         limitMax = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
             //加金额 步长默认2000
+            if (realAmount == limitMax) {
+                return@setOnDelayClickListener
+            }
             if (realAmount + limitInterval >= limitMax) {
                 //超过了就默认最大
                 realAmount = limitMax
             } else {
                 realAmount = realAmount + limitInterval
             }
-            mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+            amountToHomeN()
             //试算
             orderTrialData()
         }
@@ -129,13 +134,16 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.orderSubIv.setOnDelayClickListener {
             //减金额
             //加金额 步长默认2000
+            if (realAmount == limitMin) {
+                return@setOnDelayClickListener
+            }
             if (realAmount - limitInterval <= limitMin) {
                 //超过了就默认最大
                 realAmount = limitMin
             } else {
                 realAmount = realAmount - limitInterval
             }
-            mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+            amountToHomeN()
             //试算
             orderTrialData()
         }
@@ -186,13 +194,13 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                 } else {
                     realAmount = cleanString.toInt()
                 }
-                mViewBind.sureOrderAmountTv.setText(realAmount.toN().toString())
+                amountToHomeN()
                 orderTrialData()
                 true
             }
             false
         }
-        mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+        amountToHomeN()
 
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")
 
@@ -202,7 +210,11 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     private fun resetAmount() {
         realAmount = amount.toInt()
-        mViewBind.sureOrderAmountTv.setText(realAmount.toN())
+        amountToHomeN()
+
+    }
+    fun amountToHomeN(){
+        mViewBind.sureOrderAmountTv.setText(realAmount.toHomeN())
     }
 
     private fun orderTrialData() {
@@ -359,7 +371,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         val end = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_LOAN_CONTRACT)
+                ZipWebActivity.startByData(this@ZipSureOrderActivity, Constants.APP_LOAN_CONTRACT, getLoanData())
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {
@@ -377,7 +389,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         val end1 = span.length
         span.setSpan(object : ClickableSpan() {
             override fun onClick(@NonNull widget: View) {
-                ZipWebActivity.start(this@ZipSureOrderActivity, Constants.APP_REPAYMENT_AGREEMENT)
+                ZipWebActivity.startByData(this@ZipSureOrderActivity, Constants.APP_REPAYMENT_AGREEMENT, getLoanData())
             }
 
             override fun updateDrawState(@NonNull ds: TextPaint) {
@@ -393,6 +405,14 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.zipOrderPrivateTv.highlightColor = Color.TRANSPARENT
         mViewBind.zipOrderPrivateTv.setText(span)
 
+
+    }
+
+    fun getLoanData(): WebLoanBean {
+        val bean = WebLoanBean(System.currentTimeMillis().toString(), UserInfoUtils.getBankData()?.bankName
+            ?: "", preBizId.toString(),
+            UserInfoUtils.getBankData()?.cardNo.toString(), currentDid, UserInfoUtils.getUserPhone(), UserInfoUtils.getProductType().productType.toString(), riskLevel, realAmount)
+        return bean
 
     }
 
@@ -418,7 +438,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             if (data?.paidType != null) {
                 currentPaidType = data?.paidType.toString()
             }
-            if(data!=null){
+            if (data != null) {
                 limitMin = data.minQuota
             }
         }
