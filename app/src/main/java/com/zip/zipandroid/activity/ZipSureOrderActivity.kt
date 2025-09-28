@@ -87,7 +87,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         limitMax = amount.toInt()
         mViewBind.orderAddIv.setOnDelayClickListener {
             //加金额 步长默认2000
-            if (realAmount + limitInterval > limitMax) {
+            if (realAmount + limitInterval >= limitMax) {
                 //超过了就默认最大
                 realAmount = limitMax
             } else {
@@ -129,7 +129,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewBind.orderSubIv.setOnDelayClickListener {
             //减金额
             //加金额 步长默认2000
-            if (realAmount - limitInterval < limitMin) {
+            if (realAmount - limitInterval <= limitMin) {
                 //超过了就默认最大
                 realAmount = limitMin
             } else {
@@ -280,6 +280,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
         }
         mViewModel.homeLiveData.observe(this) {
+            zipHomeDataBean = it
             if (UserInfoUtils.getUserInfo().doubleLoan == 1 || Constants.isDemoAccount) {
                 mViewBind.dealLeftPlaceTv.hide()
             }
@@ -293,6 +294,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                     installAdapter.setNewData(arrayListOf(PeriodStage(demoData.did.toString(), demoData?.stageCount)))
                     currentDid = demoData.did.toString()
                     currentPaidType = demoData.paidType.toString()
+                    limitMin = demoData.minQuota
                 }
             } else {
                 var realIndex = it.productList.productPeriods.size - 1
@@ -304,9 +306,9 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
                     filterAndReserList(item)
                 }
             }
-            zipHomeDataBean = it
+
 //            limitMax = it.productList.limitMax.toDouble().toInt()
-            limitMin = it.productList.limitMin.toDouble().toInt()
+//            limitMin = it.productList.limitMin.toDouble().toInt()
 //            limitInterval = it.productList.limitInterval
             mViewModel.getCouponList(1)
         }
@@ -415,6 +417,9 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             val data = zipHomeDataBean?.productList?.productDidInfos?.find { it.did.toString() == currentDid }
             if (data?.paidType != null) {
                 currentPaidType = data?.paidType.toString()
+            }
+            if(data!=null){
+                limitMin = data.minQuota
             }
         }
     }
