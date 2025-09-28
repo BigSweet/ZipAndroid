@@ -119,7 +119,7 @@ public class ZipShapeTextView extends AppCompatTextView {
 
             setEnabledPlus(isEnablePlus);
             if (needScale) {
-                ZipScaleClickHelper.setScaleClick(this);
+//                ZipScaleClickHelper.setScaleClick(this);
             }
         }
     }
