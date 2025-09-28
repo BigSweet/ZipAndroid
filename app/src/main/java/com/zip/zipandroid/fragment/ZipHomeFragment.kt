@@ -51,7 +51,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
-            showLoading()
+
             checkUserInfo()
             ZipTrackUtils.track("ApplyNow")
         }
@@ -279,7 +279,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toHomeN())
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
-            showLoading()
+
             ZipTrackUtils.track("ApplyNow")
             checkUserInfo()
         }
@@ -287,7 +287,13 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     var userInfo: ZipUserInfoBean? = null
     fun checkUserInfo() {
+        if (Constants.isDemoAccount) {
+            //直接进个人信息页面
+            startActivity(ZipPersonInfoActivity::class.java)
+            return
+        }
         val it = userInfo ?: return
+        showLoading()
         if (it.mbCustId > 0) {
             UserInfoUtils.saveCusId(it.mbCustId)
         }
