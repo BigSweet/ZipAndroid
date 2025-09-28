@@ -28,11 +28,16 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ZipEventBusUtils.post(ZipRefreshHomeEvent())
+    }
     var bizId = ""
     override fun initView(savedInstanceState: Bundle?) {
         bizId = intent.getStringExtra("bizId") ?: ""
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
+            ZipEventBusUtils.post(ZipRefreshHomeEvent())
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Approval")
@@ -41,7 +46,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
         mViewBind.nextReturnHomeTv.setOnDelayClickListener {
             finish()
         }
-        ZipEventBusUtils.post(ZipRefreshHomeEvent())
+//        ZipEventBusUtils.post(ZipRefreshHomeEvent())
 
 
     }

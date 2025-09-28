@@ -349,13 +349,17 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             mViewBind.couponInterTv.setText(it.couponAmount)
             zipTriaBean = it
             mViewBind.realInterTv.setText(it.totalInterestExcludeTaxFee.toDouble().toN())
-            mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
+            if(it.totalFee!="0"){
+                mViewBind.realManagerTv.setText(it.totalFee.toDouble().toN())
+            }else{
+                mViewBind.realManagerTv.setText("0")
+            }
             mViewBind.bankCardTv.setText(UserInfoUtils.getBankData()?.cardNo)
             mViewBind.loanBottomPriceTv.setText(it.payAmount.toInt().toN())
             mViewBind.totalAmountTv.setText(it.totalAmount.toDouble().toN())
             if (!it.repaymentList.isNullOrEmpty()) {
                 val itemRepay = it.repaymentList.first()
-                mViewBind.planPriceTv.setText(itemRepay.shouldAmount.toInt().toN())
+                mViewBind.planPriceTv.setText(itemRepay.shouldAmount.toDouble().toN())
                 mViewBind.planTimeTv.setText(formatTimestampToDate(itemRepay.shouldTime))
             }
             if (it.couponAmount != null && it.couponAmount.toInt() > 0) {

@@ -10,7 +10,9 @@ import com.google.gson.annotations.SerializedName
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.bean.ZipRiskLevelBean
 import com.zip.zipandroid.databinding.ActivityZipOrderReviewBinding
+import com.zip.zipandroid.event.ZipRefreshHomeEvent
 import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -138,6 +140,7 @@ class ZipOrderReviewActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZi
         dismissLoading()
         ZipSureOrderActivity.start(this, amount, levelBean?.riskLevel
             ?: "", levelBean?.productDay?:0, preBizId)
+        ZipEventBusUtils.post(ZipRefreshHomeEvent())
         finish()
     }
 

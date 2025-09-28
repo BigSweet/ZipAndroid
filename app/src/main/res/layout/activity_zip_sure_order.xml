@@ -109,6 +109,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:imeOptions="actionDone"
+                    android:hint=" "
+                    android:textColorHint="#00000000"
                     android:inputType="number"
                     android:singleLine="true"
                     android:textColor="#ff3667f0"

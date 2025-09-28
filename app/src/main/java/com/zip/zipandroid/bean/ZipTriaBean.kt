@@ -26,7 +26,7 @@ data class ZipRepayment(
     val rate: Int,
     val shouldCapital: Double,
     val shouldInterest: Double,
-    val shouldAmount: Double,
+    val shouldAmount: String,
     val shouldTime: Long,
 )
 //indexs
