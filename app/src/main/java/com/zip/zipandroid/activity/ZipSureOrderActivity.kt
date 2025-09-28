@@ -4,15 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.NonNull
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.KeyboardUtils
@@ -44,6 +47,7 @@ import com.zip.zipandroid.view.toN
 import com.zip.zipandroid.viewmodel.ZipReviewModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -186,15 +190,55 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             findPaidType()
             orderTrialData()
         }
+        mViewBind.sureOrderAmountTv.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                previousText = s?.toString() ?: ""
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                if (isFormatting) {
+                    return
+                }
+                isFormatting = true
+                val currentText = editable.toString()
+                if (currentText.length < previousText.length) {
+                    val deleteStart = mViewBind.sureOrderAmountTv.selectionStart
+                    if (deleteStart > 0 && deleteStart < previousText.length){
+                        val charBeforeDeletedChar = previousText[deleteStart - 1]
+                        val deletedChar = previousText[deleteStart]
+                        if (charBeforeDeletedChar == ',' && deletedChar.isDigit()) {
+                            val newString = StringBuilder(previousText)
+                                .delete(deleteStart - 1, deleteStart + 1) // 删除逗号和数字
+                                .toString()
+                            editable?.replace(0, editable.length, newString)
+                            mViewBind.sureOrderAmountTv.setSelection(deleteStart - 1)
+                        }
+                    }
+                }
+                isFormatting = false
+            }
+
+        })
         mViewBind.sureOrderAmountTv.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val cleanString = mViewBind.sureOrderAmountTv.text.replace("[^0-9]".toRegex(), "")
-                if (cleanString.toInt() >= limitMax) {
+//                val parsedValue  = cleanString.toInt()
+                var parsedValue = cleanString.toLong()
+                val correctedValue = if (parsedValue >= 100) {
+                    (parsedValue / 100) * 100
+                } else {
+                    0L // 如果小于100，则清空或设为0
+                }
+
+                if (correctedValue >= limitMax) {
                     realAmount = limitMax
-                } else if (cleanString.toInt() <= limitMin) {
+                } else if (correctedValue <= limitMin) {
                     realAmount = limitMin
                 } else {
-                    realAmount = cleanString.toInt()
+                    realAmount = correctedValue.toInt()
                 }
                 KeyboardUtils.hideSoftInput(mViewBind.sureOrderAmountTv)
                 mViewBind.sureOrderAmountTv.clearFocus()
@@ -212,7 +256,8 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         mViewModel.zipHomeData()
 
     }
-
+    private var previousText: String = ""
+    private var isFormatting: Boolean = false
     private fun resetAmount() {
         realAmount = amount.toInt()
         amountToHomeN()
