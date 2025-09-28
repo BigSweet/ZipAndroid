@@ -11,6 +11,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -174,7 +175,22 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             findPaidType()
             orderTrialData()
         }
-
+        mViewBind.sureOrderAmountTv.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val cleanString = mViewBind.sureOrderAmountTv.text.replace("[^0-9]".toRegex(), "")
+                if (cleanString.toInt() >= limitMax) {
+                    realAmount = limitMax
+                } else if (cleanString.toInt() <= limitMin) {
+                    realAmount = limitMin
+                } else {
+                    realAmount = cleanString.toInt()
+                }
+                mViewBind.sureOrderAmountTv.setText(realAmount.toN().toString())
+                orderTrialData()
+                true
+            }
+            false
+        }
         mViewBind.sureOrderAmountTv.setText(realAmount.toN())
 
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Application")

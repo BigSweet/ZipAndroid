@@ -13,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipOrderNextActivity
+import com.zip.zipandroid.activity.ZipPerActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
@@ -80,8 +81,8 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
-            ZipOrderNextActivity.start(this, "1610000000042541")
-//            startActivity(ZipContractActivity::class.java)
+//            ZipOrderNextActivity.start(this, "1610000000042541")
+            startActivity(ZipPerActivity::class.java)
         }
 //        FirebaseAnalytics.getInstance()
         lifecycleScope.launch {

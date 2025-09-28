@@ -25,30 +25,11 @@
             app:sv_scl_radius="30dp">
 
 
-            <androidx.core.widget.NestedScrollView
+            <WebView
+                android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="80dp"
-                android:clipToPadding="false"
-                android:fillViewport="true">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Por este medio, autorizo a CrediDora, y a sus agencias autorizadas, a consultar mi historial crediticio en las instituciones que consideren necesarias.\n\n\n
-Entiendo el propósito y el alcance de la información solicitada. Acepto que CrediDora utilice esta información y pueda consultar periódicamente mi actividad crediticia.\n\n\n
-Esta autorización tendrá una vigencia de 3 años a partir de hoy, o durante todo el tiempo que mantengamos una relación legal, a menos que se indique lo contrario.\n\n\n
-Reconozco que este documento es propiedad de CrediDora y se utiliza para dar cumplimiento al artículo 28 de la Ley de Sociedades de Información Crediticia (LRSIC).\n\n\n
-Por este medio, autorizo a CrediDora, y a sus agencias autorizadas, a consultar mi historial crediticio en las instituciones que consideren necesarias.\n\n\n
-Entiendo el propósito y el alcance de la información solicitada. Acepto que CrediDora utilice esta información y pueda consultar periódicamente mi actividad crediticia.\n\n\n
-Esta autorización tendrá una vigencia de 3 años a partir de hoy, o durante todo el tiempo que mantengamos una relación legal, a menos que se indique lo contrario.\n\n\n
-Reconozco que este documento es propiedad de CrediDora y se utiliza para dar cumplimiento al artículo 28 de la Ley de Sociedades de Información Crediticia (LRSIC)."
-                    android:textColor="#ff000000"
-                    android:textSize="13sp"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.core.widget.NestedScrollView>
+                android:layout_marginBottom="73dp" />
 
             <!--            -->
             <!--            <WebView-->

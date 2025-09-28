@@ -80,11 +80,15 @@
                 app:layout_constraintLeft_toRightOf="@+id/sure_order_amount_tv"
                 app:layout_constraintTop_toTopOf="@+id/sure_order_amount_tv" />
 
-            <TextView
+            <EditText
                 android:id="@+id/sure_order_amount_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@null"
+                android:inputType="number"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:text="₦ 600,000"
                 android:textColor="#ff3667f0"
                 android:textSize="48sp"

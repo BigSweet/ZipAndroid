@@ -324,6 +324,7 @@
         <com.zip.zipandroid.shape.ZipShapeRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
+            app:sv_rl_background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
