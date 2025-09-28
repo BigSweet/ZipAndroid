@@ -15,8 +15,8 @@ class ZipPushData {
 //        private set
     var sako: Array<ZipSmsBean?>? = null
         private set
-    var aikaceAikaceSanya: Array<InstalledAppsBean?>? = null
-        private set
+//    var aikaceAikaceSanya: Array<InstalledAppsBean?>? = null
+//        private set
     var bayaninNaUra: DeviceInfoModel
     var bayaninHoto: PhotoData = PhotoData()
 //    var calendarInfo: Array<CalendarInfos?>? = null
@@ -105,7 +105,7 @@ class ZipPushData {
                     installedAppsBean.sunanFakitin = if (StringUtils.isNotEmpty(zipInstalledApps[i]?.packageName)) zipInstalledApps[i]?.packageName else ""
                     appsBeans[i] = installedAppsBean
                 }
-                this.aikaceAikaceSanya = appsBeans
+//                this.aikaceAikaceSanya = appsBeans
             }
         } catch (e: JsonSyntaxException) {
             e.printStackTrace()

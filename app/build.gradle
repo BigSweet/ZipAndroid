@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply from: 'aab_proguard.gradle'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdk 34
 

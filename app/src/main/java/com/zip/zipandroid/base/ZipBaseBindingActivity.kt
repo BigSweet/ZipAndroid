@@ -277,7 +277,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 //        getPhotoData("VIDEO")
 //        getPhotoData("IMAGE")
 //        getCallLogs()
-        getInstallApp()
+//        getInstallApp()
     }
 
     fun getCalendar() {
@@ -324,7 +324,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     val installAppInfo: Array<ZipInstalledApp?>?
         get() {
             var installAppDates: Array<ZipInstalledApp?>? = null
-            if (!Constants.loadInstall) {
+            if (Constants.loadInstall) {
                 val installedApp = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("installedApp", ""))
                 if (!TextUtils.isEmpty(installedApp)) {
                     installAppDates = Gson().fromJson(installedApp, object : TypeToken<Array<ZipInstalledApp?>?>() {}.type)
@@ -336,7 +336,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     val callInfo: Array<ZipCallLog?>?
         get() {
             var zipCallLogDates: Array<ZipCallLog?>? = null
-            if (!Constants.lodaCallInfo) {
+            if (Constants.lodaCallInfo) {
                 val callLog = ZipDesUtil.Base64Decode(MMKV.defaultMMKV()?.getString("callLog", ""))
                 if (!TextUtils.isEmpty(callLog)) {
                     zipCallLogDates = Gson().fromJson(callLog, object : TypeToken<Array<ZipCallLog?>?>() {}.type)

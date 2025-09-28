@@ -60,33 +60,41 @@ class ZipWebActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityZipAndro
                 super.onProgressChanged(view, newProgress)
                 try {
                     if (newProgress == 100) {
+                        dismissLoading()
                         val title = view.title ?: ""
                         if (!TextUtils.isEmpty(title) && !title.startsWith("http")) {
-                            tvCenter.setText(view.title)
+//                            tvCenter.setText(view.title)
                         } else {
-                            tvCenter.setText(resources.getString(R.string.app_name))
+//                            tvCenter.setText(resources.getString(R.string.app_name))
                         }
                     }
                 } catch (e: Exception) {
+                    dismissLoading()
                     e.printStackTrace()
                 }
             }
         }
+        showLoading()
+        if (url == Constants.commonPrivateUrl) {
+            tvCenter.setText("Privacy Policy")
+        }
+        if (url == Constants.commonServiceUrl) {
+            tvCenter.setText("Terms of Service")
+        }
         if (url == Constants.APP_LOAN_CONTRACT || url == Constants.APP_REPAYMENT_AGREEMENT) {
-            showLoading()
+
             mViewModel.getProtocolBeforeLoan(url, AppUtils.getAppName())
-            if(url == Constants.APP_LOAN_CONTRACT){
+            if (url == Constants.APP_LOAN_CONTRACT) {
                 tvCenter.setText("Loan Agreement")
-            }else{
+            } else {
                 tvCenter.setText("Advance Payment Agreement")
             }
-
         } else {
             mViewBind.webView.loadUrl(url)
         }
         mViewModel.agreementNameLive.observe(this) {
 //            it.string()
-            dismissLoading()
+//            dismissLoading()
             mViewBind.webView.loadDataWithBaseURL("https://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan", it?.string()
                 ?: "", "text/html",
                 "UTF-8",

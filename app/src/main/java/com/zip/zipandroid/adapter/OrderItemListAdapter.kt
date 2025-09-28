@@ -110,7 +110,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             //订单列表
             //
             //每期多少天字段是哪个
-            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each 14 Days")
+            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each ${item.applyPeriodNew.toInt()/item.stageCount} Days")
 
         }
         if (item.status == "CANCELED" || item.status == "CANCEL") {
@@ -128,7 +128,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             //订单列表
             //
             //每期多少天字段是哪个
-            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each 14 Days")
+            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each ${item.applyPeriodNew.toInt()/item.stageCount} Days")
 
         }
 
@@ -152,7 +152,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             //订单列表
             //
             //每期多少天字段是哪个
-            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each 14 Days")
+            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each ${item.applyPeriodNew.toInt()/item.stageCount} Days")
             bottom_status_tv.setText("You'll receive the review outcome in a\n" +
                     " few minutes")
             bottom_status_tv.show()
@@ -184,7 +184,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
             //订单列表
             //
             //每期多少天字段是哪个
-            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each 14 Days")
+            zip_order_item_install_tv.setText(item.stageCount.toString() + "Installment,\n Each ${item.applyPeriodNew.toInt()/item.stageCount} Days")
 
 
             zip_order_amount_place_tv.setTextColor(Color.parseColor("#FF649778"))
