@@ -82,7 +82,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
         mViewBind.testBtn.visible = BuildConfig.DEBUG
         mViewBind.testBtn.setOnDelayClickListener {
-//            ZipOrderNextActivity.start(this, "1610000000042541")
+//            ZipOrderNextActivity.start(this, "1610000000067566")
             startActivity(ZipPersonInfoActivity::class.java)
         }
 //        FirebaseAnalytics.getInstance()

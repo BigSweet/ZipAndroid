@@ -115,7 +115,7 @@ class OrderItemListAdapter : BaseQuickAdapter<ZipOrderListBeanItem, BaseViewHold
         }
         if (item.status == "CANCELED" || item.status == "CANCEL") {
             zip_item_order_amount_tv.setText(item.applyAmount.toDouble().toN())
-            item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.periodTime))
+            item_zip_order_time_tv.setText(formatTimestampToDate("Completion Date:", item.approveTime))
             bottom_status_tv.show()
             bottom_status_tv.setText("This loan order has been cancelled")
 

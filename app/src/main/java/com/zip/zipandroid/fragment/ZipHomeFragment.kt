@@ -275,7 +275,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
     private fun showNormalStatus(it: ZipHomeDataBean) {
         mViewBind.homeOrderNormalCl.show()
-        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax)
+        mViewBind.zipHomeMoneyTv.setText(it.productList.limitMax.toDouble().toInt().toN())
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
             showLoading()
