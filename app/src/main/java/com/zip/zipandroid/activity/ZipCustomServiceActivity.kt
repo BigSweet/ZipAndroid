@@ -32,8 +32,14 @@ class ZipCustomServiceActivity : ZipBaseBindingActivity<ZipHomeViewModel, Activi
                 startActivity(intent);
             } catch (e: Exception) {
                 //  没有安装WhatsApp
-                ClipboardUtils.copyText(mViewBind.zipWhatAppTv.text.toString())
-                ToastUtils.showShort("copy success")
+                val webpage = Uri.parse(whatUrl)
+                val intent = Intent(Intent.ACTION_VIEW, webpage)
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                } else {
+                    ZipWebActivity.start(this, whatUrl)
+                }
+
             }
         }
         mViewBind.zipPhoneTv.setOnDelayClickListener {
@@ -50,13 +56,16 @@ class ZipCustomServiceActivity : ZipBaseBindingActivity<ZipHomeViewModel, Activi
         startActivity(intent)
     }
 
+    var whatUrl = ""
     override fun createObserver() {
         mViewModel.configLiveData.observe(this) {
             val whatApp = it?.APP_CUSTOMER_SERVICE_WHATSAPP
+            whatUrl = it?.APP_CUSTOMER_SERVICE_WHATSAPP ?: ""
             val phone = it?.APP_MX_SOCIAL_MS_SWITCH
             val email = it?.APP_CUSTOMER_SERVICE_EMAIL
             mViewBind.zipPhoneTv.setText(phone)
-            mViewBind.zipWhatAppTv.setText(whatApp)
+            val cleanString = whatApp?.replace("[^0-9]".toRegex(), "")
+            mViewBind.zipWhatAppTv.setText(cleanString)
             mViewBind.zipEmailTv.setText(email)
 
         }

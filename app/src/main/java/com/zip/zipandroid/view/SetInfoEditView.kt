@@ -230,20 +230,18 @@ class SetInfoEditView : RelativeLayout {
                     }
                     if (inputInfoType == TYPE_PHONE) {
                         if ((it.text?.length ?: 0) !in 10..11) {
-                            ToastUtils.showShort("Please enter 10 or 11 digits")
+                            ToastUtils.showShort("Please enter a valid phone number")
                             it.tag = "error"
                             it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                         } else {
                             if ((it.text?.length ?: 0) == 10 && (it.text?.get(0) ?: "") == "0") {
-                                ToastUtils.showShort("The first digit cannot be 0")
+                                ToastUtils.showShort("Please enter a valid phone number")
                                 it.tag = "error"
                                 it.setBackgroundColor(Color.parseColor("#FFF1F1")) // 错误状态
                             } else {
                                 it.tag = "completed"
                                 it.setBackgroundColor(Color.parseColor("#F1F5FF")) // 完成状态
                             }
-
-
                         }
                         it.clearFocus()
                         false
@@ -571,7 +569,7 @@ class SetInfoEditView : RelativeLayout {
                             if (length > 10) {
                                 s.replace(0, s.length, lastValidText)
 //                                it.error = "enter a maximum of 10 digits."
-                                ToastUtils.showShort("Please enter a valid mobile phone number")
+//                                ToastUtils.showShort("Please enter a valid mobile phone number")
                                 it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                                 isFormatting = false
                                 return

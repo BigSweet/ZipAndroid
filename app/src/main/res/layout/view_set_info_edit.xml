@@ -38,7 +38,7 @@
         android:hint="Please choose"
         android:includeFontPadding="false"
         android:minHeight="69dp"
-        android:paddingTop="27dp"
+        android:paddingTop="37dp"
         android:paddingLeft="15dp"
         android:paddingRight="40dp"
         android:paddingBottom="10dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:sv_tx_background="#FFF7F7F7"
         app:sv_tx_radius="13dp"
-        tools:text=""
+        tools:text="That normally happens when the pluginThat normally happens when the pluginThat normally happens when the plugin"
         tools:visibility="visible">
 
     </com.zip.zipandroid.shape.ZipShapeTextView>

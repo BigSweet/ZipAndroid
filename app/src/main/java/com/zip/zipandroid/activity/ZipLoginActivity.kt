@@ -142,7 +142,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                     // 子规则2b：长度不能超过10
                     if (length > 10) {
                         editable.replace(0, editable.length, lastValidText)
-                        showPhoneFail()
+//                        showPhoneFail()
 //                        mViewBind.zipLoginEdit?.error = "enter a maximum of 10 digits."
                         isFormatting = false
                         return
