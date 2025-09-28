@@ -36,7 +36,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Loan Approval")
-        showLoading()
+
         interValRange(bizId)
         mViewBind.nextReturnHomeTv.setOnDelayClickListener {
             finish()
@@ -54,14 +54,14 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
     var disposable: Disposable? = null
 
     fun interValRange(bizId: String) {
-        disposable = Observable.intervalRange(1, 6, 500, 5000, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
+        disposable = Observable.intervalRange(1, 10, 500, 3000, TimeUnit.MILLISECONDS) // 让被观察者执行在 IO 线程
             .subscribeOn(Schedulers.io()) // 让观察者执行在主线程
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Consumer<Long> {
                 override fun accept(aLong: Long?) {
                     getOrderData(bizId = bizId)
                     if (aLong == 6L) {
-                        dismissLoading()
+//                        dismissLoading()
                         disposable?.dispose()
                     }
                 }
@@ -71,12 +71,13 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
 
 
     fun getOrderData(bizId: String) {
+        showLoading()
         mViewModel.getUserOrder(bizId)
     }
 
     override fun createObserver() {
         mViewModel.userOrderLiveData.observe(this) {
-//            dismissLoading()
+            dismissLoading()
 //
 
 //            订单状态（300 等待 同WAITING 挂起状态，跳转到订单确认页面，等待用户确认，用户确认或取消后跳转到首页。

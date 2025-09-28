@@ -500,6 +500,7 @@ public class WheelTime {
                 if (mSelectChangeCallback != null) {
                     mSelectChangeCallback.onTimeSelectChanged();
                 }
+                wv_day.setCurrentItem(0);
             }
         });
 
@@ -534,7 +535,8 @@ public class WheelTime {
 
 
     private void setReDay(int year_num, int monthNum, int startD, int endD, List<String> list_big, List<String> list_little) {
-        int currentItem = 0;
+//        int currentItem = 0;
+        int currentItem = wv_day.getCurrentItem();
 
 //        int maxItem;
         if (list_big.contains(String.valueOf(monthNum))) {
@@ -566,11 +568,11 @@ public class WheelTime {
             }
         }
 
-//        if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
-//            currentItem = wv_day.getAdapter().getItemsCount() - 1;
-//            wv_day.setCurrentItem(currentItem);
-//        }
-        wv_day.setCurrentItem(currentItem);
+        if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
+            currentItem = wv_day.getAdapter().getItemsCount() - 1;
+            wv_day.setCurrentItem(currentItem);
+        }
+//        wv_day.setCurrentItem(currentItem);
     }
 
 
