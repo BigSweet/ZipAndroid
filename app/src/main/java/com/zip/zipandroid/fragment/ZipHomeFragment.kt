@@ -18,6 +18,7 @@ import com.zip.zipandroid.activity.ZipQuestionActivity
 import com.zip.zipandroid.activity.ZipWebActivity
 import com.zip.zipandroid.activity.ZipWorkInfoActivity
 import com.zip.zipandroid.base.ZipBaseBindingFragment
+import com.zip.zipandroid.bean.ZipAppConfigBean
 import com.zip.zipandroid.bean.ZipHomeDataBean
 import com.zip.zipandroid.bean.ZipUserInfoBean
 import com.zip.zipandroid.databinding.FragmentZipHomeBinding
@@ -107,7 +108,6 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
             dismissLoading()
         }
         mViewModel.homeLiveData.observe(this) {
-            dismissLoading()
             if (it.userOrderStatus == 0) {
                 //展示首页费率
                 mViewBind.loadTeamSl.show()
@@ -220,7 +220,8 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
 
         }
         mViewModel.configLiveData.observe(this) {
-
+            dismissLoading()
+            configData = it
 //            Constants.commonServiceUrl = it?.APP_REGISTER_AGREEMENT ?: "https://www.baidu.com"//注册协议
 //            Constants.commonPrivateUrl = it?.APP_PRIVACY_AGREEMENT ?: "https://www.baidu.com"//隐私协议
 
@@ -285,8 +286,13 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
         }
     }
 
+    var configData: ZipAppConfigBean? = null
     var userInfo: ZipUserInfoBean? = null
     fun checkUserInfo() {
+        if (configData == null) {
+            ToastUtils.showShort("config prepareing")
+            return
+        }
         if (Constants.isDemoAccount) {
             //直接进个人信息页面
             startActivity(ZipPersonInfoActivity::class.java)

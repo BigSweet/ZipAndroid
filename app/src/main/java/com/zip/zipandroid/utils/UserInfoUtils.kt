@@ -95,6 +95,7 @@ object UserInfoUtils {
         MMKV.defaultMMKV()?.remove("zipuploaduserInfo")
         mSignKey = ""
         mUserNo = ""
+        Constants.isDemoAccount =false
         mUserPhone = ""
         mMid = 0L
     }

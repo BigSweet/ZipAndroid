@@ -10,6 +10,7 @@ import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
+import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
@@ -77,7 +78,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             checkAllPer()
 
         }
-
 //        Log.d("广告id", AppsFlyerLib.getInstance().getAppsFlyerUID(this).toString())
 
 
@@ -85,6 +85,8 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
         mViewBind.testBtn.setOnDelayClickListener {
 //            ZipOrderNextActivity.start(this, "1610000000067566")
 //            ZipOrderReviewActivity.start(this, "")
+//            CrashReport.testJavaCrash();
+
             startActivity(ZipContractActivity::class.java)
         }
 //        FirebaseAnalytics.getInstance()
