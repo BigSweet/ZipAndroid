@@ -199,7 +199,7 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
                 }
                 if (it.creditOrderList?.status == "REFUSED") {
                     if (it.creditOrderList.loanRefusedDuration != null && ((it.creditOrderList.loanRefusedDuration
-                            ?: 0) / 24 / 3600 / 1000) > 7
+                            ?: 0) / 24 / 3600 / 1000) >= 7
                     ) {
                         mViewBind.homeSubmitRefuseCl.hide()
                         showNormalStatus(it)
