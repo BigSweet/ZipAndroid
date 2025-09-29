@@ -10,7 +10,6 @@ import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
-import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
@@ -112,7 +111,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     override fun onResume() {
         super.onResume()
-        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.wifiStatus)) {
 
         } else {
             noPerPop?.dismiss()
@@ -122,7 +121,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
-        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.redCalendar, AllPerUtils.wifiStatus)) {
+        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.wifiStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
             //权限弹窗
             val pop = ZipAllPerPop(getContext())

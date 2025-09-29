@@ -272,7 +272,7 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 //    设备信息、短信、日历、蓝牙、Advertising ID、WIFI这些都要吗
 
     fun getAllPerData() {
-        getCalendar()
+//        getCalendar()
 //        getSms()
 //        getPhotoData("VIDEO")
 //        getPhotoData("IMAGE")
@@ -280,19 +280,19 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
 //        getInstallApp()
     }
 
-    fun getCalendar() {
-        if (PermissionUtils.isGranted(Manifest.permission.READ_CALENDAR) && PermissionUtils.isGranted(Manifest.permission.WRITE_CALENDAR)) {
-            ZipPhoneDateProvider.sharedInstance(ZipApplication.instance).getCalendarInfo(object : ZipCalendarListener {
-                override fun onCalendarFetched(calendar: Array<ZipCalendarInfos>) {
-                    val calendar = ZipDesUtil.Base64Encode(Gson().toJson(calendar))
-                    MMKV.defaultMMKV()?.putString("calendar", calendar)
-                }
-
-                override fun onError(s: String) {}
-            })
-        }
-
-    }
+//    fun getCalendar() {
+//        if (PermissionUtils.isGranted(Manifest.permission.READ_CALENDAR) && PermissionUtils.isGranted(Manifest.permission.WRITE_CALENDAR)) {
+//            ZipPhoneDateProvider.sharedInstance(ZipApplication.instance).getCalendarInfo(object : ZipCalendarListener {
+//                override fun onCalendarFetched(calendar: Array<ZipCalendarInfos>) {
+//                    val calendar = ZipDesUtil.Base64Encode(Gson().toJson(calendar))
+//                    MMKV.defaultMMKV()?.putString("calendar", calendar)
+//                }
+//
+//                override fun onError(s: String) {}
+//            })
+//        }
+//
+//    }
 
     fun getSms() {
         if (PermissionUtils.isGranted(Manifest.permission.READ_SMS)) {
