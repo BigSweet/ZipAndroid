@@ -241,6 +241,7 @@ class ZipReviewModel : ZipBaseViewModel() {
         pushData.bayaninHoto.gabanID = imgBean.serverPaths.FRONT
         val bean = UserInfoUtils.getUserInfo()
         info.cardNo = UserInfoUtils.getBankData()?.cardNo.toString()
+        info.cardName =   UserInfoUtils.getBankData()?.bankName.toString()
         info.accountName = UserInfoUtils.getUserInfo().realname
 //        bean.bankName = bankName
         info.bankId = UserInfoUtils.getBankData()?.bankId.toString()

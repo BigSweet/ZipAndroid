@@ -53,6 +53,7 @@ class ZipOrderNextActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipO
 
     override fun onDestroy() {
         super.onDestroy()
+        dismissLoading()
         disposable?.dispose()
     }
 
