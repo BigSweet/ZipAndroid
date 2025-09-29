@@ -136,7 +136,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
 //    implementation project(':SpinnerDatePickerLib')
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'com.tencent.bugly:crashreport:latest.release'
 //    implementation project(path: ':liveness')
 //    api 'com.contrarywind:Android-PickerView:4.1.9'
     api project(':pickerview')
@@ -146,4 +145,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:31.1.1")
     implementation "com.google.firebase:firebase-analytics-ktx"
     implementation("com.google.firebase:firebase-crashlytics")
+
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+
 }

@@ -253,3 +253,7 @@
 -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 -keep,allowoptimization,allowshrinking,allowobfuscation class <3>
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
+
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

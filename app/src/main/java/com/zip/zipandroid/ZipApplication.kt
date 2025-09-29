@@ -21,7 +21,7 @@ class ZipApplication : Application() {
 //                return DeviceUtils.getAndroidID() == "38c682680c26ddb2"
 //            }
 //        })
-        CrashReport.initCrashReport(getApplicationContext(), "bf7aa0ef33", false);
+        CrashReport.initCrashReport(getApplicationContext(), "4692898aa8", false);
         initAdvanceLivenessDetection()
     }
 
