@@ -570,7 +570,7 @@ class SetInfoEditView : RelativeLayout {
                                 s.replace(0, s.length, lastValidText)
 //                                it.error = "enter a maximum of 10 digits."
 //                                ToastUtils.showShort("Please enter a valid mobile phone number")
-                                it.setBackgroundColor(Color.parseColor("#FFF1F1"))
+//                                it.setBackgroundColor(Color.parseColor("#FFF1F1"))
                                 isFormatting = false
                                 return
                             }
