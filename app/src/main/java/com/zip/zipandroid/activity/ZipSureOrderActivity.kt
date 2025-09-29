@@ -465,7 +465,8 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
     fun getLoanData(): WebLoanBean {
         val bean = WebLoanBean(System.currentTimeMillis().toString(), UserInfoUtils.getBankData()?.bankName
             ?: "", preBizId.toString(),
-            UserInfoUtils.getBankData()?.cardNo.toString(), currentDid, UserInfoUtils.getUserPhone(), UserInfoUtils.getProductType().productType.toString(), riskLevel, realAmount)
+            UserInfoUtils.getBankData()?.cardNo.toString(), currentDid, UserInfoUtils.getUserPhone(), UserInfoUtils.getProductType().productType.toString(), riskLevel, realAmount,
+            UserInfoUtils.getUserInfo().identity)
         return bean
 
     }

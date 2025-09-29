@@ -56,11 +56,13 @@ open class ZipBaseViewModel : ViewModel(), ZipIRxDisManger {
         api.addParam("matakinHadariNext", data.riskLevel)
         api.addParam("nauInSamfur", data.productType)
         api.addParam("dNaUraid", System.currentTimeMillis())
+        api.addParam("lambarBashi", data.creditNo)
 
         treeMap.putAll(api)
 //        val sign = SignUtils.signParameter(treeMap, UserInfoUtils.getSignKey())
 //        return "http://loansapp.flaminghorizon.com/api/v4/ziplead/getProtocolBeforeLoan?fakitinAiki=${AppUtils.getAppPackageName()}&sigarBincike=${AppUtils.getAppVersionName()}&tushen=${"ANDROID"}&matsakaici=${UserInfoUtils.getMid().toString()}&lambarMutum=${UserInfoUtils.getUserNo().toString()}&idAbokinCiniki=${clientId}&sunanAiki=${appName}&sunanYarjejeniya=${agreementName}&sanyaHannu=${sign}"
         ZipRetrofitHelper.createApi(ZipApi::class.java).getProtocolBeforeLoan(
+            data.creditNo.toString(),
             data.applyAmount.toString(),
             data.riskLevel.toString(),
             data.productType.toString(),

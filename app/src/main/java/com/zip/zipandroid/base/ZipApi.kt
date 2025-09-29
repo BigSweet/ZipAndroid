@@ -45,6 +45,8 @@ interface ZipApi {
 
     @GET("api/v4/ziplead/getProtocolBeforeLoan")
     fun getProtocolBeforeLoan(
+        @Query("lambarBashi") creditNo: String,
+
         @Query("adadinNema") applyAmount: String,
         @Query("matakinHadariNext") riskLevel: String,
         @Query("nauInSamfur") productType: String,
