@@ -694,7 +694,7 @@ class SetInfoEditView : RelativeLayout {
     private fun debounceAndCheckCompletion() {
         debounceJob?.cancel()
         debounceJob = CoroutineScope(Dispatchers.Main).launch {
-            delay(800)
+            delay(200)
             handleInputComplete()
         }
     }

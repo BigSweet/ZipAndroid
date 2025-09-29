@@ -9,18 +9,15 @@ import androidx.lifecycle.lifecycleScope
 import com.appsflyer.AppsFlyerLib
 import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
 import com.zip.zipandroid.activity.ZipContractActivity
-import com.zip.zipandroid.activity.ZipOrderNextActivity
-import com.zip.zipandroid.activity.ZipOrderReviewActivity
-import com.zip.zipandroid.activity.ZipPerActivity
-import com.zip.zipandroid.activity.ZipPersonInfoActivity
+import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
 import com.zip.zipandroid.base.ZipBaseBindingActivity
 import com.zip.zipandroid.base.ZipBaseViewModel
 import com.zip.zipandroid.databinding.ActivityMainBinding
+import com.zip.zipandroid.event.ZipLoginOutEvent
 import com.zip.zipandroid.event.ZipSwitchIndexEvent
 import com.zip.zipandroid.fragment.ZipHomeFragment
 import com.zip.zipandroid.fragment.ZipMineFragment
@@ -33,6 +30,8 @@ import com.zip.zipandroid.utils.AllPerUtils
 import com.zip.zipandroid.utils.AnimationUtils
 import com.zip.zipandroid.utils.Constants
 import com.zip.zipandroid.utils.OnNoDoubleClickListener
+import com.zip.zipandroid.utils.UserInfoUtils
+import com.zip.zipandroid.utils.ZipActivityCollector
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -182,16 +181,16 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var logout = false
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    fun onEvent(event: ZipLoginOutEvent) {
-//        if (logout) {
-//            return
-//        }
-//        logout = true
-//        ZipActivityCollector.removeAllActivity()
-//        startActivity(ZipLoginActivity::class.java)
-//        UserInfoUtils.clear()
-//    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: ZipLoginOutEvent) {
+        if (logout) {
+            return
+        }
+        logout = true
+        ZipActivityCollector.removeAllActivity()
+        startActivity(ZipLoginActivity::class.java)
+        UserInfoUtils.clear()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
