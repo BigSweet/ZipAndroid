@@ -411,7 +411,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Encrypt data transmitted over the Internet to ensure the security of user data during transmission. \n Permission information and data will be encrypted and uploaded to the server: http//www.flaminghorizonglobalservices.com/"
+                                android:text="Encrypt data transmitted over the Internet to ensure the security of user data during transmission. \n Permission information and data will be encrypted and uploaded to the server: https://www.flaminghorizon.com/"
                                 android:textColor="#ff000000"
                                 android:textSize="12sp"
                                 app:layout_constraintTop_toBottomOf="@+id/zip_per_inter_icon" />
