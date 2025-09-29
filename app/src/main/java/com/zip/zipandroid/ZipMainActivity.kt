@@ -75,7 +75,6 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
             realGetAllPer()
         } else {
             checkAllPer()
-
         }
 //        Log.d("广告id", AppsFlyerLib.getInstance().getAppsFlyerUID(this).toString())
 
@@ -121,24 +120,18 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 
     var noPerPop: ZipDefPerPop? = null
     fun checkAllPer() {
-        if (!PermissionUtils.isGranted(AllPerUtils.netWorkStatusPer, AllPerUtils.wifiStatus)) {
 //        if (!PermissionUtils.isGranted(AllPerUtils.smsStatus)) {
-            //权限弹窗
-            val pop = ZipAllPerPop(getContext())
-            pop.allPerFail = {
-                //退出登录，关闭界面
-//                UserInfoUtils.clear()
-                finish()
-            }
-            pop.allPerSuccess = {
-                MMKV.defaultMMKV().putBoolean("showPer", true)
-                realGetAllPer()
-            }
-            XPopup.Builder(getContext()).asCustom(pop).show()
-
-        } else {
-            getAllPerData()
+        //权限弹窗
+        val pop = ZipAllPerPop(getContext())
+        pop.allPerFail = {
+            finish()
         }
+        pop.allPerSuccess = {
+            MMKV.defaultMMKV().putBoolean("showPer", true)
+            realGetAllPer()
+        }
+        XPopup.Builder(getContext()).asCustom(pop).show()
+
     }
 
     private fun realGetAllPer() {
