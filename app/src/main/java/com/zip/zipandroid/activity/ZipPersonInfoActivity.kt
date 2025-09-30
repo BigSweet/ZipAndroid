@@ -24,6 +24,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.ForMateDateUtils
 import com.zip.zipandroid.utils.UserInfoUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
@@ -145,8 +146,8 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
                 brithDayStr = "$year-$month-$realDay"
                 brithDay = calendar.time.time
 
-                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + brithDay)
-                mViewBind.birthdayInfoView.setContentText(brithDayStr)
+//                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + brithDay)
+                mViewBind.birthdayInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(brithDayStr))
                 mViewBind.birthdayInfoView.setTagComplete()
             }
         }
@@ -306,7 +307,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             if (it.birthDate > 0) {
                 brithDayStr = formatTimestamp(it.birthDate)
                 brithDay = it.birthDate
-                mViewBind.birthdayInfoView.setContentText(brithDayStr)
+                mViewBind.birthdayInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(brithDayStr))
             }
             if (!it.identity.isNullOrEmpty()) {
                 mViewBind.bvnInfoView.setContentText(it.identity)

@@ -20,6 +20,7 @@ import com.zip.zipandroid.ktx.setOnDelayClickListener
 import com.zip.zipandroid.ktx.show
 import com.zip.zipandroid.pop.SingleCommonSelectPop
 import com.zip.zipandroid.utils.Constants
+import com.zip.zipandroid.utils.ForMateDateUtils
 import com.zip.zipandroid.utils.ZipEventBusUtils
 import com.zip.zipandroid.utils.ZipStringUtils
 import com.zip.zipandroid.utils.ZipTrackUtils
@@ -134,8 +135,8 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 val year = calendar.get(Calendar.YEAR)
                 val dateStr = "$year-$month-$realDay"
                 val dateTime = calendar.time.time
-                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + dateTime)
-                mViewBind.timeWorkInfoView.setContentText(dateStr)
+//                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + dateTime)
+                mViewBind.timeWorkInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(dateStr))
                 mViewBind.timeWorkInfoView.setTagComplete()
             }
         }
@@ -171,10 +172,10 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 val realDay = ZipStringUtils.addZero(day)
                 val month = ZipStringUtils.addZero(calendar[Calendar.MONTH] + 1)
                 val year = calendar.get(Calendar.YEAR)
-                val dateStr = "$year-$month-$realDay"
+                dateStr = "$year-$month-$realDay"
                 val dateTime = calendar.time.time
-                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + dateTime)
-                mViewBind.schoolTimeWorkInfoView.setContentText(dateStr)
+//                Log.d("选的日期", "$year-$month-$realDay" + "数字时间" + dateTime)
+                mViewBind.schoolTimeWorkInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(dateStr))
                 mViewBind.schoolTimeWorkInfoView.setTagComplete()
             }
         }
@@ -186,19 +187,20 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
                 addressUploadBean.detail = mViewBind.detailWorkInfoView.getEditText()
-                mViewModel.saveCompanyInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.companyNameInfoView.getEditText(), addressUploadBean, mViewBind.detailWorkInfoView.getEditText(), mViewBind.payDayView.getEditText(), mViewBind.incomeInfoView.getRawNumericValue(), mViewBind.timeWorkInfoView.getEditText())
+                mViewModel.saveCompanyInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.companyNameInfoView.getEditText(), addressUploadBean, mViewBind.detailWorkInfoView.getEditText(), mViewBind.payDayView.getEditText(), mViewBind.incomeInfoView.getRawNumericValue(), dateStr)
             }
             if (currentType == type_ume) {
                 mViewModel.saveWorkUmeInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, ontherIncome, mViewBind.lengthOfUmView.getEditText(), mViewBind.umeIncomeView.getRawNumericValue())
             }
             if (currentType == type_student) {
                 addressUploadBean.detail = mViewBind.schoolDetailNameInfoView.getEditText()
-                mViewModel.saveStudentInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.schoolNameInfoView.getEditText(), addressUploadBean, mViewBind.schoolDetailNameInfoView.getEditText(), mViewBind.schoolIncomeInfoView.getRawNumericValue(), mViewBind.schoolTimeWorkInfoView.getEditText())
+                mViewModel.saveStudentInfo(industry, mViewBind.occInfoInfoView.getEditText(), emp_status, mViewBind.schoolNameInfoView.getEditText(), addressUploadBean, mViewBind.schoolDetailNameInfoView.getEditText(), mViewBind.schoolIncomeInfoView.getRawNumericValue(), dateStr)
             }
         }
 
     }
 
+    var dateStr = ""
 
     var singleButtonAdapter = SingleButtonAdapter()
 
@@ -463,13 +465,13 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
             }
             if (it.timeWorkBegins > 0) {
-                val brithDayStr = formatTimestamp(it.timeWorkBegins)
+                dateStr = formatTimestamp(it.timeWorkBegins)
 
                 if (currentType == type_student) {
-                    mViewBind.schoolTimeWorkInfoView.setContentText(brithDayStr)
+                    mViewBind.schoolTimeWorkInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(dateStr))
                     mViewBind.schoolTimeWorkInfoView.setTagComplete()
                 } else {
-                    mViewBind.timeWorkInfoView.setContentText(brithDayStr)
+                    mViewBind.timeWorkInfoView.setContentText(ForMateDateUtils.formatDateToEnglish(dateStr))
                     mViewBind.timeWorkInfoView.setTagComplete()
                 }
             }
