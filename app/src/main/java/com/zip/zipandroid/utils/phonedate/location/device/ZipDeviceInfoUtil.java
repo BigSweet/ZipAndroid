@@ -119,13 +119,13 @@ public class ZipDeviceInfoUtil {
             }
 
             if (TextUtils.isEmpty(deviceId)) {
-                deviceId = "NA";
+                deviceId = "NG";
             }
             return deviceId;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "NA";
+        return "NG";
     }
 
     public String getIdForAdvertising() {
@@ -147,7 +147,7 @@ public class ZipDeviceInfoUtil {
 //        }
 //
 //        return advertId;
-        return "NA";
+        return "NG";
     }
 
     public String getDisplayResolution() {
@@ -221,7 +221,7 @@ public class ZipDeviceInfoUtil {
     public String getDeviceArch() {
         String arch = System.getProperty("os.arch");
         if (TextUtils.isEmpty(arch)) {
-            arch = "NA";
+            arch = "NG";
         }
         return arch;
     }
@@ -234,7 +234,7 @@ public class ZipDeviceInfoUtil {
             int ipAddress = wm.getConnectionInfo().getIpAddress();
             return String.format(Locale.US, "%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
         }
-        return "NA";
+        return "NG";
     }
 
     public String getSystemStartupTime() {
@@ -515,7 +515,7 @@ public class ZipDeviceInfoUtil {
             type = networkInfo.getTypeName();
         }
         if (TextUtils.isEmpty(type)) {
-            type = "NA";
+            type = "NG";
         }
         return type;
     }
@@ -527,7 +527,7 @@ public class ZipDeviceInfoUtil {
             name = manager.getNetworkOperatorName();
         }
         if (TextUtils.isEmpty(name)) {
-            name = "NA";
+            name = "NG";
         }
         return name;
     }
@@ -539,7 +539,7 @@ public class ZipDeviceInfoUtil {
             country = manager.getNetworkCountryIso();
         }
         if (TextUtils.isEmpty(country)) {
-            country = "NA";
+            country = "NG";
         }
         return country;
     }
@@ -574,7 +574,7 @@ public class ZipDeviceInfoUtil {
 //                }
 //            }
 //        }
-        return "NA";
+        return "NG";
     }
 
     public String getUUID() {
@@ -651,11 +651,11 @@ public class ZipDeviceInfoUtil {
                     did = getIdForVendor();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    did = "NA";
+                    did = "NG";
                 }
             }
 
-            if (!TextUtils.isEmpty(did) && !"NA".equals(did) && charCount(did, '0') != did.length() && charCount(did, '*') != did.length()) {
+            if (!TextUtils.isEmpty(did) && !"NG".equals(did) && charCount(did, '0') != did.length() && charCount(did, '*') != did.length()) {
                 deviceId.append("did");
                 deviceId.append("_");
                 deviceId.append(did);
@@ -681,7 +681,7 @@ public class ZipDeviceInfoUtil {
 
             //sim序列号（simSerialNumber）
             String sim = getSimId();
-            if (!TextUtils.isEmpty(sim) && !"NA".equals(sim)) {
+            if (!TextUtils.isEmpty(sim) && !"NG".equals(sim)) {
                 deviceId.append("sim");
                 deviceId.append("_");
                 deviceId.append(sim);
@@ -739,7 +739,7 @@ public class ZipDeviceInfoUtil {
     }
 
     public String getIsCharging() {
-        String isCharging = "NA";
+        String isCharging = "NG";
         try {
             Intent batteryBroadcast = context.registerReceiver(null,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -756,7 +756,7 @@ public class ZipDeviceInfoUtil {
     }
 
     public String getSystemBattery() {
-        String percentBattery = "NA";
+        String percentBattery = "NG";
         try {
             Intent batteryInfoIntent = context.getApplicationContext().registerReceiver(null,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -821,43 +821,43 @@ public class ZipDeviceInfoUtil {
         return result;
     }
 
+//
+//    public JSONObject toJSONObject() {
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("idForVendor", this.getIdForVendor());
+//            jsonObject.put("idForAdvertising", this.getIdForAdvertising());
+//            jsonObject.put("displayResolution", this.getDisplayResolution());
+//            jsonObject.put("model", this.getModel());
+//            jsonObject.put("totalMemory", this.getTotalMemory());
+//            jsonObject.put("totalStorage", this.getTotalStorage());
+//            jsonObject.put("cpuCount", this.getCPUCount());
+//            jsonObject.put("cpuSpeed", this.getCPUSpeed());
+//            jsonObject.put("deviceArch", this.getDeviceArch());
+//            jsonObject.put("ipAddress", this.getIPAddress());
+//            jsonObject.put("macAddress", this.getMacAddress());
+//            jsonObject.put("carrierName", this.getCarrierName());
+//            jsonObject.put("networkType", this.getNetworkType());
+//            jsonObject.put("country", this.getCountry());
+//            jsonObject.put("osVersion", this.getOSVersion());
+//            jsonObject.put("isSimulator", this.isSimulator());
+//            jsonObject.put("androidId", this.getAndroidId());
+//            jsonObject.put("simSerialNumber", this.getSimId());
+//            jsonObject.put("uuid", this.getUUID());
+//            jsonObject.put("timeZoneDisplayNameShort", this.getTimeZoneDisplayNameShort());
+//            jsonObject.put("generalDeviceId", this.getGenaralDeviceId());
+//            jsonObject.put("employMemory", this.getEmployMemory());
+//            jsonObject.put("employStorage", this.getEmployStorage());
+//            jsonObject.put("isCharging", this.getIsCharging());
+//            jsonObject.put("systemBattery", this.getSystemBattery());
+//            jsonObject.put("systemRunTime", this.getSystemRunTime());
+//        } catch (JSONException e) {
+//
+//        }
+//        return jsonObject;
+//    }
 
-    public JSONObject toJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("idForVendor", this.getIdForVendor());
-            jsonObject.put("idForAdvertising", this.getIdForAdvertising());
-            jsonObject.put("displayResolution", this.getDisplayResolution());
-            jsonObject.put("model", this.getModel());
-            jsonObject.put("totalMemory", this.getTotalMemory());
-            jsonObject.put("totalStorage", this.getTotalStorage());
-            jsonObject.put("cpuCount", this.getCPUCount());
-            jsonObject.put("cpuSpeed", this.getCPUSpeed());
-            jsonObject.put("deviceArch", this.getDeviceArch());
-            jsonObject.put("ipAddress", this.getIPAddress());
-            jsonObject.put("macAddress", this.getMacAddress());
-            jsonObject.put("carrierName", this.getCarrierName());
-            jsonObject.put("networkType", this.getNetworkType());
-            jsonObject.put("country", this.getCountry());
-            jsonObject.put("osVersion", this.getOSVersion());
-            jsonObject.put("isSimulator", this.isSimulator());
-            jsonObject.put("androidId", this.getAndroidId());
-            jsonObject.put("simSerialNumber", this.getSimId());
-            jsonObject.put("uuid", this.getUUID());
-            jsonObject.put("timeZoneDisplayNameShort", this.getTimeZoneDisplayNameShort());
-            jsonObject.put("generalDeviceId", this.getGenaralDeviceId());
-            jsonObject.put("employMemory", this.getEmployMemory());
-            jsonObject.put("employStorage", this.getEmployStorage());
-            jsonObject.put("isCharging", this.getIsCharging());
-            jsonObject.put("systemBattery", this.getSystemBattery());
-            jsonObject.put("systemRunTime", this.getSystemRunTime());
-        } catch (JSONException e) {
-
-        }
-        return jsonObject;
-    }
-
-    public String toJSONString() {
-        return this.toJSONObject().toString();
-    }
+//    public String toJSONString() {
+//        return this.toJSONObject().toString();
+//    }
 }
