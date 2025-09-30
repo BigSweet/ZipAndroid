@@ -63,7 +63,9 @@ abstract class ZipBaseBindingActivity<VM : ZipBaseViewModel, VB : ViewBinding> :
     }
 
     fun dismissLoading() {
-        ZipLoadingUtils.dismiss()
+        if (!isFinishing && !isDestroyed) {
+            ZipLoadingUtils.dismiss()
+        }
     }
 
 
