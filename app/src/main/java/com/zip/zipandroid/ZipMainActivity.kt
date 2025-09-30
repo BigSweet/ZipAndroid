@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lxj.xpopup.XPopup
 import com.tencent.mmkv.MMKV
+import com.zip.zipandroid.activity.ZipBandCardActivity
 import com.zip.zipandroid.activity.ZipContractActivity
 import com.zip.zipandroid.activity.ZipLoginActivity
 import com.zip.zipandroid.adapter.LazyPagerAdapter
@@ -85,7 +86,7 @@ class ZipMainActivity : ZipBaseBindingActivity<ZipBaseViewModel, ActivityMainBin
 //            ZipOrderReviewActivity.start(this, "")
 //            CrashReport.testJavaCrash();
 
-            startActivity(ZipContractActivity::class.java)
+            startActivity(ZipBandCardActivity::class.java)
         }
 //        FirebaseAnalytics.getInstance()
         lifecycleScope.launch {

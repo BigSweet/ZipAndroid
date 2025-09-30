@@ -76,6 +76,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
                 showBankListPop()
             }
         }
+        showLoading()
         mViewModel.zipQueryCard()
         mViewModel.getBankList()
         mViewModel.getUserInfo()
@@ -204,6 +205,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.bankListLiveData.observe(this) {
 //            dismissLoading()
             dataPrepare = true
+            dismissLoading()
             bankList = it
             bankList?.forEach {
                 it.getNamePin()
