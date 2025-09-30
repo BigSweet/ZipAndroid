@@ -3,7 +3,6 @@ package com.zip.zipandroid
 //import aai.liveness.GuardianLivenessDetectionSDK
 //import ai.advance.liveness.lib.Market
 import android.app.Application
-import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 
 class ZipApplication : Application() {
@@ -21,7 +20,7 @@ class ZipApplication : Application() {
 //                return DeviceUtils.getAndroidID() == "38c682680c26ddb2"
 //            }
 //        })
-        CrashReport.initCrashReport(getApplicationContext(), "4692898aa8", false);
+//        CrashReport.initCrashReport(getApplicationContext(), "4692898aa8", false);
         initAdvanceLivenessDetection()
     }
 
