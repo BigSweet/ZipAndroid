@@ -282,6 +282,9 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
             } else {
                 mViewBind.firstNameInfoView.showBoard()
             }
+            if ((it.age ?: 0) > 0) {
+                age = it.age?:0
+            }
             if (!it.midName.isNullOrEmpty()) {
                 mViewBind.middleNameInfoView.setContentText(it.midName)
                 span.append(" " + it.midName)
