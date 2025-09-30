@@ -70,19 +70,19 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutContactInfo")
+        ZipTrackUtils.track("exit_contact")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ZipTrackUtils.track("InContactInfo")
+        ZipTrackUtils.track("enter_contact")
         ZipEventBusUtils.register(this)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutContactInfo")
+            ZipTrackUtils.track("exit_contact")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Contact Info")
@@ -135,7 +135,7 @@ class ZipContractActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
             showLoading()
             val list = convertData()
             mViewModel.saveContractInfo(list)
-            ZipTrackUtils.track("SubmitContactInfo")
+            ZipTrackUtils.track("submit_contact_ok")
         }
         mViewModel.saveInfoLiveData.observe(this) {
             //保存进件到第几部了

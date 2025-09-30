@@ -48,13 +48,13 @@ class ZipHomeFragment : ZipBaseBindingFragment<ZipHomeViewModel, FragmentZipHome
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        ZipTrackUtils.track("FirstPageOpen")
+        ZipTrackUtils.track("enter_home")
 
         mViewBind.zipHomeVerTv.setOnDelayClickListener {
             //查到了第几部，在去进件
 
             checkUserInfo()
-            ZipTrackUtils.track("ApplyNow")
+            ZipTrackUtils.track("click_loan")
         }
         mViewBind.newHomeSwpie.setOnRefreshListener {
             getAllData()

@@ -45,20 +45,20 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ZipTrackUtils.track("InQuestionnairePage")
+        ZipTrackUtils.track("enter_questionnaire")
         ZipEventBusUtils.register(this)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutQuestionnairePage")
+        ZipTrackUtils.track("exit_questionnaire")
 
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutQuestionnairePage")
+            ZipTrackUtils.track("exit_questionnaire")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Questionnaire")
@@ -67,7 +67,7 @@ class ZipQuestionActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
-            ZipTrackUtils.track("SubmitQuestionnairePage")
+            ZipTrackUtils.track("submit_questionnaire_ok")
             mViewModel.saveQuestionList(convertQuestion(), purpose, amountRange)
         }
         mViewBind.zipQuestionRv.layoutManager = LinearLayoutManager(this)

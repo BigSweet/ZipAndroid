@@ -51,13 +51,13 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ZipTrackUtils.track("InBankInfo")
+        ZipTrackUtils.track("enter_bank")
         ZipEventBusUtils.register(this)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutBankInfo")
+        ZipTrackUtils.track("exit_bank")
     }
 
     var fromMine = false
@@ -65,7 +65,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         fromMine = intent.getBooleanExtra("fromMine", false)
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutBankInfo")
+            ZipTrackUtils.track("exit_bank")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Bank Info")
@@ -81,7 +81,7 @@ class ZipBandCardActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
         mViewModel.getUserInfo()
         focusChangeCheck(mViewBind.zipBankAccount)
         mViewBind.infoNextBtn.setOnDelayClickListener {
-            ZipTrackUtils.track("SubmitBankInfo")
+            ZipTrackUtils.track("submit_bank_ok")
             showLoading()
             currentBandCardBean?.let {
                 mViewModel.zipBandCard(it.id.toString(), it.bankName, mViewBind.zipBankAccount.getEditText(), it.payType.toString(),

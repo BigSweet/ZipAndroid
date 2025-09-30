@@ -40,7 +40,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
 
     override fun initView(savedInstanceState: Bundle?) {
-        ZipTrackUtils.track("InLogin")
+        ZipTrackUtils.track("enter_login")
         val span = SpannableStringBuilder()
         span.append("I agree to the ")
         val start = span.length
@@ -207,7 +207,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
                 ToastUtils.showShort("Please check the agreement")
                 return@setOnDelayClickListener
             }
-            ZipTrackUtils.track("ClickLogin")
+            ZipTrackUtils.track("click_login")
             getZipCode()
         }
         mViewModel.getZipAppConfig()
@@ -294,7 +294,7 @@ class ZipLoginActivity : ZipBaseBindingActivity<ZipLoginModel, ActivityZipLoginB
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutLogin")
+        ZipTrackUtils.track("exit_login")
     }
 
     override fun getData() {

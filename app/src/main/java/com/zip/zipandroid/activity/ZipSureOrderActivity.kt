@@ -77,7 +77,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutLoanConfirm")
+        ZipTrackUtils.track("exit_loan_confirm")
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -89,7 +89,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         productDay = intent.getIntExtra("productDay", 0)
 
 
-        ZipTrackUtils.track("InLoanConfirm", preBizId)
+        ZipTrackUtils.track("enter_loan_confirm", preBizId)
 
         realAmount = amount.toInt()
         limitMax = amount.toInt()
@@ -128,13 +128,13 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
             realOrderBizId = it?.bizId ?: ""
             //跳转到下一个界面
             ZipOrderNextActivity.start(this, realOrderBizId)
-            ZipTrackUtils.track("SuccessConfirm", realOrderBizId)
+            ZipTrackUtils.track("success_loan_confirm", realOrderBizId)
             finish()
         }
 
         mViewBind.orderAcceptLoan.setOnDelayClickListener {
             showLoading()
-            ZipTrackUtils.track("ClicktoConfirm")
+            ZipTrackUtils.track("click_loan_confirm")
             mViewModel.getUploadUserInfo()
         }
         mViewBind.orderSubIv.setOnDelayClickListener {
@@ -155,7 +155,7 @@ class ZipSureOrderActivity : ZipBaseBindingActivity<ZipReviewModel, ActivityZipS
         }
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutLoanConfirm")
+            ZipTrackUtils.track("exit_loan_confirm")
             finish()
         }
         mViewBind.zipSureInstallRv.layoutManager = LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)

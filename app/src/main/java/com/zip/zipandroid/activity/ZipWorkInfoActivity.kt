@@ -46,7 +46,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutWorkInfo")
+        ZipTrackUtils.track("exit_work")
     }
 
     override fun onDestroy() {
@@ -73,7 +73,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutWorkInfo")
+            ZipTrackUtils.track("exit_work")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Work Info")
@@ -182,7 +182,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
 
 
         mViewBind.infoNextBtn.setOnDelayClickListener {
-            ZipTrackUtils.track("SubmitWorkInfo")
+            ZipTrackUtils.track("submit_work_ok")
             showLoading()
             if (currentType == type_company || currentType == type_free) {
                 //保存com的数据
@@ -359,7 +359,7 @@ class ZipWorkInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activity
     var dicInfoBean: PersonalInformationDictBean? = null
     var addressPrepare = false
     override fun createObserver() {
-        ZipTrackUtils.track("InWorkInfo")
+        ZipTrackUtils.track("enter_work")
         mViewModel.allAddressInfo.observe(this) {
             processDataAsync(it) { result ->
                 when (result) {

@@ -53,7 +53,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ZipTrackUtils.track("OutPersonalInfo")
+        ZipTrackUtils.track("exit_personal")
     }
 
     override fun onDestroy() {
@@ -65,7 +65,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ZipEventBusUtils.register(this)
-        ZipTrackUtils.track("InPersonalInfo")
+        ZipTrackUtils.track("enter_personal")
     }
 
 
@@ -74,7 +74,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
     override fun initView(savedInstanceState: Bundle?) {
         updateToolbarTopMargin(mViewBind.privateIncludeTitle.commonTitleRl)
         mViewBind.privateIncludeTitle.commonBackIv.setOnDelayClickListener {
-            ZipTrackUtils.track("OutPersonalInfo")
+            ZipTrackUtils.track("exit_personal")
             finish()
         }
         mViewBind.privateIncludeTitle.titleBarTitleTv.setText("Personal Info")
@@ -189,7 +189,7 @@ class ZipPersonInfoActivity : ZipBaseBindingActivity<PersonInfoViewModel, Activi
         mViewBind.infoNextBtn.setOnDelayClickListener {
             showLoading()
             mViewModel.checkBvn(mViewBind.bvnInfoView.getEditText())
-            ZipTrackUtils.track("SubmitPersonalInfo")
+            ZipTrackUtils.track("submit_personal_ok")
         }
     }
 
